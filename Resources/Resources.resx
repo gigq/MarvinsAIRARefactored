@@ -841,4 +841,8 @@
     <value>I want to thank these volunteer moderators for helping answer the many questions posed by MAIRA users, allowing me to have more time to focus on the development of MAIRA!</value>
     <comment>Contribute</comment>
   </data>
+  <data name="AdminBoxxIsUpdating" xml:space="preserve">
+    <value>The AdminBoxx firmware is being updated</value>
+    <comment>AdminBoxx</comment>
+  </data>
 </root>
