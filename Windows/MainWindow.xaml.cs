@@ -580,6 +580,21 @@ public partial class MainWindow : Window
 		app.RacingWheel.ClearPeakTorque = true;
 	}
 
+	private void RacingWheel_Preview_ScrollViewer_PreviewMouseWheel( object sender, MouseWheelEventArgs e )
+	{
+		e.Handled = true;
+
+		var eventArg = new MouseWheelEventArgs( e.MouseDevice, e.Timestamp, e.Delta )
+		{
+			RoutedEvent = MouseWheelEvent,
+			Source = sender
+		};
+
+		var parent = ( (ScrollViewer) sender ).Parent as UIElement;
+
+		parent?.RaiseEvent( eventArg );
+	}
+
 	private void Pedals_ClutchTest1_MairaMappableButton_Click( object sender, RoutedEventArgs e )
 	{
 		var app = App.Instance!;
