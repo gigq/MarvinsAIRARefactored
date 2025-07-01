@@ -845,4 +845,8 @@
     <value>The AdminBoxx firmware is being updated</value>
     <comment>AdminBoxx</comment>
   </data>
+  <data name="AllowSuperStrength" xml:space="preserve">
+    <value>Allow up to 200% strength (potentially dangerous)</value>
+    <comment>Racing wheel</comment>
+  </data>
 </root>
