@@ -119,13 +119,13 @@ namespace MarvinsAIRARefactored.Components
 			}
 		}
 
-		public void Play( string key, float volume, bool loop = false )
+		public void Play( string key, float volume, float frequencyRatio = 1f, bool loop = false )
 		{
 			using ( _lock.EnterScope() )
 			{
 				if ( _soundPlayerCache.TryGetValue( key, out var player ) )
 				{
-					player.Play( volume, loop );
+					player.Play( volume, frequencyRatio, loop );
 				}
 			}
 		}
