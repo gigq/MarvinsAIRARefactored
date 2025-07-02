@@ -849,4 +849,8 @@
     <value>Allow up to 200% strength (potentially dangerous)</value>
     <comment>Racing wheel</comment>
   </data>
+  <data name="ON" xml:space="preserve">
+    <value>ON</value>
+    <comment>Generic</comment>
+  </data>
 </root>

@@ -551,7 +551,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = Math.Clamp( value, 0.05f, 1f );
 
 			if ( value != _racingWheelDetailBoostBias )
 			{
@@ -653,7 +653,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = Math.Clamp( value, 0.05f, 1f );
 
 			if ( value != _racingWheelDeltaLimiterBias )
 			{
