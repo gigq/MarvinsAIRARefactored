@@ -13,11 +13,15 @@ public partial class ChatQueue
 		public required string? Value { get; set; }
 	}
 
+	private const int UpdateInterval = 6;
+
 	private readonly Lock _lock = new();
 
 	private readonly List<Message> _messageList = [];
 
 	private bool _chatWindowOpened = false;
+
+	private int _updateCounter = UpdateInterval;
 
 	public void SendMessage( string messageTemplate, string? value = null )
 	{
@@ -47,8 +51,9 @@ public partial class ChatQueue
 		}
 	}
 
-	public void Tick( App app )
+	private void Update( App app )
 	{
+
 		using ( _lock.EnterScope() )
 		{
 			if ( _messageList.Count > 0 )
@@ -99,6 +104,18 @@ public partial class ChatQueue
 					_chatWindowOpened = false;
 				}
 			}
+		}
+	}
+
+	public void Tick( App app )
+	{
+		_updateCounter--;
+
+		if ( _updateCounter == 0 )
+		{
+			_updateCounter = UpdateInterval;
+
+			Update( app );
 		}
 	}
 }
