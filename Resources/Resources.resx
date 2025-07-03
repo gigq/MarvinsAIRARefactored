@@ -619,7 +619,7 @@
   </data>
   <data name="ABSEngaged" xml:space="preserve">
     <value>ABS Engaged</value>
-    <comment>Pedal effects list</comment>
+    <comment>Pedal effects list, Sounds</comment>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>[Disabled]</value>
@@ -852,5 +852,25 @@
   <data name="ON" xml:space="preserve">
     <value>ON</value>
     <comment>Generic</comment>
+  </data>
+  <data name="Sounds" xml:space="preserve">
+    <value>Sounds</value>
+    <comment>Tab item</comment>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="FrequencyRatio" xml:space="preserve">
+    <value>Frequency Ratio</value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="Fade" xml:space="preserve">
+    <value>Fade</value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="SendChatMessages" xml:space="preserve">
+    <value>Send Chat Messages</value>
+    <comment>Racing wheel</comment>
   </data>
 </root>
