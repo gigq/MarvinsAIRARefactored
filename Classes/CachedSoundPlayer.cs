@@ -1,4 +1,5 @@
 ﻿
+using SharpDX.DirectSound;
 using SharpDX.XAudio2;
 
 namespace MarvinsAIRARefactored.Classes;
@@ -15,7 +16,7 @@ public class CachedSoundPlayer( CachedSound sound, XAudio2 xaudio2 ) : IDisposab
 		{
 			_sourceVoice?.DestroyVoice();
 
-			_sourceVoice = new SourceVoice( _xaudio2, _sound.WaveFormat );
+			_sourceVoice = new SourceVoice( _xaudio2, _sound.WaveFormat, VoiceFlags.None, 4f );
 		}
 		else
 		{
@@ -25,9 +26,6 @@ public class CachedSoundPlayer( CachedSound sound, XAudio2 xaudio2 ) : IDisposab
 				_sourceVoice.FlushSourceBuffers();
 			}
 		}
-
-		_sourceVoice.SetFrequencyRatio( frequencyRatio );
-		_sourceVoice.SetVolume( Math.Clamp( volume, 0f, 1f ) );
 
 		var buffer = new AudioBuffer
 		{
@@ -39,8 +37,19 @@ public class CachedSoundPlayer( CachedSound sound, XAudio2 xaudio2 ) : IDisposab
 
 		buffer.LoopCount = loop ? AudioBuffer.LoopInfinite : 0;
 
+		_sourceVoice.SetFrequencyRatio( frequencyRatio );
+		_sourceVoice.SetVolume( Math.Clamp( volume, 0f, 1f ) );
 		_sourceVoice.SubmitSourceBuffer( buffer, _sound.DecodedPacketsInfo );
 		_sourceVoice.Start();
+	}
+
+	public void Update( float volume, float frequencyRatio = 1f )
+	{
+		if ( _sourceVoice != null )
+		{
+			_sourceVoice.SetFrequencyRatio( frequencyRatio );
+			_sourceVoice.SetVolume( Math.Clamp( volume, 0f, 1f ) );
+		}
 	}
 
 	public void Stop()
