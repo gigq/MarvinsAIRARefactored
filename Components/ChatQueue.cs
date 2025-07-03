@@ -13,7 +13,7 @@ public partial class ChatQueue
 		public required string? Value { get; set; }
 	}
 
-	private const int UpdateInterval = 6;
+	private const int UpdateInterval = 10;
 
 	private readonly Lock _lock = new();
 
@@ -53,7 +53,6 @@ public partial class ChatQueue
 
 	private void Update( App app )
 	{
-
 		using ( _lock.EnterScope() )
 		{
 			if ( _messageList.Count > 0 )
@@ -83,25 +82,13 @@ public partial class ChatQueue
 
 					_messageList.RemoveAt( 0 );
 
-					if ( _messageList.Count > 0 )
-					{
-						_chatWindowOpened = false;
-					}
+					_chatWindowOpened = false;
 				}
 				else
 				{
 					app.Simulator.IRSDK.ChatComand( IRacingSdkEnum.ChatCommandMode.BeginChat, 0 );
 
 					_chatWindowOpened = true;
-				}
-			}
-			else
-			{
-				if ( _chatWindowOpened )
-				{
-					app.Simulator.IRSDK.ChatComand( IRacingSdkEnum.ChatCommandMode.Cancel, 0 );
-
-					_chatWindowOpened = false;
 				}
 			}
 		}
