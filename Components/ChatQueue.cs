@@ -13,7 +13,7 @@ public partial class ChatQueue
 		public required string? Value { get; set; }
 	}
 
-	private const int UpdateInterval = 10;
+	private const int UpdateInterval = 6;
 
 	private readonly Lock _lock = new();
 
@@ -21,7 +21,7 @@ public partial class ChatQueue
 
 	private bool _chatWindowOpened = false;
 
-	private int _updateCounter = UpdateInterval;
+	private int _updateCounter = UpdateInterval + 0;
 
 	public void SendMessage( string messageTemplate, string? value = null )
 	{
