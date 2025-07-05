@@ -1730,6 +1730,27 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region Racing wheel - Enable Logitech RPM lights
+
+	private bool _racingWheelEnableLogitechRPMLights = true;
+
+	public bool RacingWheelEnableLogitechRPMLights
+	{
+		get => _racingWheelEnableLogitechRPMLights;
+
+		set
+		{
+			if ( value != _racingWheelEnableLogitechRPMLights )
+			{
+				_racingWheelEnableLogitechRPMLights = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	#endregion
+
 	#region Racing wheel - Allow super strength
 
 	private bool _racingWheelAllowSuperStrength = false;

@@ -64,6 +64,8 @@ public class RacingWheel
 
 	private readonly GraphBase _algorithmPreviewGraphBase = new();
 
+	private bool _logiPlayLedsNotWorking = false;
+
 	private int _updateCounter = UpdateInterval + 4;
 
 	public void Initialize()
@@ -664,13 +666,44 @@ public class RacingWheel
 		{
 			_updateCounter = UpdateInterval;
 
+			// shortcut to settings
+
+			var settings = DataContext.DataContext.Instance.Settings;
+
+			// update auto force label
+
 			app.MainWindow.RacingWheel_AutoForce_Label.Content = $"{_autoTorque:F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
+
+			// update logitech rpm lights
+
+			if ( settings.RacingWheelEnableLogitechRPMLights )
+			{
+				if ( !_logiPlayLedsNotWorking && app.Simulator.IsConnected && ( app.DirectInput.ForceFeedbackJoystick != null ) )
+				{
+					try
+					{
+						if ( !LogitechGSDK.LogiPlayLedsDInput( app.DirectInput.ForceFeedbackJoystick.NativePointer, app.Simulator.RPM, app.Simulator.ShiftLightsFirstRPM, app.Simulator.ShiftLightsShiftRPM ) )
+						{
+							_logiPlayLedsNotWorking = true;
+						}
+					}
+					catch ( Exception )
+					{
+						_logiPlayLedsNotWorking = true;
+					}
+
+					if ( _logiPlayLedsNotWorking )
+					{
+						app.Logger.WriteLine( "[RacingWheel] The Logitech G SDK doesn't seem to be working, so we are temporarily disabling Logitech RPM lights support." );
+					}
+				}
+			}
+
+			// update algorithm preview
 
 			if ( UpdateAlgorithmPreview )
 			{
 				UpdateAlgorithmPreview = false;
-
-				var settings = DataContext.DataContext.Instance.Settings;
 
 				_algorithmPreviewGraphBase.Reset();
 

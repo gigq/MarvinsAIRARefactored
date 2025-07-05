@@ -46,6 +46,7 @@ public class Simulator
 	public float[] RPMSpeedRatios { get; private set; } = new float[ MaxNumGears ];
 	public float[] RRShockVel_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
 	public IRacingSdkEnum.Flags SessionFlags { get; private set; } = 0;
+	public float ShiftLightsFirstRPM { get; private set; } = 0f;
 	public float ShiftLightsShiftRPM { get; private set; } = 0f;
 	public string SimMode { get; private set; } = string.Empty;
 	public bool SteeringFFBEnabled { get; private set; } = false;
@@ -226,6 +227,7 @@ public class Simulator
 		var sessionInfo = _irsdk.Data.SessionInfo;
 
 		NumForwardGears = sessionInfo.DriverInfo.DriverCarGearNumForward;
+		ShiftLightsFirstRPM = sessionInfo.DriverInfo.DriverCarSLFirstRPM;
 		ShiftLightsShiftRPM = sessionInfo.DriverInfo.DriverCarSLShiftRPM;
 		SimMode = sessionInfo.WeekendInfo.SimMode;
 

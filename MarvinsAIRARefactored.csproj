@@ -108,6 +108,12 @@
     <ProjectReference Include="..\SimagicHPR\SimagicHPR.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="LogitechSteeringWheelEnginesWrapper.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy &quot;$(ProjectDir)Resources\Resources*.resx&quot; &quot;$(registry:HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders@Personal)\MarvinsAIRA Refactored\Languages\&quot; /Y /I" />
     <Exec Command="xcopy /S &quot;$(ProjectDir)Sounds\*.wav&quot; &quot;$(registry:HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders@Personal)\MarvinsAIRA Refactored\Sounds\&quot; /Y /I" />
