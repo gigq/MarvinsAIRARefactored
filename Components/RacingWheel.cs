@@ -19,13 +19,14 @@ public class RacingWheel
 		ZeAlanLeTwist,
 	};
 
-	private const int _maxSteeringWheelTorque360HzIndex = Simulator.SamplesPerFrame360Hz + 1;
+	private const int UpdateInterval = 6;
+	private const int MaxSteeringWheelTorque360HzIndex = Simulator.SamplesPerFrame360Hz + 1;
 
-	private const float _unsuspendTimeMS = 1000f;
-	private const float _fadeInTimeMS = 2000f;
-	private const float _fadeOutTimeMS = 500f;
-	private const float _testSignalTimeMS = 2000f;
-	private const float _crashProtectionRecoveryTime = 1000f;
+	private const float UnsuspendTimeMS = 1000f;
+	private const float FadeInTimeMS = 2000f;
+	private const float FadeOutTimeMS = 500f;
+	private const float TestSignalTimeMS = 2000f;
+	private const float CrashProtectionRecoveryTime = 1000f;
 
 	private Guid? _currentRacingWheelGuid = null;
 
@@ -62,6 +63,8 @@ public class RacingWheel
 	private float _elapsedMilliseconds = 0f;
 
 	private readonly GraphBase _algorithmPreviewGraphBase = new();
+
+	private int _updateCounter = UpdateInterval + 4;
 
 	public void Initialize()
 	{
@@ -289,7 +292,7 @@ public class RacingWheel
 
 			if ( PlayTestSignal )
 			{
-				_testSignalTimerMS = _testSignalTimeMS;
+				_testSignalTimerMS = TestSignalTimeMS;
 
 				app.Logger.WriteLine( "[RacingWheel] Sending test signal" );
 
@@ -300,7 +303,7 @@ public class RacingWheel
 
 			if ( _testSignalTimerMS > 0f )
 			{
-				testSignalTorque = MathF.Cos( _testSignalTimerMS * MathF.Tau / 20f ) * MathF.Sin( _testSignalTimerMS * MathF.Tau / _testSignalTimeMS * 2f ) * 0.2f;
+				testSignalTorque = MathF.Cos( _testSignalTimerMS * MathF.Tau / 20f ) * MathF.Sin( _testSignalTimerMS * MathF.Tau / TestSignalTimeMS * 2f ) * 0.2f;
 
 				_testSignalTimerMS -= deltaMilliseconds;
 			}
@@ -315,7 +318,7 @@ public class RacingWheel
 				{
 					app.Logger.WriteLine( "[RacingWheel] Requesting suspend of force feedback" );
 
-					_unsuspendTimerMS = _unsuspendTimeMS;
+					_unsuspendTimerMS = UnsuspendTimeMS;
 				}
 				else
 				{
@@ -339,13 +342,13 @@ public class RacingWheel
 					{
 						app.Logger.WriteLine( "[RacingWheel] Requesting fade in of steering wheel torque data" );
 
-						_fadeTimerMS = _fadeInTimeMS;
+						_fadeTimerMS = FadeInTimeMS;
 					}
 					else
 					{
 						app.Logger.WriteLine( "[RacingWheel] Requesting fade out of steering wheel torque data" );
 
-						_fadeTimerMS = _fadeOutTimeMS;
+						_fadeTimerMS = FadeOutTimeMS;
 					}
 				}
 			}
@@ -461,9 +464,9 @@ public class RacingWheel
 
 			var steeringWheelTorque360HzIndex = 1f + ( _elapsedMilliseconds * 360f / 1000f );
 
-			var i1 = Math.Min( _maxSteeringWheelTorque360HzIndex, (int) MathF.Truncate( steeringWheelTorque360HzIndex ) );
-			var i2 = Math.Min( _maxSteeringWheelTorque360HzIndex, i1 + 1 );
-			var i3 = Math.Min( _maxSteeringWheelTorque360HzIndex, i2 + 1 );
+			var i1 = Math.Min( MaxSteeringWheelTorque360HzIndex, (int) MathF.Truncate( steeringWheelTorque360HzIndex ) );
+			var i2 = Math.Min( MaxSteeringWheelTorque360HzIndex, i1 + 1 );
+			var i3 = Math.Min( MaxSteeringWheelTorque360HzIndex, i2 + 1 );
 			var i0 = Math.Max( 0, i1 - 1 );
 
 			var t = MathF.Min( 1f, steeringWheelTorque360HzIndex - i1 );
@@ -498,7 +501,7 @@ public class RacingWheel
 
 			if ( ActivateCrashProtection )
 			{
-				_crashProtectionTimerMS = settings.RacingWheelCrashProtectionDuration * 1000f + _crashProtectionRecoveryTime;
+				_crashProtectionTimerMS = settings.RacingWheelCrashProtectionDuration * 1000f + CrashProtectionRecoveryTime;
 
 				ActivateCrashProtection = false;
 			}
@@ -507,7 +510,7 @@ public class RacingWheel
 
 			if ( _crashProtectionTimerMS > 0f )
 			{
-				crashProtectionScale = 1f - settings.RacingWheelCrashProtectionForceReduction * ( ( _crashProtectionTimerMS <= _crashProtectionRecoveryTime ) ? ( _crashProtectionTimerMS / _crashProtectionRecoveryTime ) : 1f );
+				crashProtectionScale = 1f - settings.RacingWheelCrashProtectionForceReduction * ( ( _crashProtectionTimerMS <= CrashProtectionRecoveryTime ) ? ( _crashProtectionTimerMS / CrashProtectionRecoveryTime ) : 1f );
 
 				_crashProtectionTimerMS -= deltaMilliseconds;
 			}
@@ -594,13 +597,13 @@ public class RacingWheel
 			{
 				if ( _usingSteeringWheelTorqueData )
 				{
-					fadeScale = _fadeTimerMS / _fadeInTimeMS;
+					fadeScale = _fadeTimerMS / FadeInTimeMS;
 
 					outputTorque *= 1f - fadeScale;
 				}
 				else
 				{
-					fadeScale = _fadeTimerMS / _fadeOutTimeMS;
+					fadeScale = _fadeTimerMS / FadeOutTimeMS;
 
 					outputTorque = _lastUnfadedOutputTorque * fadeScale;
 				}
@@ -649,52 +652,59 @@ public class RacingWheel
 		{
 			app.Logger.WriteLine( $"[RacingWheel] Exception caught: {exception.Message.Trim()}" );
 
-			_unsuspendTimerMS = _unsuspendTimeMS;
+			_unsuspendTimerMS = UnsuspendTimeMS;
 		}
 	}
 
 	public void Tick( App app )
 	{
-		app.MainWindow.RacingWheel_AutoForce_Label.Content = $"{_autoTorque:F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
+		_updateCounter--;
 
-		if ( UpdateAlgorithmPreview )
+		if ( _updateCounter == 0 )
 		{
-			UpdateAlgorithmPreview = false;
+			_updateCounter = UpdateInterval;
 
-			var settings = DataContext.DataContext.Instance.Settings;
+			app.MainWindow.RacingWheel_AutoForce_Label.Content = $"{_autoTorque:F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
 
-			_algorithmPreviewGraphBase.Reset();
-
-			var recording = app.RecordingManager.Recording;
-
-			var runningTorque = 0f;
-			var lastTorque500Hz = 0f;
-
-			if ( recording != null )
+			if ( UpdateAlgorithmPreview )
 			{
-				runningTorque = recording.Data![ 0 ].InputTorque500Hz;
-				lastTorque500Hz = recording.Data![ 0 ].InputTorque500Hz;
-			}
+				UpdateAlgorithmPreview = false;
 
-			for ( var x = 0; x < _algorithmPreviewGraphBase.BitmapWidth; x++ )
-			{
+				var settings = DataContext.DataContext.Instance.Settings;
+
+				_algorithmPreviewGraphBase.Reset();
+
+				var recording = app.RecordingManager.Recording;
+
+				var runningTorque = 0f;
+				var lastTorque500Hz = 0f;
+
 				if ( recording != null )
 				{
-					var inputTorque60Hz = recording.Data![ x ].InputTorque60Hz;
-					var inputTorque500Hz = recording.Data![ x ].InputTorque500Hz;
-
-					var outputTorque = ProcessAlgorithm( ref runningTorque, lastTorque500Hz, inputTorque60Hz, inputTorque500Hz, 0f );
-
-					lastTorque500Hz = inputTorque500Hz;
-
-					_algorithmPreviewGraphBase.Update( inputTorque500Hz / settings.RacingWheelMaxForce, 0.5f, 0f, 0f, 1f, 0.25f, 0.25f );
-					_algorithmPreviewGraphBase.Update( outputTorque, 0f, 0.5f, 0.5f, 0.25f, 1f, 1f );
+					runningTorque = recording.Data![ 0 ].InputTorque500Hz;
+					lastTorque500Hz = recording.Data![ 0 ].InputTorque500Hz;
 				}
 
-				_algorithmPreviewGraphBase.FinishUpdates();
-			}
+				for ( var x = 0; x < _algorithmPreviewGraphBase.BitmapWidth; x++ )
+				{
+					if ( recording != null )
+					{
+						var inputTorque60Hz = recording.Data![ x ].InputTorque60Hz;
+						var inputTorque500Hz = recording.Data![ x ].InputTorque500Hz;
 
-			_algorithmPreviewGraphBase.WritePixels();
+						var outputTorque = ProcessAlgorithm( ref runningTorque, lastTorque500Hz, inputTorque60Hz, inputTorque500Hz, 0f );
+
+						lastTorque500Hz = inputTorque500Hz;
+
+						_algorithmPreviewGraphBase.Update( inputTorque500Hz / settings.RacingWheelMaxForce, 0.5f, 0f, 0f, 1f, 0.25f, 0.25f );
+						_algorithmPreviewGraphBase.Update( outputTorque, 0f, 0.5f, 0.5f, 0.25f, 1f, 1f );
+					}
+
+					_algorithmPreviewGraphBase.FinishUpdates();
+				}
+
+				_algorithmPreviewGraphBase.WritePixels();
+			}
 		}
 	}
 }
