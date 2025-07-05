@@ -10,6 +10,7 @@ namespace MarvinsAIRARefactored.Components;
 public class Simulator
 {
 	public const int SamplesPerFrame360Hz = 6;
+	private const int UpdateInterval = 6;
 	private const int MaxNumGears = 10;
 	private const float OneG = 9.80665f; // in meters per second squared
 
@@ -98,6 +99,8 @@ public class Simulator
 	private IRacingSdkDatum? _velocityXDatum = null;
 	private IRacingSdkDatum? _velocityYDatum = null;
 	private IRacingSdkDatum? _weatherDeclaredWetDatum = null;
+
+	private int _updateCounter = UpdateInterval + 5;
 
 	public void Initialize()
 	{
@@ -548,6 +551,13 @@ public class Simulator
 
 	public void Tick( App app )
 	{
-		app.MainWindow.RacingWheel_CurrentForce_Label.Content = $"{MathF.Abs( SteeringWheelTorque_ST[ 5 ] ):F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
+		_updateCounter--;
+
+		if ( _updateCounter == 0 )
+		{
+			_updateCounter = UpdateInterval;
+
+			app.MainWindow.RacingWheel_CurrentForce_Label.Content = $"{MathF.Abs( SteeringWheelTorque_ST[ 5 ] ):F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
+		}
 	}
 }
