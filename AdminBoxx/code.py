@@ -9,7 +9,7 @@ from adafruit_neotrellis.neotrellis import NeoTrellis
 from adafruit_neotrellis.multitrellis import MultiTrellis
 
 # Version
-VERSION = "4.0.1"
+VERSION = "4.0.4"
 
 # Configuration
 num_rows = 4
@@ -18,10 +18,11 @@ heartbeat_timeout = 2
 
 # Color constants
 disabled = (0, 0, 0)
-dark_white = (16, 16, 16)
-dark_red = (16, 0, 0)
-dark_yellow = (16, 16, 0)
-dark_green = (0, 16, 0)
+white = (32, 32, 32)
+red = (32, 32, 32)
+yellow = (32, 32, 0)
+dark_red = (4, 0, 0)
+dark_yellow = (4, 4, 0)
 
 # Initialize I2C and trellis
 i2c_bus = busio.I2C(board.SCL, board.SDA)
@@ -34,7 +35,6 @@ def set_all_leds(color):
         for x in range(num_columns):
             trellis.color(x, y, color)
 
-
 # Utility: map (x, y) to board and key
 def get_key_for(x, y):
     trellis_index = x // 4
@@ -42,13 +42,12 @@ def get_key_for(x, y):
     key = y * 4 + local_x
     return trellis_index, key
 
-
 # Indicate startup
-set_all_leds(dark_white)
+set_all_leds(white)
 set_all_leds(disabled)
-set_all_leds(dark_white)
+set_all_leds(white)
 set_all_leds(disabled)
-set_all_leds(dark_white)
+set_all_leds(white)
 print("Starting up.")
 
 # Buffer for storing incoming data
@@ -99,20 +98,17 @@ def non_blocking_sleep(duration):
         time.sleep(0.01)
 
 # Function to flash the entire LED array 3 times
-def flash_led(x, y, color, leave_on):
+def flash_led(x, y, color):
     trellis.color(x, y, color)
-    non_blocking_sleep(0.25)
+    non_blocking_sleep(0.5)
     trellis.color(x, y, disabled)
-    non_blocking_sleep(0.25)
+    non_blocking_sleep(0.5)
     trellis.color(x, y, color)
-    non_blocking_sleep(0.25)
+    non_blocking_sleep(0.5)
     trellis.color(x, y, disabled)
-    non_blocking_sleep(0.25)
+    non_blocking_sleep(0.5)
     trellis.color(x, y, color)
-    non_blocking_sleep(0.25)
-
-    if not leave_on:
-        trellis.color(x, y, disabled)
+    non_blocking_sleep(0.5)
 
 # Set callback on all buttons
 for y in range(num_rows):
@@ -244,7 +240,7 @@ while True:
                     
                 # clear buffer
                 buffer = bytearray()
-                
+
     usb_connected = supervisor.runtime.usb_connected
     app_connected = current_time - last_command_time < heartbeat_timeout
 
@@ -253,15 +249,23 @@ while True:
 
     if usb_changed or (app_changed and not app_connected) or force_update_leds:
         set_all_leds(disabled)
-        flash_led(1, 0, dark_red, True)
 
-        if usb_connected:
-            flash_led(2, 0, dark_yellow, True)
+        if not usb_connected:
+            flash_led(3, 3, red)
+
+        else:
+            flash_led(3, 3, yellow)
             
-        non_blocking_sleep(10)
-        set_all_leds(disabled)
+        non_blocking_sleep(300)
+
+        if not usb_connected:
+            trellis.color(3, 3, dark_red)
+
+        else:
+            trellis.color(3, 3, dark_yellow)
+
         force_update_leds = False
-        
+
     usb_was_connected = usb_connected
     app_was_connected = app_connected
 
