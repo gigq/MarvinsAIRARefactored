@@ -1,7 +1,7 @@
 ﻿
-using vJoyInterfaceWrap;
-
 using MarvinsAIRARefactored.Classes;
+
+using vJoyInterfaceWrap;
 
 namespace MarvinsAIRARefactored.Components;
 
@@ -13,6 +13,15 @@ public class VirtualJoystick
 	public float Brake {  get; set; } = 0f;
 	public bool ShiftUp { get; set; } = false;
 	public bool ShiftDown { get; set; } = false;
+
+	private long _minimumX = 0;
+	private long _maximumX = 0;
+
+	private long _minimumY = 0;
+	private long _maximumY = 0;
+
+	private long _minimumZ = 0;
+	private long _maximumZ = 0;
 
 	private readonly vJoy _vJoy = new();
 
@@ -61,6 +70,15 @@ public class VirtualJoystick
 				{
 					_vJoy.ResetVJD( JoystickId );
 
+					_vJoy.GetVJDAxisMin( JoystickId, HID_USAGES.HID_USAGE_X, ref _minimumX );
+					_vJoy.GetVJDAxisMax( JoystickId, HID_USAGES.HID_USAGE_X, ref _maximumX );
+
+					_vJoy.GetVJDAxisMin( JoystickId, HID_USAGES.HID_USAGE_Y, ref _minimumY );
+					_vJoy.GetVJDAxisMax( JoystickId, HID_USAGES.HID_USAGE_Y, ref _maximumY );
+
+					_vJoy.GetVJDAxisMin( JoystickId, HID_USAGES.HID_USAGE_Z, ref _minimumZ );
+					_vJoy.GetVJDAxisMax( JoystickId, HID_USAGES.HID_USAGE_Z, ref _maximumZ );
+
 					_initialized = true;
 				}
 			}
@@ -73,9 +91,9 @@ public class VirtualJoystick
 		{
 			_joystickState.bDevice = (byte) JoystickId;
 
-			_joystickState.AxisX = (int) Misc.Lerp( 0f, 65535f, SteeringWheelAngle * 0.5f + 0.5f );
-			_joystickState.AxisY = (int) Misc.Lerp( 0f, 4095f, Throttle );
-			_joystickState.AxisZ = (int) Misc.Lerp( 0f, 4095f, Brake );
+			_joystickState.AxisX = (int) MathF.Round( Misc.Lerp( _minimumX, _maximumX, SteeringWheelAngle * 0.5f + 0.5f ) );
+			_joystickState.AxisY = (int) MathF.Round( Misc.Lerp( _minimumY, _maximumY, Throttle ) );
+			_joystickState.AxisZ = (int) MathF.Round( Misc.Lerp( _minimumZ, _maximumZ, Brake ) );
 
 			uint shiftUp = ShiftUp ? (uint) 0x00000001 : 0;
 			uint shiftDown = ShiftDown ? (uint) 0x00000002 : 0;
