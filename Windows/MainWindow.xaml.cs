@@ -603,6 +603,90 @@ public partial class MainWindow : Window
 		parent?.RaiseEvent( eventArg );
 	}
 
+	private void SteeringEffects_SteeringWheelLeft_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.SteeringWheelAngle = -1f;
+	}
+
+	private void SteeringEffects_SteeringWheelRight_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.SteeringWheelAngle = 1f;
+	}
+
+	private void SteeringEffects_SteeringWheelCenter_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.SteeringWheelAngle = 0f;
+	}
+
+	private void SteeringEffects_SteeringWheel90Left_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.SteeringWheelAngle = -( 90f / 450f );
+	}
+
+	private void SteeringEffects_MinThrottle_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.Throttle = 0f;
+	}
+
+	private void SteeringEffects_MaxThrottle_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.Throttle = 1f;
+	}
+
+	private void SteeringEffects_MinBrake_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.Brake = 0f;
+	}
+
+	private void SteeringEffects_MaxBrake_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.Brake = 1f;
+	}
+
+	private void SteeringEffects_ShiftUp_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.ShiftUp = true;
+	}
+
+	private void SteeringEffects_ShiftDown_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.ShiftDown = true;
+	}
+
+	private void SteeringEffects_RunCalibration_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.SteeringEffects.RunCalibration();
+	}
+
+	private void SteeringEffects_StopCalibration_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.SteeringEffects.StopCalibration();
+	}
+
 	private void Pedals_ClutchTest1_MairaMappableButton_Click( object sender, RoutedEventArgs e )
 	{
 		var app = App.Instance!;

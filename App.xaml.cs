@@ -37,6 +37,8 @@ public partial class App : Application
 	public MultimediaTimer MultimediaTimer { get; private set; }
 	public Simulator Simulator { get; private set; }
 	public RecordingManager RecordingManager { get; private set; }
+	public SteeringEffects SteeringEffects { get; private set; }
+	public VirtualJoystick VirtualJoystick { get; private set; }
 
 	public const int TimerPeriodInMilliseconds = 17;
 	public const int TimerTicksPerSecond = 1000 / TimerPeriodInMilliseconds;
@@ -74,6 +76,8 @@ public partial class App : Application
 		MultimediaTimer = new();
 		Simulator = new();
 		RecordingManager = new();
+		SteeringEffects = new();
+		VirtualJoystick = new();
 
 		_timer.Elapsed += OnTimer;
 	}
@@ -1337,6 +1341,8 @@ public partial class App : Application
 					app.Simulator.Tick( app );
 					app.Sounds.Tick( app );
 					app.Graph.Tick( app );
+					app.SteeringEffects.Tick( app );
+					app.VirtualJoystick.Tick( app );
 				} );
 			}
 		}

@@ -63,6 +63,7 @@ public class Simulator
 	public float VelocityY { get; private set; } = 0f;
 	public bool WasOnTrack { get; private set; } = false;
 	public bool WeatherDeclaredWet { get; private set; } = false;
+	public float YawRate { get; private set; } = 0f;
 
 	private bool _telemetryDataInitialized = false;
 	private bool _needToUpdateFromContextSettings = false;
@@ -101,6 +102,7 @@ public class Simulator
 	private IRacingSdkDatum? _velocityXDatum = null;
 	private IRacingSdkDatum? _velocityYDatum = null;
 	private IRacingSdkDatum? _weatherDeclaredWetDatum = null;
+	private IRacingSdkDatum? _yawRateDatum = null;
 
 	private int _updateCounter = UpdateInterval + 5;
 
@@ -285,6 +287,7 @@ public class Simulator
 			_velocityXDatum = _irsdk.Data.TelemetryDataProperties[ "VelocityX" ];
 			_velocityYDatum = _irsdk.Data.TelemetryDataProperties[ "VelocityY" ];
 			_weatherDeclaredWetDatum = _irsdk.Data.TelemetryDataProperties[ "WeatherDeclaredWet" ];
+			_yawRateDatum = _irsdk.Data.TelemetryDataProperties[ "YawRate" ];
 
 			_cfShockVel_STDatum = null;
 			_crShockVel_STDatum = null;
@@ -432,6 +435,10 @@ public class Simulator
 		}
 
 		_weatherDeclaredWetLastFrame = WeatherDeclaredWet;
+
+		// get the yaw rate
+
+		YawRate = _irsdk.Data.GetFloat( _yawRateDatum );
 
 		// calculate g force
 

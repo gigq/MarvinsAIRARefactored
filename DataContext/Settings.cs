@@ -1825,6 +1825,49 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region Steering effects - Steering wheel angle
+
+	private float _steeringEffectsSteeringWheelAngle = -45f;
+
+	public float SteeringEffectsSteeringWheelAngle
+	{
+		get => _steeringEffectsSteeringWheelAngle;
+
+		set
+		{
+			value = Math.Clamp( value, -450f, 450f );
+
+			if ( value != _steeringEffectsSteeringWheelAngle )
+			{
+				_steeringEffectsSteeringWheelAngle = value;
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsSteeringWheelAngleString = $"{_steeringEffectsSteeringWheelAngle:F0}{DataContext.Instance.Localization[ "Degrees" ]}";
+		}
+	}
+
+	private string _steeringEffectsSteeringWheelAngleString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsSteeringWheelAngleString
+	{
+		get => _steeringEffectsSteeringWheelAngleString;
+
+		set
+		{
+			if ( value != _steeringEffectsSteeringWheelAngleString )
+			{
+				_steeringEffectsSteeringWheelAngleString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	#endregion
+
 	#region Pedals - Enabled
 
 	private bool _pedalsEnabled = false;

@@ -370,6 +370,49 @@
 
             </TabItem>
 
+            <TabItem x:Name="SteeringEffects_TabItem" Header="{Binding Localization[SteeringEffects]}">
+
+                <StackPanel Margin="10,10,10,20">
+
+                    <GroupBox Header="{Binding Localization[Calibration]}">
+
+                        <UniformGrid Columns="4" Margin="0,10,0,20">
+
+                            <controls:MairaKnob Title="{Binding Localization[SteeringWheelAngle]}" Value="{Binding Settings.SteeringEffectsSteeringWheelAngle, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsSteeringWheelAngleString}" SmallValueChangeStep="0.01" LargeValueChangeStep="1" RotationMultiplier="1" DefaultValue="45"/>
+
+                            <controls:MairaButton Title="{Binding Localization[RunCalibration]}" Click="SteeringEffects_RunCalibration_MairaButton_Click"/>
+                            <controls:MairaButton Title="{Binding Localization[StopCalibration]}" Click="SteeringEffects_StopCalibration_MairaButton_Click"/>
+
+                        </UniformGrid>
+
+                    </GroupBox>
+
+                    <GroupBox Header="{Binding Localization[VirtualJoystick]}">
+
+                        <UniformGrid Columns="4" Margin="0,10,0,20">
+                            
+                            <controls:MairaButton Title="{Binding Localization[SteeringWheelLeft]}" Click="SteeringEffects_SteeringWheelLeft_MairaButton_Click"/>
+                            <controls:MairaButton Title="{Binding Localization[SteeringWheelRight]}" Click="SteeringEffects_SteeringWheelRight_MairaButton_Click"/>
+                            <controls:MairaButton Title="{Binding Localization[SteeringWheelCenter]}" Click="SteeringEffects_SteeringWheelCenter_MairaButton_Click"/>
+                            <controls:MairaButton Title="{Binding Localization[SteeringWheel90Left]}" Click="SteeringEffects_SteeringWheel90Left_MairaButton_Click"/>
+                            
+                            <controls:MairaButton Title="{Binding Localization[MinThrottle]}" Click="SteeringEffects_MinThrottle_MairaButton_Click"/>
+                            <controls:MairaButton Title="{Binding Localization[MaxThrottle]}" Click="SteeringEffects_MaxThrottle_MairaButton_Click"/>
+
+                            <controls:MairaButton Title="{Binding Localization[MinBrake]}" Click="SteeringEffects_MinBrake_MairaButton_Click"/>
+                            <controls:MairaButton Title="{Binding Localization[MaxBrake]}" Click="SteeringEffects_MaxBrake_MairaButton_Click"/>
+
+                            <controls:MairaButton Title="{Binding Localization[ShiftUp]}" Click="SteeringEffects_ShiftUp_MairaButton_Click"/>
+                            <controls:MairaButton Title="{Binding Localization[ShiftDown]}" Click="SteeringEffects_ShiftDown_MairaButton_Click"/>
+
+                        </UniformGrid>
+
+                    </GroupBox>
+
+                </StackPanel>
+
+            </TabItem>
+
             <TabItem x:Name="Pedals_TabItem" Header="{Binding Localization[Pedals]}">
 
                 <StackPanel Margin="10,10,10,20">

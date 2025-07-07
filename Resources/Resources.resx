@@ -451,7 +451,7 @@
   </data>
   <data name="SteeringEffects" xml:space="preserve">
     <value>Steering Effects</value>
-    <comment>Pedal effects list</comment>
+    <comment>Tab item, Pedal effects list</comment>
   </data>
   <data name="WheelLock" xml:space="preserve">
     <value>Wheel Lock</value>
@@ -876,5 +876,9 @@
   <data name="EnableLogitechRPMLights" xml:space="preserve">
     <value>Enable Logitech RPM lights</value>
     <comment>Racing wheel</comment>
+  </data>
+  <data name="Degrees" xml:space="preserve">
+    <value>°</value>
+    <comment>Steering effects</comment>
   </data>
 </root>
