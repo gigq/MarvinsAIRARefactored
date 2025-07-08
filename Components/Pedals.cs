@@ -374,8 +374,8 @@ public class Pedals
 			var difference = app.Simulator.CurrentRpmSpeedRatio - app.Simulator.RPMSpeedRatios[ app.Simulator.Gear ];
 			var differencePct = ( difference / app.Simulator.RPMSpeedRatios[ app.Simulator.Gear ] ) - ( 1f - settings.PedalsWheelLockSensitivity );
 
-			app.Debug.Label_7 = $"WL difference: {difference:F6}";
-			app.Debug.Label_8 = $"WL differencePct: {differencePct * 100f:F2}%";
+			// app.Debug.Label_7 = $"WL difference: {difference:F6}";
+			// app.Debug.Label_8 = $"WL differencePct: {differencePct * 100f:F2}%";
 
 			if ( _testing || ( differencePct > 0f ) )
 			{
@@ -393,14 +393,14 @@ public class Pedals
 
 				amplitude = Math.Clamp( amplitude, 0f, 1f );
 
-				app.Debug.Label_9 = $"WL amplitude: {amplitude:F4}";
+				// app.Debug.Label_9 = $"WL amplitude: {amplitude:F4}";
 
 				amplitude = Misc.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, Misc.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
 
 				return (true, frequency, amplitude);
 			}
 
-			app.Debug.Label_9 = $"WL amplitude: {0f:F4}";
+			// app.Debug.Label_9 = $"WL amplitude: {0f:F4}";
 		}
 
 		return (false, 0f, 0f);
