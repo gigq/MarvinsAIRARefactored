@@ -543,7 +543,7 @@ public class Simulator
 				{
 					RPMSpeedRatios[ Gear ] = Misc.Lerp( RPMSpeedRatios[ Gear ], CurrentRpmSpeedRatio, 0.01f );
 				}
-
+				/*
 				switch ( Gear )
 				{
 					case 1: app.Debug.Label_1 = $"{RPMSpeedRatios[ 1 ]:F8}"; break;
@@ -553,6 +553,7 @@ public class Simulator
 					case 5: app.Debug.Label_5 = $"{RPMSpeedRatios[ 5 ]:F8}"; break;
 					case 6: app.Debug.Label_6 = $"{RPMSpeedRatios[ 6 ]:F8}"; break;
 				}
+				*/
 			}
 		}
 
