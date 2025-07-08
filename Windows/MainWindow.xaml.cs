@@ -673,6 +673,20 @@ public partial class MainWindow : Window
 		app.VirtualJoystick.ShiftDown = true;
 	}
 
+	private void SteeringEffects_ActiveResetSave_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.ActiveResetSave = true;
+	}
+
+	private void SteeringEffects_ActiveResetRun_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.VirtualJoystick.ActiveResetRun = true;
+	}
+
 	private void SteeringEffects_RunCalibration_MairaButton_Click( object sender, RoutedEventArgs e )
 	{
 		var app = App.Instance!;
