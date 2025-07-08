@@ -9,10 +9,12 @@ public class VirtualJoystick
 {
 	public uint JoystickId { get; set; } = 1;
 	public float SteeringWheelAngle { get; set; } = 0f;
-	public float Throttle {  get; set; } = 0f;
-	public float Brake {  get; set; } = 0f;
+	public float Throttle { get; set; } = 0f;
+	public float Brake { get; set; } = 0f;
 	public bool ShiftUp { get; set; } = false;
 	public bool ShiftDown { get; set; } = false;
+	public bool ActiveResetSave { get; set; } = false;
+	public bool ActiveResetRun { get; set; } = false;
 
 	private long _minimumX = 0;
 	private long _maximumX = 0;
@@ -97,11 +99,15 @@ public class VirtualJoystick
 
 			uint shiftUp = ShiftUp ? (uint) 0x00000001 : 0;
 			uint shiftDown = ShiftDown ? (uint) 0x00000002 : 0;
+			uint activeResetSave = ActiveResetSave ? (uint) 0x00000004 : 0;
+			uint activeResetRun = ActiveResetRun ? (uint) 0x00000008 : 0;
 
 			ShiftUp = false;
 			ShiftDown = false;
+			ActiveResetSave = false;
+			ActiveResetRun = false;
 
-			_joystickState.Buttons = shiftUp | shiftDown;
+			_joystickState.Buttons = shiftUp | shiftDown | activeResetSave | activeResetRun;
 
 			if ( !_vJoy.UpdateVJD( JoystickId, ref _joystickState ) )
 			{
