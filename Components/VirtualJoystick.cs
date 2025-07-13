@@ -8,9 +8,10 @@ namespace MarvinsAIRARefactored.Components;
 public class VirtualJoystick
 {
 	public uint JoystickId { get; set; } = 1;
-	public float SteeringWheelAngle { get; set; } = 0f;
-	public float Throttle { get; set; } = 0f;
+	public float Steering { get; set; } = 0f;
+	public float Clutch { get; set; } = 0f;
 	public float Brake { get; set; } = 0f;
+	public float Throttle { get; set; } = 0f;
 	public bool ShiftUp { get; set; } = false;
 	public bool ShiftDown { get; set; } = false;
 	public bool ActiveResetSave { get; set; } = false;
@@ -19,11 +20,14 @@ public class VirtualJoystick
 	private long _minimumX = 0;
 	private long _maximumX = 0;
 
-	private long _minimumY = 0;
-	private long _maximumY = 0;
+	private long _minimumRX = 0;
+	private long _maximumRX = 0;
 
-	private long _minimumZ = 0;
-	private long _maximumZ = 0;
+	private long _minimumRY = 0;
+	private long _maximumRY = 0;
+
+	private long _minimumRZ = 0;
+	private long _maximumRZ = 0;
 
 	private readonly vJoy _vJoy = new();
 
@@ -75,11 +79,14 @@ public class VirtualJoystick
 					_vJoy.GetVJDAxisMin( JoystickId, HID_USAGES.HID_USAGE_X, ref _minimumX );
 					_vJoy.GetVJDAxisMax( JoystickId, HID_USAGES.HID_USAGE_X, ref _maximumX );
 
-					_vJoy.GetVJDAxisMin( JoystickId, HID_USAGES.HID_USAGE_Y, ref _minimumY );
-					_vJoy.GetVJDAxisMax( JoystickId, HID_USAGES.HID_USAGE_Y, ref _maximumY );
+					_vJoy.GetVJDAxisMin( JoystickId, HID_USAGES.HID_USAGE_RX, ref _minimumRY );
+					_vJoy.GetVJDAxisMax( JoystickId, HID_USAGES.HID_USAGE_RX, ref _maximumRY );
 
-					_vJoy.GetVJDAxisMin( JoystickId, HID_USAGES.HID_USAGE_Z, ref _minimumZ );
-					_vJoy.GetVJDAxisMax( JoystickId, HID_USAGES.HID_USAGE_Z, ref _maximumZ );
+					_vJoy.GetVJDAxisMin( JoystickId, HID_USAGES.HID_USAGE_RY, ref _minimumRZ );
+					_vJoy.GetVJDAxisMax( JoystickId, HID_USAGES.HID_USAGE_RY, ref _maximumRZ );
+
+					_vJoy.GetVJDAxisMin( JoystickId, HID_USAGES.HID_USAGE_RZ, ref _minimumRX );
+					_vJoy.GetVJDAxisMax( JoystickId, HID_USAGES.HID_USAGE_RZ, ref _maximumRX );
 
 					_initialized = true;
 				}
@@ -93,14 +100,16 @@ public class VirtualJoystick
 		{
 			_joystickState.bDevice = (byte) JoystickId;
 
-			_joystickState.AxisX = (int) MathF.Round( Misc.Lerp( _minimumX, _maximumX, SteeringWheelAngle * 0.5f + 0.5f ) );
-			_joystickState.AxisY = (int) MathF.Round( Misc.Lerp( _minimumY, _maximumY, Throttle ) );
-			_joystickState.AxisZ = (int) MathF.Round( Misc.Lerp( _minimumZ, _maximumZ, Brake ) );
+			_joystickState.AxisX = (int) MathF.Round( Misc.Lerp( _minimumX, _maximumX, Steering * 0.5f + 0.5f ) );
 
-			uint shiftUp = ShiftUp ? (uint) 0x00000001 : 0;
-			uint shiftDown = ShiftDown ? (uint) 0x00000002 : 0;
-			uint activeResetSave = ActiveResetSave ? (uint) 0x00000004 : 0;
-			uint activeResetRun = ActiveResetRun ? (uint) 0x00000008 : 0;
+			_joystickState.AxisXRot = (int) MathF.Round( Misc.Lerp( _minimumRY, _maximumRY, Clutch ) );
+			_joystickState.AxisYRot = (int) MathF.Round( Misc.Lerp( _minimumRZ, _maximumRZ, Brake ) );
+			_joystickState.AxisZRot = (int) MathF.Round( Misc.Lerp( _minimumRX, _maximumRX, Throttle ) );
+
+			var shiftUp = ShiftUp ? (uint) 0x00000001 : 0;
+			var shiftDown = ShiftDown ? (uint) 0x00000002 : 0;
+			var activeResetSave = ActiveResetSave ? (uint) 0x00000004 : 0;
+			var activeResetRun = ActiveResetRun ? (uint) 0x00000008 : 0;
 
 			ShiftUp = false;
 			ShiftDown = false;

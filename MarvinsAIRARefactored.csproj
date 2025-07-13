@@ -15,6 +15,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Artwork\Misc\centripetal_circuit.png" />
+    <None Remove="Artwork\Misc\race_car.png" />
+    <None Remove="Artwork\Misc\target_position.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
       <WrapperTool>tlbimp</WrapperTool>
       <VersionMinor>0</VersionMinor>
@@ -71,7 +77,10 @@
     <Resource Include="Artwork\Flags\netherlands.png" />
     <Resource Include="Artwork\Flags\russia.png" />
     <Resource Include="Artwork\Flags\spain.png" />
+    <Resource Include="Artwork\Misc\centripetal_circuit.png" />
+    <Resource Include="Artwork\Misc\race_car.png" />
     <Resource Include="Artwork\Misc\simagic_logo.png" />
+    <Resource Include="Artwork\Misc\target_position.png" />
     <Resource Include="Artwork\RoundButton\round_button.png" />
     <Resource Include="Artwork\RoundButton\round_button_disabled.png" />
     <Resource Include="Artwork\RoundButton\round_button_disabled_small.png" />

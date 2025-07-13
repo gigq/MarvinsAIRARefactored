@@ -881,4 +881,8 @@
     <value>°</value>
     <comment>Steering effects</comment>
   </data>
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
+    <comment>Sounds</comment>
+  </data>
 </root>

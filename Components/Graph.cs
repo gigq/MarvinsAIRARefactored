@@ -142,21 +142,24 @@ public class Graph : GraphBase
 
 	public void Tick( App app )
 	{
-		WritePixels();
-
-		_updateCounter--;
-
-		if ( _updateCounter == 0 )
+		if ( app.MainWindow.GraphTabItemIsVisible )
 		{
-			_updateCounter = UpdateInterval;
+			WritePixels();
 
-			var statistics = _statisticsArray[ (int) DataContext.DataContext.Instance.Settings.GraphStatisticsLayerIndex ];
+			_updateCounter--;
 
-			app.MainWindow.Graph_Minimum_Label.Content = $"{statistics.MinimumValue:F2}";
-			app.MainWindow.Graph_Maximum_Label.Content = $"{statistics.MaximumValue:F2}";
-			app.MainWindow.Graph_Average_Label.Content = $"{statistics.AverageValue:F2}";
-			app.MainWindow.Graph_Variance_Label.Content = $"{statistics.Variance:F2}";
-			app.MainWindow.Graph_StandardDeviation_Label.Content = $"{statistics.StandardDeviation:F2}";
+			if ( _updateCounter == 0 )
+			{
+				_updateCounter = UpdateInterval;
+
+				var statistics = _statisticsArray[ (int) DataContext.DataContext.Instance.Settings.GraphStatisticsLayerIndex ];
+
+				app.MainWindow.Graph_Minimum_Label.Content = $"{statistics.MinimumValue:F2}";
+				app.MainWindow.Graph_Maximum_Label.Content = $"{statistics.MaximumValue:F2}";
+				app.MainWindow.Graph_Average_Label.Content = $"{statistics.AverageValue:F2}";
+				app.MainWindow.Graph_Variance_Label.Content = $"{statistics.Variance:F2}";
+				app.MainWindow.Graph_StandardDeviation_Label.Content = $"{statistics.StandardDeviation:F2}";
+			}
 		}
 	}
 
