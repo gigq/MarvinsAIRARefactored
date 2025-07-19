@@ -15,9 +15,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Artwork\Misc\centripetal_circuit.png" />
-    <None Remove="Artwork\Misc\race_car.png" />
-    <None Remove="Artwork\Misc\target_position.png" />
+    <None Remove="Artwork\ButtonIcons\button_icon_dot.png" />
+    <None Remove="Artwork\Misc\maira_logo_rotated.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +33,9 @@
 
   <ItemGroup>
     <EmbeddedResource Include="AdminBoxx\code.py" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_dot.png" />
+    <Resource Include="Artwork\Misc\maira_logo_rotated.png" />
+    <Resource Include="Fonts\FiraCode-VariableFont_wght.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,31 +45,34 @@
     <Resource Include="Artwork\Backgrounds\background_buttonmapping.png" />
     <Resource Include="Artwork\Backgrounds\background_pedals.png" />
     <Resource Include="Artwork\Backgrounds\background_racingwheel.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_binoculars.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_cancel.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_down_small.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_left_small.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_magic.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_minus_small.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_plus.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_plus_small.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_record_off.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_record_on.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_reset.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_right_small.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_target.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_thumbs_up.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_trash.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_up_small.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_vibrate.png" />
-    <Resource Include="Artwork\ButtonIcons\icon_zero.png" />
-    <Resource Include="Artwork\ButtonIcons\power_led_black.png" />
-    <Resource Include="Artwork\ButtonIcons\power_led_green.png" />
-    <Resource Include="Artwork\ButtonIcons\power_led_red.png" />
-    <Resource Include="Artwork\ButtonIcons\power_led_yellow.png" />
-    <Resource Include="Artwork\ComboBox\round_button_down_arrow.png" />
-    <Resource Include="Artwork\Dial\dial.png" />
-    <Resource Include="Artwork\Dial\dial_marker.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_binoculars.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_cancel.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_down.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_knob.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_left.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_magic.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_minus.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_plus.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_record_off.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_record_on.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_reset.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_right.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_target.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_thumbs_up.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_trash.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_up.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_vibrate.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_zero.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_power_led_black.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_power_led_green.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_power_led_red.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_power_led_yellow.png" />
+    <Resource Include="Artwork\Button\button_border_default.png" />
+    <Resource Include="Artwork\Button\button_border_mapped.png" />
+    <Resource Include="Artwork\Button\button_face_default.png" />
+    <Resource Include="Artwork\Button\button_face_disabled.png" />
+    <Resource Include="Artwork\Button\button_face_hover.png" />
+    <Resource Include="Artwork\Button\button_face_pressed.png" />
     <Resource Include="Artwork\Flags\brazil.png" />
     <Resource Include="Artwork\Flags\canada.png" />
     <Resource Include="Artwork\Flags\czech-republic.png" />
@@ -81,17 +86,8 @@
     <Resource Include="Artwork\Misc\race_car.png" />
     <Resource Include="Artwork\Misc\simagic_logo.png" />
     <Resource Include="Artwork\Misc\target_position.png" />
-    <Resource Include="Artwork\RoundButton\round_button.png" />
-    <Resource Include="Artwork\RoundButton\round_button_disabled.png" />
-    <Resource Include="Artwork\RoundButton\round_button_disabled_small.png" />
-    <Resource Include="Artwork\RoundButton\round_button_mapped.png" />
-    <Resource Include="Artwork\RoundButton\round_button_mapped_small.png" />
-    <Resource Include="Artwork\RoundButton\round_button_pressed.png" />
-    <Resource Include="Artwork\RoundButton\round_button_pressed_small.png" />
-    <Resource Include="Artwork\RoundButton\round_button_small.png" />
     <Resource Include="Artwork\Switch\switch_off.png" />
     <Resource Include="Artwork\Switch\switch_on.png" />
-    <Resource Include="Fonts\digital-7 (mono).ttf" />
   </ItemGroup>
 
   <ItemGroup>

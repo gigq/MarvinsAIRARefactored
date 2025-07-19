@@ -37,7 +37,7 @@ public partial class MairaKnob : UserControl
 	{
 		InitializeComponent();
 
-		KnobImage.RenderTransform = _knobRotation;
+		ButtonIcon_Image.RenderTransform = _knobRotation;
 
 		_resetDispatcherTimer.Tick += ResetDispatcherTimer_Tick;
 
@@ -173,6 +173,9 @@ public partial class MairaKnob : UserControl
 		{
 			_isDragging = true;
 
+			ButtonFace_Default_Image.Visibility = Visibility.Hidden;
+			ButtonFace_Pressed_Image.Visibility = Visibility.Visible;
+
 			User32.GetCursorPos( out _draggingCenter );
 
 			_ = User32.ShowCursor( false );
@@ -275,6 +278,9 @@ public partial class MairaKnob : UserControl
 	{
 		_isDragging = false;
 
+		ButtonFace_Default_Image.Visibility = Visibility.Visible;
+		ButtonFace_Pressed_Image.Visibility = Visibility.Hidden;
+
 		_ = User32.ShowCursor( true );
 
 		Mouse.Capture( null );
@@ -300,8 +306,8 @@ public partial class MairaKnob : UserControl
 
 		if ( ShowCurve )
 		{
-			var imageWidth = (int) CurveImage.Width;
-			var imageHeight = (int) CurveImage.Height;
+			var imageWidth = (int) Curve_Image.Width;
+			var imageHeight = (int) Curve_Image.Height;
 
 			var power = Misc.CurveToPower( Value );
 
@@ -354,12 +360,12 @@ public partial class MairaKnob : UserControl
 
 			renderTargetBitmap.Render( dv );
 
-			CurveImage.Source = renderTargetBitmap;
-			CurveImage.Visibility = Visibility.Visible;
+			Curve_Image.Source = renderTargetBitmap;
+			Curve_Image.Visibility = Visibility.Visible;
 		}
 		else
 		{
-			CurveImage.Visibility = Visibility.Collapsed;
+			Curve_Image.Visibility = Visibility.Collapsed;
 		}
 	}
 

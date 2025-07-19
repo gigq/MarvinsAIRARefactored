@@ -1,7 +1,6 @@
 ﻿
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.DataContext;
@@ -13,8 +12,15 @@ public class MairaMappableButton : MairaButton
 {
 	public MairaMappableButton()
 	{
+		Loaded += MairaMappableButton_Loaded;
+
 		Label.PreviewMouseRightButtonDown += MappableMairaButton_Label_PreviewMouseRightButtonDown;
 		Button.PreviewMouseRightButtonDown += MappableMairaButton_Button_PreviewMouseRightButtonDown;
+	}
+
+	private void MairaMappableButton_Loaded( object sender, RoutedEventArgs e )
+	{
+		IsMapped = HasAnyMappedButton();
 	}
 
 	public static readonly DependencyProperty ContextSwitchesProperty = DependencyProperty.Register( nameof( ContextSwitches ), typeof( ContextSwitches ), typeof( MairaMappableButton ), new PropertyMetadata( null ) );
@@ -69,7 +75,7 @@ public class MairaMappableButton : MairaButton
 
 			updateButtonMappingsWindow.ShowDialog();
 
-			UpdateImageSources();
+			IsMapped = HasAnyMappedButton();
 		}
 	}
 
@@ -87,25 +93,5 @@ public class MairaMappableButton : MairaButton
 		}
 
 		return false;
-	}
-
-	protected override void UpdateImageSources()
-	{
-		base.UpdateImageSources();
-
-		if ( Small )
-		{
-			if ( HasAnyMappedButton() )
-			{
-				Normal_Image.Source = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/RoundButton/round_button_mapped_small.png" ) as ImageSource;
-			}
-		}
-		else
-		{
-			if ( HasAnyMappedButton() )
-			{
-				Normal_Image.Source = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/RoundButton/round_button_mapped.png" ) as ImageSource;
-			}
-		}
 	}
 }

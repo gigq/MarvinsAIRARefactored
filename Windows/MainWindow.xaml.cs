@@ -1,22 +1,20 @@
 ﻿
+using MarvinsAIRARefactored.Classes;
+using MarvinsAIRARefactored.Components;
+using MarvinsAIRARefactored.PInvoke;
+using Simagic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-
 using Application = System.Windows.Application;
 using Brushes = System.Windows.Media.Brushes;
 using ScrollEventArgs = System.Windows.Controls.Primitives.ScrollEventArgs;
 using TabControl = System.Windows.Controls.TabControl;
-
-using Simagic;
-
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Components;
-using MarvinsAIRARefactored.PInvoke;
 
 namespace MarvinsAIRARefactored.Windows;
 
@@ -239,13 +237,13 @@ public partial class MainWindow : Window
 
 			if ( !MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelEnableForceFeedback )
 			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/ButtonIcons/power_led_red.png" ) as ImageSource;
+				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_power_led_red.png" ) as ImageSource;
 
 				RacingWheel_Power_MairaMappableButton.Blink = true;
 			}
 			else if ( app.RacingWheel.SuspendForceFeedback || !app.DirectInput.ForceFeedbackInitialized )
 			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/ButtonIcons/power_led_yellow.png" ) as ImageSource;
+				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_power_led_yellow.png" ) as ImageSource;
 
 				if ( app.Simulator.IsConnected )
 				{
@@ -254,7 +252,7 @@ public partial class MainWindow : Window
 			}
 			else
 			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/ButtonIcons/power_led_green.png" ) as ImageSource;
+				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_power_led_green.png" ) as ImageSource;
 			}
 
 			if ( imageSource != null )
@@ -547,6 +545,22 @@ public partial class MainWindow : Window
 			};
 
 			Process.Start( processStartInfo );
+		}
+	}
+
+	private void Window_Loaded( object sender, RoutedEventArgs e )
+	{
+		var tabPanel = Misc.FindTabPanel( TabControl );
+
+		if ( tabPanel != null )
+		{
+			Maira_Logo_Image.Width = tabPanel.ActualWidth - 10;
+			Maira_Logo_Image.Visibility = Visibility.Visible;
+
+			tabPanel.SizeChanged += ( s, args ) =>
+			{
+				Maira_Logo_Image.Width = tabPanel.ActualWidth - 10;
+			};
 		}
 	}
 

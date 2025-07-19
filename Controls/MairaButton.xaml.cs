@@ -17,11 +17,6 @@ public partial class MairaButton : UserControl
 		InitializeComponent();
 	}
 
-	private void MairaButton_Loaded( object sender, RoutedEventArgs e )
-	{
-		UpdateImageSources();
-	}
-
 	public static readonly DependencyProperty TitleProperty = DependencyProperty.Register( nameof( Title ), typeof( string ), typeof( MairaButton ), new PropertyMetadata( "" ) );
 
 	public string Title
@@ -44,6 +39,34 @@ public partial class MairaButton : UserControl
 	{
 		get => (ImageSource) GetValue( ButtonIconProperty );
 		set => SetValue( ButtonIconProperty, value );
+	}
+
+	public static readonly DependencyProperty IsMappedProperty = DependencyProperty.Register( nameof( IsMapped ), typeof( bool ), typeof( MairaButton ), new PropertyMetadata( false, OnIsMappedChanged ) );
+
+	public bool IsMapped
+	{
+		get => (bool) GetValue( IsMappedProperty );
+		set => SetValue( IsMappedProperty, value );
+	}
+
+	private static void OnIsMappedChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
+	{
+		if ( d is MairaButton mairaButton )
+		{
+			if ( !mairaButton.Disabled )
+			{
+				if ( mairaButton.IsMapped )
+				{
+					mairaButton.ButtonBorder_Default_Image.Visibility = Visibility.Hidden;
+					mairaButton.ButtonBorder_Mapped_Image.Visibility = Visibility.Visible;
+				}
+				else
+				{
+					mairaButton.ButtonBorder_Default_Image.Visibility = Visibility.Visible;
+					mairaButton.ButtonBorder_Mapped_Image.Visibility = Visibility.Hidden;
+				}
+			}
+		}
 	}
 
 	public static readonly DependencyProperty BlinkProperty = DependencyProperty.Register( nameof( Blink ), typeof( bool ), typeof( MairaButton ), new PropertyMetadata( false, OnBlinkChanged ) );
@@ -74,7 +97,58 @@ public partial class MairaButton : UserControl
 	{
 		if ( d is MairaButton mairaButton )
 		{
-			mairaButton.UpdateImageSources();
+			if ( mairaButton.Small )
+			{
+				mairaButton.ButtonBorder_Default_Image.Width = 24;
+				mairaButton.ButtonBorder_Default_Image.Height = 24;
+
+				mairaButton.ButtonBorder_Mapped_Image.Width = 24;
+				mairaButton.ButtonBorder_Mapped_Image.Height = 24;
+
+				mairaButton.ButtonFace_Default_Image.Width = 24;
+				mairaButton.ButtonFace_Default_Image.Height = 24;
+
+				mairaButton.ButtonFace_Disabled_Image.Width = 24;
+				mairaButton.ButtonFace_Disabled_Image.Height = 24;
+
+				mairaButton.ButtonFace_Hover_Image.Width = 24;
+				mairaButton.ButtonFace_Hover_Image.Height = 24;
+
+				mairaButton.ButtonFace_Pressed_Image.Width = 24;
+				mairaButton.ButtonFace_Pressed_Image.Height = 24;
+
+				mairaButton.BehindIcon_Image.Width = 24;
+				mairaButton.BehindIcon_Image.Height = 24;
+
+				mairaButton.ButtonIcon_Image.Width = 24;
+				mairaButton.ButtonIcon_Image.Height = 24;
+			}
+			else
+			{
+				mairaButton.ButtonBorder_Default_Image.Width = 48;
+				mairaButton.ButtonBorder_Default_Image.Height = 48;
+
+				mairaButton.ButtonBorder_Mapped_Image.Width = 48;
+				mairaButton.ButtonBorder_Mapped_Image.Height = 48;
+
+				mairaButton.ButtonFace_Default_Image.Width = 48;
+				mairaButton.ButtonFace_Default_Image.Height = 48;
+
+				mairaButton.ButtonFace_Disabled_Image.Width = 48;
+				mairaButton.ButtonFace_Disabled_Image.Height = 48;
+
+				mairaButton.ButtonFace_Hover_Image.Width = 48;
+				mairaButton.ButtonFace_Hover_Image.Height = 48;
+
+				mairaButton.ButtonFace_Pressed_Image.Width = 48;
+				mairaButton.ButtonFace_Pressed_Image.Height = 48;
+
+				mairaButton.BehindIcon_Image.Width = 48;
+				mairaButton.BehindIcon_Image.Height = 48;
+
+				mairaButton.ButtonIcon_Image.Width = 48;
+				mairaButton.ButtonIcon_Image.Height = 48;
+			}
 		}
 	}
 
@@ -90,7 +164,34 @@ public partial class MairaButton : UserControl
 	{
 		if ( d is MairaButton mairaButton )
 		{
-			mairaButton.Disabled_Image.Visibility = mairaButton.Disabled ? Visibility.Visible : Visibility.Hidden;
+			if ( mairaButton.Disabled )
+			{
+				mairaButton.ButtonBorder_Default_Image.Visibility = Visibility.Visible;
+				mairaButton.ButtonBorder_Mapped_Image.Visibility = Visibility.Hidden;
+
+				mairaButton.ButtonFace_Default_Image.Visibility = Visibility.Hidden;
+				mairaButton.ButtonFace_Disabled_Image.Visibility = Visibility.Visible;
+				mairaButton.ButtonFace_Hover_Image.Visibility = Visibility.Hidden;
+				mairaButton.ButtonFace_Pressed_Image.Visibility = Visibility.Hidden;
+			}
+			else
+			{
+				if ( mairaButton.IsMapped )
+				{
+					mairaButton.ButtonBorder_Default_Image.Visibility = Visibility.Hidden;
+					mairaButton.ButtonBorder_Mapped_Image.Visibility = Visibility.Visible;
+				}
+				else
+				{
+					mairaButton.ButtonBorder_Default_Image.Visibility = Visibility.Visible;
+					mairaButton.ButtonBorder_Mapped_Image.Visibility = Visibility.Hidden;
+				}
+
+				mairaButton.ButtonFace_Default_Image.Visibility = Visibility.Visible;
+				mairaButton.ButtonFace_Disabled_Image.Visibility = Visibility.Hidden;
+				mairaButton.ButtonFace_Hover_Image.Visibility = Visibility.Hidden;
+				mairaButton.ButtonFace_Pressed_Image.Visibility = Visibility.Hidden;
+			}
 		}
 	}
 
@@ -134,34 +235,6 @@ public partial class MairaButton : UserControl
 		_blink = !_blink;
 	}
 
-	protected virtual void UpdateImageSources()
-	{
-		if ( Small )
-		{
-			Normal_Image.Source = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/RoundButton/round_button_small.png" ) as ImageSource;
-			Pressed_Image.Source = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/RoundButton/round_button_pressed_small.png" ) as ImageSource;
-			Disabled_Image.Source = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/RoundButton/round_button_disabled_small.png" ) as ImageSource;
-
-			Normal_Image.Height = 24;
-			Pressed_Image.Height = 24;
-			Disabled_Image.Height = 24;
-
-			ButtonIcon_Image.Height = 24;
-		}
-		else
-		{
-			Normal_Image.Source = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/RoundButton/round_button.png" ) as ImageSource;
-			Pressed_Image.Source = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/RoundButton/round_button_pressed.png" ) as ImageSource;
-			Disabled_Image.Source = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/RoundButton/round_button_disabled.png" ) as ImageSource;
-
-			Normal_Image.Height = 48;
-			Pressed_Image.Height = 48;
-			Disabled_Image.Height = 48;
-
-			ButtonIcon_Image.Height = 48;
-		}
-	}
-
 	public event RoutedEventHandler? Click;
 
 	private void Button_Click( object sender, RoutedEventArgs e )
@@ -172,13 +245,29 @@ public partial class MairaButton : UserControl
 		}
 	}
 
+	private void Button_MouseEnter( object sender, RoutedEventArgs e )
+	{
+		if ( !Disabled )
+		{
+			ButtonFace_Hover_Image.Visibility = Visibility.Visible;
+		}
+	}
+
+	private void Button_MouseLeave( object sender, RoutedEventArgs e )
+	{
+		ButtonFace_Hover_Image.Visibility = Visibility.Hidden;
+	}
+
 	private void Button_PreviewMouseDown( object sender, RoutedEventArgs e )
 	{
-		Pressed_Image.Visibility = Visibility.Visible;
+		if ( !Disabled )
+		{
+			ButtonFace_Pressed_Image.Visibility = Visibility.Visible;
+		}
 	}
 
 	private void Button_PreviewMouseUp( object sender, RoutedEventArgs e )
 	{
-		Pressed_Image.Visibility = Visibility.Hidden;
+		ButtonFace_Pressed_Image.Visibility = Visibility.Hidden;
 	}
 }

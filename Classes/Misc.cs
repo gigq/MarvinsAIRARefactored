@@ -8,10 +8,10 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 using IWshRuntimeLibrary;
-
 using PInvoke;
 
 namespace MarvinsAIRARefactored.Classes;
@@ -237,5 +237,27 @@ public class Misc
 
 			ApplyToTaggedElements( child, tagName, action );
 		}
+	}
+
+	public static TabPanel? FindTabPanel( DependencyObject parent )
+	{
+		for ( var i = 0; i < VisualTreeHelper.GetChildrenCount( parent ); i++ )
+		{
+			var child = VisualTreeHelper.GetChild( parent, i );
+
+			if ( child is TabPanel panel )
+			{
+				return panel;
+			}
+
+			var result = FindTabPanel( child );
+
+			if ( result != null )
+			{
+				return result;
+			}
+		}
+
+		return null;
 	}
 }

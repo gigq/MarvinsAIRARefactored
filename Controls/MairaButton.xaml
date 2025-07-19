@@ -4,17 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
-             mc:Ignorable="d"
-             Loaded="MairaButton_Loaded">
-    
+             mc:Ignorable="d">
+
     <Grid>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" x:Name="Label" Content="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center">
+        <Label Grid.Row="0" x:Name="Label" Margin="0,0,0,10" Content="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center">
             <Label.Style>
                 <Style TargetType="Label">
                     <Setter Property="Visibility" Value="Visible"/>
@@ -28,16 +27,50 @@
             </Label.Style>
         </Label>
 
-        <Button x:Name="Button" Grid.Row="1" Click="Button_Click" PreviewMouseDown="Button_PreviewMouseDown" PreviewMouseUp="Button_PreviewMouseUp">
+        <Button Grid.Row="1" x:Name="Button" Focusable="False" IsTabStop="False" Background="Transparent" BorderThickness="0" Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" PreviewMouseDown="Button_PreviewMouseDown" PreviewMouseUp="Button_PreviewMouseUp">
+
+            <Button.Style>
+
+                <Style TargetType="Button">
+                    
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <ContentPresenter />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Disabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                            <Setter Property="Cursor" Value="Arrow"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                    
+                </Style>
+                
+            </Button.Style>
+
             <Grid>
-                <Image x:Name="Normal_Image"/>
-                <Image x:Name="Pressed_Image" Visibility="Hidden"/>
-                <Image x:Name="Disabled_Image" Visibility="Hidden"/>
-                <Image x:Name="BehindIcon_Image" Source="{Binding BehindIcon, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                <Image x:Name="ButtonIcon_Image" Source="{Binding ButtonIcon, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+
+                <Image x:Name="ButtonFace_Default_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_face_default.png" Width="48" Height="48"/>
+                <Image x:Name="ButtonFace_Disabled_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_face_disabled.png" Width="48" Height="48" Visibility="Hidden"/>
+                <Image x:Name="ButtonFace_Hover_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_face_hover.png" Width="48" Height="48" Visibility="Hidden"/>
+                <Image x:Name="ButtonFace_Pressed_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_face_pressed.png" Width="48" Height="48" Visibility="Hidden"/>
+
+                <Image x:Name="ButtonBorder_Default_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_border_default.png" Width="48" Height="48"/>
+                <Image x:Name="ButtonBorder_Mapped_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_border_mapped.png" Width="48" Height="48" Visibility="Hidden"/>
+
+                <Image x:Name="BehindIcon_Image" Source="{Binding BehindIcon, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="48" Height="48" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <Image x:Name="ButtonIcon_Image" Source="{Binding ButtonIcon, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="48" Height="48" RenderOptions.BitmapScalingMode="HighQuality"/>
+                
             </Grid>
+
         </Button>
-        
+
     </Grid>
-    
+
 </UserControl>

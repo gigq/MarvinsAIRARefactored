@@ -13,14 +13,55 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0" x:Name="Button" Click="Button_Click">
+        <Button Grid.Column="0" x:Name="Button" Focusable="False" IsTabStop="False" Background="Transparent" BorderThickness="0" Click="Button_Click">
+
+            <Button.Style>
+
+                <Style TargetType="Button">
+
+                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <ContentPresenter />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Disabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                            <Setter Property="Cursor" Value="Arrow"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+
+                </Style>
+
+            </Button.Style>
+
             <Grid>
-                <Image x:Name="OffImage" Source="/MarvinsAIRARefactored;component/Artwork/Switch/switch_off.png" Height="48" Visibility="Visible"/>
-                <Image x:Name="OnImage" Source="/MarvinsAIRARefactored;component/Artwork/Switch/switch_on.png" Height="48" Visibility="Hidden"/>
+                
+                <Image x:Name="OffImage" Source="/MarvinsAIRARefactored;component/Artwork/Switch/switch_off.png" Width="48" Height="24" Visibility="Visible"/>
+                <Image x:Name="OnImage" Source="/MarvinsAIRARefactored;component/Artwork/Switch/switch_on.png" Width="48" Height="24" Visibility="Hidden"/>
+                
             </Grid>
+            
         </Button>
 
-        <TextBlock Grid.Column="1" x:Name="TextBlock" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" VerticalAlignment="Center" Foreground="#FFFFFFFF" FontSize="17" Margin="10,0,0,0" Cursor="Hand" TextWrapping="Wrap" MouseDown="Button_Click" PreviewMouseRightButtonDown="TextBlock_PreviewMouseRightButtonDown"/>
+        <TextBlock Grid.Column="1" x:Name="TextBlock" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" VerticalAlignment="Center" Foreground="#FFFFFFFF" FontSize="17" Margin="10,0,0,0" Cursor="Hand" TextWrapping="Wrap" MouseDown="Button_Click" PreviewMouseRightButtonDown="TextBlock_PreviewMouseRightButtonDown">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
 
     </Grid>
 
