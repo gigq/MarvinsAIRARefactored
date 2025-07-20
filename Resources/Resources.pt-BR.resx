@@ -59,10 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root"
-    xmlns=""
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -558,18 +555,6 @@
   </data>
   <data name="Audio" xml:space="preserve">
     <value>Audio</value>
-    <comment>AdminBoxx</comment>
-  </data>
-  <data name="BlackFlagR" xml:space="preserve">
-    <value>Bandeira Preta R</value>
-    <comment>AdminBoxx</comment>
-  </data>
-  <data name="BlackFlagG" xml:space="preserve">
-    <value>Bandeira Preta G</value>
-    <comment>AdminBoxx</comment>
-  </data>
-  <data name="BlackFlagB" xml:space="preserve">
-    <value>Bandeira Preta B</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="DeltaLimiterBias" xml:space="preserve">

@@ -1201,42 +1201,6 @@ public partial class App : Application
 				settings.AdminBoxxBrightness -= 0.01f;
 			}
 
-			// adminboxx black flag r
-
-			if ( CheckMappedButtons( settings.AdminBoxxBlackFlagGPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
-			{
-				settings.AdminBoxxBlackFlagR += 0.01f;
-			}
-
-			if ( CheckMappedButtons( settings.AdminBoxxBlackFlagRMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
-			{
-				settings.AdminBoxxBlackFlagR -= 0.01f;
-			}
-
-			// adminboxx black flag g
-
-			if ( CheckMappedButtons( settings.AdminBoxxBlackFlagGPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
-			{
-				settings.AdminBoxxBlackFlagG += 0.01f;
-			}
-
-			if ( CheckMappedButtons( settings.AdminBoxxBlackFlagGMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
-			{
-				settings.AdminBoxxBlackFlagG -= 0.01f;
-			}
-
-			// adminboxx black flag b
-
-			if ( CheckMappedButtons( settings.AdminBoxxBlackFlagGPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
-			{
-				settings.AdminBoxxBlackFlagB += 0.01f;
-			}
-
-			if ( CheckMappedButtons( settings.AdminBoxxBlackFlagBMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
-			{
-				settings.AdminBoxxBlackFlagB -= 0.01f;
-			}
-
 			// adminboxx volume knob
 
 			if ( CheckMappedButtons( settings.AdminBoxxVolumePlusButtonMappings, deviceInstanceGuid, buttonNumber ) )

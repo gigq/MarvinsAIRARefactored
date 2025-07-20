@@ -826,13 +826,6 @@ public partial class MainWindow : Window
 		app.AdminBoxx.ResendAllLEDs();
 	}
 
-	private void AdminBoxx_BlackFlag_ValueChanged( float newValue )
-	{
-		var app = App.Instance!;
-
-		app.AdminBoxx.WaveBlackFlag();
-	}
-
 	private void AdminBoxx_Volume_ValueChanged( float newValue )
 	{
 		var app = App.Instance!;

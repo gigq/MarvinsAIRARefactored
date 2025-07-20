@@ -557,18 +557,6 @@
     <value>Audio</value>
     <comment>AdminBoxx</comment>
   </data>
-  <data name="BlackFlagR" xml:space="preserve">
-    <value>Drapeau noir R</value>
-    <comment>AdminBoxx</comment>
-  </data>
-  <data name="BlackFlagG" xml:space="preserve">
-    <value>Drapeau noir G</value>
-    <comment>AdminBoxx</comment>
-  </data>
-  <data name="BlackFlagB" xml:space="preserve">
-    <value>Drapeau noir  B</value>
-    <comment>AdminBoxx</comment>
-  </data>
   <data name="DeltaLimiterBias" xml:space="preserve">
     <value>Delta Limiter Bias</value>
     <comment>Racing wheel</comment>

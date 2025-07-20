@@ -19,6 +19,7 @@ public partial class AdminBoxx
 	public static Color Yellow { get; } = new( 1f, 1f, 0f );
 	public static Color Green { get; } = new( 0f, 1f, 0f );
 	public static Color White { get; } = new( 1f, 1f, 1f );
+	public static Color Gray { get; } = new( 0.5f, 0.5f, 0.5f );
 	public static Color Blue { get; } = new( 0f, 0f, 1f );
 	public static Color Red { get; } = new( 1f, 0f, 0f );
 	public static Color Cyan { get; } = new( 0f, 1f, 1f );
@@ -450,7 +451,7 @@ public partial class AdminBoxx
 			{
 				_shownBlackFlag = true;
 
-				WaveBlackFlag();
+				WaveFlag( Gray, 3 );
 			}
 		}
 		else
@@ -485,13 +486,6 @@ public partial class AdminBoxx
 		{
 			_shownRedFlag = false;
 		}
-	}
-
-	public void WaveBlackFlag()
-	{
-		var color = new Color( DataContext.DataContext.Instance.Settings.AdminBoxxBlackFlagR, DataContext.DataContext.Instance.Settings.AdminBoxxBlackFlagG, DataContext.DataContext.Instance.Settings.AdminBoxxBlackFlagB );
-
-		WaveFlag( color, 3 );
 	}
 
 	private void WaveFlag( Color color, int numberOfTimes, bool checkered = false )
@@ -1519,8 +1513,7 @@ public partial class AdminBoxx
 						break;
 
 					case 5:
-						var color = new Color( DataContext.DataContext.Instance.Settings.AdminBoxxBlackFlagR, DataContext.DataContext.Instance.Settings.AdminBoxxBlackFlagG, DataContext.DataContext.Instance.Settings.AdminBoxxBlackFlagB );
-						WaveFlag( color, 2 );
+						WaveFlag( Gray, 2 );
 						break;
 
 					case 6:

@@ -557,18 +557,6 @@
     <value>Geluid</value>
     <comment>AdminBoxx</comment>
   </data>
-  <data name="BlackFlagR" xml:space="preserve">
-    <value>Zwarte vlag R</value>
-    <comment>AdminBoxx</comment>
-  </data>
-  <data name="BlackFlagG" xml:space="preserve">
-    <value>Zwarte vlag G</value>
-    <comment>AdminBoxx</comment>
-  </data>
-  <data name="BlackFlagB" xml:space="preserve">
-    <value>Zwarte vlag B</value>
-    <comment>AdminBoxx</comment>
-  </data>
   <data name="DeltaLimiterBias" xml:space="preserve">
     <value>Delta begrenzer balans</value>
     <comment>Racing wheel</comment>
