@@ -84,6 +84,20 @@ public class RacingWheel
 		app.Logger.WriteLine( "[RacingWheel] <<< Initialize" );
 	}
 
+	public static void SendChatMessage( string key, string? value = null )
+	{
+		var app = App.Instance!;
+
+		if ( DataContext.DataContext.Instance.Settings.RacingWheelSendChatMessages && ( app.Simulator.UserName != string.Empty ) )
+		{
+			var playerName = app.Simulator.UserName;
+
+			playerName = playerName.Replace( " ", "." );
+
+			app.ChatQueue.SendMessage( $"/{playerName} [MAIRA] {DataContext.DataContext.Instance.Localization[ key ]}", value );
+		}
+	}
+
 	public static void SetMairaComboBoxItemsSource( MairaComboBox mairaComboBox )
 	{
 		var app = App.Instance!;
@@ -506,6 +520,8 @@ public class RacingWheel
 				_crashProtectionTimerMS = settings.RacingWheelCrashProtectionDuration * 1000f + CrashProtectionRecoveryTime;
 
 				ActivateCrashProtection = false;
+
+				SendChatMessage( DataContext.DataContext.Instance.Localization[ "CrashProtectionActivated" ] );
 			}
 
 			var crashProtectionScale = 1f;
@@ -524,6 +540,8 @@ public class RacingWheel
 				_curbProtectionTimerMS = settings.RacingWheelCurbProtectionDuration * 1000f;
 
 				ActivateCurbProtection = false;
+
+				SendChatMessage( DataContext.DataContext.Instance.Localization[ "CurbProtectionActivated" ] );
 			}
 
 			var curbProtectionLerpFactor = 0f;
