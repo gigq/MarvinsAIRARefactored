@@ -112,19 +112,25 @@ public partial class App : Application
 			}
 
 			Logger.Initialize();
-			CloudService.Initialize();
 			SettingsFile.Initialize();
+			AdminBoxx.Initialize();
+			AudioManager.Initialize();
+			Simulator.Initialize();
+			DirectInput.Initialize();
+
+#if !ADMINBOXX
+
+			CloudService.Initialize();
 			Graph.Initialize();
 			Pedals.Initialize();
-			AdminBoxx.Initialize();
 			RacingWheel.Initialize();
-			AudioManager.Initialize();
 			Sounds.Initialize();
-			DirectInput.Initialize();
 			LFE.Initialize();
 			MultimediaTimer.Initialize();
-			Simulator.Initialize();
 			RecordingManager.Initialize();
+			VirtualJoystick.Initialize();
+
+#endif
 
 			DirectInput.OnInput += OnInput;
 
@@ -231,7 +237,7 @@ public partial class App : Application
 
 				RacingWheel.SendChatMessage( "Reset" );
 			}
-			
+
 			// racing wheel strength knob
 
 			if ( CheckMappedButtons( settings.RacingWheelStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )

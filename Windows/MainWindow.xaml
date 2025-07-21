@@ -66,7 +66,7 @@
 
         </Border>
 
-        <Image Grid.Row="1" x:Name="Maira_Logo_Image" Source="/MarvinsAIRARefactored;component/Artwork/Misc/maira_logo_rotated.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10" RenderOptions.BitmapScalingMode="HighQuality" Visibility="Collapsed"/>
+        <Image Grid.Row="1" x:Name="Logo_Image" Source="/MarvinsAIRARefactored;component/Artwork/Misc/maira_logo_rotated.png" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10" RenderOptions.BitmapScalingMode="HighQuality" Visibility="Collapsed"/>
 
         <TabControl Grid.Row="1" x:Name="TabControl" TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged">
 
@@ -1035,6 +1035,8 @@
 
                 <StackPanel Background="#FF333333">
 
+                    <Image Source="/MarvinsAIRARefactored;component/Artwork/Misc/adminboxx_logo.png" Height="72" Margin="0,20,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+
                     <StackPanel Margin="0,10,0,10">
 
                         <GroupBox Header="{Binding Localization[Connection]}">
@@ -1092,19 +1094,23 @@
 
                         <GroupBox Header="{Binding Localization[Audio]}">
 
-                            <Grid Margin="0,10,0,0">
+                            <StackPanel>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                                <Grid>
 
-                                <controls:MairaKnob Grid.Column="0" Title="{Binding Localization[Volume]}" Value="{Binding Settings.AdminBoxxVolume, Mode=TwoWay}" ValueString="{Binding Settings.AdminBoxxVolumeString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.05" RotationMultiplier="10" PlusButtonMappings="{Binding Settings.AdminBoxxVolumePlusButtonMappings}" MinusButtonMappings="{Binding Settings.AdminBoxxVolumeMinusButtonMappings}" ValueChangedCallback="AdminBoxx_Volume_ValueChanged" DefaultValue="0.75"/>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                            </Grid>
+                                    <controls:MairaKnob Grid.Column="0" Title="{Binding Localization[Volume]}" Value="{Binding Settings.AdminBoxxVolume, Mode=TwoWay}" ValueString="{Binding Settings.AdminBoxxVolumeString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.05" RotationMultiplier="10" PlusButtonMappings="{Binding Settings.AdminBoxxVolumePlusButtonMappings}" MinusButtonMappings="{Binding Settings.AdminBoxxVolumeMinusButtonMappings}" ValueChangedCallback="AdminBoxx_Volume_ValueChanged" DefaultValue="0.75"/>
+
+                                </Grid>
+
+                            </StackPanel>
 
                         </GroupBox>
 
@@ -1353,7 +1359,7 @@
 
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Localization[CloudService]}">
+                        <GroupBox x:Name="App_CloudService_GroupBox" Header="{Binding Localization[CloudService]}">
 
                             <Grid>
 

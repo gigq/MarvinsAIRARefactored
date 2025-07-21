@@ -1,20 +1,23 @@
 ﻿
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Components;
-using MarvinsAIRARefactored.PInvoke;
-using Simagic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+
 using Application = System.Windows.Application;
 using Brushes = System.Windows.Media.Brushes;
 using ScrollEventArgs = System.Windows.Controls.Primitives.ScrollEventArgs;
 using TabControl = System.Windows.Controls.TabControl;
+
+using Simagic;
+
+using MarvinsAIRARefactored.Classes;
+using MarvinsAIRARefactored.Components;
+using MarvinsAIRARefactored.Controls;
+using MarvinsAIRARefactored.PInvoke;
 
 namespace MarvinsAIRARefactored.Windows;
 
@@ -53,8 +56,26 @@ public partial class MainWindow : Window
 		Simulator_SessionInfo_SessionInfoViewer.Initialize( Simulator_SessionInfo_ScrollBar );
 		Simulator_TelemetryData_TelemetryDataViewer.Initialize( Simulator_TelemetryData_ScrollBar );
 
-		// AdminBoxx_TabItem.Visibility = Visibility.Collapsed;
-		// Debug_TabItem.Visibility = Visibility.Collapsed;
+#if ADMINBOXX
+
+		RacingWheel_TabItem.Visibility = Visibility.Collapsed;
+		SteeringEffects_TabItem.Visibility = Visibility.Collapsed;
+		Pedals_TabItem.Visibility = Visibility.Collapsed;
+		Sounds_TabItem.Visibility = Visibility.Collapsed;
+		Graph_TabItem.Visibility = Visibility.Collapsed;
+		Simulator_TabItem.Visibility = Visibility.Collapsed;
+		Contribute_TabItem.Visibility = Visibility.Collapsed;
+		Donate_TabItem.Visibility = Visibility.Collapsed;
+		Debug_TabItem.Visibility = Visibility.Collapsed;
+
+		App_CloudService_GroupBox.Visibility = Visibility.Collapsed;
+
+		TabItemPositionHelper.SetIsFirst( AdminBoxx_TabItem, true );
+		TabItemPositionHelper.SetIsLast( App_TabItem, true );
+
+		TabControl.SelectedItem = AdminBoxx_TabItem;
+
+#endif
 
 		app.Logger.WriteLine( "[MainWindow] <<< Constructor" );
 	}
@@ -104,6 +125,12 @@ public partial class MainWindow : Window
 		{
 			var app = App.Instance!;
 
+#if ADMINBOXX
+
+			Title = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "AdminBoxx" ] + " " + Misc.GetVersion();
+
+#else
+
 			Title = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "AppTitle" ] + " " + Misc.GetVersion();
 
 			app.DirectInput.SetMairaComboBoxItemsSource( RacingWheel_SteeringDevice_ComboBox );
@@ -125,6 +152,8 @@ public partial class MainWindow : Window
 			Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect1_ComboBox );
 			Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect2_ComboBox );
 			Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect3_ComboBox );
+
+#endif
 
 			UpdateStatus();
 			UpdatePedalsDevice();
@@ -550,18 +579,22 @@ public partial class MainWindow : Window
 
 	private void Window_Loaded( object sender, RoutedEventArgs e )
 	{
+#if !ADMINBOXX
+
 		var tabPanel = Misc.FindTabPanel( TabControl );
 
 		if ( tabPanel != null )
 		{
-			Maira_Logo_Image.Width = tabPanel.ActualWidth - 10;
-			Maira_Logo_Image.Visibility = Visibility.Visible;
+			Logo_Image.Width = tabPanel.ActualWidth - 10;
+			Logo_Image.Visibility = Visibility.Visible;
 
 			tabPanel.SizeChanged += ( s, args ) =>
 			{
-				Maira_Logo_Image.Width = tabPanel.ActualWidth - 10;
+				Logo_Image.Width = tabPanel.ActualWidth - 10;
 			};
 		}
+
+#endif
 	}
 
 	private void TabControl_SelectionChanged( object sender, SelectionChangedEventArgs e )

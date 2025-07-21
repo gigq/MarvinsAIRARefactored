@@ -16,6 +16,14 @@ namespace MarvinsAIRARefactored.Components;
 
 public partial class AdminBoxx
 {
+	private enum Tone
+	{
+		None,
+		AdminBoxx,
+		Telemetry,
+		Replay
+	};
+
 	public static Color Yellow { get; } = new( 1f, 1f, 0f );
 	public static Color Green { get; } = new( 0f, 1f, 0f );
 	public static Color White { get; } = new( 1f, 1f, 1f );
@@ -111,8 +119,9 @@ public partial class AdminBoxx
 
 	private int _sequenceCounter = 0;
 	private int _sequenceState = 0;
-	private int _sequenceBeepsRemaining = 0;
-	private bool _sequenceBlinkWhenBeeping = false;
+	private int _sequenceBeepBlinkRemaining = 0;
+	private Tone _sequenceBeepTone = Tone.AdminBoxx;
+	private bool _sequenceBlink = false;
 	private bool _sequenceBlinkState = false;
 	private Color _sequenceBlinkColor = Disabled;
 	private int _sequenceBlinkX = 0;
@@ -206,11 +215,11 @@ public partial class AdminBoxx
 
 			if ( app.Simulator.IsConnected )
 			{
-				RunSequence( 0, false, null, 0, 0, "connected_to_iracing_simulator" );
+				RunSequence( 0, Tone.None, false, null, 0, 0, "connected_to_iracing_simulator" );
 			}
 			else
 			{
-				RunSequence( 3, true, Green, 3, 3, "connected_to_adminboxx_app" );
+				RunSequence( 3, Tone.AdminBoxx, true, Green, 3, 3, "connected_to_adminboxx_app" );
 			}
 
 			RequestVersionNumber();
@@ -288,7 +297,7 @@ public partial class AdminBoxx
 
 		if ( IsConnected )
 		{
-			RunSequence( 0, false, null, 0, 0, "connected_to_iracing_simulator" );
+			RunSequence( 0, Tone.None, false, null, 0, 0, "connected_to_iracing_simulator" );
 		}
 	}
 
@@ -303,7 +312,7 @@ public partial class AdminBoxx
 
 		if ( IsConnected )
 		{
-			RunSequence( 3, true, Green, 3, 3, "disconnected_from_iracing_simulator" );
+			RunSequence( 3, Tone.None, true, Green, 3, 3, "disconnected_from_iracing_simulator" );
 		}
 	}
 
@@ -338,7 +347,7 @@ public partial class AdminBoxx
 
 				if ( ( app.Simulator.SessionFlags & IRacingSdkEnum.Flags.CautionWaving ) != 0 )
 				{
-					RunSequence( 2, false, null, 0, 0, "we_are_under_caution" );
+					RunSequence( 2, Tone.Telemetry, false, null, 0, 0, "we_are_under_caution" );
 				}
 			}
 		}
@@ -356,6 +365,8 @@ public partial class AdminBoxx
 				_shownOneLapToGreenFlag = true;
 
 				WaveFlag( Yellow, 1 );
+
+				RunSequence( 1, Tone.Telemetry );
 			}
 		}
 		else
@@ -372,6 +383,8 @@ public partial class AdminBoxx
 				_shownStartReadyFlag = true;
 
 				WaveFlag( Red, 1 );
+
+				RunSequence( 1, Tone.Telemetry );
 			}
 		}
 		else
@@ -388,6 +401,8 @@ public partial class AdminBoxx
 				_shownStartSetFlag = true;
 
 				WaveFlag( Yellow, 1 );
+
+				RunSequence( 1, Tone.Telemetry );
 			}
 		}
 		else
@@ -404,6 +419,8 @@ public partial class AdminBoxx
 				_shownGreenFlag = true;
 
 				WaveFlag( Green, 1 );
+
+				RunSequence( 1, Tone.Telemetry );
 			}
 		}
 		else
@@ -420,6 +437,8 @@ public partial class AdminBoxx
 				_shownWhiteFlag = true;
 
 				WaveFlag( White, 3 );
+
+				RunSequence( 3, Tone.Telemetry );
 			}
 		}
 		else
@@ -436,6 +455,8 @@ public partial class AdminBoxx
 				_shownCheckeredFlag = true;
 
 				WaveFlag( White, 5, true );
+
+				RunSequence( 5, Tone.Telemetry );
 			}
 		}
 		else
@@ -452,6 +473,8 @@ public partial class AdminBoxx
 				_shownBlackFlag = true;
 
 				WaveFlag( Gray, 3 );
+
+				RunSequence( 3, Tone.Telemetry );
 			}
 		}
 		else
@@ -466,6 +489,8 @@ public partial class AdminBoxx
 				_shownBlueFlag = true;
 
 				WaveFlag( Blue, 1 );
+
+				RunSequence( 1, Tone.Telemetry );
 			}
 		}
 		else
@@ -480,6 +505,8 @@ public partial class AdminBoxx
 				_shownRedFlag = true;
 
 				WaveFlag( Red, 3 );
+
+				RunSequence( 3, Tone.Telemetry );
 			}
 		}
 		else
@@ -631,6 +658,8 @@ public partial class AdminBoxx
 					byte[] data = [ 133, 255 ];
 
 					_usbSerialPortHelper.Write( data );
+
+					Disconnect();
 
 					IsUpdating = false;
 
@@ -872,7 +901,7 @@ public partial class AdminBoxx
 			{
 				app.ChatQueue.SendMessage( "!yellow" );
 
-				RunSequence( 3, true, Yellow, 0, 0 );
+				RunSequence( 3, Tone.AdminBoxx, true, Yellow, 0, 0 );
 			}
 		}
 
@@ -905,7 +934,7 @@ public partial class AdminBoxx
 
 		app.ChatQueue.SendMessage( $"!black #{_carNumber}" );
 
-		RunSequence( 1, false, null, 0, 0, "black_flag_driver_number", _carNumber );
+		RunSequence( 1, Tone.AdminBoxx, false, null, 0, 0, "black_flag_driver_number", _carNumber );
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< BlackFlagCallback" );
 	}
@@ -936,7 +965,7 @@ public partial class AdminBoxx
 
 		app.ChatQueue.SendMessage( $"!clear #{_carNumber}" );
 
-		RunSequence( 1, false, null, 0, 0, "clear_driver_number", _carNumber );
+		RunSequence( 1, Tone.AdminBoxx, false, null, 0, 0, "clear_driver_number", _carNumber );
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< ClearFlagCallback" );
 	}
@@ -951,7 +980,7 @@ public partial class AdminBoxx
 		{
 			app.ChatQueue.SendMessage( "!clearall" );
 
-			RunSequence( 1, true, White, 6, 0, "all_penalties_cleared" );
+			RunSequence( 1, Tone.AdminBoxx, true, White, 6, 0, "all_penalties_cleared" );
 		}
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DoClearAllFlags" );
@@ -971,7 +1000,7 @@ public partial class AdminBoxx
 
 				_globalChatEnabled = false;
 
-				RunSequence( 1, true, White, 7, 0, "chat_disabled" );
+				RunSequence( 1, Tone.AdminBoxx, true, White, 7, 0, "chat_disabled" );
 			}
 			else
 			{
@@ -979,7 +1008,7 @@ public partial class AdminBoxx
 
 				_globalChatEnabled = true;
 
-				RunSequence( 1, true, White, 7, 0, "chat_enabled" );
+				RunSequence( 1, Tone.AdminBoxx, true, White, 7, 0, "chat_enabled" );
 			}
 		}
 
@@ -1000,13 +1029,13 @@ public partial class AdminBoxx
 			{
 				app.ChatQueue.SendMessage( "!restart single" );
 
-				RunSequence( 1, true, White, 0, 1, "restart_is_single_file", null );
+				RunSequence( 1, Tone.AdminBoxx, true, White, 0, 1, "restart_is_single_file", null );
 			}
 			else
 			{
 				app.ChatQueue.SendMessage( "!restart double" );
 
-				RunSequence( 2, true, White, 0, 1, "restart_is_double_file", null );
+				RunSequence( 2, Tone.AdminBoxx, true, White, 0, 1, "restart_is_double_file", null );
 			}
 		}
 
@@ -1039,7 +1068,7 @@ public partial class AdminBoxx
 
 		app.ChatQueue.SendMessage( $"!waveby #{_carNumber}" );
 
-		RunSequence( 1, false, null, 0, 0, "wave_by_driver_number", _carNumber );
+		RunSequence( 1, Tone.AdminBoxx, false, null, 0, 0, "wave_by_driver_number", _carNumber );
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< WaveByDriverCallback" );
 	}
@@ -1070,7 +1099,7 @@ public partial class AdminBoxx
 
 		app.ChatQueue.SendMessage( $"!eol #{_carNumber}" );
 
-		RunSequence( 1, false, null, 0, 0, "end_of_line_driver_number", _carNumber );
+		RunSequence( 1, Tone.AdminBoxx, false, null, 0, 0, "end_of_line_driver_number", _carNumber );
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< EndOfLineDriverCallback" );
 	}
@@ -1101,7 +1130,7 @@ public partial class AdminBoxx
 
 		app.ChatQueue.SendMessage( $"!dq #{_carNumber}" );
 
-		RunSequence( 1, false, null, 0, 0, "disqualify_driver_number", _carNumber );
+		RunSequence( 1, Tone.AdminBoxx, false, null, 0, 0, "disqualify_driver_number", _carNumber );
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DisqualifyDriverCallback" );
 	}
@@ -1132,7 +1161,7 @@ public partial class AdminBoxx
 
 		app.ChatQueue.SendMessage( $"!remove #{_carNumber}" );
 
-		RunSequence( 1, false, null, 0, 0, "remove_driver_number", _carNumber );
+		RunSequence( 1, Tone.AdminBoxx, false, null, 0, 0, "remove_driver_number", _carNumber );
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< RemoveDriverCallback" );
 	}
@@ -1147,7 +1176,7 @@ public partial class AdminBoxx
 		{
 			app.ChatQueue.SendMessage( "!pacelaps +1" );
 
-			RunSequence( 1, true, White, 0, 2, "caution_extended_by_one_lap", null );
+			RunSequence( 1, Tone.AdminBoxx, true, White, 0, 2, "caution_extended_by_one_lap", null );
 		}
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DoPlusOneLap" );
@@ -1163,7 +1192,7 @@ public partial class AdminBoxx
 		{
 			app.ChatQueue.SendMessage( "!advance" );
 
-			RunSequence( 1, true, White, 4, 2, "session_has_been_advanced", null );
+			RunSequence( 1, Tone.AdminBoxx, true, White, 4, 2, "session_has_been_advanced", null );
 		}
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DoAdvanceToNextSession" );
@@ -1180,7 +1209,7 @@ public partial class AdminBoxx
 			app.Simulator.IRSDK.ReplaySetPlayPosition( IRacingSdkEnum.RpyPosMode.End, 0 );
 			app.Simulator.IRSDK.ReplaySetPlaySpeed( 16, false );
 
-			RunSequence( 1 );
+			app.AudioManager.Play( "replay_tone", DataContext.DataContext.Instance.Settings.AdminBoxxVolume );
 		}
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DoLive" );
@@ -1196,7 +1225,7 @@ public partial class AdminBoxx
 		{
 			app.Simulator.IRSDK.ReplaySearch( IRacingSdkEnum.RpySrchMode.PrevIncident );
 
-			RunSequence( 1 );
+			app.AudioManager.Play( "replay_tone", DataContext.DataContext.Instance.Settings.AdminBoxxVolume );
 		}
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DoGoToPreviousIncident" );
@@ -1212,7 +1241,7 @@ public partial class AdminBoxx
 		{
 			app.Simulator.IRSDK.ReplaySearch( IRacingSdkEnum.RpySrchMode.NextIncident );
 
-			RunSequence( 1 );
+			app.AudioManager.Play( "replay_tone", DataContext.DataContext.Instance.Settings.AdminBoxxVolume );
 		}
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DoGoToNextIncident" );
@@ -1228,7 +1257,7 @@ public partial class AdminBoxx
 		{
 			app.ChatQueue.SendMessage( "!pacelaps -1" );
 
-			RunSequence( 1, true, White, 0, 3, "caution_shortened_by_one_lap", null );
+			RunSequence( 1, Tone.AdminBoxx, true, White, 0, 3, "caution_shortened_by_one_lap", null );
 		}
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DoMinusOneLap" );
@@ -1269,7 +1298,7 @@ public partial class AdminBoxx
 
 			app.Simulator.IRSDK.ReplaySetPlaySpeed( replayPlaySpeed, true );
 
-			RunSequence( 1 );
+			app.AudioManager.Play( "replay_tone", DataContext.DataContext.Instance.Settings.AdminBoxxVolume );
 		}
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DoSlowMotion" );
@@ -1296,7 +1325,7 @@ public partial class AdminBoxx
 
 			app.Simulator.IRSDK.ReplaySetPlaySpeed( replayPlaySpeed, false );
 
-			RunSequence( 1 );
+			app.AudioManager.Play( "replay_tone", DataContext.DataContext.Instance.Settings.AdminBoxxVolume );
 		}
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DoReverse" );
@@ -1321,9 +1350,9 @@ public partial class AdminBoxx
 				replayPlaySpeed = 0;
 			}
 
-			RunSequence( 1 );
-
 			app.Simulator.IRSDK.ReplaySetPlaySpeed( replayPlaySpeed, false );
+
+			app.AudioManager.Play( "replay_tone", DataContext.DataContext.Instance.Settings.AdminBoxxVolume );
 		}
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DoForward" );
@@ -1350,7 +1379,7 @@ public partial class AdminBoxx
 
 			app.Simulator.IRSDK.ReplaySetPlaySpeed( replayPlaySpeed, false );
 
-			RunSequence( 1 );
+			app.AudioManager.Play( "replay_tone", DataContext.DataContext.Instance.Settings.AdminBoxxVolume );
 		}
 
 		app.Logger.WriteLine( "[AdminBoxx] <<< DoFastForward" );
@@ -1396,14 +1425,16 @@ public partial class AdminBoxx
 		app.Logger.WriteLine( "[AdminBoxx] <<< HandleVersionNumber" );
 	}
 
-	private void RunSequence( int beepCount, bool blinkWhenBeeping = false, Color? blinkColor = null, int blinkX = 0, int blinkY = 0, string? key = null, string? driverNumberToSay = null )
+	private void RunSequence( int beepBlinkCount, Tone beepTone = Tone.AdminBoxx, bool blink = false, Color? blinkColor = null, int blinkX = 0, int blinkY = 0, string? key = null, string? driverNumberToSay = null )
 	{
 		_sequenceState = 0;
 		_sequenceCounter = 1;
 
-		_sequenceBeepsRemaining = beepCount;
+		_sequenceBeepBlinkRemaining = beepBlinkCount;
 
-		_sequenceBlinkWhenBeeping = blinkWhenBeeping;
+		_sequenceBeepTone = beepTone;
+
+		_sequenceBlink = blink;
 		_sequenceBlinkState = false;
 		_sequenceBlinkColor = blinkColor ?? Disabled;
 		_sequenceBlinkX = blinkX;
@@ -1598,52 +1629,65 @@ public partial class AdminBoxx
 				{
 					case 0: // turn off all leds (if we want to blink)
 
-						if ( _sequenceBlinkWhenBeeping )
+						if ( _sequenceBlink )
 						{
 							SetAllLEDsToColor( Disabled, _blueNoiseLedOrder, false );
 						}
 
 						_sequenceState++;
+
+						if ( _sequenceBeepBlinkRemaining == 0 )
+						{
+							_sequenceState++;
+						}
+
 						_sequenceCounter = 1;
 
 						break;
 
 					case 1: // beep / blink
 
-						if ( _sequenceBeepsRemaining == 0 )
+						_sequenceBlinkState = !_sequenceBlinkState;
+
+						if ( _sequenceBlinkState )
 						{
-							_sequenceState++;
-							_sequenceCounter = 1;
+							var key = _sequenceBeepTone switch
+							{
+								Tone.AdminBoxx => "adminboxx_tone",
+								Tone.Telemetry => "iracing_tone",
+								Tone.Replay => "replay_tone",
+								_ => string.Empty
+							};
+
+							app.AudioManager.Play( key, DataContext.DataContext.Instance.Settings.AdminBoxxVolume );
+
+							_sequenceBeepBlinkRemaining--;
+
+							if ( _sequenceBlink )
+							{
+								SetLEDToColor( _sequenceBlinkY, _sequenceBlinkX, _sequenceBlinkColor, false );
+							}
 						}
 						else
 						{
-							_sequenceBlinkState = !_sequenceBlinkState;
-
-							if ( _sequenceBlinkState )
+							if ( _sequenceBlink )
 							{
-								app.AudioManager.Play( "adminboxx_tone", DataContext.DataContext.Instance.Settings.AdminBoxxVolume );
-
-								_sequenceBeepsRemaining--;
-
-								if ( _sequenceBeepsRemaining == 0 )
-								{
-									_sequenceState++;
-								}
+								SetLEDToColor( _sequenceBlinkY, _sequenceBlinkX, Disabled, false );
 							}
 
-							if ( _sequenceBlinkWhenBeeping )
+							if ( _sequenceBeepBlinkRemaining == 0 )
 							{
-								SetLEDToColor( _sequenceBlinkY, _sequenceBlinkX, _sequenceBlinkState ? _sequenceBlinkColor : Disabled, false );
+								_sequenceState++;
 							}
-
-							_sequenceCounter = 30;
 						}
+
+						_sequenceCounter = 30;
 
 						break;
 
 					case 2: // restore led colors
 
-						if ( _sequenceBlinkWhenBeeping )
+						if ( _sequenceBlink )
 						{
 							UpdateColors( _blueNoiseLedOrder, false );
 						}

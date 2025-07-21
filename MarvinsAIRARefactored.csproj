@@ -14,8 +14,13 @@
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+
   <ItemGroup>
     <None Remove="Artwork\ButtonIcons\button_icon_dot.png" />
+    <None Remove="Artwork\Misc\adminboxx_logo.png" />
     <None Remove="Artwork\Misc\maira_logo_rotated.png" />
   </ItemGroup>
 
@@ -34,6 +39,7 @@
   <ItemGroup>
     <EmbeddedResource Include="AdminBoxx\code.py" />
     <Resource Include="Artwork\ButtonIcons\button_icon_dot.png" />
+    <Resource Include="Artwork\Misc\adminboxx_logo.png" />
     <Resource Include="Artwork\Misc\maira_logo_rotated.png" />
     <Resource Include="Fonts\FiraCode-VariableFont_wght.ttf" />
   </ItemGroup>

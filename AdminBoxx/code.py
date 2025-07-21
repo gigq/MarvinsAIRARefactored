@@ -9,7 +9,7 @@ from adafruit_neotrellis.neotrellis import NeoTrellis
 from adafruit_neotrellis.multitrellis import MultiTrellis
 
 # Version
-VERSION = "4.0.4"
+VERSION = "4.0.6"
 
 # Configuration
 num_rows = 4
@@ -43,12 +43,18 @@ def get_key_for(x, y):
     return trellis_index, key
 
 # Indicate startup
-set_all_leds(white)
-set_all_leds(disabled)
-set_all_leds(white)
-set_all_leds(disabled)
-set_all_leds(white)
 print("Starting up.")
+
+set_all_leds(white)
+time.sleep(0.4)
+set_all_leds(disabled)
+time.sleep(0.4)
+set_all_leds(white)
+time.sleep(0.4)
+set_all_leds(disabled)
+time.sleep(0.4)
+set_all_leds(white)
+time.sleep(0.4)
 
 # Buffer for storing incoming data
 buffer = bytearray()
@@ -97,7 +103,7 @@ def non_blocking_sleep(duration):
         trellis.sync()
         time.sleep(0.01)
 
-# Function to flash the entire LED array 3 times
+# Function to flash a button 3 times
 def flash_led(x, y, color):
     trellis.color(x, y, color)
     non_blocking_sleep(0.5)
