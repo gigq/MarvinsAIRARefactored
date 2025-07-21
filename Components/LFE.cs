@@ -230,13 +230,13 @@ public class LFE
 
 		var app = App.Instance!;
 
-		var directSound = app.LFE;
+		var lfe = app.LFE;
 
-		while ( directSound._running )
+		while ( lfe._running )
 		{
-			var signalReceived = directSound._autoResetEvent.WaitOne( 250 );
+			var signalReceived = lfe._autoResetEvent.WaitOne( 250 );
 
-			directSound.Update( app, signalReceived, _byteSpan );
+			lfe.Update( app, signalReceived, _byteSpan );
 		}
 	}
 }
