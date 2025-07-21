@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <controls:MairaButton Grid.Column="0" x:Name="Record_MairaButton" Title="" BehindIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/icon_record_off.png" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/icon_record_on.png" Margin="10,0,10,0" Click="Record_MairaButton_Click"/>
+            <controls:MairaButton Grid.Column="0" x:Name="Record_MairaButton" Title="" BehindIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_record_off.png" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_record_on.png" Margin="10,0,10,0" Click="Record_MairaButton_Click"/>
 
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
 
@@ -28,7 +28,7 @@
 
             </StackPanel>
 
-            <controls:MairaButton Grid.Column="2" Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/icon_trash.png" Margin="10,0,10,0" Click="Trash_MairaButton_Click"/>
+            <controls:MairaButton Grid.Column="2" Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_trash.png" Margin="10,0,10,0" Click="Trash_MairaButton_Click"/>
 
         </Grid>
 
