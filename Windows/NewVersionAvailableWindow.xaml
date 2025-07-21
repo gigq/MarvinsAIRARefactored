@@ -17,15 +17,12 @@
         SizeToContent="Height"
         ResizeMode="NoResize"
         WindowStyle="SingleBorderWindow"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner"
+        Background="#FF111111">
 
     <Window.DataContext>
         <Binding Source="{x:Static datacontext:DataContext.Instance}"/>
     </Window.DataContext>
-
-    <Window.Background>
-        <ImageBrush ImageSource="/MarvinsAIRARefactored;component/Artwork/Backgrounds/background_buttonmapping.png" Stretch="UniformToFill" Opacity="0.2"/>
-    </Window.Background>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
 
@@ -47,8 +44,8 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/icon_cancel.png" Margin="10,10,10,0" Click="Cancel_MairaButton_Click"/>
-                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/icon_thumbs_up.png" Margin="10,10,10,0" Click="ThumbsUp_MairaButton_Click"/>
+                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_cancel.png" Margin="10,10,10,0" Click="Cancel_MairaButton_Click"/>
+                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_thumbs_up.png" Margin="10,10,10,0" Click="ThumbsUp_MairaButton_Click"/>
 
             </StackPanel>
 
