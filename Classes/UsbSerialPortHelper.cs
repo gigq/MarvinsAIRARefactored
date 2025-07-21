@@ -112,6 +112,15 @@ public class UsbSerialPortHelper( string vid, string pid ) : IDisposable
 
 				if ( _serialPort.IsOpen )
 				{
+					try
+					{
+						_serialPort.BaseStream.Flush();
+					}
+					catch
+					{
+
+					}
+
 					_serialPort.Close();
 				}
 
