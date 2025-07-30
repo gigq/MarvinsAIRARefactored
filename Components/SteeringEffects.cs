@@ -42,8 +42,8 @@ public class SteeringEffects
 	private const float CarHomePositionY = -5f;
 
 	private const float WarmUpTiresDrivingRadius = 190f;
-	private const float WarmUpLaps = 1;
-	private const int WarmUpTiresSpeedInKPH = 120;
+	private const float WarmUpLaps = 3;
+	private const int WarmUpTiresSpeedInKPH = 150;
 
 	private const float ActiveResetSavePointX = -25f;
 	private const float ActiveResetSavePointY = 125f;
@@ -90,8 +90,6 @@ public class SteeringEffects
 
 	private float _carPositionX = 0f;
 	private float _carPositionY = 0f;
-
-	private bool _coefficientsAreValid = false;
 
 	private double[]? _leftCoefficientsPeak;
 	private double[]? _leftCoefficientsWarn;
@@ -525,11 +523,13 @@ public class SteeringEffects
 
 				// detect if it's time to move to the next phase
 
-				if ( _targetSteeringWheelAngleInDegrees < -MaxSteeringWheelAngleInDegrees )
+				var maxSteeringWheelAngleInDegrees = Math.Min( app.Simulator.SteeringWheelAngleMax * RadiansToDegrees, MaxSteeringWheelAngleInDegrees );
+
+				if ( _targetSteeringWheelAngleInDegrees < -maxSteeringWheelAngleInDegrees )
 				{
 					_currentPhase = Phase.UTurn;
 				}
-				else if ( _targetSteeringWheelAngleInDegrees > MaxSteeringWheelAngleInDegrees )
+				else if ( _targetSteeringWheelAngleInDegrees > maxSteeringWheelAngleInDegrees )
 				{
 					StopCalibration();
 				}
@@ -826,9 +826,9 @@ public class SteeringEffects
 
 		app.Logger.WriteLine( "[SteeringEffects] UpdateCalibration >>>" );
 
-		// load the recording
+		// load the recording (only if we aren't currently calibrating)
 
-		if ( LoadCalibration() )
+		if ( ( _currentPhase == Phase.NotCalibrating ) && LoadCalibration() )
 		{
 			// allocate data arrays for curve fitting
 
@@ -947,19 +947,10 @@ public class SteeringEffects
 
 				var success = _cobyla.Minimize( coefficients );
 
-				// return default coefficients
-
-				if ( !success )
-				{
-					_coefficientsAreValid = false;
-				}
-
 				return coefficients;
 			}
 
 			// get our coefficients
-
-			_coefficientsAreValid = true;
 
 			_leftCoefficientsPeak = calculateCoefficients( numLeftAngles, leftAngles, leftValuesPeak );
 			_leftCoefficientsWarn = calculateCoefficients( numLeftAngles, leftAngles, leftValuesWarn );
@@ -1017,20 +1008,20 @@ public class SteeringEffects
 
 			if ( steeringWheelAngle < 0f )
 			{
-				var denominator = absSteeringWheelAngle + _leftCoefficientsPeak[ 1 ];
+				var denominator = absSteeringWheelAngle + (float) _leftCoefficientsPeak[ 1 ];
 
 				if ( denominator > 0 )
 				{
-					return (float) ( _leftCoefficientsPeak[ 0 ] / denominator );
+					return (float) MathF.Log( (float) _leftCoefficientsPeak[ 0 ] ) - MathF.Log( denominator );
 				}
 			}
 			else
 			{
-				var denominator = absSteeringWheelAngle + _rightCoefficientsPeak[ 1 ];
+				var denominator = absSteeringWheelAngle + (float) _rightCoefficientsPeak[ 1 ];
 
 				if ( denominator > 0 )
 				{
-					return (float) ( _rightCoefficientsPeak[ 0 ] / denominator );
+					return (float) MathF.Log( (float) _rightCoefficientsPeak[ 0 ] ) - MathF.Log( denominator );
 				}
 			}
 		}
@@ -1047,20 +1038,20 @@ public class SteeringEffects
 
 			if ( steeringWheelAngle < 0f )
 			{
-				var denominator = absSteeringWheelAngle + _leftCoefficientsWarn[ 1 ];
+				var denominator = absSteeringWheelAngle + (float) _leftCoefficientsWarn[ 1 ];
 
 				if ( denominator > 0 )
 				{
-					return (float) ( _leftCoefficientsWarn[ 0 ] / denominator );
+					return (float) MathF.Log( (float) _leftCoefficientsWarn[ 0 ] ) - MathF.Log( denominator );
 				}
 			}
 			else
 			{
-				var denominator = absSteeringWheelAngle + _rightCoefficientsWarn[ 1 ];
+				var denominator = absSteeringWheelAngle + (float) _rightCoefficientsWarn[ 1 ];
 
 				if ( denominator > 0 )
 				{
-					return (float) ( _rightCoefficientsWarn[ 0 ] / denominator );
+					return (float) MathF.Log( (float) _rightCoefficientsWarn[ 0 ] ) - MathF.Log( denominator );
 				}
 			}
 		}
