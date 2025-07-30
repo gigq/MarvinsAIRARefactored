@@ -63,7 +63,7 @@ public partial class App : Application
 
 	private readonly Timer _timer = new( TimerPeriodInMilliseconds );
 
-	private readonly Lock _lock = new();
+	private int _tickMutex = 0;
 
 	App()
 	{
@@ -1461,7 +1461,7 @@ public partial class App : Application
 			{
 				app._autoResetEvent.WaitOne();
 
-				using ( app._lock.EnterScope() )
+				if ( Interlocked.Exchange( ref app._tickMutex, 1 ) == 0 )
 				{
 					app.Dispatcher.BeginInvoke( () =>
 					{
@@ -1478,6 +1478,8 @@ public partial class App : Application
 						app.Graph.Tick( app );
 						app.SteeringEffects.Tick( app );
 						app.VirtualJoystick.Tick( app );
+
+						app._tickMutex = 0;
 					} );
 				}
 			}
