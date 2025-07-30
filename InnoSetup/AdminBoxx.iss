@@ -6,13 +6,13 @@
 #define MyAppIconName "AdminBoxx"
 #define MyAppVersion GetFileVersion(MyAppFile)
 #define MyAppPublisher "Marvin Herbold"
-#define MyAppURL "https://herboldracing.com"
+#define MyAppURL "https://adminboxx.com"
 #define MyAppExeName "AdminBoxx.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{49221926-0B97-4313-B82A-7ADD3B922AED}
+AppId={{E8E1E83E-0006-4576-8751-8AC695D05F38}}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
