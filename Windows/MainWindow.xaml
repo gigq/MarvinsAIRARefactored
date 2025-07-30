@@ -373,20 +373,20 @@
                         </Grid>
 
                         <Grid Tag="Complex">
-                            
-                        <GroupBox Header="{Binding Localization[PrivateMessages]}">
 
-                            <StackPanel>
+                            <GroupBox Header="{Binding Localization[PrivateMessages]}">
 
-                                <controls:MairaSwitch Margin="0" IsOn="{Binding Settings.RacingWheelSendChatMessages, Mode=TwoWay}" Title="{Binding Localization[SendChatMessages]}"/>
-                                <controls:MairaSwitch Margin="0,10,0,0" IsOn="{Binding Settings.RacingWheelInputMappedSettingUpdateEnabled, Mode=TwoWay}" Title="{Binding Localization[InputMappedSettingUpdateEnabled]}"/>
-                                <controls:MairaSwitch Margin="0,10,0,0" IsOn="{Binding Settings.RacingWheelCrashProtectionMessagesEnabled, Mode=TwoWay}" Title="{Binding Localization[CrashProtectionMessagesEnabled]}"/>
-                                <controls:MairaSwitch Margin="0,10,0,0" IsOn="{Binding Settings.RacingWheelCurbProtectionMessagesEnabled, Mode=TwoWay}" Title="{Binding Localization[CurbProtectionMessagesEnabled]}"/>
+                                <StackPanel>
 
-                            </StackPanel>
+                                    <controls:MairaSwitch Margin="0" IsOn="{Binding Settings.RacingWheelSendChatMessages, Mode=TwoWay}" Title="{Binding Localization[SendChatMessages]}"/>
+                                    <controls:MairaSwitch Margin="0,10,0,0" IsOn="{Binding Settings.RacingWheelInputMappedSettingUpdateEnabled, Mode=TwoWay}" Title="{Binding Localization[InputMappedSettingUpdateEnabled]}"/>
+                                    <controls:MairaSwitch Margin="0,10,0,0" IsOn="{Binding Settings.RacingWheelCrashProtectionMessagesEnabled, Mode=TwoWay}" Title="{Binding Localization[CrashProtectionMessagesEnabled]}"/>
+                                    <controls:MairaSwitch Margin="0,10,0,0" IsOn="{Binding Settings.RacingWheelCurbProtectionMessagesEnabled, Mode=TwoWay}" Title="{Binding Localization[CurbProtectionMessagesEnabled]}"/>
 
-                        </GroupBox>
-                            
+                                </StackPanel>
+
+                            </GroupBox>
+
                         </Grid>
 
                         <GroupBox Header="{Binding Localization[Switches]}">
@@ -416,80 +416,83 @@
 
                     <StackPanel Margin="0,10,0,10">
 
-                        <GroupBox Header="{Binding Localization[Calibration]}">
-
-                            <Grid>
-
-                                <Grid.Resources>
-                                    <Style TargetType="controls:MairaButton">
-                                        <Setter Property="Margin" Value="0,10,0,0" />
-                                    </Style>
-                                </Grid.Resources>
-
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <StackPanel Grid.Column="0">
-                                    <controls:MairaButton Title="{Binding Localization[RunCalibration]}" Click="SteeringEffects_RunCalibration_MairaButton_Click"/>
-                                    <controls:MairaButton Title="{Binding Localization[StopCalibration]}" Click="SteeringEffects_StopCalibration_MairaButton_Click"/>
-                                </StackPanel>
-
-                                <Image Grid.Column="1" Grid.ColumnSpan="3" Source="/MarvinsAIRARefactored;component/Artwork/Misc/centripetal_circuit.png" Width="640" Height="512" HorizontalAlignment="Center"/>
-                                <Image Grid.Column="1" Grid.ColumnSpan="3" x:Name="SteeringEffects_RaceCar_Image" Source="/MarvinsAIRARefactored;component/Artwork/Misc/race_car.png" Width="8" Height="22" RenderTransformOrigin="0.5,0.5"/>
-                                <Image Grid.Column="1" Grid.ColumnSpan="3" x:Name="SteeringEffects_TargetPosition_Image" Source="/MarvinsAIRARefactored;component/Artwork/Misc/target_position.png" Width="8" Height="8" RenderTransformOrigin="0.5,0.5" Visibility="Hidden"/>
-
-                                <StackPanel Grid.Column="1" Grid.ColumnSpan="3">
-                                    <Label x:Name="SteeringEffects_Calibration_Phase" FontSize="18" Padding="0" Content="Phase: " FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                    <Label x:Name="SteeringEffects_Calibration_ExtraInfo" FontSize="18" Padding="0" Content="Extra Info:" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                    <Label x:Name="SteeringEffects_Calibration_Steering" FontSize="18" Padding="0" Content="S:    0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue" Margin="0,20,0,0"/>
-                                    <Label x:Name="SteeringEffects_Calibration_Brake" FontSize="18" Padding="0" Content="B: 100%" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                    <Label x:Name="SteeringEffects_Calibration_Throttle" FontSize="18" Padding="0" Content="T: 100%" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                </StackPanel>
-
-                                <StackPanel Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right">
-                                    <Label x:Name="SteeringEffects_Calibration_CarPositionX" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="X:    0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                    <Label x:Name="SteeringEffects_Calibration_CarPositionY" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="Y:    0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                    <Label x:Name="SteeringEffects_Calibration_YawRate" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="YR:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue" Margin="0,20,0,0"/>
-                                    <Label x:Name="SteeringEffects_Calibration_YawNorth" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="YN:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                    <Label x:Name="SteeringEffects_Calibration_VelocityY" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="VY:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                </StackPanel>
-
-                            </Grid>
-
+                        <GroupBox Header="{Binding Localization[UndersteerEffect]}">
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Localization[VirtualJoystick]}">
+                        <GroupBox Header="{Binding Localization[UndersteerEffectCalibration]}">
 
-                            <UniformGrid Columns="4">
+                            <StackPanel>
 
-                                <UniformGrid.Resources>
-                                    <Style TargetType="controls:MairaButton">
-                                        <Setter Property="Margin" Value="0,10,0,0" />
-                                    </Style>
-                                </UniformGrid.Resources>
+                                <Grid>
 
-                                <controls:MairaButton Title="{Binding Localization[SteeringWheelLeft]}" Click="SteeringEffects_SteeringWheelLeft_MairaButton_Click"/>
-                                <controls:MairaButton Title="{Binding Localization[SteeringWheelCenter]}" Click="SteeringEffects_SteeringWheelCenter_MairaButton_Click"/>
-                                <controls:MairaButton Title="{Binding Localization[SteeringWheelRight]}" Click="SteeringEffects_SteeringWheelRight_MairaButton_Click"/>
-                                <controls:MairaButton Title="{Binding Localization[SteeringWheel90Left]}" Click="SteeringEffects_SteeringWheel90Left_MairaButton_Click"/>
+                                    <Grid.Resources>
+                                        <Style TargetType="controls:MairaButton">
+                                            <Setter Property="Margin" Value="0,10,0,0" />
+                                        </Style>
+                                    </Grid.Resources>
 
-                                <controls:MairaButton Title="{Binding Localization[MinThrottle]}" Click="SteeringEffects_MinThrottle_MairaButton_Click"/>
-                                <controls:MairaButton Title="{Binding Localization[MaxThrottle]}" Click="SteeringEffects_MaxThrottle_MairaButton_Click"/>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <controls:MairaButton Title="{Binding Localization[ShiftUp]}" Click="SteeringEffects_ShiftUp_MairaButton_Click"/>
-                                <controls:MairaButton Title="{Binding Localization[ShiftDown]}" Click="SteeringEffects_ShiftDown_MairaButton_Click"/>
+                                    <StackPanel Grid.Column="0">
+                                        <controls:MairaButton Title="{Binding Localization[RunCalibration]}" Click="SteeringEffects_RunCalibration_MairaButton_Click"/>
+                                        <controls:MairaButton Title="{Binding Localization[StopCalibration]}" Click="SteeringEffects_StopCalibration_MairaButton_Click"/>
+                                    </StackPanel>
 
-                                <controls:MairaButton Title="{Binding Localization[MinBrake]}" Click="SteeringEffects_MinBrake_MairaButton_Click"/>
-                                <controls:MairaButton Title="{Binding Localization[MaxBrake]}" Click="SteeringEffects_MaxBrake_MairaButton_Click"/>
+                                    <Image Grid.Column="1" Grid.ColumnSpan="3" Source="/MarvinsAIRARefactored;component/Artwork/Misc/centripetal_circuit.png" Width="640" Height="512" HorizontalAlignment="Center"/>
+                                    <Image Grid.Column="1" Grid.ColumnSpan="3" x:Name="SteeringEffects_RaceCar_Image" Source="/MarvinsAIRARefactored;component/Artwork/Misc/race_car.png" Width="8" Height="22" RenderTransformOrigin="0.5,0.5"/>
+                                    <Image Grid.Column="1" Grid.ColumnSpan="3" x:Name="SteeringEffects_TargetPosition_Image" Source="/MarvinsAIRARefactored;component/Artwork/Misc/target_position.png" Width="8" Height="8" RenderTransformOrigin="0.5,0.5" Visibility="Hidden"/>
 
-                                <controls:MairaButton Title="{Binding Localization[ActiveResetSave]}" Click="SteeringEffects_ActiveResetSave_MairaButton_Click"/>
-                                <controls:MairaButton Title="{Binding Localization[ActiveResetRun]}" Click="SteeringEffects_ActiveResetRun_MairaButton_Click"/>
+                                    <StackPanel Grid.Column="1" Grid.ColumnSpan="3">
+                                        <Label x:Name="SteeringEffects_Calibration_Phase" FontSize="18" Padding="0" Content="Phase: " FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_ExtraInfo" FontSize="18" Padding="0" Content="Extra Info:" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_Steering" FontSize="18" Padding="0" Content="S:    0°" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue" Margin="0,20,0,0"/>
+                                        <Label x:Name="SteeringEffects_Calibration_Brake" FontSize="18" Padding="0" Content="B:  100%" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_Throttle" FontSize="18" Padding="0" Content="T:  100%" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                    </StackPanel>
 
-                            </UniformGrid>
+                                    <StackPanel Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right">
+                                        <Label x:Name="SteeringEffects_Calibration_CarPositionX" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="X:    0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_CarPositionY" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="Y:    0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_YawRate" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="YR:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue" Margin="0,20,0,0"/>
+                                        <Label x:Name="SteeringEffects_Calibration_YawNorth" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="YN:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_VelocityY" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="VY:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                    </StackPanel>
+
+                                </Grid>
+
+                                <UniformGrid Columns="4">
+
+                                    <UniformGrid.Resources>
+                                        <Style TargetType="controls:MairaButton">
+                                            <Setter Property="Margin" Value="0,10,0,0" />
+                                        </Style>
+                                    </UniformGrid.Resources>
+
+                                    <controls:MairaButton Title="{Binding Localization[SteeringWheelLeft]}" Click="SteeringEffects_SteeringWheelLeft_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[SteeringWheelCenter]}" Click="SteeringEffects_SteeringWheelCenter_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[SteeringWheelRight]}" Click="SteeringEffects_SteeringWheelRight_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[SteeringWheel90Left]}" Click="SteeringEffects_SteeringWheel90Left_MairaButton_Click"/>
+
+                                    <controls:MairaButton Title="{Binding Localization[MinThrottle]}" Click="SteeringEffects_MinThrottle_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[MaxThrottle]}" Click="SteeringEffects_MaxThrottle_MairaButton_Click"/>
+
+                                    <controls:MairaButton Title="{Binding Localization[ShiftUp]}" Click="SteeringEffects_ShiftUp_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[ShiftDown]}" Click="SteeringEffects_ShiftDown_MairaButton_Click"/>
+
+                                    <controls:MairaButton Title="{Binding Localization[MinBrake]}" Click="SteeringEffects_MinBrake_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[MaxBrake]}" Click="SteeringEffects_MaxBrake_MairaButton_Click"/>
+
+                                    <controls:MairaButton Title="{Binding Localization[ActiveResetSave]}" Click="SteeringEffects_ActiveResetSave_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[ActiveResetRun]}" Click="SteeringEffects_ActiveResetRun_MairaButton_Click"/>
+
+                                </UniformGrid>
+
+                            </StackPanel>
 
                         </GroupBox>
 
@@ -1273,53 +1276,56 @@
 
             <TabItem x:Name="Simulator_TabItem" Header="{Binding Localization[Simulator]}">
 
-                <StackPanel Background="#FF333333">
+                <Grid Background="#FF333333">
 
                     <TabControl TabStripPlacement="Top" Background="{x:Null}">
 
-                        <TabItem x:Name="Simulator_HeaderData_TabItem" Header="{Binding Localization[HeaderData]}" Padding="24,2,24,2">
+                        <TabItem x:Name="Simulator_HeaderData_TabItem" Header="{Binding Localization[HeaderData]}" Padding="24,2,24,4">
 
                             <Grid>
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <viewers:HeaderDataViewer Grid.Column="0" x:Name="Simulator_HeaderData_HeaderDataViewer" MouseWheel="Simulator_HeaderData_HeaderDataViewer_MouseWheel" ClipToBounds="True"/>
-                                <ScrollBar Grid.Column="1" x:Name="Simulator_HeaderData_ScrollBar" Scroll="Simulator_HeaderData_ScrollBar_Scroll" SmallChange="1" LargeChange="5"/>
+                                <ScrollBar Grid.Column="2" x:Name="Simulator_HeaderData_ScrollBar" Scroll="Simulator_HeaderData_ScrollBar_Scroll" SmallChange="1" LargeChange="5"/>
 
                             </Grid>
 
                         </TabItem>
 
-                        <TabItem x:Name="Simulator_SessionInfo_TabItem" Header="{Binding Localization[SessionInformation]}" Padding="24,2,24,2">
+                        <TabItem x:Name="Simulator_SessionInfo_TabItem" Header="{Binding Localization[SessionInformation]}" Padding="24,2,24,4">
 
                             <Grid>
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <viewers:SessionInfoViewer Grid.Column="0" x:Name="Simulator_SessionInfo_SessionInfoViewer" MouseWheel="Simulator_SessionInfo_SessionInfoViewer_MouseWheel" ClipToBounds="True"/>
-                                <ScrollBar Grid.Column="1" x:Name="Simulator_SessionInfo_ScrollBar" Scroll="Simulator_SessionInfo_ScrollBar_Scroll" SmallChange="1" LargeChange="5"/>
+                                <ScrollBar Grid.Column="2" x:Name="Simulator_SessionInfo_ScrollBar" Scroll="Simulator_SessionInfo_ScrollBar_Scroll" SmallChange="1" LargeChange="5"/>
 
                             </Grid>
 
                         </TabItem>
 
-                        <TabItem x:Name="Simulator_TelemetryData_TabItem" Header="{Binding Localization[TelemetryData]}" Padding="24,2,24,2">
+                        <TabItem x:Name="Simulator_TelemetryData_TabItem" Header="{Binding Localization[TelemetryData]}" Padding="24,2,24,4">
 
                             <Grid>
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <viewers:TelemetryDataViewer Grid.Column="0" x:Name="Simulator_TelemetryData_TelemetryDataViewer" MouseWheel="Simulator_TelemetryData_TelemetryDataViewer_MouseWheel" ClipToBounds="True"/>
-                                <ScrollBar Grid.Column="1" x:Name="Simulator_TelemetryData_ScrollBar" Scroll="Simulator_TelemetryData_ScrollBar_Scroll" SmallChange="1" LargeChange="5"/>
+                                <ScrollBar Grid.Column="2" x:Name="Simulator_TelemetryData_ScrollBar" Scroll="Simulator_TelemetryData_ScrollBar_Scroll" SmallChange="1" LargeChange="5"/>
 
                             </Grid>
 
@@ -1327,7 +1333,7 @@
 
                     </TabControl>
 
-                </StackPanel>
+                </Grid>
 
             </TabItem>
 

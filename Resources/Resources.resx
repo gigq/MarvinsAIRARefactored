@@ -897,4 +897,12 @@
     <value>Enable input mapped setting update messages</value>
     <comment>Racing wheel</comment>
   </data>
+  <data name="UndersteerEffect" xml:space="preserve">
+    <value>Understeer Effect</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="UndersteerEffectCalibration" xml:space="preserve">
+    <value>Understeer Effect Calibration</value>
+    <comment>Steering effects</comment>
+  </data>
 </root>

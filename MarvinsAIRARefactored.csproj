@@ -14,13 +14,21 @@
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants);CODER</DefineConstants>
+  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DefineConstants>$(DefineConstants);CODER</DefineConstants>
+  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants);CODER</DefineConstants>
+  </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DefineConstants>$(DefineConstants);CODER</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Artwork\ButtonIcons\button_icon_dot.png" />
@@ -101,6 +109,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Accord" Version="3.8.0" />
+    <PackageReference Include="Accord.Math" Version="3.8.0" />
+    <PackageReference Include="Accord.Neuro" Version="3.8.0" />
+    <PackageReference Include="Accord.Statistics" Version="3.8.0" />
     <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.183">
       <PrivateAssets>all</PrivateAssets>
@@ -113,9 +125,9 @@
     <PackageReference Include="SharpDX.DirectInput" Version="4.2.0" />
     <PackageReference Include="SharpDX.DirectSound" Version="4.2.0" />
     <PackageReference Include="SharpDX.XAudio2" Version="4.2.0" />
-    <PackageReference Include="System.IO.Ports" Version="9.0.6" />
-    <PackageReference Include="System.Management" Version="9.0.6" />
-    <PackageReference Include="System.Windows.Extensions" Version="9.0.6" />
+    <PackageReference Include="System.IO.Ports" Version="9.0.7" />
+    <PackageReference Include="System.Management" Version="9.0.7" />
+    <PackageReference Include="System.Windows.Extensions" Version="9.0.7" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,6 +5,7 @@ using PInvoke;
 
 using IRSDKSharper;
 using MarvinsAIRARefactored.Classes;
+using System.IO;
 
 namespace MarvinsAIRARefactored.Components;
 
@@ -24,6 +25,9 @@ public class Simulator
 	public bool BrakeABSactive { get; private set; } = false;
 	public float Brake { get; private set; } = 0f;
 	public string CarScreenName { get; private set; } = string.Empty;
+	public string CarSetupLoadTypeName { get; private set; } = string.Empty;
+	public string CarSetupName { get; private set; } = string.Empty;
+	public string CarSetupTireType { get; private set; } = string.Empty;
 	public float[] CFShockVel_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
 	public float Clutch { get; private set; } = 0f;
 	public float[] CRShockVel_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
@@ -68,6 +72,7 @@ public class Simulator
 
 	private bool _telemetryDataInitialized = false;
 	private bool _needToUpdateFromContextSettings = false;
+	private bool _needToUpdateCalibration = false;
 
 	private int? _tickCountLastFrame = null;
 	private float? _velocityLastFrame = null;
@@ -231,9 +236,23 @@ public class Simulator
 
 		var sessionInfo = _irsdk.Data.SessionInfo;
 
+		CarSetupLoadTypeName = sessionInfo.DriverInfo.DriverSetupLoadTypeName; // "iracing" or "user"
+		CarSetupName = sessionInfo.DriverInfo.DriverSetupName;
+
+		if ( ( sessionInfo.CarSetup != null ) && ( sessionInfo.CarSetup.Tires != null ) )
+		{
+			CarSetupTireType = sessionInfo.CarSetup.Tires.TireType.TireType; // "wet" or "dry"
+		}
+		else
+		{
+			CarSetupTireType = "dry";
+		}
+
 		NumForwardGears = sessionInfo.DriverInfo.DriverCarGearNumForward;
+
 		ShiftLightsFirstRPM = sessionInfo.DriverInfo.DriverCarSLFirstRPM;
 		ShiftLightsShiftRPM = sessionInfo.DriverInfo.DriverCarSLShiftRPM;
+
 		SimMode = sessionInfo.WeekendInfo.SimMode;
 
 		foreach ( var driver in _irsdk.Data.SessionInfo.DriverInfo.Drivers )
@@ -256,7 +275,19 @@ public class Simulator
 			_needToUpdateFromContextSettings = false;
 		}
 
+		_needToUpdateCalibration = true;
+
 		app.MainWindow.UpdateStatus();
+
+#if DEBUG
+
+		var sessionInfoYaml = _irsdk.Data.SessionInfoYaml;
+
+		var filePath = Path.Combine( App.DocumentsFolder, "SessionInfo.yaml" );
+
+		File.WriteAllText( filePath, sessionInfoYaml );
+
+#endif
 	}
 
 	private void OnTelemetryData()
@@ -590,6 +621,13 @@ public class Simulator
 			_updateCounter = UpdateInterval;
 
 			app.MainWindow.RacingWheel_CurrentForce_Label.Content = $"{MathF.Abs( SteeringWheelTorque_ST[ 5 ] ):F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
+		}
+
+		if ( _needToUpdateCalibration )
+		{
+			_needToUpdateCalibration = false;
+
+			app.SteeringEffects.UpdateCalibration();
 		}
 	}
 }

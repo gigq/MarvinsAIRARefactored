@@ -50,6 +50,7 @@ public class RacingWheel
 	private float _testSignalTimerMS = 0f;
 	private float _crashProtectionTimerMS = 0f;
 	private float _curbProtectionTimerMS = 0f;
+	private float _understeerEffectTimerMS = 0f;
 
 	private readonly float[] _steeringWheelTorque360Hz = new float[ Simulator.SamplesPerFrame360Hz + 2 ];
 
@@ -309,6 +310,10 @@ public class RacingWheel
 
 			var settings = DataContext.DataContext.Instance.Settings;
 
+			// initialize generated vibration torque
+
+			var vibrationTorque = 0f;
+
 			// test signal generator
 
 			if ( PlayTestSignal )
@@ -320,13 +325,27 @@ public class RacingWheel
 				PlayTestSignal = false;
 			}
 
-			var testSignalTorque = 0f;
-
 			if ( _testSignalTimerMS > 0f )
 			{
-				testSignalTorque = MathF.Cos( _testSignalTimerMS * MathF.Tau / 20f ) * MathF.Sin( _testSignalTimerMS * MathF.Tau / TestSignalTimeMS * 2f ) * 0.2f;
-
 				_testSignalTimerMS -= deltaMilliseconds;
+
+				vibrationTorque += MathF.Cos( _testSignalTimerMS * MathF.Tau / 20f ) * MathF.Sin( _testSignalTimerMS * MathF.Tau / TestSignalTimeMS * 2f ) * 0.2f;
+			}
+
+			// understeer steering effect signal generator
+
+			if ( app.SteeringEffects.UndersteerEffectIntensity > 0f )
+			{
+				var understeerEffectTorque = MathF.Cos( _understeerEffectTimerMS * MathF.Tau / 10f ) * 0.1f;
+
+				_understeerEffectTimerMS -= deltaMilliseconds;
+
+				if ( _understeerEffectTimerMS < 0f )
+				{
+					_understeerEffectTimerMS += 1f;
+				}
+
+				vibrationTorque += understeerEffectTorque * app.SteeringEffects.UndersteerEffectIntensity;
 			}
 
 			// check if we want to suspend or unsuspend force feedback
@@ -652,7 +671,7 @@ public class RacingWheel
 				_lastUnfadedOutputTorque = outputTorque;
 			}
 
-			// center wheel when not in car (fade also affects this)
+			// center wheel when not in car (also affected by fade)
 
 			if ( settings.RacingWheelCenterWheelWhenNotInCar )
 			{
@@ -666,9 +685,9 @@ public class RacingWheel
 				}
 			}
 
-			// add test signal torque
+			// add vibration torque
 
-			outputTorque += testSignalTorque;
+			outputTorque += vibrationTorque;
 
 			// update force feedback torque
 
