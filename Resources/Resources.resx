@@ -1041,4 +1041,12 @@
     <value>Stopping</value>
     <comment>Steering effects</comment>
   </data>
+  <data name="ShowGripOMeter" xml:space="preserve">
+    <value>Show the Grip-O-Meter window</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MakeGripOMeterDraggable" xml:space="preserve">
+    <value>Make the Grip-O-Meter window draggable</value>
+    <comment>Steering effects</comment>
+  </data>
 </root>

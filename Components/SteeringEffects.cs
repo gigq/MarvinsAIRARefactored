@@ -6,11 +6,15 @@ using System.Windows.Media;
 
 using Accord.Math.Optimization;
 
+using MarvinsAIRARefactored.Classes;
+
 namespace MarvinsAIRARefactored.Components;
 
 public class SteeringEffects
 {
 	public float UndersteerEffectIntensity { get; private set; } = 0f;
+	public float MaximumGrip { get; private set; } = 0f; // if == 0f then there is no max grip
+	public float CurrentGrip { get; private set; } = 0f; // % of maximum grip - can exceed 100%
 
 	private enum Phase
 	{
@@ -89,8 +93,11 @@ public class SteeringEffects
 	private float _carPositionX = 0f;
 	private float _carPositionY = 0f;
 
-	private double[]? _leftCoefficients;
-	private double[]? _rightCoefficients;
+	private float[]? _leftCoefficients;
+	private float[]? _rightCoefficients;
+
+	private float _scaleTop = 0f;
+	private float _scaleBottom = 0f;
 
 	private readonly Cobyla _cobyla = new( 2, CobylaObjective );
 
@@ -110,6 +117,10 @@ public class SteeringEffects
 		// save the data
 
 		SaveCalibration();
+
+		// update the calibration
+
+		UpdateCalibration();
 	}
 
 	public void Update( App app, float deltaSeconds )
@@ -117,34 +128,64 @@ public class SteeringEffects
 		if ( _currentPhase == Phase.NotCalibrating )
 		{
 			var steeringWheelAngleInDegrees = app.Simulator.SteeringWheelAngle * RadiansToDegrees;
-			var yawRateInDegrees = app.Simulator.YawRate * RadiansToDegrees;
-			var absYawRateInDegrees = MathF.Abs( yawRateInDegrees );
-			var speedInKPH = app.Simulator.VelocityX * MPSToKPH;
-
-			app.Debug.Label_1 = $"Steering Wheel Angle: {steeringWheelAngleInDegrees:F0} Degrees";
-			app.Debug.Label_2 = $"Abs Yaw Rate: {absYawRateInDegrees:F1} Degrees";
-			app.Debug.Label_3 = $"Speed: {speedInKPH:F0} KPH";
 
 			var peak = Predict( steeringWheelAngleInDegrees );
-			var warn = peak * 0.9f;
+			var warn = peak * 1f;
 
-			var current = MathF.Log( speedInKPH / ( absYawRateInDegrees + 1f ) );
-
-			app.Debug.Label_5 = $"Peak: {peak:F6}";
-			app.Debug.Label_6 = $"Warn: {warn:F6}";
-			app.Debug.Label_7 = $"Current: {current:F6}";
-
-			if ( ( app.Simulator.VelocityX > 0f ) && ( warn > 0f ) && ( current > warn ) && ( MathF.Sign( steeringWheelAngleInDegrees ) == MathF.Sign( yawRateInDegrees ) ) )
+			if ( peak == 0f )
 			{
-				UndersteerEffectIntensity = Math.Clamp( ( current - warn ) / ( peak - warn ), 0f, 1f );
+				MaximumGrip = 0f;
+				CurrentGrip = 0f;
+			}
+			else
+			{
+				MaximumGrip = Misc.Lerp( 0.5f, 1.0f, ( peak - _scaleBottom ) / ( _scaleTop - _scaleBottom ) );
+			}
+
+			if ( ( app.Simulator.VelocityX > 1f ) && ( MathF.Sign( app.Simulator.SteeringWheelAngle ) == MathF.Sign( app.Simulator.YawRate ) ) )
+			{
+				var speedInKPH = app.Simulator.VelocityX * MPSToKPH;
+				var yawRateInDegrees = app.Simulator.YawRate * RadiansToDegrees;
+				var absYawRateInDegrees = MathF.Abs( yawRateInDegrees );
+
+				var current = MathF.Log( speedInKPH / ( absYawRateInDegrees + 1f ) );
+
+				if ( peak > 0f )
+				{
+					CurrentGrip = ( current / peak ) * MaximumGrip;
+
+					UndersteerEffectIntensity = ( current > peak ) ? 1f : 0f; // Math.Clamp( ( current - warn ) / ( peak - warn ), 0f, 1f );
+				}
+				else
+				{
+					CurrentGrip = 0f;
+
+					UndersteerEffectIntensity = 0f;
+				}
+
+				app.Debug.Label_1 = $"Speed: {speedInKPH:F0} KPH";
+				app.Debug.Label_2 = $"Steering Wheel Angle: {steeringWheelAngleInDegrees:F0} Degrees";
+				app.Debug.Label_3 = $"Abs Yaw Rate: {absYawRateInDegrees:F1} Degrees";
+
+				app.Debug.Label_5 = $"Peak: {peak:F6}";
+				app.Debug.Label_6 = $"Warn: {warn:F6}";
+				app.Debug.Label_7 = $"Current: {current:F6}";
 
 				app.Debug.Label_9 = $"Effect Intensity: {UndersteerEffectIntensity * 100f:F0}%";
 			}
 			else
 			{
-				UndersteerEffectIntensity = 0f;
+				app.Debug.Label_1 = $"Speed: ---";
+				app.Debug.Label_2 = $"Steering Wheel Angle: ---";
+				app.Debug.Label_3 = $"Abs Yaw Rate: ---";
+
+				app.Debug.Label_5 = $"Peak: ---";
+				app.Debug.Label_6 = $"Warn: ---";
+				app.Debug.Label_7 = $"Current: ---";
 
 				app.Debug.Label_9 = $"Effect Intensity: ---";
+
+				UndersteerEffectIntensity = 0f;
 			}
 		}
 		else
@@ -154,6 +195,8 @@ public class SteeringEffects
 
 			_carPositionX += worldVelocityX * deltaSeconds;
 			_carPositionY += worldVelocityY * deltaSeconds;
+
+			CurrentGrip = 0f;
 		}
 	}
 
@@ -904,7 +947,7 @@ public class SteeringEffects
 
 			//
 
-			double[] calculateCoefficients( int numAngles, double[] inAngles, double[] inValues )
+			float[] calculateCoefficients( int numAngles, double[] inAngles, double[] inValues )
 			{
 				// trim the data arrays
 
@@ -920,19 +963,37 @@ public class SteeringEffects
 
 				// initial guess
 
-				double[] coefficients = [ 1000, 1 ];
+				double[] coefficients = [ 150, -5 ];
 
 				// run optimizer (modifies initial guess in place)
 
 				var success = _cobyla.Minimize( coefficients );
 
-				return coefficients;
+				return [ (float) coefficients[ 0 ], (float) coefficients[ 1 ] ];
 			}
 
 			// get our coefficients
 
 			_leftCoefficients = calculateCoefficients( numLeftAngles, leftAngles, leftValues );
 			_rightCoefficients = calculateCoefficients( numRightAngles, rightAngles, rightValues );
+
+			var leftErrorMargin = Math.Sqrt( CobylaObjective( [ _leftCoefficients[ 0 ], _leftCoefficients[ 1 ] ] ) );
+			var rightErrorMargin = Math.Sqrt( CobylaObjective( [ _rightCoefficients[ 0 ], _rightCoefficients[ 1 ] ] ) );
+
+			app.Logger.WriteLine( $"[SteeringEffects] Average margin of error turning left = {leftErrorMargin:F6}" );
+			app.Logger.WriteLine( $"[SteeringEffects] Average margin of error turning right = {rightErrorMargin:F6}" );
+
+			// figure out a good scale to use
+
+			var leftPrediction = Predict( MathF.Min( 0, _leftCoefficients[ 1 ] ) - 1f );
+			var rightPrediction = Predict( 1f - MathF.Min( 0, _rightCoefficients[ 1 ] ) );
+
+			_scaleTop = MathF.Max( leftPrediction, rightPrediction );
+
+			leftPrediction = Predict( -180f );
+			rightPrediction = Predict( 180f );
+
+			_scaleBottom = MathF.Min( leftPrediction, rightPrediction );
 
 			// write out debug csv file
 
@@ -963,9 +1024,10 @@ public class SteeringEffects
 
 			for ( var angle = 0.1f; angle < 90.0f; angle += 0.1f )
 			{
-				var predicted = Predict( (float) -angle );
+				leftPrediction = Predict( -angle );
+				rightPrediction = Predict( angle );
 
-				writer2.WriteLine( $"{angle:F1},{predicted:F6}" );
+				writer2.WriteLine( $"{angle:F1},{leftPrediction:F6},{rightPrediction:F6}" );
 			}
 		}
 
@@ -983,20 +1045,20 @@ public class SteeringEffects
 
 			if ( steeringWheelAngle < 0f )
 			{
-				var denominator = absSteeringWheelAngle + (float) _leftCoefficients[ 1 ];
+				var denominator = absSteeringWheelAngle + _leftCoefficients[ 1 ];
 
 				if ( denominator > 0 )
 				{
-					return (float) MathF.Log( (float) _leftCoefficients[ 0 ] ) - MathF.Log( denominator );
+					return MathF.Log( _leftCoefficients[ 0 ] ) - MathF.Log( denominator );
 				}
 			}
 			else
 			{
-				var denominator = absSteeringWheelAngle + (float) _rightCoefficients[ 1 ];
+				var denominator = absSteeringWheelAngle + _rightCoefficients[ 1 ];
 
 				if ( denominator > 0 )
 				{
-					return (float) MathF.Log( (float) _rightCoefficients[ 0 ] ) - MathF.Log( denominator );
+					return MathF.Log( _rightCoefficients[ 0 ] ) - MathF.Log( denominator );
 				}
 			}
 		}

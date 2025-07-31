@@ -1888,6 +1888,63 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region Steering effects - Show Grip-O-Meter window
+
+	private bool _steeringEffectsShowGripOMeterWindow = false;
+
+	public bool SteeringEffectsShowGripOMeterWindow
+	{
+		get => _steeringEffectsShowGripOMeterWindow;
+
+		set
+		{
+			if ( value != _steeringEffectsShowGripOMeterWindow )
+			{
+				_steeringEffectsShowGripOMeterWindow = value;
+
+				OnPropertyChanged();
+			}
+
+			var app = App.Instance!;
+
+			if ( _steeringEffectsShowGripOMeterWindow )
+			{
+				app.GripOMeter.Show();
+			}
+			else
+			{
+				app.GripOMeter.Hide();
+			}
+		}
+	}
+
+	#endregion
+
+	#region Steering effects - Make Grip-O-Meter draggable
+
+	private bool _steeringEffectsMakeGripOMeterDraggable = false;
+
+	public bool SteeringEffectsMakeGripOMeterDraggable
+	{
+		get => _steeringEffectsMakeGripOMeterDraggable;
+
+		set
+		{
+			if ( value != _steeringEffectsMakeGripOMeterDraggable )
+			{
+				_steeringEffectsMakeGripOMeterDraggable = value;
+
+				OnPropertyChanged();
+			}
+
+			var app = App.Instance!;
+
+			app.GripOMeter.MakeDraggable( _steeringEffectsMakeGripOMeterDraggable );
+		}
+	}
+
+	#endregion
+
 	#region Pedals - Enabled
 
 	private bool _pedalsEnabled = false;

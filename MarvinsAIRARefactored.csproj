@@ -33,6 +33,8 @@
   <ItemGroup>
     <None Remove="Artwork\ButtonIcons\button_icon_dot.png" />
     <None Remove="Artwork\Misc\adminboxx_logo.png" />
+    <None Remove="Artwork\Misc\grip-o-meter-bar.png" />
+    <None Remove="Artwork\Misc\grip-o-meter.png" />
     <None Remove="Artwork\Misc\maira_logo_rotated.png" />
   </ItemGroup>
 
@@ -52,6 +54,8 @@
     <EmbeddedResource Include="AdminBoxx\code.py" />
     <Resource Include="Artwork\ButtonIcons\button_icon_dot.png" />
     <Resource Include="Artwork\Misc\adminboxx_logo.png" />
+    <Resource Include="Artwork\Misc\grip-o-meter-bar.png" />
+    <Resource Include="Artwork\Misc\grip-o-meter.png" />
     <Resource Include="Artwork\Misc\maira_logo_rotated.png" />
     <Resource Include="Fonts\FiraCode-VariableFont_wght.ttf" />
   </ItemGroup>

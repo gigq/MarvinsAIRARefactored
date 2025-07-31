@@ -417,6 +417,14 @@
                     <StackPanel Margin="0,10,0,10">
 
                         <GroupBox Header="{Binding Localization[UndersteerEffect]}">
+
+                            <StackPanel>
+
+                                <controls:MairaSwitch Margin="0" IsOn="{Binding Settings.SteeringEffectsShowGripOMeterWindow, Mode=TwoWay}" Title="{Binding Localization[ShowGripOMeter]}"/>
+                                <controls:MairaSwitch Margin="0,10,0,0" IsOn="{Binding Settings.SteeringEffectsMakeGripOMeterDraggable, Mode=TwoWay}" Title="{Binding Localization[MakeGripOMeterDraggable]}"/>
+
+                            </StackPanel>
+
                         </GroupBox>
 
                         <GroupBox Header="{Binding Localization[UndersteerEffectCalibration]}">

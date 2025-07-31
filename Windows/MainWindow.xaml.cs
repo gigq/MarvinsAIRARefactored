@@ -516,6 +516,8 @@ public partial class MainWindow : Window
 		if ( WindowHandle == 0 )
 		{
 			WindowHandle = new WindowInteropHelper( this ).Handle;
+
+			App.Instance!.GripOMeter.Owner = this;
 		}
 	}
 
