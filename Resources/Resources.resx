@@ -905,4 +905,140 @@
     <value>Understeer Effect Calibration</value>
     <comment>Steering effects</comment>
   </data>
+  <data name="NotOnCentripetalCircuitTrack" xml:space="preserve">
+    <value>You are not on the Centripetal Circuit track</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="RunCalibration" xml:space="preserve">
+    <value>Run Calibration</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="StopCalibration" xml:space="preserve">
+    <value>Stop Calibration</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SteeringWheelLeft" xml:space="preserve">
+    <value>Steering Wheel Left</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SteeringWheelCenter" xml:space="preserve">
+    <value>Steering Wheel Center</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SteeringWheelRight" xml:space="preserve">
+    <value>Steering Wheel Right</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SteeringWheel90Left" xml:space="preserve">
+    <value>Steering Wheel 90° Left</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MinThrottle" xml:space="preserve">
+    <value>Minimum Throttle</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MaxThrottle" xml:space="preserve">
+    <value>Maximum Throttle</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ShiftUp" xml:space="preserve">
+    <value>Shift Up</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ShiftDown" xml:space="preserve">
+    <value>Shift Down</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MinBrake" xml:space="preserve">
+    <value>Minimum Brake</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MaxBrake" xml:space="preserve">
+    <value>Maximum Brake</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ActiveResetSave" xml:space="preserve">
+    <value>Active Reset Save</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ActiveResetRun" xml:space="preserve">
+    <value>Active Reset Run</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Phase:" xml:space="preserve">
+    <value>Phase:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SteeringPosition:" xml:space="preserve">
+    <value>Steering Position:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SteeringIncrement:" xml:space="preserve">
+    <value>Steering Increment:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="YawRate:" xml:space="preserve">
+    <value>Yaw Rate:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="CarPositionX:" xml:space="preserve">
+    <value>Car X:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="CarPositionY:" xml:space="preserve">
+    <value>Car Y:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="VelocityX:" xml:space="preserve">
+    <value>Velocity X:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="VelocityY:" xml:space="preserve">
+    <value>Velocity Y:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Heading:" xml:space="preserve">
+    <value>Heading:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Throttle:" xml:space="preserve">
+    <value>Throttle:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Brake:" xml:space="preserve">
+    <value>Brake:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="NotCalibrating" xml:space="preserve">
+    <value>Not Calibrating</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ResetCalibration" xml:space="preserve">
+    <value>Reset Calibration</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="DriveToWallEdge" xml:space="preserve">
+    <value>Drive to Wall Edge</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="WarmUpTires" xml:space="preserve">
+    <value>Warm Up Tires</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="DriveToActiveResetPoint" xml:space="preserve">
+    <value>Drive to Active Reset Point</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="TurningPasses" xml:space="preserve">
+    <value>Turning Passes</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="UTurn" xml:space="preserve">
+    <value>U-Turn</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stopping</value>
+    <comment>Steering effects</comment>
+  </data>
 </root>
