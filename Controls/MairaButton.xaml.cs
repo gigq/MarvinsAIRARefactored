@@ -25,6 +25,14 @@ public partial class MairaButton : UserControl
 		set => SetValue( TitleProperty, value );
 	}
 
+	public static readonly DependencyProperty TitleOnRightProperty = DependencyProperty.Register( nameof( TitleOnRight ), typeof( bool ), typeof( MairaButton ), new PropertyMetadata( false ) );
+
+	public bool TitleOnRight
+	{
+		get => (bool) GetValue( TitleOnRightProperty );
+		set => SetValue( TitleOnRightProperty, value );
+	}
+
 	public static readonly DependencyProperty BehindIconProperty = DependencyProperty.Register( nameof( BehindIcon ), typeof( ImageSource ), typeof( MairaButton ), new PropertyMetadata( null ) );
 
 	public ImageSource BehindIcon

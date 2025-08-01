@@ -13,21 +13,44 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" x:Name="Label" Margin="0,0,0,10" Content="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Label x:Name="Label" Content="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" VerticalAlignment="Center">
+            
             <Label.Style>
+                
                 <Style TargetType="Label">
+                    
                     <Setter Property="Visibility" Value="Visible"/>
                     <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                    <Setter Property="Grid.Row" Value="0"/>
+                    <Setter Property="Grid.Column" Value="0"/>
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+
                     <Style.Triggers>
+                        
                         <DataTrigger Binding="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="">
                             <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
+
+                        <DataTrigger Binding="{Binding TitleOnRight, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                            <Setter Property="Grid.Row" Value="1"/>
+                            <Setter Property="Grid.Column" Value="1"/>
+                            <Setter Property="Margin" Value="5,0,0,0"/>
+                        </DataTrigger>
+
                     </Style.Triggers>
+                    
                 </Style>
+                
             </Label.Style>
+            
         </Label>
 
-        <Button Grid.Row="1" x:Name="Button" Focusable="False" IsTabStop="False" Background="Transparent" BorderThickness="0" Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" PreviewMouseDown="Button_PreviewMouseDown" PreviewMouseUp="Button_PreviewMouseUp">
+        <Button Grid.Row="1" Grid.Column="0" x:Name="Button" Focusable="False" IsTabStop="False" Background="Transparent" BorderThickness="0" Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" PreviewMouseDown="Button_PreviewMouseDown" PreviewMouseUp="Button_PreviewMouseUp">
 
             <Button.Style>
 
