@@ -16,7 +16,15 @@ public class Logger
 	{
 		WriteLine( "[Logger] Initialize >>>" );
 
+#if !ADMINBOXX
+
 		var filePath = Path.Combine( App.DocumentsFolder, "MarvinsAIRA.log" );
+
+#else
+
+		var filePath = Path.Combine( App.DocumentsFolder, "AdminBoxx.log" );
+
+#endif
 
 		if ( File.Exists( filePath ) )
 		{
