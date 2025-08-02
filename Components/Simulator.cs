@@ -72,7 +72,7 @@ public class Simulator
 
 	private bool _telemetryDataInitialized = false;
 	private bool _needToUpdateFromContextSettings = false;
-	private bool _needToUpdateCalibration = false;
+	private bool _needToLoadCalibration = false;
 
 	private int? _tickCountLastFrame = null;
 	private float? _velocityLastFrame = null;
@@ -275,7 +275,7 @@ public class Simulator
 			_needToUpdateFromContextSettings = false;
 		}
 
-		_needToUpdateCalibration = true;
+		_needToLoadCalibration = true;
 
 		app.MainWindow.UpdateStatus();
 
@@ -623,11 +623,11 @@ public class Simulator
 			app.MainWindow.RacingWheel_CurrentForce_Label.Content = $"{MathF.Abs( SteeringWheelTorque_ST[ 5 ] ):F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
 		}
 
-		if ( _needToUpdateCalibration )
+		if ( _needToLoadCalibration )
 		{
-			_needToUpdateCalibration = false;
+			_needToLoadCalibration = false;
 
-			app.SteeringEffects.UpdateCalibration();
+			app.SteeringEffects.LoadCalibration();
 		}
 	}
 }

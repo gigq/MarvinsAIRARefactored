@@ -26,7 +26,6 @@ public class SteeringEffects
 		WarmUpTires,
 		DriveToActiveResetPoint,
 		TurningPasses,
-		UTurn,
 		Stop
 	}
 
@@ -41,24 +40,21 @@ public class SteeringEffects
 	private const float RadiansToDegrees = 180f / MathF.PI;
 	private const float DegreesToRadians = MathF.PI / 180f;
 
-	private const float DeltaTime = 1f / 60f;
 	private const float MapScale = 1.225f;
 
 	private const float CarHomePositionX = -1f;
 	private const float CarHomePositionY = -5f;
 
 	private const float WarmUpTiresDrivingRadius = 190f;
-	private const float WarmUpLaps = 3;
+	private const float WarmUpLaps = 10;
 	private const int WarmUpTiresSpeedInKPH = 150;
 
-	private const float ActiveResetSavePointX = -25f;
-	private const float ActiveResetSavePointY = 125f;
+	private const float ActiveResetSavePointX = 0f;
+	private const float ActiveResetSavePointY = 0f;
 
 	private const int MaxSteeringWheelAngleInDegrees = 180;
 	private const int MaxSpeedInKPH = 250;
 	private const int MaxNumSteeringWheelAngles = 72;
-
-	private const int StartingSteeringWheelAngle = 10;
 
 	private readonly string _calibrationDirectory = Path.Combine( App.DocumentsFolder, "Calibration" );
 
@@ -70,6 +66,7 @@ public class SteeringEffects
 	private float _targetPositionY = 0f;
 	private int _targetSteeringWheelAngleInDegrees = 0;
 	private int _targetVelocityInKPH = 0;
+	private float _targetDistanceToStop = 0f;
 
 	private RobotMode _robotMode = RobotMode.DriveToTarget;
 
@@ -81,7 +78,6 @@ public class SteeringEffects
 	private float _robotGearShiftTimer = 0f;
 
 	private int _numSteeringWheelAnglesRecorded = 0;
-	private int _steeringWheelDirection = 0;
 	private int _currentSteeringWheelInterval = 0;
 
 	private float _maxAbsYawRateInDegrees = 0f;
@@ -116,13 +112,13 @@ public class SteeringEffects
 
 		_currentPhase = Phase.Stop;
 
-		// save the data
+		// save the calibration data
 
 		SaveCalibration();
 
-		// update the calibration
+		// load the calibration data
 
-		UpdateCalibration();
+		LoadCalibration();
 	}
 
 	public void Update( App app, float deltaSeconds )
@@ -177,29 +173,9 @@ public class SteeringEffects
 					IsUndersteering = false;
 					UndersteerEffectIntensity = 0f;
 				}
-
-				app.Debug.Label_1 = $"Speed: {speedInKPH:F0} KPH";
-				app.Debug.Label_2 = $"Steering Wheel Angle: {steeringWheelAngleInDegrees:F0} Degrees";
-				app.Debug.Label_3 = $"Abs Yaw Rate: {absYawRateInDegrees:F1} Degrees";
-
-				app.Debug.Label_5 = $"Peak: {peak:F6}";
-				app.Debug.Label_6 = $"Warn: {warn:F6}";
-				app.Debug.Label_7 = $"Current: {current:F6}";
-
-				app.Debug.Label_9 = $"Effect Intensity: {UndersteerEffectIntensity * 100f:F0}%";
 			}
 			else
 			{
-				app.Debug.Label_1 = $"Speed: ---";
-				app.Debug.Label_2 = $"Steering Wheel Angle: ---";
-				app.Debug.Label_3 = $"Abs Yaw Rate: ---";
-
-				app.Debug.Label_5 = $"Peak: ---";
-				app.Debug.Label_6 = $"Warn: ---";
-				app.Debug.Label_7 = $"Current: ---";
-
-				app.Debug.Label_9 = $"Effect Intensity: ---";
-
 				CurrentGrip = 0f;
 				IsUndersteering = false;
 				UndersteerEffectIntensity = 0f;
@@ -207,6 +183,33 @@ public class SteeringEffects
 		}
 		else
 		{
+			switch ( _currentPhase )
+			{
+				case Phase.ResetCalibration:
+					DoResetCalibration( app, deltaSeconds );
+					break;
+
+				case Phase.DriveToWallEdge:
+					DoDriveToWallEdge( app, deltaSeconds );
+					break;
+
+				case Phase.WarmUpTires:
+					DoWarmUpTires( app, deltaSeconds );
+					break;
+
+				case Phase.DriveToActiveResetPoint:
+					DoDriveActiveResetSavePoint( app, deltaSeconds );
+					break;
+
+				case Phase.TurningPasses:
+					DoTurningPasses( app, deltaSeconds );
+					break;
+
+				case Phase.Stop:
+					DoStop( app, deltaSeconds );
+					break;
+			}
+
 			var worldVelocityX = app.Simulator.VelocityX * MathF.Sin( app.Simulator.YawNorth ) - app.Simulator.VelocityY * MathF.Cos( app.Simulator.YawNorth );
 			var worldVelocityY = app.Simulator.VelocityX * MathF.Cos( app.Simulator.YawNorth ) + app.Simulator.VelocityY * MathF.Sin( app.Simulator.YawNorth );
 
@@ -262,15 +265,17 @@ public class SteeringEffects
 		_robotLastFrameVelocityX = 0f;
 	}
 
-	private void UpdateRobot( App app )
+	private void UpdateRobot( App app, float deltaSeconds )
 	{
+		var currentAccelerationInMPS = ( app.Simulator.VelocityX - _robotLastFrameVelocityX ) / deltaSeconds; // in m*s^2
+
 		if ( _robotSettleTimer < 1f )
 		{
 			// let the car settle before driving
 
-			_robotSettleTimer = Math.Min( _robotSettleTimer + DeltaTime, 1f );
+			_robotSettleTimer = Math.Min( _robotSettleTimer + deltaSeconds, 1f );
 
-			_robotBrake = 1f;
+			_robotBrake = 0f;
 			_robotThrottle = 0f;
 			_robotSteeringWheelAngleInDegrees = 0f;
 
@@ -279,11 +284,11 @@ public class SteeringEffects
 		}
 		else
 		{
-			// adjust gear
-
 			if ( app.Simulator.Gear < app.Simulator.NumForwardGears )
 			{
-				_robotGearShiftTimer += DeltaTime;
+				// shift until we get into top gear
+
+				_robotGearShiftTimer += deltaSeconds;
 
 				if ( _robotGearShiftTimer >= 1f )
 				{
@@ -292,59 +297,67 @@ public class SteeringEffects
 					app.VirtualJoystick.ShiftUp = true;
 				}
 			}
-
-			// adjust steering wheel
-
-			if ( _robotMode == RobotMode.DriveToTarget )
-			{
-				var nearestDistanceToTargetTurningLeft = PredictNearestDistanceToTarget( app, app.Simulator.YawRate - 0.005f, 0.01f );
-				var nearestDistanceToTargetTurningRight = PredictNearestDistanceToTarget( app, app.Simulator.YawRate + 0.005f, 0.01f );
-
-				var wheelTurnAmount = ( nearestDistanceToTargetTurningRight - nearestDistanceToTargetTurningLeft ) * 0.15f;
-
-				_robotSteeringWheelAngleInDegrees += Math.Clamp( wheelTurnAmount, -0.25f, 0.25f ) * Math.Min( 1f, app.Simulator.VelocityX * 0.25f );
-			}
 			else
 			{
-				_robotSteeringWheelAngleInDegrees = _targetSteeringWheelAngleInDegrees;
-			}
 
-			if ( app.Simulator.Gear == app.Simulator.NumForwardGears )
-			{
-				// should we be speeding up or slowing down?
+				// adjust steering wheel
 
-				var deltaTargetVelocity = _targetVelocityInKPH * KPHToMPS - app.Simulator.VelocityX;
-
-				// adjust brake
-
-				if ( deltaTargetVelocity < 0 )
+				if ( _robotMode == RobotMode.DriveToTarget )
 				{
-					_robotBrake = Math.Min( _robotBrake - deltaTargetVelocity * 0.0025f, 0.25f );
+					var nearestDistanceToTargetTurningLeft = PredictNearestDistanceToTarget( app, app.Simulator.YawRate - 0.005f, 0.01f );
+					var nearestDistanceToTargetTurningRight = PredictNearestDistanceToTarget( app, app.Simulator.YawRate + 0.005f, 0.01f );
+
+					var wheelTurnAmount = ( nearestDistanceToTargetTurningRight - nearestDistanceToTargetTurningLeft ) * 0.15f;
+
+					_robotSteeringWheelAngleInDegrees += Math.Clamp( wheelTurnAmount, -0.25f, 0.25f ) * Math.Min( 1f, app.Simulator.VelocityX * 0.25f );
 				}
 				else
 				{
-					_robotBrake -= 0.01f;
+					var deltaSteeringWheelAngleInDegrees = _targetSteeringWheelAngleInDegrees - _robotSteeringWheelAngleInDegrees;
+
+					if ( MathF.Abs( deltaSteeringWheelAngleInDegrees ) < 0.5f )
+					{
+						_robotSteeringWheelAngleInDegrees = _targetSteeringWheelAngleInDegrees;
+					}
+					else
+					{
+						_robotSteeringWheelAngleInDegrees = Misc.Lerp( _robotSteeringWheelAngleInDegrees, _targetSteeringWheelAngleInDegrees, 0.15f );
+					}
 				}
 
-				// adjust throttle
+				// adjust throttle and brake
 
-				var currentAcceleration = app.Simulator.VelocityX - _robotLastFrameVelocityX;
-
-				_robotLastFrameVelocityX = app.Simulator.VelocityX;
-
-				if ( deltaTargetVelocity > 0f )
+				if ( _targetVelocityInKPH == 0 )
 				{
-					if ( currentAcceleration <= 0.01f )
+					_robotThrottle -= deltaSeconds; // go from 100% to 0% throttle in one second
+
+					var currentDistanceToStop = -( ( app.Simulator.VelocityX * app.Simulator.VelocityX ) / ( 2f * currentAccelerationInMPS ) ); // how far will the car go before we come to a complete stop at the current acceleration?
+
+					var deltaDistanceToStop = _targetDistanceToStop - currentDistanceToStop;
+
+					if ( ( currentAccelerationInMPS > 0f ) || ( deltaDistanceToStop < 0f ) )
 					{
-						if ( _robotBrake <= 0f )
-						{
-							_robotThrottle += 0.0005f;
-						}
+						_robotBrake += MathF.Min( deltaSeconds / 2f, -deltaDistanceToStop * 0.01f ); // increase brake (take 2 seconds to go from 0% to 100% brake)
+					}
+					else
+					{
+						_robotBrake -= deltaSeconds / 2f; // ease off the brake (take 2 seconds to go from 100% to 0% brake)
 					}
 				}
 				else
 				{
-					_robotThrottle += deltaTargetVelocity * 0.0015f;
+					// should we be increasing throttle?
+
+					var deltaTargetVelocityInKPH = _targetVelocityInKPH - app.Simulator.VelocityX * MPSToKPH;
+
+					if ( deltaTargetVelocityInKPH > 0f )
+					{
+						var targetAccelerationInKPH = 1f; // 1 KPH is the target acceleration
+
+						var deltaAccelerationInKPH = targetAccelerationInKPH - currentAccelerationInMPS * MPSToKPH;
+
+						_robotThrottle += Math.Clamp( deltaAccelerationInKPH * deltaSeconds, -deltaSeconds / 30f, deltaSeconds / 30f );
+					}
 				}
 			}
 		}
@@ -354,13 +367,26 @@ public class SteeringEffects
 		_robotSteeringWheelAngleInDegrees = Math.Clamp( _robotSteeringWheelAngleInDegrees, -450f, 450f );
 		_robotBrake = Math.Clamp( _robotBrake, 0f, 1f );
 		_robotThrottle = Math.Clamp( _robotThrottle, 0f, 1f );
+		_robotLastFrameVelocityX = app.Simulator.VelocityX;
 
 		app.VirtualJoystick.Steering = _robotSteeringWheelAngleInDegrees / 450f;
 		app.VirtualJoystick.Brake = _robotBrake;
 		app.VirtualJoystick.Throttle = _robotThrottle;
+
+		// debug
+
+		app.Debug.Label_1 = $"deltaSeconds: {deltaSeconds:F6}";
+
+		app.Debug.Label_3 = $"velocityX: {app.Simulator.VelocityX * MPSToKPH:F2}";
+		app.Debug.Label_4 = $"robotLastFrameVelocityX: {_robotLastFrameVelocityX * MPSToKPH:F2}";
+
+		app.Debug.Label_6 = $"currentAcceleration: {currentAccelerationInMPS * MPSToKPH:F3}";
+
+		app.Debug.Label_8 = $"robotThrottle: {_robotThrottle * 100f:F0}%";
+		app.Debug.Label_9 = $"robotBrake: {_robotBrake * 100f:F0}%";
 	}
 
-	private void DoResetCalibration( App app )
+	private void DoResetCalibration( App app, float deltaSeconds )
 	{
 		// clear out our old calibration data
 
@@ -383,13 +409,14 @@ public class SteeringEffects
 		_currentPhase = Phase.DriveToWallEdge;
 	}
 
-	private void DoDriveToWallEdge( App app )
+	private void DoDriveToWallEdge( App app, float deltaSeconds )
 	{
 		// set target position and velocity
 
 		_targetPositionX = WarmUpTiresDrivingRadius;
 		_targetPositionY = CarHomePositionY;
-		_targetVelocityInKPH = 30;
+		_targetVelocityInKPH = 50;
+		_targetDistanceToStop = 0f;
 
 		// check if we're getting close and if so, go to the next phase
 
@@ -402,10 +429,10 @@ public class SteeringEffects
 
 		// update robot
 
-		UpdateRobot( app );
+		UpdateRobot( app, deltaSeconds );
 	}
 
-	private void DoWarmUpTires( App app )
+	private void DoWarmUpTires( App app, float deltaSeconds )
 	{
 		// remember our original target position
 
@@ -430,6 +457,7 @@ public class SteeringEffects
 		_targetPositionY = rotatedY;
 
 		_targetVelocityInKPH = WarmUpTiresSpeedInKPH;
+		_targetDistanceToStop = 0f;
 
 		// check if we are done running warm up laps
 
@@ -448,39 +476,26 @@ public class SteeringEffects
 
 		// update robot
 
-		UpdateRobot( app );
+		UpdateRobot( app, deltaSeconds );
 	}
 
-	private void DoDriveActiveResetSavePoint( App app )
+	private void DoDriveActiveResetSavePoint( App app, float deltaSeconds )
 	{
 		// set target position
 
-		if ( _carPositionX < 50f )
-		{
-			_targetPositionY = _carPositionY;
-		}
-		else
-		{
-			_targetPositionY = ActiveResetSavePointY;
-		}
-
 		_targetPositionX = ActiveResetSavePointX;
+		_targetPositionY = ActiveResetSavePointY;
 
 		// set target velocity
 
-		if ( _carPositionX > _targetPositionX )
-		{
-			var deltaX = _targetPositionX - _carPositionX;
-			var deltaY = _targetPositionY - _carPositionY;
+		_targetVelocityInKPH = 0;
 
-			var distance = MathF.Sqrt( deltaX * deltaX + deltaY * deltaY );
+		// set target distance to stop
 
-			_targetVelocityInKPH = Math.Min( (int) MathF.Ceiling( distance * 0.35f ), WarmUpTiresSpeedInKPH );
-		}
-		else
-		{
-			_targetVelocityInKPH = 0;
-		}
+		var deltaX = _targetPositionX - _carPositionX;
+		var deltaY = _targetPositionY - _carPositionY;
+
+		_targetDistanceToStop = MathF.Sqrt( deltaX * deltaX + deltaY * deltaY );
 
 		// when we have stopped, go to the next phase
 
@@ -498,12 +513,12 @@ public class SteeringEffects
 			// prepare for the first pass
 
 			_robotSettleTimer = 0f;
-			_steeringWheelDirection = -1;
-			_targetSteeringWheelAngleInDegrees = StartingSteeringWheelAngle * _steeringWheelDirection;
+			_targetSteeringWheelAngleInDegrees = -MaxSteeringWheelAngleInDegrees;
 			_steeringWheelAnglesInDegrees[ _numSteeringWheelAnglesRecorded ] = _targetSteeringWheelAngleInDegrees;
 			_targetVelocityInKPH = 1;
+			_targetDistanceToStop = 0f;
 			_maxAbsYawRateInDegrees = 0f;
-			_currentSteeringWheelInterval = 2;
+			_currentSteeringWheelInterval = 10;
 
 			// tell robot to use fixed steering wheel angle
 
@@ -516,10 +531,10 @@ public class SteeringEffects
 
 		// update robot
 
-		UpdateRobot( app );
+		UpdateRobot( app, deltaSeconds );
 	}
 
-	private void DoTurningPasses( App app )
+	private void DoTurningPasses( App app, float deltaSeconds )
 	{
 		if ( _robotSettleTimer >= 1f )
 		{
@@ -556,37 +571,33 @@ public class SteeringEffects
 
 				_numSteeringWheelAnglesRecorded++;
 
-				// if we've not crashed then increment the interval
-
-				if ( !crashed )
-				{
-					_currentSteeringWheelInterval++;
-				}
-
-				// prepare for the next pass
-
-				_targetSteeringWheelAngleInDegrees += _currentSteeringWheelInterval * _steeringWheelDirection;
-				_steeringWheelAnglesInDegrees[ _numSteeringWheelAnglesRecorded ] = _targetSteeringWheelAngleInDegrees;
-				_targetVelocityInKPH = 1;
-				_maxAbsYawRateInDegrees = 0f;
-
 				// hit the active reset run button
 
 				app.VirtualJoystick.ActiveResetRun = true;
+
+				// prepare for the next pass
+
+				if ( _targetSteeringWheelAngleInDegrees < 0 )
+				{
+					_targetSteeringWheelAngleInDegrees = -_targetSteeringWheelAngleInDegrees;
+				}
+				else
+				{
+					_targetSteeringWheelAngleInDegrees = -_targetSteeringWheelAngleInDegrees + _currentSteeringWheelInterval;
+				}
+
+				_steeringWheelAnglesInDegrees[ _numSteeringWheelAnglesRecorded ] = _targetSteeringWheelAngleInDegrees;
+				_targetVelocityInKPH = 1;
+				_targetDistanceToStop = 0f;
+				_maxAbsYawRateInDegrees = 0f;
 
 				// reset the robot
 
 				ResetRobot();
 
-				// detect if it's time to move to the next phase
+				// detect if it's time to stop
 
-				var maxSteeringWheelAngleInDegrees = Math.Min( app.Simulator.SteeringWheelAngleMax * RadiansToDegrees, MaxSteeringWheelAngleInDegrees );
-
-				if ( _targetSteeringWheelAngleInDegrees < -maxSteeringWheelAngleInDegrees )
-				{
-					_currentPhase = Phase.UTurn;
-				}
-				else if ( _targetSteeringWheelAngleInDegrees > maxSteeringWheelAngleInDegrees )
+				if ( ( _targetSteeringWheelAngleInDegrees >= -10 ) && ( _targetSteeringWheelAngleInDegrees <= 10 ) )
 				{
 					StopCalibration();
 				}
@@ -595,58 +606,10 @@ public class SteeringEffects
 
 		// update robot
 
-		UpdateRobot( app );
+		UpdateRobot( app, deltaSeconds );
 	}
 
-	private void DoUTurn( App app )
-	{
-		if ( _robotSettleTimer >= 1f )
-		{
-			// set target steering wheel angle and velocity
-
-			_targetSteeringWheelAngleInDegrees = -180;
-
-			_targetVelocityInKPH = Math.Clamp( (int) MathF.Ceiling( ( app.Simulator.YawNorth - MathF.PI * 0.5f ) * 3f ), 1, 10 );
-
-			// check if we've reached our desired orientation
-
-			if ( app.Simulator.YawNorth <= 90f * DegreesToRadians )
-			{
-				// prepare for the first right turning pass
-
-				_robotSettleTimer = 0f;
-				_steeringWheelDirection = 1;
-				_targetSteeringWheelAngleInDegrees = StartingSteeringWheelAngle * _steeringWheelDirection;
-				_steeringWheelAnglesInDegrees[ _numSteeringWheelAnglesRecorded ] = _targetSteeringWheelAngleInDegrees;
-				_targetVelocityInKPH = 1;
-				_maxAbsYawRateInDegrees = 0f;
-				_currentSteeringWheelInterval = 2;
-
-				// hit the active reset save button
-
-				app.VirtualJoystick.ActiveResetSave = true;
-
-				// reset the robot
-
-				ResetRobot();
-
-				// save the reset position
-
-				_carResetPositionX = _carPositionX;
-				_carResetPositionY = _carPositionY;
-
-				// and we're off
-
-				_currentPhase = Phase.TurningPasses;
-			}
-		}
-
-		// update robot
-
-		UpdateRobot( app );
-	}
-
-	private void DoStop( App app )
+	private void DoStop( App app, float deltaSeconds )
 	{
 		app.VirtualJoystick.Steering = 0f;
 		app.VirtualJoystick.Throttle = 0f;
@@ -731,128 +694,213 @@ public class SteeringEffects
 		app.Logger.WriteLine( "[SteeringEffects] <<< SaveCalibration" );
 	}
 
-	private bool LoadCalibration()
+	public void LoadCalibration()
 	{
 		var app = App.Instance!;
 
 		app.Logger.WriteLine( "[SteeringEffects] LoadCalibration >>>" );
 
-		// clear out the data tables
-
-		_numSteeringWheelAnglesRecorded = 0;
-
-		Array.Clear( _steeringWheelAnglesInDegrees );
-		Array.Clear( _yawRateDataInDegrees );
-
-		// keep track of whether the file load was good or not
-
-		var success = true;
-
-		// open file
-
-		var filePath = GetPreferredCalibrationFileName();
-
-		if ( !File.Exists( filePath ) )
+		if ( _currentPhase == Phase.NotCalibrating )
 		{
-			app.Logger.WriteLine( $"[SteeringEffects] Calibration file not found: {filePath}" );
+			// clear out the data tables
 
-			success = false;
-		}
-		else
-		{
-			using var reader = new StreamReader( filePath );
+			_numSteeringWheelAnglesRecorded = 0;
 
-			// skip the first line
+			Array.Clear( _steeringWheelAnglesInDegrees );
+			Array.Clear( _yawRateDataInDegrees );
 
-			var carInfoLine = reader.ReadLine();
+			// keep track of whether the file load was good or not
 
-			// read header line and extract steering wheel angles
+			var fileLoadWasSuccessful = true;
 
-			var headerLine = reader.ReadLine();
+			// open file
 
-			if ( string.IsNullOrWhiteSpace( headerLine ) )
+			var filePath = GetPreferredCalibrationFileName();
+
+			if ( !File.Exists( filePath ) )
 			{
-				app.Logger.WriteLine( "[SteeringEffects] Missing header line." );
+				app.Logger.WriteLine( $"[SteeringEffects] Calibration file not found: {filePath}" );
 
-				success = false;
+				fileLoadWasSuccessful = false;
 			}
 			else
 			{
-				var headerParts = headerLine.Split( ',' );
+				using var reader = new StreamReader( filePath );
 
-				if ( headerParts.Length < 2 )
+				// skip the first line
+
+				var carInfoLine = reader.ReadLine();
+
+				// read header line and extract steering wheel angles
+
+				var headerLine = reader.ReadLine();
+
+				if ( string.IsNullOrWhiteSpace( headerLine ) )
 				{
-					app.Logger.WriteLine( "[SteeringEffects] Invalid header line." );
+					app.Logger.WriteLine( "[SteeringEffects] Missing header line." );
 
-					success = false;
+					fileLoadWasSuccessful = false;
 				}
 				else
 				{
-					var angleLabels = headerParts.Skip( 1 ).ToList();
+					var headerParts = headerLine.Split( ',' );
 
-					_numSteeringWheelAnglesRecorded = angleLabels.Count;
-
-					for ( var angleIndex = 0; angleIndex < _numSteeringWheelAnglesRecorded; angleIndex++ )
+					if ( headerParts.Length < 2 )
 					{
-						if ( !int.TryParse( angleLabels[ angleIndex ].Trim(), out _steeringWheelAnglesInDegrees[ angleIndex ] ) )
-						{
-							app.Logger.WriteLine( "[SteeringEffects] Failed to parse initial steering wheel angle." );
+						app.Logger.WriteLine( "[SteeringEffects] Invalid header line." );
 
-							success = false;
-
-							break;
-						}
+						fileLoadWasSuccessful = false;
 					}
-
-					// read yaw rate data
-
-					if ( success )
+					else
 					{
-						while ( !reader.EndOfStream )
+						var angleLabels = headerParts.Skip( 1 ).ToList();
+
+						_numSteeringWheelAnglesRecorded = angleLabels.Count;
+
+						for ( var angleIndex = 0; angleIndex < _numSteeringWheelAnglesRecorded; angleIndex++ )
 						{
-							var line = reader.ReadLine();
-
-							if ( string.IsNullOrWhiteSpace( line ) ) continue;
-
-							var parts = line.Split( ',' );
-
-							if ( !int.TryParse( parts[ 0 ], out var speedInKPH ) ) continue;
-
-							if ( speedInKPH > MaxSpeedInKPH )
+							if ( !int.TryParse( angleLabels[ angleIndex ].Trim(), out _steeringWheelAnglesInDegrees[ angleIndex ] ) )
 							{
-								app.Logger.WriteLine( "[SteeringEffects] Invalid speed." );
+								app.Logger.WriteLine( "[SteeringEffects] Failed to parse initial steering wheel angle." );
 
-								success = false;
+								fileLoadWasSuccessful = false;
 
 								break;
 							}
+						}
 
-							for ( var angleIndex = 0; angleIndex < _numSteeringWheelAnglesRecorded; angleIndex++ )
+						// read yaw rate data
+
+						if ( fileLoadWasSuccessful )
+						{
+							while ( !reader.EndOfStream )
 							{
-								var partIndex = angleIndex + 1;
+								var line = reader.ReadLine();
 
-								if ( partIndex >= parts.Length ) break;
+								if ( string.IsNullOrWhiteSpace( line ) ) continue;
 
-								if ( float.TryParse( parts[ partIndex ], NumberStyles.Float, CultureInfo.InvariantCulture, out var yawRate ) )
+								var parts = line.Split( ',' );
+
+								if ( !int.TryParse( parts[ 0 ], out var speedInKPH ) ) continue;
+
+								if ( speedInKPH > MaxSpeedInKPH )
 								{
-									_yawRateDataInDegrees[ angleIndex, speedInKPH ] = yawRate;
+									app.Logger.WriteLine( "[SteeringEffects] Invalid speed." );
+
+									fileLoadWasSuccessful = false;
+
+									break;
 								}
-								else
+
+								for ( var angleIndex = 0; angleIndex < _numSteeringWheelAnglesRecorded; angleIndex++ )
 								{
-									_yawRateDataInDegrees[ angleIndex, speedInKPH ] = 0f;
+									var partIndex = angleIndex + 1;
+
+									if ( partIndex >= parts.Length ) break;
+
+									if ( float.TryParse( parts[ partIndex ], NumberStyles.Float, CultureInfo.InvariantCulture, out var yawRate ) )
+									{
+										_yawRateDataInDegrees[ angleIndex, speedInKPH ] = yawRate;
+									}
+									else
+									{
+										_yawRateDataInDegrees[ angleIndex, speedInKPH ] = 0f;
+									}
 								}
 							}
 						}
 					}
 				}
+			}
+
+			if ( fileLoadWasSuccessful )
+			{
+				// find the best coefficients to use for predicting the peak yaw rates and corresponding speeds
+
+				var yawRateModel = new YawRateModel( _steeringWheelAnglesInDegrees, _yawRateDataInDegrees, MaxSpeedInKPH );
+
+				var (leftYawCoefficients, leftSpeedCoefficients) = yawRateModel.FitWithProgressiveRefinement( true );
+				var (rightYawCoefficients, rightSpeedCoefficients) = yawRateModel.FitWithProgressiveRefinement( false );
+
+				// allocate data arrays for curve fitting
+
+				var numAngles = 160;
+
+				var leftAngles = new double[ numAngles ];
+				var rightAngles = new double[ numAngles ];
+
+				var leftValues = new double[ numAngles ];
+				var rightValues = new double[ numAngles ];
+
+				// fill out the data arrays
+
+				for ( var angleIndex = 0; angleIndex < numAngles; angleIndex++ )
+				{
+					var angle = angleIndex + 20;
+
+					leftAngles[ angleIndex ] = angle;
+					rightAngles[ angleIndex ] = angle;
+
+					var maxYawRate = YawRateModel.Predict( leftYawCoefficients, -angle );
+					var correspondingSpeed = YawRateModel.Predict( leftSpeedCoefficients, -angle );
+
+					leftValues[ angleIndex ] = correspondingSpeed / ( MathF.Abs( maxYawRate ) + 1f );
+
+					maxYawRate = YawRateModel.Predict( rightYawCoefficients, angle );
+					correspondingSpeed = YawRateModel.Predict( rightSpeedCoefficients, angle );
+
+					rightValues[ angleIndex ] = correspondingSpeed / ( MathF.Abs( maxYawRate ) + 1f );
+				}
+
+				//
+
+				float[] calculateCoefficients( int numAngles, double[] inAngles, double[] inValues )
+				{
+					// trim the data arrays
+
+					double[] angles = [ .. inAngles.Take( numAngles ) ];
+					double[] values = [ .. inValues.Take( numAngles ) ];
+
+					double[] logValues = [ .. values.Select( v => Math.Log( v ) ) ];
+
+					// prep Cobyla objective function
+
+					_cobylaAngles = angles;
+					_cobylaValues = logValues;
+
+					// initial guess
+
+					double[] coefficients = [ 150, -5 ];
+
+					// run optimizer (modifies initial guess in place)
+
+					var success = _cobyla.Minimize( coefficients );
+
+					return [ (float) coefficients[ 0 ], (float) coefficients[ 1 ] ];
+				}
+
+				// get our coefficients
+
+				_leftCoefficients = calculateCoefficients( numAngles, leftAngles, leftValues );
+				_rightCoefficients = calculateCoefficients( numAngles, rightAngles, rightValues );
+
+				// figure out a good scale to use
+
+				var leftPrediction = Predict( MathF.Min( 0, _leftCoefficients[ 1 ] ) - 1f );
+				var rightPrediction = Predict( 1f - MathF.Min( 0, _rightCoefficients[ 1 ] ) );
+
+				_scaleTop = MathF.Max( leftPrediction, rightPrediction );
+
+				leftPrediction = Predict( -180f );
+				rightPrediction = Predict( 180f );
+
+				_scaleBottom = MathF.Min( leftPrediction, rightPrediction );
 			}
 		}
 
 		//
 
 		app.Logger.WriteLine( "[SteeringEffects] <<< LoadCalibration" );
-
-		return success;
 	}
 
 	private static double[] _cobylaAngles = [];
@@ -875,184 +923,6 @@ public class SteeringEffects
 		}
 
 		return error;
-	}
-
-	public void UpdateCalibration()
-	{
-		var app = App.Instance!;
-
-		app.Logger.WriteLine( "[SteeringEffects] UpdateCalibration >>>" );
-
-		// load the recording (only if we aren't currently calibrating)
-
-		if ( ( _currentPhase == Phase.NotCalibrating ) && LoadCalibration() )
-		{
-			// allocate data arrays for curve fitting
-
-			var numLeftAngles = 0;
-			var numRightAngles = 0;
-
-			var leftAngles = new double[ _numSteeringWheelAnglesRecorded ];
-			var rightAngles = new double[ _numSteeringWheelAnglesRecorded ];
-
-			var leftValues = new double[ _numSteeringWheelAnglesRecorded ];
-			var rightValues = new double[ _numSteeringWheelAnglesRecorded ];
-
-			// fill out the data arrays
-
-			for ( var angleIndex = 0; angleIndex < _numSteeringWheelAnglesRecorded; angleIndex++ )
-			{
-				// find the peak yaw rate
-
-				var increasingValueCount = 0;
-				var lastAbsYawRateInDegrees = 0f;
-				var maxAbsYawRateInDegrees = 0f;
-				var speedAtMaxAbsYawRateInKPH = 0;
-
-				for ( var speed = MaxSpeedInKPH; speed > 0; speed-- )
-				{
-					var yawRateInDegrees = _yawRateDataInDegrees[ angleIndex, speed ];
-
-					if ( yawRateInDegrees == 0f )
-					{
-						continue;
-					}
-
-					var absYawRateInDegrees = MathF.Abs( yawRateInDegrees );
-
-					if ( absYawRateInDegrees > lastAbsYawRateInDegrees )
-					{
-						increasingValueCount++;
-
-						if ( increasingValueCount >= 5 )
-						{
-							maxAbsYawRateInDegrees = absYawRateInDegrees;
-
-							speedAtMaxAbsYawRateInKPH = speed;
-						}
-					}
-					else if ( increasingValueCount >= 5 )
-					{
-						break;
-					}
-					else
-					{
-						increasingValueCount = 0;
-					}
-
-					lastAbsYawRateInDegrees = absYawRateInDegrees;
-				}
-
-				if ( increasingValueCount >= 5 )
-				{
-					// store values as speed / ( yaw rate + 1 ) for each steering wheel angle
-
-					if ( _steeringWheelAnglesInDegrees[ angleIndex ] < 0 )
-					{
-						leftAngles[ numLeftAngles ] = Math.Abs( _steeringWheelAnglesInDegrees[ angleIndex ] );
-						leftValues[ numLeftAngles ] = speedAtMaxAbsYawRateInKPH / ( maxAbsYawRateInDegrees + 1f );
-
-						numLeftAngles++;
-					}
-					else
-					{
-						rightAngles[ numRightAngles ] = Math.Abs( _steeringWheelAnglesInDegrees[ angleIndex ] );
-						rightValues[ numRightAngles ] = speedAtMaxAbsYawRateInKPH / ( maxAbsYawRateInDegrees + 1f );
-
-						numRightAngles++;
-					}
-				}
-			}
-
-			//
-
-			float[] calculateCoefficients( int numAngles, double[] inAngles, double[] inValues )
-			{
-				// trim the data arrays
-
-				double[] angles = [ .. inAngles.Take( numAngles ) ];
-				double[] values = [ .. inValues.Take( numAngles ) ];
-
-				double[] logValues = [ .. values.Select( v => Math.Log( v ) ) ];
-
-				// prep Cobyla objective function
-
-				_cobylaAngles = angles;
-				_cobylaValues = logValues;
-
-				// initial guess
-
-				double[] coefficients = [ 150, -5 ];
-
-				// run optimizer (modifies initial guess in place)
-
-				var success = _cobyla.Minimize( coefficients );
-
-				return [ (float) coefficients[ 0 ], (float) coefficients[ 1 ] ];
-			}
-
-			// get our coefficients
-
-			_leftCoefficients = calculateCoefficients( numLeftAngles, leftAngles, leftValues );
-			_rightCoefficients = calculateCoefficients( numRightAngles, rightAngles, rightValues );
-
-			var leftErrorMargin = Math.Sqrt( CobylaObjective( [ _leftCoefficients[ 0 ], _leftCoefficients[ 1 ] ] ) );
-			var rightErrorMargin = Math.Sqrt( CobylaObjective( [ _rightCoefficients[ 0 ], _rightCoefficients[ 1 ] ] ) );
-
-			app.Logger.WriteLine( $"[SteeringEffects] Average margin of error turning left = {leftErrorMargin:F6}" );
-			app.Logger.WriteLine( $"[SteeringEffects] Average margin of error turning right = {rightErrorMargin:F6}" );
-
-			// figure out a good scale to use
-
-			var leftPrediction = Predict( MathF.Min( 0, _leftCoefficients[ 1 ] ) - 1f );
-			var rightPrediction = Predict( 1f - MathF.Min( 0, _rightCoefficients[ 1 ] ) );
-
-			_scaleTop = MathF.Max( leftPrediction, rightPrediction );
-
-			leftPrediction = Predict( -180f );
-			rightPrediction = Predict( 180f );
-
-			_scaleBottom = MathF.Min( leftPrediction, rightPrediction );
-
-			// write out debug csv file
-
-			var filePath = Path.Combine( _calibrationDirectory, "debug.csv" );
-
-			using var writer = new StreamWriter( filePath );
-
-			var headerString = "SWA,Actual,Predicted";
-
-			writer.WriteLine( headerString );
-
-			for ( var angleIndex = 0; angleIndex < numLeftAngles; angleIndex++ )
-			{
-				var angle = leftAngles[ angleIndex ];
-				var value = MathF.Log( (float) leftValues[ angleIndex ] );
-				var predicted = Predict( (float) -angle );
-
-				writer.WriteLine( $"{angle:F0},{value:F6},{predicted:F6}" );
-			}
-
-			filePath = Path.Combine( _calibrationDirectory, "debug2.csv" );
-
-			using var writer2 = new StreamWriter( filePath );
-
-			headerString = "SWA,Predicted";
-
-			writer2.WriteLine( headerString );
-
-			for ( var angle = 0.1f; angle < 90.0f; angle += 0.1f )
-			{
-				leftPrediction = Predict( -angle );
-				rightPrediction = Predict( angle );
-
-				writer2.WriteLine( $"{angle:F1},{leftPrediction:F6},{rightPrediction:F6}" );
-			}
-		}
-
-		//
-
-		app.Logger.WriteLine( "[SteeringEffects] <<< UpdateCalibration" );
 	}
 
 	[MethodImpl( MethodImplOptions.AggressiveInlining )]
@@ -1088,37 +958,6 @@ public class SteeringEffects
 	public void Tick( App app )
 	{
 		var localization = DataContext.DataContext.Instance.Localization;
-
-		switch ( _currentPhase )
-		{
-			case Phase.ResetCalibration:
-				DoResetCalibration( app );
-				break;
-
-			case Phase.DriveToWallEdge:
-				DoDriveToWallEdge( app );
-				break;
-
-			case Phase.WarmUpTires:
-				DoWarmUpTires( app );
-				break;
-
-			case Phase.DriveToActiveResetPoint:
-				DoDriveActiveResetSavePoint( app );
-				break;
-
-			case Phase.TurningPasses:
-				DoTurningPasses( app );
-				break;
-
-			case Phase.UTurn:
-				DoUTurn( app );
-				break;
-
-			case Phase.Stop:
-				DoStop( app );
-				break;
-		}
 
 		if ( app.MainWindow.SteeringEffectsTabItemIsVisible )
 		{
