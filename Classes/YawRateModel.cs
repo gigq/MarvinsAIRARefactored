@@ -9,7 +9,7 @@ public class YawRateModel( int[] steeringWheelAnglesInDegrees, float[,] yawRateD
 	private readonly float[,] _yawRateDataInDegrees = yawRateDataInDegrees;
 	private readonly int _maxSpeed = maxSpeed;
 
-	public float MaxYawPredictionError = 1.5f; // adjustable threshold
+	public float MaxYawPredictionError = 2.5f; // adjustable threshold
 
 	private readonly int _minStartingMagnitude = 150;
 
