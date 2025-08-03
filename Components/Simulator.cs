@@ -239,7 +239,7 @@ public class Simulator
 		CarSetupLoadTypeName = sessionInfo.DriverInfo.DriverSetupLoadTypeName; // "iracing" or "user"
 		CarSetupName = sessionInfo.DriverInfo.DriverSetupName;
 
-		if ( ( sessionInfo.CarSetup != null ) && ( sessionInfo.CarSetup.Tires != null ) )
+		if ( ( sessionInfo.CarSetup != null ) && ( sessionInfo.CarSetup.Tires != null ) && ( sessionInfo.CarSetup.Tires.TireType != null ) )
 		{
 			CarSetupTireType = sessionInfo.CarSetup.Tires.TireType.TireType; // "wet" or "dry"
 		}
