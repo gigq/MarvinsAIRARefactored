@@ -42,23 +42,26 @@ public class SteeringEffects
 
 	private const float MapScale = 1.225f;
 
-	private const float CarHomePositionX = -1f;
-	private const float CarHomePositionY = -5f;
+	private const float CarHomePositionX = -0.8f;
+	private const float CarHomePositionY = -5.2f;
 
 	private const float WarmUpTiresDrivingRadius = 190f;
-	private const float WarmUpLaps = 10;
-	private const int WarmUpTiresSpeedInKPH = 150;
+	private const int WarmUpLaps = 10;
+	private const int WarmUpTiresSpeedInKPH = 120;
 
 	private const float ActiveResetSavePointX = 0f;
 	private const float ActiveResetSavePointY = 0f;
 
+	private const int MaxCalibrationProgress = 1 + WarmUpLaps + 1 + 17 + 17;
 	private const int MaxSteeringWheelAngleInDegrees = 180;
 	private const int MaxSpeedInKPH = 250;
 	private const int MaxNumSteeringWheelAngles = 72;
+	private const int SteeringWheelAngleIncrement = 10;
 
 	private readonly string _calibrationDirectory = Path.Combine( App.DocumentsFolder, "Calibration" );
 
 	private Phase _currentPhase = Phase.NotCalibrating;
+	private int _calibrationProgress = 0;
 
 	private int _currentWarmUpLapNumber = 0;
 
@@ -66,6 +69,7 @@ public class SteeringEffects
 	private float _targetPositionY = 0f;
 	private int _targetSteeringWheelAngleInDegrees = 0;
 	private int _targetVelocityInKPH = 0;
+	private int _targetAccelerationInKPH = 0;
 	private float _targetDistanceToStop = 0f;
 
 	private RobotMode _robotMode = RobotMode.DriveToTarget;
@@ -78,7 +82,6 @@ public class SteeringEffects
 	private float _robotGearShiftTimer = 0f;
 
 	private int _numSteeringWheelAnglesRecorded = 0;
-	private int _currentSteeringWheelInterval = 0;
 
 	private float _maxAbsYawRateInDegrees = 0f;
 
@@ -222,7 +225,7 @@ public class SteeringEffects
 		}
 	}
 
-	private float PredictNearestDistanceToTarget( App app, float yawRate, float timeStep )
+	private float PredictNearestDistanceToTarget( App app, float yawRate, float deltaSeconds )
 	{
 		var posX = _carPositionX;
 		var posY = _carPositionY;
@@ -231,12 +234,14 @@ public class SteeringEffects
 
 		var yawNorth = app.Simulator.YawNorth;
 
-		while ( true )
-		{
-			yawNorth -= yawRate * timeStep;
+		var maxLoops = (int) ( 20f / deltaSeconds );
 
-			posX += ( app.Simulator.VelocityX * MathF.Sin( yawNorth ) - app.Simulator.VelocityY * MathF.Cos( yawNorth ) ) * timeStep;
-			posY += ( app.Simulator.VelocityX * MathF.Cos( yawNorth ) + app.Simulator.VelocityY * MathF.Sin( yawNorth ) ) * timeStep;
+		for ( var i = 0; i < maxLoops; i++ )
+		{
+			yawNorth -= yawRate * deltaSeconds;
+
+			posX += ( app.Simulator.VelocityX * MathF.Sin( yawNorth ) - app.Simulator.VelocityY * MathF.Cos( yawNorth ) ) * deltaSeconds;
+			posY += ( app.Simulator.VelocityX * MathF.Cos( yawNorth ) + app.Simulator.VelocityY * MathF.Sin( yawNorth ) ) * deltaSeconds;
 
 			var deltaX = _targetPositionX - posX;
 			var deltaY = _targetPositionY - posY;
@@ -304,8 +309,8 @@ public class SteeringEffects
 
 				if ( _robotMode == RobotMode.DriveToTarget )
 				{
-					var nearestDistanceToTargetTurningLeft = PredictNearestDistanceToTarget( app, app.Simulator.YawRate - 0.005f, 0.01f );
-					var nearestDistanceToTargetTurningRight = PredictNearestDistanceToTarget( app, app.Simulator.YawRate + 0.005f, 0.01f );
+					var nearestDistanceToTargetTurningLeft = PredictNearestDistanceToTarget( app, app.Simulator.YawRate - 0.005f, deltaSeconds );
+					var nearestDistanceToTargetTurningRight = PredictNearestDistanceToTarget( app, app.Simulator.YawRate + 0.005f, deltaSeconds );
 
 					var wheelTurnAmount = ( nearestDistanceToTargetTurningRight - nearestDistanceToTargetTurningLeft ) * 0.15f;
 
@@ -327,7 +332,7 @@ public class SteeringEffects
 
 				// adjust throttle and brake
 
-				if ( _targetVelocityInKPH == 0 )
+				if ( ( _targetVelocityInKPH == 0 ) && ( _targetAccelerationInKPH == 0 ) )
 				{
 					_robotThrottle -= deltaSeconds; // go from 100% to 0% throttle in one second
 
@@ -344,20 +349,21 @@ public class SteeringEffects
 						_robotBrake -= deltaSeconds / 2f; // ease off the brake (take 2 seconds to go from 100% to 0% brake)
 					}
 				}
-				else
+				else if ( _targetAccelerationInKPH != 0 )
 				{
-					// should we be increasing throttle?
+					var deltaAccelerationInKPH = _targetAccelerationInKPH - currentAccelerationInMPS * MPSToKPH;
 
+					_robotThrottle += Math.Clamp( deltaAccelerationInKPH * deltaSeconds, -deltaSeconds / 30f, deltaSeconds / 30f );
+				}
+				else if ( _targetVelocityInKPH != 0 )
+				{
 					var deltaTargetVelocityInKPH = _targetVelocityInKPH - app.Simulator.VelocityX * MPSToKPH;
 
-					if ( deltaTargetVelocityInKPH > 0f )
-					{
-						var targetAccelerationInKPH = 1f; // 1 KPH is the target acceleration
+					var targetAccelerationInKPH = Math.Clamp( deltaTargetVelocityInKPH, -0.1f, 1f ); // 1 KPH is the target acceleration
 
-						var deltaAccelerationInKPH = targetAccelerationInKPH - currentAccelerationInMPS * MPSToKPH;
+					var deltaAccelerationInKPH = targetAccelerationInKPH - currentAccelerationInMPS * MPSToKPH;
 
-						_robotThrottle += Math.Clamp( deltaAccelerationInKPH * deltaSeconds, -deltaSeconds / 30f, deltaSeconds / 30f );
-					}
+					_robotThrottle += Math.Clamp( deltaAccelerationInKPH * deltaSeconds, -deltaSeconds / 30f, deltaSeconds / 30f );
 				}
 			}
 		}
@@ -388,6 +394,10 @@ public class SteeringEffects
 
 	private void DoResetCalibration( App app, float deltaSeconds )
 	{
+		// reset calibration progress
+
+		_calibrationProgress = 0;
+
 		// clear out our old calibration data
 
 		_numSteeringWheelAnglesRecorded = 0;
@@ -416,12 +426,15 @@ public class SteeringEffects
 		_targetPositionX = WarmUpTiresDrivingRadius;
 		_targetPositionY = CarHomePositionY;
 		_targetVelocityInKPH = 50;
+		_targetAccelerationInKPH = 0;
 		_targetDistanceToStop = 0f;
 
 		// check if we're getting close and if so, go to the next phase
 
 		if ( _carPositionX >= 50f )
 		{
+			_calibrationProgress++;
+
 			_currentWarmUpLapNumber = 0;
 
 			_currentPhase = Phase.WarmUpTires;
@@ -457,6 +470,7 @@ public class SteeringEffects
 		_targetPositionY = rotatedY;
 
 		_targetVelocityInKPH = WarmUpTiresSpeedInKPH;
+		_targetAccelerationInKPH = 0;
 		_targetDistanceToStop = 0f;
 
 		// check if we are done running warm up laps
@@ -465,6 +479,7 @@ public class SteeringEffects
 		{
 			if ( MathF.Sign( _targetPositionY ) != MathF.Sign( originalTargetPositionY ) )
 			{
+				_calibrationProgress++;
 				_currentWarmUpLapNumber++;
 
 				if ( _currentWarmUpLapNumber > WarmUpLaps )
@@ -486,9 +501,10 @@ public class SteeringEffects
 		_targetPositionX = ActiveResetSavePointX;
 		_targetPositionY = ActiveResetSavePointY;
 
-		// set target velocity
+		// set target velocity and acceleration
 
 		_targetVelocityInKPH = 0;
+		_targetAccelerationInKPH = 0;
 
 		// set target distance to stop
 
@@ -516,15 +532,17 @@ public class SteeringEffects
 			_targetSteeringWheelAngleInDegrees = -MaxSteeringWheelAngleInDegrees;
 			_steeringWheelAnglesInDegrees[ _numSteeringWheelAnglesRecorded ] = _targetSteeringWheelAngleInDegrees;
 			_targetVelocityInKPH = 1;
+			_targetAccelerationInKPH = 1;
 			_targetDistanceToStop = 0f;
 			_maxAbsYawRateInDegrees = 0f;
-			_currentSteeringWheelInterval = 10;
 
 			// tell robot to use fixed steering wheel angle
 
 			_robotMode = RobotMode.FixedSteeringWheelAngle;
 
 			// and we're off
+
+			_calibrationProgress++;
 
 			_currentPhase = Phase.TurningPasses;
 		}
@@ -567,6 +585,10 @@ public class SteeringEffects
 
 			if ( crashed || ( _targetVelocityInKPH > MaxSpeedInKPH ) || ( MathF.Abs( app.Simulator.VelocityY ) > 1.5f ) || ( ( app.Simulator.VelocityX >= ( 40f * KPHToMPS ) ) && ( absYawRateInDegrees < ( _maxAbsYawRateInDegrees * 0.9f ) ) ) )
 			{
+				// update calibration progress
+
+				_calibrationProgress++;
+
 				// increase num steering wheel angles recorded
 
 				_numSteeringWheelAnglesRecorded++;
@@ -583,11 +605,12 @@ public class SteeringEffects
 				}
 				else
 				{
-					_targetSteeringWheelAngleInDegrees = -_targetSteeringWheelAngleInDegrees + _currentSteeringWheelInterval;
+					_targetSteeringWheelAngleInDegrees = -_targetSteeringWheelAngleInDegrees + SteeringWheelAngleIncrement;
 				}
 
 				_steeringWheelAnglesInDegrees[ _numSteeringWheelAnglesRecorded ] = _targetSteeringWheelAngleInDegrees;
 				_targetVelocityInKPH = 1;
+				_targetAccelerationInKPH = 1;
 				_targetDistanceToStop = 0f;
 				_maxAbsYawRateInDegrees = 0f;
 
@@ -597,7 +620,7 @@ public class SteeringEffects
 
 				// detect if it's time to stop
 
-				if ( ( _targetSteeringWheelAngleInDegrees >= -10 ) && ( _targetSteeringWheelAngleInDegrees <= 10 ) )
+				if ( _targetSteeringWheelAngleInDegrees == -10 )
 				{
 					StopCalibration();
 				}
@@ -962,22 +985,21 @@ public class SteeringEffects
 		if ( app.MainWindow.SteeringEffectsTabItemIsVisible )
 		{
 			app.MainWindow.SteeringEffects_Calibration_Phase_Label.Content = $"{localization[ "Phase:" ]} {localization[ _currentPhase.ToString() ]}";
+			app.MainWindow.SteeringEffects_Calibration_Progress_Label.Content = $"{localization[ "Progress:" ]} {_calibrationProgress * 100f / MaxCalibrationProgress:F0}{localization[ "Percent" ]}";
 
-			app.MainWindow.SteeringEffects_Calibration_Throttle_Label.Content = $"{localization[ "Throttle:" ]} {_robotThrottle * 100f:F0}{localization[ "Percent" ]}";
 			app.MainWindow.SteeringEffects_Calibration_Brake_Label.Content = $"{localization[ "Brake:" ]} {_robotBrake * 100f:F0}{localization[ "Percent" ]}";
-
-			app.MainWindow.SteeringEffects_Calibration_SteeringPosition_Label.Content = $"{localization[ "SteeringPosition:" ]} {_robotSteeringWheelAngleInDegrees:F0}{localization[ "Degrees" ]}";
-			app.MainWindow.SteeringEffects_Calibration_SteeringIncrement_Label.Content = $"{localization[ "SteeringIncrement:" ]} {_currentSteeringWheelInterval:F0}{localization[ "Degrees" ]}";
+			app.MainWindow.SteeringEffects_Calibration_Throttle_Label.Content = $"{localization[ "Throttle:" ]} {_robotThrottle * 100f:F0}{localization[ "Percent" ]}";
+			app.MainWindow.SteeringEffects_Calibration_SteeringWheel_Label.Content = $"{localization[ "SteeringWheel:" ]} {_robotSteeringWheelAngleInDegrees:F0}{localization[ "Degrees" ]}";
 
 			app.MainWindow.SteeringEffects_Calibration_YawRate_Label.Content = $"{localization[ "YawRate:" ]} {app.Simulator.YawRate * RadiansToDegrees,6:F1}";
 
 			app.MainWindow.SteeringEffects_Calibration_CarPositionX_Label.Content = $"{localization[ "CarPositionX:" ]} {_carPositionX,6:F1}";
 			app.MainWindow.SteeringEffects_Calibration_CarPositionY_Label.Content = $"{localization[ "CarPositionY:" ]} {_carPositionY,6:F1}";
 
+			app.MainWindow.SteeringEffects_Calibration_Heading_Label.Content = $"{localization[ "Heading:" ]} {app.Simulator.YawNorth * RadiansToDegrees,6:F1}";
+
 			app.MainWindow.SteeringEffects_Calibration_VelocityX_Label.Content = $"{localization[ "VelocityX:" ]} {app.Simulator.VelocityX * MPSToKPH,6:F1}";
 			app.MainWindow.SteeringEffects_Calibration_VelocityY_Label.Content = $"{localization[ "VelocityY:" ]} {app.Simulator.VelocityY * MPSToKPH,6:F1}";
-
-			app.MainWindow.SteeringEffects_Calibration_Heading_Label.Content = $"{localization[ "Heading:" ]} {app.Simulator.YawNorth * RadiansToDegrees,6:F1}";
 
 			var transformGroup = new TransformGroup
 			{
@@ -998,6 +1020,19 @@ public class SteeringEffects
 			else
 			{
 				app.MainWindow.SteeringEffects_TargetPosition_Image.Visibility = Visibility.Hidden;
+			}
+
+			var disableButtons = ( app.Simulator.TrackDisplayName != "Centripetal Circuit" );
+
+			if ( _currentPhase == Phase.NotCalibrating )
+			{
+				app.MainWindow.SteeringEffects_RunCalibration_MairaButton.Disabled = false;
+				app.MainWindow.SteeringEffects_StopCalibration_MairaButton.Disabled = !disableButtons;
+			}
+			else
+			{
+				app.MainWindow.SteeringEffects_RunCalibration_MairaButton.Disabled = !disableButtons;
+				app.MainWindow.SteeringEffects_StopCalibration_MairaButton.Disabled = false;
 			}
 		}
 	}
