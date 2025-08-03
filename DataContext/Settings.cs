@@ -1888,6 +1888,31 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region Steering effects - Understeer calibration file
+
+	private string _steeringEffectsUndersteerCalibrationFile = string.Empty;
+
+	public string SteeringEffectsUndersteerCalibrationFile
+	{
+		get => _steeringEffectsUndersteerCalibrationFile;
+
+		set
+		{
+			if ( value != _steeringEffectsUndersteerCalibrationFile )
+			{
+				_steeringEffectsUndersteerCalibrationFile = value;
+
+				OnPropertyChanged();
+			}
+
+			var app = App.Instance!;
+
+			app.SteeringEffects.LoadCalibration();
+		}
+	}
+
+	#endregion
+
 	#region Steering effects - Understeer strength
 
 	private float _steeringEffectsUndersteerStrength = 0.1f;
