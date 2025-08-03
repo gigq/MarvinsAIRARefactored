@@ -507,8 +507,8 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel Grid.Column="0">
-                                        <controls:MairaButton x:Name="SteeringEffects_RunCalibration_MairaButton" Title="{Binding Localization[RunCalibration]}" Click="SteeringEffects_RunCalibration_MairaButton_Click"/>
-                                        <controls:MairaButton x:Name="SteeringEffects_StopCalibration_MairaButton" Title="{Binding Localization[StopCalibration]}" Click="SteeringEffects_StopCalibration_MairaButton_Click"/>
+                                        <controls:MairaButton x:Name="SteeringEffects_RunCalibration_MairaButton" Title="{Binding Localization[RunCalibration]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_record_on.png" Click="SteeringEffects_RunCalibration_MairaButton_Click"/>
+                                        <controls:MairaButton x:Name="SteeringEffects_StopCalibration_MairaButton" Title="{Binding Localization[StopCalibration]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_cancel.png" Click="SteeringEffects_StopCalibration_MairaButton_Click"/>
                                     </StackPanel>
 
                                     <Image Grid.Column="1" Grid.ColumnSpan="3" Source="/MarvinsAIRARefactored;component/Artwork/Misc/centripetal_circuit.png" Width="640" Height="512" HorizontalAlignment="Center"/>
@@ -516,14 +516,14 @@
                                     <Image Grid.Column="1" Grid.ColumnSpan="3" x:Name="SteeringEffects_TargetPosition_Image" Source="/MarvinsAIRARefactored;component/Artwork/Misc/target_position.png" Width="8" Height="8" RenderTransformOrigin="0.5,0.5" Visibility="Hidden"/>
 
                                     <StackPanel Grid.Column="1" Grid.ColumnSpan="3">
-                                        <Label x:Name="SteeringEffects_Calibration_Phase_Label" FontSize="18" Padding="0" Content="Phase: " FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue" Margin="0,0,0,20"/>
-                                        <Label x:Name="SteeringEffects_Calibration_Throttle_Label" FontSize="18" Padding="0" Content="Throttle: 100%" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                        <Label x:Name="SteeringEffects_Calibration_Brake_Label" FontSize="18" Padding="0" Content="Brake: 100%" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_Phase_Label" FontSize="18" Padding="0" Content="Phase: " FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_Progress_Label" FontSize="18" Padding="0" Content="Phase: " FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
                                     </StackPanel>
 
                                     <StackPanel Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Bottom">
-                                        <Label x:Name="SteeringEffects_Calibration_SteeringPosition_Label" FontSize="18" Padding="0" Content="Steering Wheel: 0°" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                        <Label x:Name="SteeringEffects_Calibration_SteeringIncrement_Label" FontSize="18" Padding="0" Content="Steering Increment: 0°" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_Brake_Label" FontSize="18" Padding="0" Content="Brake: 100%" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_Throttle_Label" FontSize="18" Padding="0" Content="Throttle: 100%" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_SteeringWheel_Label" FontSize="18" Padding="0" Content="Steering Wheel: 0°" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
                                     </StackPanel>
 
                                     <StackPanel Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right">
@@ -533,9 +533,9 @@
                                     </StackPanel>
 
                                     <StackPanel Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                        <Label x:Name="SteeringEffects_Calibration_Heading_Label" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="Heading:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue" Margin="0,0,0,20"/>
                                         <Label x:Name="SteeringEffects_Calibration_VelocityX_Label" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="VX:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                        <Label x:Name="SteeringEffects_Calibration_VelocityY_Label" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="VY:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue" Margin="0,0,0,20"/>
-                                        <Label x:Name="SteeringEffects_Calibration_Heading_Label" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="Heading:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
+                                        <Label x:Name="SteeringEffects_Calibration_VelocityY_Label" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="VY:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
                                     </StackPanel>
 
                                 </Grid>
@@ -548,22 +548,22 @@
                                         </Style>
                                     </UniformGrid.Resources>
 
-                                    <controls:MairaButton Title="{Binding Localization[SteeringWheelLeft]}" Click="SteeringEffects_SteeringWheelLeft_MairaButton_Click"/>
-                                    <controls:MairaButton Title="{Binding Localization[SteeringWheelCenter]}" Click="SteeringEffects_SteeringWheelCenter_MairaButton_Click"/>
-                                    <controls:MairaButton Title="{Binding Localization[SteeringWheelRight]}" Click="SteeringEffects_SteeringWheelRight_MairaButton_Click"/>
-                                    <controls:MairaButton Title="{Binding Localization[SteeringWheel90Left]}" Click="SteeringEffects_SteeringWheel90Left_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[SteeringWheelLeft]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_steering_wheel_left.png" Click="SteeringEffects_SteeringWheelLeft_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[SteeringWheelCenter]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_steering_wheel_center.png" Click="SteeringEffects_SteeringWheelCenter_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[SteeringWheelRight]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_steering_wheel_right.png" Click="SteeringEffects_SteeringWheelRight_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[SteeringWheel90Left]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_steering_wheel_90_left.png" Click="SteeringEffects_SteeringWheel90Left_MairaButton_Click"/>
 
-                                    <controls:MairaButton Title="{Binding Localization[MinThrottle]}" Click="SteeringEffects_MinThrottle_MairaButton_Click"/>
-                                    <controls:MairaButton Title="{Binding Localization[MaxThrottle]}" Click="SteeringEffects_MaxThrottle_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[MinThrottle]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_min_throttle.png" Click="SteeringEffects_MinThrottle_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[MaxThrottle]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_max_throttle.png" Click="SteeringEffects_MaxThrottle_MairaButton_Click"/>
 
-                                    <controls:MairaButton Title="{Binding Localization[ShiftUp]}" Click="SteeringEffects_ShiftUp_MairaButton_Click"/>
-                                    <controls:MairaButton Title="{Binding Localization[ShiftDown]}" Click="SteeringEffects_ShiftDown_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[ShiftUp]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_plus.png" Click="SteeringEffects_ShiftUp_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[ShiftDown]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_minus.png" Click="SteeringEffects_ShiftDown_MairaButton_Click"/>
 
-                                    <controls:MairaButton Title="{Binding Localization[MinBrake]}" Click="SteeringEffects_MinBrake_MairaButton_Click"/>
-                                    <controls:MairaButton Title="{Binding Localization[MaxBrake]}" Click="SteeringEffects_MaxBrake_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[MinBrake]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_min_brake.png" Click="SteeringEffects_MinBrake_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[MaxBrake]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_max_brake.png" Click="SteeringEffects_MaxBrake_MairaButton_Click"/>
 
-                                    <controls:MairaButton Title="{Binding Localization[ActiveResetSave]}" Click="SteeringEffects_ActiveResetSave_MairaButton_Click"/>
-                                    <controls:MairaButton Title="{Binding Localization[ActiveResetRun]}" Click="SteeringEffects_ActiveResetRun_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[ActiveResetSave]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_target.png" Click="SteeringEffects_ActiveResetSave_MairaButton_Click"/>
+                                    <controls:MairaButton Title="{Binding Localization[ActiveResetRun]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_magic.png" Click="SteeringEffects_ActiveResetRun_MairaButton_Click"/>
 
                                 </UniformGrid>
 
