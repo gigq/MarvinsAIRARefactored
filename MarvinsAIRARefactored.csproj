@@ -28,6 +28,14 @@
 
   <ItemGroup>
     <None Remove="Artwork\ButtonIcons\button_icon_dot.png" />
+    <None Remove="Artwork\ButtonIcons\button_icon_max_brake.png" />
+    <None Remove="Artwork\ButtonIcons\button_icon_max_throttle.png" />
+    <None Remove="Artwork\ButtonIcons\button_icon_min_brake.png" />
+    <None Remove="Artwork\ButtonIcons\button_icon_min_throttle.png" />
+    <None Remove="Artwork\ButtonIcons\button_icon_steering_wheel_90_left.png" />
+    <None Remove="Artwork\ButtonIcons\button_icon_steering_wheel_center.png" />
+    <None Remove="Artwork\ButtonIcons\button_icon_steering_wheel_left.png" />
+    <None Remove="Artwork\ButtonIcons\button_icon_steering_wheel_right.png" />
     <None Remove="Artwork\Misc\adminboxx_logo.png" />
     <None Remove="Artwork\Misc\grip-o-meter-bar.png" />
     <None Remove="Artwork\Misc\grip-o-meter.png" />
@@ -49,6 +57,14 @@
   <ItemGroup>
     <EmbeddedResource Include="AdminBoxx\code.py" />
     <Resource Include="Artwork\ButtonIcons\button_icon_dot.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_max_brake.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_max_throttle.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_min_brake.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_min_throttle.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_steering_wheel_90_left.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_steering_wheel_center.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_steering_wheel_left.png" />
+    <Resource Include="Artwork\ButtonIcons\button_icon_steering_wheel_right.png" />
     <Resource Include="Artwork\Misc\adminboxx_logo.png" />
     <Resource Include="Artwork\Misc\grip-o-meter-bar.png" />
     <Resource Include="Artwork\Misc\grip-o-meter.png" />
