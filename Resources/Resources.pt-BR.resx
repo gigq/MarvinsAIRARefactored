@@ -59,7 +59,10 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root"
+    xmlns=""
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -142,7 +145,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="FadeForceFeedback" xml:space="preserve">
-    <value>Diminuir forcefeedback ao entrar ou sair do carro</value>
+    <value>Diminuir force feedback ao entrar ou sair do carro</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="Friction" xml:space="preserve">
@@ -238,7 +241,7 @@
     <comment>App language list</comment>
   </data>
   <data name="TopmostWindow" xml:space="preserve">
-    <value>Manter Janela Acima</value>
+    <value>Manter Janela em Primeiro Plano</value>
     <comment>App</comment>
   </data>
   <data name="TorqueUnits" xml:space="preserve">
@@ -410,7 +413,7 @@
     <comment>Pedals</comment>
   </data>
   <data name="PedalEffects" xml:space="preserve">
-    <value>Efeitos dos Pedais</value>
+    <value>Efeitos</value>
     <comment>Pedals</comment>
   </data>
   <data name="Strength" xml:space="preserve">
@@ -451,7 +454,7 @@
   </data>
   <data name="SteeringEffects" xml:space="preserve">
     <value>Efeitos de Direção</value>
-    <comment>Pedal effects list</comment>
+    <comment>Tab item, Pedal effects list</comment>
   </data>
   <data name="WheelLock" xml:space="preserve">
     <value>Batente Virtual</value>
@@ -863,6 +866,38 @@
   </data>
   <data name="EnableLogitechRPMLights" xml:space="preserve">
     <value>Habilitar LEDs de RPM Logitech</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="Degrees" xml:space="preserve">
+    <value>°</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="CrashProtectionActivated" xml:space="preserve">
+    <value>Proteção de batidas ativada!</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CurbProtectionActivated" xml:space="preserve">
+    <value>Proteção de zebras ativada!</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="PrivateMessages" xml:space="preserve">
+    <value>Mensagens</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CurbProtectionMessagesEnabled" xml:space="preserve">
+    <value>Habilitar mensagens de proteção de zebra</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CrashProtectionMessagesEnabled" xml:space="preserve">
+    <value>Habilitar mensagens de proteção de batidas</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="InputMappedSettingUpdateEnabled" xml:space="preserve">
+    <value>Habilitar mensagens de atualizações de configurações</value>
     <comment>Racing wheel</comment>
   </data>
 </root>

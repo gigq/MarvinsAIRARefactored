@@ -59,7 +59,10 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root"
+    xmlns=""
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -262,7 +265,7 @@
     <comment>Window title</comment>
   </data>
   <data name="PressTheRecordButton" xml:space="preserve">
-    <value>[Нажмите кнопку "запись"]</value>
+    <value>[Нажмите кнопку &quot;запись&quot;]</value>
     <comment>Button mapping</comment>
   </data>
   <data name="Button" xml:space="preserve">
@@ -451,7 +454,7 @@
   </data>
   <data name="SteeringEffects" xml:space="preserve">
     <value>Эффекты руля</value>
-    <comment>Pedal effects list</comment>
+    <comment>Tab item, Pedal effects list</comment>
   </data>
   <data name="WheelLock" xml:space="preserve">
     <value>Блокировка колёс</value>
@@ -858,15 +861,43 @@
     <comment>Sounds</comment>
   </data>
   <data name="SendChatMessages" xml:space="preserve">
-    <value>Направлять водителю сообщения в личку</value>
+    <value>Направлять водителю личные сообщения</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="EnableLogitechRPMLights" xml:space="preserve">
     <value>Включить RPM лампы Logitech</value>
     <comment>Racing wheel</comment>
   </data>
+  <data name="Degrees" xml:space="preserve">
+    <value>°</value>
+    <comment>Steering effects</comment>
+  </data>
   <data name="Master" xml:space="preserve">
     <value>Общая громкость</value>
     <comment>Sounds</comment>
+  </data>
+  <data name="CrashProtectionActivated" xml:space="preserve">
+    <value>Защита от аварий включена!</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CurbProtectionActivated" xml:space="preserve">
+    <value>Защита от поребриков включена!</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="PrivateMessages" xml:space="preserve">
+    <value>Личные сообщения</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CurbProtectionMessagesEnabled" xml:space="preserve">
+    <value>Включить сообщения о срабатывании защиты от поребриков</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CrashProtectionMessagesEnabled" xml:space="preserve">
+    <value>Включить сообщения о срабатывании защиты от аварий</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="InputMappedSettingUpdateEnabled" xml:space="preserve">
+    <value>Включить сообщения об обновлении настроек ввода</value>
+    <comment>Racing wheel</comment>
   </data>
 </root>
