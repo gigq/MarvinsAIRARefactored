@@ -43,7 +43,7 @@ public class SteeringEffects
 	private const float MapScale = 1.225f;
 
 	private const float CarHomePositionX = 0f;
-	private const float CarHomePositionY = -5.4f;
+	private const float CarHomePositionY = -5.5f;
 
 	private const float WarmUpTiresDrivingRadius = 190f;
 	private const int WarmUpLaps = 10;
@@ -79,7 +79,9 @@ public class SteeringEffects
 	private float _robotBrake = 0f;
 	private float _robotThrottle = 0f;
 	private float _robotLastFrameVelocityX = 0f;
+	private bool _robotIsShiftingGears = false;
 	private float _robotGearShiftTimer = 0f;
+	private float _robotGearShiftLockoutTimer = 0f;
 
 	private int _numSteeringWheelAnglesRecorded = 0;
 
@@ -328,6 +330,9 @@ public class SteeringEffects
 		_robotBrake = 0f;
 		_robotThrottle = 0f;
 		_robotLastFrameVelocityX = 0f;
+		_robotIsShiftingGears = false;
+		_robotGearShiftTimer = 0f;
+		_robotGearShiftLockoutTimer = 0f;
 	}
 
 	private void UpdateRobot( App app, float deltaSeconds )
@@ -340,102 +345,118 @@ public class SteeringEffects
 
 			_robotSettleTimer = Math.Min( _robotSettleTimer + deltaSeconds, 1f );
 
+			_robotSteeringWheelAngleInDegrees = 0f;
 			_robotBrake = 0f;
 			_robotThrottle = 0f;
-			_robotSteeringWheelAngleInDegrees = 0f;
 
 			_carPositionX = _carResetPositionX;
 			_carPositionY = _carResetPositionY;
 		}
 		else
 		{
-			if ( app.Simulator.Gear < app.Simulator.NumForwardGears )
+			// shift up when it's time
+
+			if ( _robotIsShiftingGears )
 			{
-				// shift until we get into top gear
+				_robotGearShiftTimer = MathF.Max( 0f, _robotGearShiftTimer - deltaSeconds );
 
-				_robotGearShiftTimer += deltaSeconds;
-
-				if ( _robotGearShiftTimer >= 1f )
+				if ( _robotGearShiftTimer == 0f )
 				{
-					_robotGearShiftTimer = 0f;
+					_robotIsShiftingGears = false;
 
 					app.VirtualJoystick.ShiftUp = true;
 				}
+			}
 
-				// apply throttle in 1st gear for those cars with launch control
+			// check if we need to shift gears
 
-				if ( app.Simulator.Gear == 1 )
+			_robotGearShiftLockoutTimer = MathF.Max( 0f, _robotGearShiftLockoutTimer - deltaSeconds );
+
+			if ( _robotGearShiftLockoutTimer == 0f )
+			{
+				if ( ( app.Simulator.Gear == 0 ) || ( app.Simulator.RPM >= ( app.Simulator.ShiftLightsShiftRPM * 0.9f ) ) )
 				{
-					_robotThrottle = 1f;
+					_robotIsShiftingGears = true;
+					_robotGearShiftTimer = 1f;
+					_robotGearShiftLockoutTimer = 5f;
 				}
-				else
+				else if ( ( app.Simulator.Gear > 1 ) && ( _targetVelocityInKPH == 0 ) && ( app.Simulator.RPM < ( app.Simulator.ShiftLightsShiftRPM * 0.5f ) ) )
 				{
-					_robotThrottle = 0f;
+					_robotGearShiftLockoutTimer = 1f;
+
+					app.VirtualJoystick.ShiftDown = true;
 				}
+			}
+
+			// adjust steering wheel
+
+			if ( _robotMode == RobotMode.DriveToTarget )
+			{
+				var nearestDistanceToTargetTurningLeft = PredictNearestDistanceToTarget( app, app.Simulator.YawRate - 0.005f, deltaSeconds );
+				var nearestDistanceToTargetTurningRight = PredictNearestDistanceToTarget( app, app.Simulator.YawRate + 0.005f, deltaSeconds );
+
+				var wheelTurnAmount = ( nearestDistanceToTargetTurningRight - nearestDistanceToTargetTurningLeft ) * 0.15f;
+
+				_robotSteeringWheelAngleInDegrees += Math.Clamp( wheelTurnAmount, -0.25f, 0.25f ) * Math.Min( 1f, app.Simulator.VelocityX * 0.25f );
 			}
 			else
 			{
+				var deltaSteeringWheelAngleInDegrees = _targetSteeringWheelAngleInDegrees - _robotSteeringWheelAngleInDegrees;
 
-				// adjust steering wheel
-
-				if ( _robotMode == RobotMode.DriveToTarget )
+				if ( MathF.Abs( deltaSteeringWheelAngleInDegrees ) < 0.5f )
 				{
-					var nearestDistanceToTargetTurningLeft = PredictNearestDistanceToTarget( app, app.Simulator.YawRate - 0.005f, deltaSeconds );
-					var nearestDistanceToTargetTurningRight = PredictNearestDistanceToTarget( app, app.Simulator.YawRate + 0.005f, deltaSeconds );
-
-					var wheelTurnAmount = ( nearestDistanceToTargetTurningRight - nearestDistanceToTargetTurningLeft ) * 0.15f;
-
-					_robotSteeringWheelAngleInDegrees += Math.Clamp( wheelTurnAmount, -0.25f, 0.25f ) * Math.Min( 1f, app.Simulator.VelocityX * 0.25f );
+					_robotSteeringWheelAngleInDegrees = _targetSteeringWheelAngleInDegrees;
 				}
 				else
 				{
-					var deltaSteeringWheelAngleInDegrees = _targetSteeringWheelAngleInDegrees - _robotSteeringWheelAngleInDegrees;
-
-					if ( MathF.Abs( deltaSteeringWheelAngleInDegrees ) < 0.5f )
-					{
-						_robotSteeringWheelAngleInDegrees = _targetSteeringWheelAngleInDegrees;
-					}
-					else
-					{
-						_robotSteeringWheelAngleInDegrees = Misc.Lerp( _robotSteeringWheelAngleInDegrees, _targetSteeringWheelAngleInDegrees, 0.15f );
-					}
+					_robotSteeringWheelAngleInDegrees = Misc.Lerp( _robotSteeringWheelAngleInDegrees, _targetSteeringWheelAngleInDegrees, 0.15f );
 				}
+			}
 
-				// adjust throttle and brake
+			// adjust throttle and brake
 
-				if ( ( _targetVelocityInKPH == 0 ) && ( _targetAccelerationInKPH == 0 ) )
+			if ( _robotIsShiftingGears )
+			{
+				_robotThrottle -= deltaSeconds / 6f; // go from 100% to 0% throttle in six seconds
+			}
+			else if ( ( _targetVelocityInKPH == 0 ) && ( _targetAccelerationInKPH == 0 ) )
+			{
+				var currentDistanceToStop = -( ( app.Simulator.VelocityX * app.Simulator.VelocityX ) / ( 2f * currentAccelerationInMPS ) ); // how far will the car go before we come to a complete stop at the current acceleration?
+
+				var deltaDistanceToStop = _targetDistanceToStop - currentDistanceToStop;
+
+				if ( ( currentAccelerationInMPS > 0f ) || ( deltaDistanceToStop < 0f ) )
 				{
+					_robotBrake += MathF.Min( deltaSeconds / 2f, -deltaDistanceToStop * 0.01f ); // increase brake (take 2 seconds to go from 0% to 100% brake)
+
 					_robotThrottle -= deltaSeconds; // go from 100% to 0% throttle in one second
-
-					var currentDistanceToStop = -( ( app.Simulator.VelocityX * app.Simulator.VelocityX ) / ( 2f * currentAccelerationInMPS ) ); // how far will the car go before we come to a complete stop at the current acceleration?
-
-					var deltaDistanceToStop = _targetDistanceToStop - currentDistanceToStop;
-
-					if ( ( currentAccelerationInMPS > 0f ) || ( deltaDistanceToStop < 0f ) )
-					{
-						_robotBrake += MathF.Min( deltaSeconds / 2f, -deltaDistanceToStop * 0.01f ); // increase brake (take 2 seconds to go from 0% to 100% brake)
-					}
-					else
-					{
-						_robotBrake -= deltaSeconds / 2f; // ease off the brake (take 2 seconds to go from 100% to 0% brake)
-					}
 				}
-				else if ( _targetAccelerationInKPH != 0 )
+				else if ( _robotBrake > 0f )
 				{
-					var deltaAccelerationInKPH = _targetAccelerationInKPH - currentAccelerationInMPS * MPSToKPH;
+					_robotBrake -= deltaSeconds / 2f; // ease off the brake (take 2 seconds to go from 100% to 0% brake)
 
-					_robotThrottle += Math.Clamp( deltaAccelerationInKPH * deltaSeconds, -deltaSeconds / 30f, deltaSeconds / 30f );
+					_robotThrottle -= deltaSeconds; // go from 100% to 0% throttle in one second
 				}
-				else if ( _targetVelocityInKPH != 0 )
+				else
 				{
-					var deltaTargetVelocityInKPH = _targetVelocityInKPH - app.Simulator.VelocityX * MPSToKPH;
-
-					var targetAccelerationInKPH = Math.Clamp( deltaTargetVelocityInKPH, -0.1f, 1f ); // 1 KPH is the target acceleration
-
-					var deltaAccelerationInKPH = targetAccelerationInKPH - currentAccelerationInMPS * MPSToKPH;
-
-					_robotThrottle += Math.Clamp( deltaAccelerationInKPH * deltaSeconds, -deltaSeconds / 30f, deltaSeconds / 30f );
+					_robotThrottle += Math.Clamp( deltaDistanceToStop * 0.01f, -deltaSeconds / 30f, deltaSeconds / 30f );
 				}
+			}
+			else if ( _targetAccelerationInKPH != 0 )
+			{
+				var deltaAccelerationInKPH = _targetAccelerationInKPH - currentAccelerationInMPS * MPSToKPH;
+
+				_robotThrottle += Math.Clamp( deltaAccelerationInKPH * deltaSeconds, -deltaSeconds / 30f, deltaSeconds / 30f );
+			}
+			else if ( _targetVelocityInKPH != 0 )
+			{
+				var deltaTargetVelocityInKPH = _targetVelocityInKPH - app.Simulator.VelocityX * MPSToKPH;
+
+				var targetAccelerationInKPH = Math.Clamp( deltaTargetVelocityInKPH, -0.1f, 2f ); // 2 KPH/s is the target acceleration in this mode
+
+				var deltaAccelerationInKPH = targetAccelerationInKPH - currentAccelerationInMPS * MPSToKPH;
+
+				_robotThrottle += Math.Clamp( deltaAccelerationInKPH * deltaSeconds, -deltaSeconds / 30f, deltaSeconds / 30f );
 			}
 		}
 
@@ -508,6 +529,8 @@ public class SteeringEffects
 
 			_currentWarmUpLapNumber = 0;
 
+			_targetPositionY = 1f;
+
 			_currentPhase = Phase.WarmUpTires;
 		}
 
@@ -553,7 +576,7 @@ public class SteeringEffects
 				_calibrationProgress++;
 				_currentWarmUpLapNumber++;
 
-				if ( _currentWarmUpLapNumber > WarmUpLaps )
+				if ( _currentWarmUpLapNumber >= WarmUpLaps )
 				{
 					_currentPhase = Phase.DriveToActiveResetPoint;
 				}
@@ -637,7 +660,7 @@ public class SteeringEffects
 
 			// check if we've reached our target speed
 
-			if ( !crashed && ( app.Simulator.VelocityX >= _targetVelocityInKPH * KPHToMPS ) )
+			if ( !crashed && ( _robotGearShiftLockoutTimer == 0f ) && ( app.Simulator.VelocityX >= _targetVelocityInKPH * KPHToMPS ) )
 			{
 				// yes - save the data
 
@@ -654,7 +677,7 @@ public class SteeringEffects
 
 			// check if we are done with this pass
 
-			if ( crashed || ( _targetVelocityInKPH > MaxSpeedInKPH ) || ( MathF.Abs( app.Simulator.VelocityY ) > 1.5f ) || ( ( app.Simulator.VelocityX >= ( 40f * KPHToMPS ) ) && ( absYawRateInDegrees < ( _maxAbsYawRateInDegrees * 0.9f ) ) ) )
+			if ( crashed || ( _targetVelocityInKPH > MaxSpeedInKPH ) || ( MathF.Abs( app.Simulator.VelocityY ) > 1.5f ) || ( ( app.Simulator.VelocityX >= ( 40f * KPHToMPS ) ) && ( _robotGearShiftLockoutTimer == 0f ) && ( absYawRateInDegrees < ( _maxAbsYawRateInDegrees * 0.9f ) ) ) )
 			{
 				// update calibration progress
 
@@ -1071,6 +1094,7 @@ public class SteeringEffects
 			app.MainWindow.SteeringEffects_Calibration_Phase_Label.Content = $"{localization[ "Phase:" ]} {localization[ _currentPhase.ToString() ]}";
 			app.MainWindow.SteeringEffects_Calibration_Progress_Label.Content = $"{localization[ "Progress:" ]} {_calibrationProgress * 100f / MaxCalibrationProgress:F0}{localization[ "Percent" ]}";
 
+			app.MainWindow.SteeringEffects_Calibration_RPM_Label.Content = $"{localization[ "RPM:" ]} {app.Simulator.RPM / app.Simulator.ShiftLightsShiftRPM * 100f:F0}{localization[ "Percent" ]}";
 			app.MainWindow.SteeringEffects_Calibration_Brake_Label.Content = $"{localization[ "Brake:" ]} {_robotBrake * 100f:F0}{localization[ "Percent" ]}";
 			app.MainWindow.SteeringEffects_Calibration_Throttle_Label.Content = $"{localization[ "Throttle:" ]} {_robotThrottle * 100f:F0}{localization[ "Percent" ]}";
 			app.MainWindow.SteeringEffects_Calibration_SteeringWheel_Label.Content = $"{localization[ "SteeringWheel:" ]} {_robotSteeringWheelAngleInDegrees:F0}{localization[ "Degrees" ]}";
