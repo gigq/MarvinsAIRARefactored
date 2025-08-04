@@ -42,7 +42,7 @@ public class SteeringEffects
 
 	private const float MapScale = 1.225f;
 
-	private const float CarHomePositionX = -0.1f;
+	private const float CarHomePositionX = 0f;
 	private const float CarHomePositionY = -5.4f;
 
 	private const float WarmUpTiresDrivingRadius = 190f;
@@ -151,7 +151,7 @@ public class SteeringEffects
 		app.Logger.WriteLine( "[SteeringEffects] <<< RunCalibration" );
 	}
 
-	public void StopCalibration()
+	public void StopCalibration( bool saveCalibration )
 	{
 		var app = App.Instance!;
 
@@ -161,13 +161,16 @@ public class SteeringEffects
 
 		_currentPhase = Phase.Stop;
 
-		// save the calibration data
+		if ( saveCalibration )
+		{
+			// save the calibration data
 
-		SaveCalibration();
+			SaveCalibration();
 
-		// load the calibration data
+			// load the calibration data
 
-		LoadCalibration();
+			LoadCalibration();
+		}
 
 		app.Logger.WriteLine( "[SteeringEffects] <<< StopCalibration" );
 	}
@@ -357,6 +360,17 @@ public class SteeringEffects
 					_robotGearShiftTimer = 0f;
 
 					app.VirtualJoystick.ShiftUp = true;
+				}
+
+				// apply throttle in 1st gear for those cars with launch control
+
+				if ( app.Simulator.Gear == 1 )
+				{
+					_robotThrottle = 1f;
+				}
+				else
+				{
+					_robotThrottle = 0f;
 				}
 			}
 			else
@@ -679,7 +693,7 @@ public class SteeringEffects
 
 				if ( _targetSteeringWheelAngleInDegrees == -10 )
 				{
-					StopCalibration();
+					StopCalibration( true );
 				}
 			}
 		}

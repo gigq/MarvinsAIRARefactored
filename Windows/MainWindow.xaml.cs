@@ -684,7 +684,7 @@ public partial class MainWindow : Window
 	{
 		var app = App.Instance!;
 
-		app.SteeringEffects.StopCalibration();
+		app.SteeringEffects.StopCalibration( false );
 	}
 
 	private void SteeringEffects_SteeringWheelLeft_MairaButton_Click( object sender, RoutedEventArgs e )
