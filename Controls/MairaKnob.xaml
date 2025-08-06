@@ -23,22 +23,40 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="0" Margin="0,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                    <Image x:Name="ButtonFace_Default_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_face_default.png" Width="48" Height="48"/>
-                    <Image x:Name="ButtonFace_Pressed_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_face_pressed.png" Width="48" Height="48" Visibility="Hidden"/>
+                <Image Grid.Column="0" Grid.RowSpan="2" x:Name="Knob_Image" Width="24" Height="24" RenderTransformOrigin="0.5,0.5" MouseDown="KnobImage_Image_MouseDown" MouseMove="KnobImage_Image_MouseMove" MouseUp="KnobImage_Image_MouseUp" LostMouseCapture="KnobImage_Image_LostMouseCapture" Cursor="SizeWE" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" UseLayoutRounding="True">
 
-                    <Image Source="/MarvinsAIRARefactored;component/Artwork/Button/button_border_default.png" Width="48" Height="48"/>
+                    <Image.Style>
 
-                    <Image x:Name="ButtonIcon_Image" Source="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_knob.png" Width="48" Height="48" RenderTransformOrigin="0.5,0.5" MouseDown="KnobImage_Image_MouseDown" MouseMove="KnobImage_Image_MouseMove" MouseUp="KnobImage_Image_MouseUp" LostMouseCapture="KnobImage_Image_LostMouseCapture" Cursor="SizeWE" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Style TargetType="Image">
 
-                </Grid>
+                            <Setter Property="Source" Value="/MarvinsAIRARefactored;component/Artwork/Knob/knob_default.png"/>
 
-                <Grid Grid.Column="1">
+                            <Style.Triggers>
+
+                                <DataTrigger Binding="{Binding IsDragging, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                    <Setter Property="Source" Value="/MarvinsAIRARefactored;component/Artwork/Knob/knob_pressed.png"/>
+                                </DataTrigger>
+
+                            </Style.Triggers>
+
+                        </Style>
+
+                    </Image.Style>
+
+                </Image>
+
+                <Grid Grid.Column="2" Grid.RowSpan="2">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -50,12 +68,8 @@
 
                 </Grid>
 
-                <StackPanel Grid.Column="2" Margin="10,0,0,0">
-
-                    <controls:MairaMappableButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_plus.png" Width="24" Height="24" Padding="0" Margin="1" Click="Plus_MairaMappableButton_Click" Small="True" ButtonMappings="{Binding PlusButtonMappings, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                    <controls:MairaMappableButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_minus.png" Width="24" Height="24" Padding="0" Margin="1" Click="Minus_MairaMappableButton_Click" Small="True" ButtonMappings="{Binding MinusButtonMappings, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-
-                </StackPanel>
+                <controls:MairaMappableButton Grid.Column="4" Grid.Row="0" Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_plus.png" Width="24" Height="24" Padding="0" Margin="0,0,0,1" Click="Plus_MairaMappableButton_Click" Small="True" ButtonMappings="{Binding PlusButtonMappings, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <controls:MairaMappableButton Grid.Column="4" Grid.Row="1" Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_minus.png" Width="24" Height="24" Padding="0" Margin="0,1,0,0" Click="Minus_MairaMappableButton_Click" Small="True" ButtonMappings="{Binding MinusButtonMappings, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 
             </Grid>
 

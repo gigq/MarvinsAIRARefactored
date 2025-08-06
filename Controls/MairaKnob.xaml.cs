@@ -24,9 +24,8 @@ public partial class MairaKnob : UserControl
 {
 	private const int ResetHoldMilliseconds = 1000;
 
-	private readonly RotateTransform _knobRotation = new( 0, 0.5, 0.5 );
+	private readonly RotateTransform _knobRotation = new( 0 );
 
-	private bool _isDragging = false;
 	private POINT _draggingCenter;
 
 	private readonly DispatcherTimer _resetDispatcherTimer = new() { Interval = TimeSpan.FromMilliseconds( 20 ) };
@@ -37,7 +36,7 @@ public partial class MairaKnob : UserControl
 	{
 		InitializeComponent();
 
-		ButtonIcon_Image.RenderTransform = _knobRotation;
+		Knob_Image.RenderTransform = _knobRotation;
 
 		_resetDispatcherTimer.Tick += ResetDispatcherTimer_Tick;
 
@@ -45,6 +44,14 @@ public partial class MairaKnob : UserControl
 	}
 
 	#region Dependency Properties
+
+	public static readonly DependencyProperty IsDraggingProperty = DependencyProperty.Register( nameof( IsDragging ), typeof( bool ), typeof( MairaKnob ), new PropertyMetadata( false ) );
+
+	public bool IsDragging
+	{
+		get => (bool) GetValue( IsDraggingProperty );
+		set => SetValue( IsDraggingProperty, value );
+	}
 
 	public static readonly DependencyProperty TitleProperty = DependencyProperty.Register( nameof( Title ), typeof( string ), typeof( MairaKnob ), new PropertyMetadata( string.Empty, OnTitleChanged ) );
 
@@ -171,10 +178,7 @@ public partial class MairaKnob : UserControl
 	{
 		if ( e.LeftButton == MouseButtonState.Pressed )
 		{
-			_isDragging = true;
-
-			ButtonFace_Default_Image.Visibility = Visibility.Hidden;
-			ButtonFace_Pressed_Image.Visibility = Visibility.Visible;
+			IsDragging = true;
 
 			User32.GetCursorPos( out _draggingCenter );
 
@@ -186,7 +190,7 @@ public partial class MairaKnob : UserControl
 
 	private void KnobImage_Image_MouseMove( object sender, MouseEventArgs e )
 	{
-		if ( _isDragging )
+		if ( IsDragging )
 		{
 			User32.GetCursorPos( out POINT current );
 
@@ -203,7 +207,7 @@ public partial class MairaKnob : UserControl
 
 	private void KnobImage_Image_MouseUp( object sender, MouseButtonEventArgs e )
 	{
-		if ( _isDragging && ( e.ChangedButton == MouseButton.Left ) )
+		if ( IsDragging && ( e.ChangedButton == MouseButton.Left ) )
 		{
 			EndDrag();
 		}
@@ -211,7 +215,7 @@ public partial class MairaKnob : UserControl
 
 	private void KnobImage_Image_LostMouseCapture( object sender, MouseEventArgs e )
 	{
-		if ( _isDragging )
+		if ( IsDragging )
 		{
 			EndDrag();
 		}
@@ -276,10 +280,7 @@ public partial class MairaKnob : UserControl
 	}
 	private void EndDrag()
 	{
-		_isDragging = false;
-
-		ButtonFace_Default_Image.Visibility = Visibility.Visible;
-		ButtonFace_Pressed_Image.Visibility = Visibility.Hidden;
+		IsDragging = false;
 
 		_ = User32.ShowCursor( true );
 
