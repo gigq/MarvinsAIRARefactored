@@ -776,6 +776,50 @@ public partial class App : Application
 				}
 			}
 
+			// racing wheel parked friction knob
+
+			if ( CheckMappedButtons( settings.RacingWheelParkedFrictionPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.RacingWheelParkedFriction += 0.05f;
+
+				if ( settings.RacingWheelInputMappedSettingUpdateEnabled )
+				{
+					RacingWheel.SendChatMessage( "ParkedFriction", settings.RacingWheelParkedFrictionString );
+				}
+			}
+
+			if ( CheckMappedButtons( settings.RacingWheelParkedFrictionMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.RacingWheelParkedFriction -= 0.05f;
+
+				if ( settings.RacingWheelInputMappedSettingUpdateEnabled )
+				{
+					RacingWheel.SendChatMessage( "ParkedFriction", settings.RacingWheelParkedFrictionString );
+				}
+			}
+
+			// racing wheel parked wheel centering strength knob
+
+			if ( CheckMappedButtons( settings.RacingWheelParkedWheelCenteringStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.RacingWheelParkedWheelCenteringStrength += 0.05f;
+
+				if ( settings.RacingWheelInputMappedSettingUpdateEnabled )
+				{
+					RacingWheel.SendChatMessage( "ParkedWheelCenteringStrength", settings.RacingWheelParkedWheelCenteringStrengthString );
+				}
+			}
+
+			if ( CheckMappedButtons( settings.RacingWheelParkedWheelCenteringStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.RacingWheelParkedWheelCenteringStrength -= 0.05f;
+
+				if ( settings.RacingWheelInputMappedSettingUpdateEnabled )
+				{
+					RacingWheel.SendChatMessage( "ParkedWheelCenteringStrength", settings.RacingWheelParkedWheelCenteringStrengthString );
+				}
+			}
+
 			// racing wheel soft lock knob
 
 			if ( CheckMappedButtons( settings.RacingWheelSoftLockStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
@@ -818,6 +862,100 @@ public partial class App : Application
 				{
 					RacingWheel.SendChatMessage( "Friction", settings.RacingWheelFrictionString );
 				}
+			}
+
+			// racing wheel wheel centering strength knob
+
+			if ( CheckMappedButtons( settings.RacingWheelWheelCenteringStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.RacingWheelWheelCenteringStrength += 0.05f;
+
+				if ( settings.RacingWheelInputMappedSettingUpdateEnabled )
+				{
+					RacingWheel.SendChatMessage( "WheelCenteringStrength", settings.RacingWheelWheelCenteringStrengthString );
+				}
+			}
+
+			if ( CheckMappedButtons( settings.RacingWheelWheelCenteringStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.RacingWheelWheelCenteringStrength -= 0.05f;
+
+				if ( settings.RacingWheelInputMappedSettingUpdateEnabled )
+				{
+					RacingWheel.SendChatMessage( "WheelCenteringStrength", settings.RacingWheelWheelCenteringStrengthString );
+				}
+			}
+
+			// steering effects understeer strength
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerStrength += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerStrength -= 0.05f;
+			}
+
+			// steering effects understeer warning threshold
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWarningThresholdPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerWarningThreshold += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWarningThresholdMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerWarningThreshold -= 0.05f;
+			}
+
+			// steering effects understeer threshold
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerThresholdPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerThreshold += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerThresholdMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerThreshold -= 0.05f;
+			}
+
+			// steering effects understeer curve
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerCurvePlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerCurve += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerCurveMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerCurve -= 0.05f;
+			}
+
+			// steering effects understeer warning frequency
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWarningFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerWarningFrequency += 1f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWarningFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerWarningFrequency -= 1f;
+			}
+
+			// steering effects understeer frequency
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerFrequency += 1f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsUndersteerFrequency -= 1f;
 			}
 
 			// pedals clutch strength 1 knob

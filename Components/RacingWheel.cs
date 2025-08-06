@@ -607,11 +607,15 @@ public class RacingWheel
 
 			outputTorque *= crashProtectionScale;
 
+			// calculate parked factor (0-5 MPH)
+
+			var parkedFactor = Math.Clamp( 1f - app.Simulator.Velocity / 2.2352f, 0f, 1f );
+
 			// reduce forces when parked
 
 			if ( settings.RacingWheelParkedStrength < 1f )
 			{
-				outputTorque *= Misc.Lerp( settings.RacingWheelParkedStrength, 1f, app.Simulator.Velocity / 2.2352f ); // V <= 5 MPH
+				outputTorque *= Misc.Lerp( 1f, settings.RacingWheelParkedStrength, parkedFactor );
 			}
 
 			// add wheel LFE
@@ -640,11 +644,43 @@ public class RacingWheel
 				}
 			}
 
-			// apply friction torque
+			// apply normal friction torque
 
 			if ( settings.RacingWheelFriction > 0f )
 			{
-				outputTorque += app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelFriction;
+				outputTorque += Misc.Lerp( app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelFriction, 0f, parkedFactor );
+			}
+
+			// apply parked friction torque
+
+			if ( settings.RacingWheelParkedFriction > 0f )
+			{
+				outputTorque += Misc.Lerp( 0f, app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelParkedFriction, parkedFactor );
+			}
+
+			// center wheel while racing and parked
+
+			if ( app.Simulator.IsOnTrack )
+			{
+				var racingCenteringForce = 0f;
+
+				if ( settings.RacingWheelCenterWheelWhileRacing )
+				{
+					var centeringForce = Math.Clamp( app.DirectInput.ForceFeedbackWheelPosition, -0.25f, 0.25f ) + app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelWheelCenteringStrength * 0.1f;
+
+					racingCenteringForce = Math.Clamp( centeringForce, -1f, 1f );
+				}
+
+				var parkedCenteringForce = 0f;
+
+				if ( settings.RacingWheelCenterWheelWhileParked )
+				{
+					var centeringForce = Math.Clamp( app.DirectInput.ForceFeedbackWheelPosition, -0.25f, 0.25f ) + app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelParkedWheelCenteringStrength * 0.1f;
+
+					parkedCenteringForce = Math.Clamp( centeringForce, -1f, 1f );
+				}
+
+				outputTorque += Misc.Lerp( racingCenteringForce, parkedCenteringForce, parkedFactor );
 			}
 
 			// apply fade

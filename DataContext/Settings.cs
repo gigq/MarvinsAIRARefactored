@@ -289,8 +289,6 @@ public class Settings : INotifyPropertyChanged
 	}
 
 	public ContextSwitches RacingWheelWheelForceContextSwitches { get; set; } = new( true, false, false, false, false );
-	public ButtonMappings RacingWheelWheelForcePlusButtonMappings { get; set; } = new();
-	public ButtonMappings RacingWheelWheelForceMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
@@ -1503,7 +1501,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region Racing wheel - Parked strength
 
-	private float _racingWheelParkedStrength = 0.25f;
+	private float _racingWheelParkedStrength = 0.15f;
 
 	public float RacingWheelParkedStrength
 	{
@@ -1549,9 +1547,117 @@ public class Settings : INotifyPropertyChanged
 		}
 	}
 
-	public ContextSwitches RacingWheelParkedStrengthContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ContextSwitches RacingWheelParkedStrengthContextSwitches { get; set; } = new( true, false, false, false, false );
 	public ButtonMappings RacingWheelParkedStrengthPlusButtonMappings { get; set; } = new();
 	public ButtonMappings RacingWheelParkedStrengthMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Racing wheel - Parked friction
+
+	private float _racingWheelParkedFriction = 0f;
+
+	public float RacingWheelParkedFriction
+	{
+		get => _racingWheelParkedFriction;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 1f );
+
+			if ( value != _racingWheelParkedFriction )
+			{
+				_racingWheelParkedFriction = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _racingWheelParkedFriction == 0f )
+			{
+				RacingWheelParkedFrictionString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				RacingWheelParkedFrictionString = $"{_racingWheelParkedFriction * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _racingWheelParkedFrictionString = string.Empty;
+
+	[XmlIgnore]
+	public string RacingWheelParkedFrictionString
+	{
+		get => _racingWheelParkedFrictionString;
+
+		set
+		{
+			if ( value != _racingWheelParkedFrictionString )
+			{
+				_racingWheelParkedFrictionString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches RacingWheelParkedFrictionContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings RacingWheelParkedFrictionPlusButtonMappings { get; set; } = new();
+	public ButtonMappings RacingWheelParkedFrictionMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Racing wheel - Parked wheel centering strength
+
+	private float _racingWheelParkedWheelCenteringStrength = 0.25f;
+
+	public float RacingWheelParkedWheelCenteringStrength
+	{
+		get => _racingWheelParkedWheelCenteringStrength;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 1f );
+
+			if ( value != _racingWheelParkedWheelCenteringStrength )
+			{
+				_racingWheelParkedWheelCenteringStrength = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _racingWheelParkedWheelCenteringStrength == 0f )
+			{
+				RacingWheelParkedWheelCenteringStrengthString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				RacingWheelParkedWheelCenteringStrengthString = $"{_racingWheelParkedWheelCenteringStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _racingWheelParkedWheelCenteringStrengthString = string.Empty;
+
+	[XmlIgnore]
+	public string RacingWheelParkedWheelCenteringStrengthString
+	{
+		get => _racingWheelParkedWheelCenteringStrengthString;
+
+		set
+		{
+			if ( value != _racingWheelParkedWheelCenteringStrengthString )
+			{
+				_racingWheelParkedWheelCenteringStrengthString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches RacingWheelParkedWheelCenteringStrengthContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings RacingWheelParkedWheelCenteringStrengthPlusButtonMappings { get; set; } = new();
+	public ButtonMappings RacingWheelParkedWheelCenteringStrengthMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
@@ -1663,6 +1769,60 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region Racing wheel - Wheel centering strength
+
+	private float _racingWheelWheelCenteringStrength = 0.75f;
+
+	public float RacingWheelWheelCenteringStrength
+	{
+		get => _racingWheelWheelCenteringStrength;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 1f );
+
+			if ( value != _racingWheelWheelCenteringStrength )
+			{
+				_racingWheelWheelCenteringStrength = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _racingWheelWheelCenteringStrength == 0f )
+			{
+				RacingWheelWheelCenteringStrengthString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				RacingWheelWheelCenteringStrengthString = $"{_racingWheelWheelCenteringStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _racingWheelWheelCenteringStrengthString = string.Empty;
+
+	[XmlIgnore]
+	public string RacingWheelWheelCenteringStrengthString
+	{
+		get => _racingWheelWheelCenteringStrengthString;
+
+		set
+		{
+			if ( value != _racingWheelWheelCenteringStrengthString )
+			{
+				_racingWheelWheelCenteringStrengthString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches RacingWheelWheelCenteringStrengthContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings RacingWheelWheelCenteringStrengthPlusButtonMappings { get; set; } = new();
+	public ButtonMappings RacingWheelWheelCenteringStrengthMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
 	#region Racing wheel - Send chat messages
 
 	private bool _racingWheelSendChatMessages = true;
@@ -1767,6 +1927,52 @@ public class Settings : INotifyPropertyChanged
 	}
 
 	public ContextSwitches RacingWheelCenterWheelWhenNotInCarContextSwitches { get; set; } = new( false, false, false, false, false );
+
+	#endregion
+
+	#region Racing wheel - Center wheel while racing
+
+	private bool _racingWheelCenterWheelWhileRacing = false;
+
+	public bool RacingWheelCenterWheelWhileRacing
+	{
+		get => _racingWheelCenterWheelWhileRacing;
+
+		set
+		{
+			if ( value != _racingWheelCenterWheelWhileRacing )
+			{
+				_racingWheelCenterWheelWhileRacing = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches RacingWheelCenterWheelWhileRacingContextSwitches { get; set; } = new( false, false, false, false, false );
+
+	#endregion
+
+	#region Racing wheel - Center wheel while parked
+
+	private bool _racingWheelCenterWheelWhileParked = true;
+
+	public bool RacingWheelCenterWheelWhileParked
+	{
+		get => _racingWheelCenterWheelWhileParked;
+
+		set
+		{
+			if ( value != _racingWheelCenterWheelWhileParked )
+			{
+				_racingWheelCenterWheelWhileParked = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches RacingWheelCenterWheelWhileParkedContextSwitches { get; set; } = new( false, false, false, false, false );
 
 	#endregion
 
