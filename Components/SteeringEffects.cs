@@ -197,17 +197,17 @@ public class SteeringEffects
 			{
 				var settings = DataContext.DataContext.Instance.Settings;
 
-				var absSteeringWheelAngleInDegrees = MathF.Abs( app.Simulator.SteeringWheelAngle * RadiansToDegrees );
+				var absSteeringWheelAngleInDegrees = Math.Min( MaxSteeringWheelAngleInDegrees, MathF.Abs( app.Simulator.SteeringWheelAngle * RadiansToDegrees ) );
 
 				var prediction = Predict( -absSteeringWheelAngleInDegrees );
 
-				MaximumGrip = Misc.Lerp( 0.5f, 1.0f, ( prediction - _scaleBottom ) / ( _scaleTop - _scaleBottom ) );
+				MaximumGrip = Misc.Lerp( 0.5f, 1.0f, settings.SteeringEffectsUndersteerThreshold * ( prediction - _scaleBottom ) / ( _scaleTop - _scaleBottom ) );
 
-				var peak = prediction * settings.SteeringEffectsUndersteerThreshold;
-				var warn = prediction * settings.SteeringEffectsUndersteerWarningThreshold;
-
-				if ( ( app.Simulator.VelocityX > 1f ) && ( MathF.Sign( app.Simulator.SteeringWheelAngle ) == MathF.Sign( app.Simulator.YawRate ) ) )
+				if ( ( absSteeringWheelAngleInDegrees >= 5f ) && ( MathF.Sign( app.Simulator.SteeringWheelAngle ) == MathF.Sign( app.Simulator.YawRate ) ) )
 				{
+					var peak = prediction * settings.SteeringEffectsUndersteerThreshold;
+					var warn = prediction * settings.SteeringEffectsUndersteerWarningThreshold;
+
 					var speedInKPH = app.Simulator.VelocityX * MPSToKPH;
 					var yawRateInDegrees = app.Simulator.YawRate * RadiansToDegrees;
 					var absYawRateInDegrees = MathF.Abs( yawRateInDegrees );
