@@ -12,6 +12,7 @@ namespace MarvinsAIRARefactored.DataContext;
 public class Settings : INotifyPropertyChanged
 {
 	private bool _updatingRacingWheelRelatedSettings = false;
+	private bool _suppressUpdatingOfContextSettings = false;
 
 	#region INotifyProperty stuff
 
@@ -27,24 +28,13 @@ public class Settings : INotifyPropertyChanged
 
 			if ( property != null )
 			{
-				app.Logger.WriteLine( $"[Settings] {propertyName} = {property.GetValue( this )}" );
+				var value = property.GetValue( this );
 
-				var contextSwitchesPropertyName = $"{propertyName}ContextSwitches";
+				app.Logger.WriteLine( $"[Settings] Updating base setting {propertyName} to {value}" );
 
-				var contextSwitchesProperty = GetType().GetProperty( contextSwitchesPropertyName );
-
-				if ( contextSwitchesProperty != null )
+				if ( !_suppressUpdatingOfContextSettings )
 				{
-					var contextSwitches = (ContextSwitches?) contextSwitchesProperty.GetValue( this );
-
-					if ( contextSwitches != null )
-					{
-						var context = new Context( contextSwitches );
-
-						var contextSettings = FindContextSettings( context );
-
-						UpdateToContextSettings( contextSettings );
-					}
+					UpdateSettings( true );
 				}
 			}
 		}
@@ -60,17 +50,48 @@ public class Settings : INotifyPropertyChanged
 
 	public SerializableDictionary<Context, ContextSettings> ContextSettingsDictionary { get; set; } = [];
 
-	public void UpdateFromContextSettings()
+	private ContextSettings FindContextSettings( Context context )
+	{
+		if ( !ContextSettingsDictionary.TryGetValue( context, out var contextSettings ) )
+		{
+			contextSettings = new ContextSettings();
+
+			var contextSettingsProperties = typeof( ContextSettings ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
+
+			foreach ( var contextSettingsProperty in contextSettingsProperties )
+			{
+				if ( contextSettingsProperty.CanRead && contextSettingsProperty.CanWrite )
+				{
+					var settingsProperty = typeof( Settings ).GetProperty( contextSettingsProperty.Name );
+
+					if ( settingsProperty != null )
+					{
+						var settingsPropertyValue = settingsProperty.GetValue( this );
+
+						contextSettingsProperty.SetValue( contextSettings, settingsPropertyValue );
+					}
+				}
+			}
+
+			ContextSettingsDictionary.Add( context, contextSettings );
+		}
+
+		return contextSettings;
+	}
+
+	public void UpdateSettings( bool updateContextSettings )
 	{
 		var app = App.Instance!;
 
-		var destinationProperties = typeof( Settings ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
+		_suppressUpdatingOfContextSettings = !updateContextSettings;
 
-		foreach ( var destinationProperty in destinationProperties )
+		var settingsProperties = typeof( Settings ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
+
+		foreach ( var settingsProperty in settingsProperties )
 		{
-			if ( destinationProperty.CanWrite && !destinationProperty.Name.EndsWith( "String" ) )
+			if ( settingsProperty.CanRead && settingsProperty.CanWrite && !settingsProperty.Name.EndsWith( "String" ) )
 			{
-				var contextSwitchesPropertyName = $"{destinationProperty.Name}ContextSwitches";
+				var contextSwitchesPropertyName = $"{settingsProperty.Name}ContextSwitches";
 
 				var contextSwitchesProperty = GetType().GetProperty( contextSwitchesPropertyName );
 
@@ -84,56 +105,35 @@ public class Settings : INotifyPropertyChanged
 
 						var contextSettings = FindContextSettings( context );
 
-						var sourceProperty = typeof( ContextSettings ).GetProperty( destinationProperty.Name );
+						var contextSettingsProperty = typeof( ContextSettings ).GetProperty( settingsProperty.Name );
 
-						if ( sourceProperty != null )
+						if ( contextSettingsProperty != null )
 						{
-							var value = sourceProperty.GetValue( contextSettings );
+							var contextSettingsPropertyValue = contextSettingsProperty.GetValue( contextSettings );
+							var settingsPropertyValue = settingsProperty.GetValue( this );
 
-							app.Logger.WriteLine( $"[Settings] Setting {destinationProperty.Name} = {value} ({context.WheelbaseGuid}|{context.CarName}|{context.TrackName}|{context.TrackConfigurationName}|{context.WetDryName})" );
+							if ( !Equals( contextSettingsPropertyValue, settingsPropertyValue ) )
+							{
+								if ( updateContextSettings )
+								{
+									app.Logger.WriteLine( $"[Settings] Updating context setting {contextSettingsProperty.Name} to {settingsPropertyValue} from setting ({context.WheelbaseGuid}|{context.CarName}|{context.TrackName}|{context.TrackConfigurationName}|{context.WetDryName})" );
 
-							destinationProperty.SetValue( this, value );
+									contextSettingsProperty.SetValue( contextSettings, settingsPropertyValue );
+								}
+								else
+								{
+									app.Logger.WriteLine( $"[Settings] Updating setting {settingsProperty.Name} to {contextSettingsPropertyValue} from context setting ({context.WheelbaseGuid}|{context.CarName}|{context.TrackName}|{context.TrackConfigurationName}|{context.WetDryName})" );
+
+									settingsProperty.SetValue( this, contextSettingsPropertyValue );
+								}
+							}
 						}
 					}
 				}
 			}
 		}
-	}
 
-	private ContextSettings FindContextSettings( Context context )
-	{
-		if ( !ContextSettingsDictionary.TryGetValue( context, out var contextSettings ) )
-		{
-			contextSettings = new ContextSettings();
-
-			UpdateToContextSettings( contextSettings );
-
-			ContextSettingsDictionary.Add( context, contextSettings );
-		}
-
-		return contextSettings;
-	}
-
-	private void UpdateToContextSettings( ContextSettings contextSettings )
-	{
-		var sourceProperties = typeof( Settings ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
-
-		var destinationProperties = typeof( ContextSettings ).GetProperties( BindingFlags.Public | BindingFlags.Instance );
-
-		foreach ( var sourceProperty in sourceProperties )
-		{
-			if ( sourceProperty.CanRead )
-			{
-				var destinationProperty = Array.Find( destinationProperties, p => p.Name == sourceProperty.Name && p.CanWrite && p.PropertyType.IsAssignableFrom( sourceProperty.PropertyType ) );
-
-				if ( destinationProperty != null )
-				{
-					var value = sourceProperty.GetValue( this );
-
-					destinationProperty.SetValue( contextSettings, value );
-				}
-			}
-		}
+		_suppressUpdatingOfContextSettings = false;
 	}
 
 	#endregion
@@ -2094,19 +2094,19 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
-	#region Steering effects - Understeer calibration file
+	#region Steering effects - Understeer calibration file name 1
 
-	private string _steeringEffectsUndersteerCalibrationFile = string.Empty;
+	private string _steeringEffectsUndersteerCalibrationFileName1 = string.Empty;
 
-	public string SteeringEffectsUndersteerCalibrationFile
+	public string SteeringEffectsUndersteerCalibrationFileName1
 	{
-		get => _steeringEffectsUndersteerCalibrationFile;
+		get => _steeringEffectsUndersteerCalibrationFileName1;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerCalibrationFile )
+			if ( value != _steeringEffectsUndersteerCalibrationFileName1 )
 			{
-				_steeringEffectsUndersteerCalibrationFile = value;
+				_steeringEffectsUndersteerCalibrationFileName1 = value;
 
 				OnPropertyChanged();
 			}
@@ -2117,59 +2117,61 @@ public class Settings : INotifyPropertyChanged
 		}
 	}
 
+	public ContextSwitches SteeringEffectsUndersteerCalibrationFileName1ContextSwitches { get; set; } = new( false, true, false, false, false );
+
 	#endregion
 
-	#region Steering effects - Understeer strength
+	#region Steering effects - Understeer calibration file name 2
 
-	private float _steeringEffectsUndersteerStrength = 0.1f;
+	private string _steeringEffectsUndersteerCalibrationFileName2 = string.Empty;
 
-	public float SteeringEffectsUndersteerStrength
+	public string SteeringEffectsUndersteerCalibrationFileName2
 	{
-		get => _steeringEffectsUndersteerStrength;
+		get => _steeringEffectsUndersteerCalibrationFileName2;
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 0.3f );
-
-			if ( value != _steeringEffectsUndersteerStrength )
+			if ( value != _steeringEffectsUndersteerCalibrationFileName2 )
 			{
-				_steeringEffectsUndersteerStrength = value;
+				_steeringEffectsUndersteerCalibrationFileName2 = value;
 
 				OnPropertyChanged();
 			}
 
-			if ( _steeringEffectsUndersteerStrength == 0f )
-			{
-				SteeringEffectsUndersteerStrengthString = DataContext.Instance.Localization[ "OFF" ];
-			}
-			else
-			{
-				SteeringEffectsUndersteerStrengthString = $"{_steeringEffectsUndersteerStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
-			}
+			var app = App.Instance!;
+
+			app.SteeringEffects.LoadCalibration();
 		}
 	}
 
-	private string _steeringEffectsUndersteerStrengthString = string.Empty;
+	public ContextSwitches SteeringEffectsUndersteerCalibrationFileName2ContextSwitches { get; set; } = new( false, true, false, false, false );
 
-	[XmlIgnore]
-	public string SteeringEffectsUndersteerStrengthString
+	#endregion
+
+	#region Steering effects - Understeer calibration file name 3
+
+	private string _steeringEffectsUndersteerCalibrationFileName3 = string.Empty;
+
+	public string SteeringEffectsUndersteerCalibrationFileName3
 	{
-		get => _steeringEffectsUndersteerStrengthString;
+		get => _steeringEffectsUndersteerCalibrationFileName3;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerStrengthString )
+			if ( value != _steeringEffectsUndersteerCalibrationFileName3 )
 			{
-				_steeringEffectsUndersteerStrengthString = value;
+				_steeringEffectsUndersteerCalibrationFileName3 = value;
 
 				OnPropertyChanged();
 			}
+
+			var app = App.Instance!;
+
+			app.SteeringEffects.LoadCalibration();
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerStrengthContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsUndersteerStrengthPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsUndersteerStrengthMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerCalibrationFileName3ContextSwitches { get; set; } = new( false, true, false, false, false );
 
 	#endregion
 
@@ -2271,151 +2273,205 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
-	#region Steering effects - Understeer curve
+	#region Steering effects - Understeer wheel vibration strength
 
-	private float _steeringEffectsUndersteerCurve = 0f;
+	private float _steeringEffectsUndersteerWheelVibrationStrength = 0.1f;
 
-	public float SteeringEffectsUndersteerCurve
+	public float SteeringEffectsUndersteerWheelVibrationStrength
 	{
-		get => _steeringEffectsUndersteerCurve;
+		get => _steeringEffectsUndersteerWheelVibrationStrength;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 0.3f );
+
+			if ( value != _steeringEffectsUndersteerWheelVibrationStrength )
+			{
+				_steeringEffectsUndersteerWheelVibrationStrength = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _steeringEffectsUndersteerWheelVibrationStrength == 0f )
+			{
+				SteeringEffectsUndersteerWheelVibrationStrengthString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				SteeringEffectsUndersteerWheelVibrationStrengthString = $"{_steeringEffectsUndersteerWheelVibrationStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _steeringEffectsUndersteerWheelVibrationStrengthString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsUndersteerWheelVibrationStrengthString
+	{
+		get => _steeringEffectsUndersteerWheelVibrationStrengthString;
+
+		set
+		{
+			if ( value != _steeringEffectsUndersteerWheelVibrationStrengthString )
+			{
+				_steeringEffectsUndersteerWheelVibrationStrengthString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsUndersteerWheelVibrationStrengthContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationStrengthPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationStrengthMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Understeer wheel vibration curve
+
+	private float _steeringEffectsUndersteerWheelVibrationCurve = 0f;
+
+	public float SteeringEffectsUndersteerWheelVibrationCurve
+	{
+		get => _steeringEffectsUndersteerWheelVibrationCurve;
 
 		set
 		{
 			value = Math.Clamp( value, -1f, 1f );
 
-			if ( value != _steeringEffectsUndersteerCurve )
+			if ( value != _steeringEffectsUndersteerWheelVibrationCurve )
 			{
-				_steeringEffectsUndersteerCurve = value;
+				_steeringEffectsUndersteerWheelVibrationCurve = value;
 
 				OnPropertyChanged();
 			}
 
-			if ( _steeringEffectsUndersteerCurve == 0f )
+			if ( _steeringEffectsUndersteerWheelVibrationCurve == 0f )
 			{
-				SteeringEffectsUndersteerCurveString = DataContext.Instance.Localization[ "OFF" ];
+				SteeringEffectsUndersteerWheelVibrationCurveString = DataContext.Instance.Localization[ "OFF" ];
 			}
 			else
 			{
-				SteeringEffectsUndersteerCurveString = $"{_steeringEffectsUndersteerCurve * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+				SteeringEffectsUndersteerWheelVibrationCurveString = $"{_steeringEffectsUndersteerWheelVibrationCurve * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
 			}
 		}
 	}
 
-	private string _steeringEffectsUndersteerCurveString = string.Empty;
+	private string _steeringEffectsUndersteerWheelVibrationCurveString = string.Empty;
 
 	[XmlIgnore]
-	public string SteeringEffectsUndersteerCurveString
+	public string SteeringEffectsUndersteerWheelVibrationCurveString
 	{
-		get => _steeringEffectsUndersteerCurveString;
+		get => _steeringEffectsUndersteerWheelVibrationCurveString;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerCurveString )
+			if ( value != _steeringEffectsUndersteerWheelVibrationCurveString )
 			{
-				_steeringEffectsUndersteerCurveString = value;
+				_steeringEffectsUndersteerWheelVibrationCurveString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerCurveContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsUndersteerCurvePlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsUndersteerCurveMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerWheelVibrationCurveContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationCurvePlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationCurveMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
-	#region Steering effects - Understeer warning frequency
+	#region Steering effects - Understeer wheel vibration warning frequency
 
-	private float _steeringEffectsUndersteerWarningFrequency = 35f;
+	private float _steeringEffectsUndersteerWheelVibrationWarningFrequency = 35f;
 
-	public float SteeringEffectsUndersteerWarningFrequency
+	public float SteeringEffectsUndersteerWheelVibrationWarningFrequency
 	{
-		get => _steeringEffectsUndersteerWarningFrequency;
+		get => _steeringEffectsUndersteerWheelVibrationWarningFrequency;
 
 		set
 		{
 			value = Math.Clamp( value, 0f, 50f );
 
-			if ( value != _steeringEffectsUndersteerWarningFrequency )
+			if ( value != _steeringEffectsUndersteerWheelVibrationWarningFrequency )
 			{
-				_steeringEffectsUndersteerWarningFrequency = value;
+				_steeringEffectsUndersteerWheelVibrationWarningFrequency = value;
 
 				OnPropertyChanged();
 			}
 
-			SteeringEffectsUndersteerWarningFrequencyString = $"{_steeringEffectsUndersteerWarningFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
+			SteeringEffectsUndersteerWheelVibrationWarningFrequencyString = $"{_steeringEffectsUndersteerWheelVibrationWarningFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
 		}
 	}
 
-	private string _steeringEffectsUndersteerWarningFrequencyString = string.Empty;
+	private string _steeringEffectsUndersteerWheelVibrationWarningFrequencyString = string.Empty;
 
 	[XmlIgnore]
-	public string SteeringEffectsUndersteerWarningFrequencyString
+	public string SteeringEffectsUndersteerWheelVibrationWarningFrequencyString
 	{
-		get => _steeringEffectsUndersteerWarningFrequencyString;
+		get => _steeringEffectsUndersteerWheelVibrationWarningFrequencyString;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerWarningFrequencyString )
+			if ( value != _steeringEffectsUndersteerWheelVibrationWarningFrequencyString )
 			{
-				_steeringEffectsUndersteerWarningFrequencyString = value;
+				_steeringEffectsUndersteerWheelVibrationWarningFrequencyString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerWarningFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsUndersteerWarningFrequencyPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsUndersteerWarningFrequencyMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerWheelVibrationWarningFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationWarningFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationWarningFrequencyMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
-	#region Steering effects - Understeer frequency
+	#region Steering effects - Understeer wheel vibration frequency
 
-	private float _steeringEffectsUndersteerFrequency = 50f;
+	private float _steeringEffectsUndersteerWheelVibrationFrequency = 50f;
 
-	public float SteeringEffectsUndersteerFrequency
+	public float SteeringEffectsUndersteerWheelVibrationFrequency
 	{
-		get => _steeringEffectsUndersteerFrequency;
+		get => _steeringEffectsUndersteerWheelVibrationFrequency;
 
 		set
 		{
 			value = Math.Clamp( value, 0f, 50f );
 
-			if ( value != _steeringEffectsUndersteerFrequency )
+			if ( value != _steeringEffectsUndersteerWheelVibrationFrequency )
 			{
-				_steeringEffectsUndersteerFrequency = value;
+				_steeringEffectsUndersteerWheelVibrationFrequency = value;
 
 				OnPropertyChanged();
 			}
 
-			SteeringEffectsUndersteerFrequencyString = $"{_steeringEffectsUndersteerFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
+			SteeringEffectsUndersteerWheelVibrationFrequencyString = $"{_steeringEffectsUndersteerWheelVibrationFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
 		}
 	}
 
-	private string _steeringEffectsUndersteerFrequencyString = string.Empty;
+	private string _steeringEffectsUndersteerWheelVibrationFrequencyString = string.Empty;
 
 	[XmlIgnore]
-	public string SteeringEffectsUndersteerFrequencyString
+	public string SteeringEffectsUndersteerWheelVibrationFrequencyString
 	{
-		get => _steeringEffectsUndersteerFrequencyString;
+		get => _steeringEffectsUndersteerWheelVibrationFrequencyString;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerFrequencyString )
+			if ( value != _steeringEffectsUndersteerWheelVibrationFrequencyString )
 			{
-				_steeringEffectsUndersteerFrequencyString = value;
+				_steeringEffectsUndersteerWheelVibrationFrequencyString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsUndersteerFrequencyPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsUndersteerFrequencyMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerWheelVibrationFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationFrequencyMinusButtonMappings { get; set; } = new();
 
 	#endregion
 

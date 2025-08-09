@@ -888,14 +888,14 @@ public partial class App : Application
 
 			// steering effects understeer strength
 
-			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsUndersteerStrength += 0.05f;
+				settings.SteeringEffectsUndersteerWheelVibrationStrength += 0.05f;
 			}
 
-			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsUndersteerStrength -= 0.05f;
+				settings.SteeringEffectsUndersteerWheelVibrationStrength -= 0.05f;
 			}
 
 			// steering effects understeer warning threshold
@@ -924,38 +924,38 @@ public partial class App : Application
 
 			// steering effects understeer curve
 
-			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerCurvePlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationCurvePlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsUndersteerCurve += 0.05f;
+				settings.SteeringEffectsUndersteerWheelVibrationCurve += 0.05f;
 			}
 
-			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerCurveMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationCurveMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsUndersteerCurve -= 0.05f;
+				settings.SteeringEffectsUndersteerWheelVibrationCurve -= 0.05f;
 			}
 
 			// steering effects understeer warning frequency
 
-			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWarningFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationWarningFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsUndersteerWarningFrequency += 1f;
+				settings.SteeringEffectsUndersteerWheelVibrationWarningFrequency += 1f;
 			}
 
-			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWarningFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationWarningFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsUndersteerWarningFrequency -= 1f;
+				settings.SteeringEffectsUndersteerWheelVibrationWarningFrequency -= 1f;
 			}
 
 			// steering effects understeer frequency
 
-			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsUndersteerFrequency += 1f;
+				settings.SteeringEffectsUndersteerWheelVibrationFrequency += 1f;
 			}
 
-			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsUndersteerFrequency -= 1f;
+				settings.SteeringEffectsUndersteerWheelVibrationFrequency -= 1f;
 			}
 
 			// pedals clutch strength 1 knob

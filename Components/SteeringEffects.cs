@@ -1,13 +1,14 @@
 ﻿
+using Accord.Statistics.Models.Regression.Linear;
+using MarvinsAIRARefactored.Classes;
+using MarvinsAIRARefactored.Controls;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
-
-using Accord.Statistics.Models.Regression.Linear;
-
-using MarvinsAIRARefactored.Classes;
+using Label = System.Windows.Controls.Label;
 
 namespace MarvinsAIRARefactored.Components;
 
@@ -117,13 +118,38 @@ public class SteeringEffects
 	private float _maximumPredictedLogYawRateFactor = 0f;
 	private float _minimumPredictedLogYawRateFactor = 0f;
 
-	public void SetMairaComboBoxItemsSource()
+	private string? _currentlyActiveCarScreenName = null;
+	private string _currentlyActiveCalibrationFileName = string.Empty;
+
+	public void SetMairaComboBoxItemsSources()
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[SteeringEffects] SetMairaComboBoxItemsSources >>>" );
+
+		if ( ( _currentlyActiveCarScreenName == null ) || ( app.Simulator.CarScreenName != _currentlyActiveCarScreenName ) )
+		{
+			_currentlyActiveCarScreenName = app.Simulator.CarScreenName;
+
+			SetMairaComboBoxItemsSource( 1 );
+			SetMairaComboBoxItemsSource( 2 );
+			SetMairaComboBoxItemsSource( 3 );
+		}
+
+		app.Logger.WriteLine( "[SteeringEffects] <<< SetMairaComboBoxItemsSources" );
+	}
+
+	private static void SetMairaComboBoxItemsSource( int tireIndex )
 	{
 		var app = App.Instance!;
 
 		app.Logger.WriteLine( "[SteeringEffects] SetMairaComboBoxItemsSource >>>" );
 
-		if ( app.Simulator.CarScreenName != string.Empty )
+		var settings = DataContext.DataContext.Instance.Settings;
+		var propertyName = $"SteeringEffectsUndersteerCalibrationFileName{tireIndex}";
+		var steeringEffectsUndersteerCalibrationFileNamePropertyInfo = settings.GetType().GetProperty( propertyName )!;
+
+		if ( ( app.Simulator.AvailableTires != null ) && ( app.Simulator.AvailableTires.Count >= tireIndex ) )
 		{
 			var localization = DataContext.DataContext.Instance.Localization;
 
@@ -139,15 +165,52 @@ public class SteeringEffects
 				dictionary.Add( option, option );
 			}
 
-			if ( !dictionary.ContainsKey( DataContext.DataContext.Instance.Settings.SteeringEffectsUndersteerCalibrationFile ) )
+			var calibrationFileName = (string) steeringEffectsUndersteerCalibrationFileNamePropertyInfo.GetValue( settings )!;
+
+			if ( !dictionary.ContainsKey( calibrationFileName ) )
 			{
-				DataContext.DataContext.Instance.Settings.SteeringEffectsUndersteerCalibrationFile = string.Empty;
+				calibrationFileName = string.Empty;
+
+				steeringEffectsUndersteerCalibrationFileNamePropertyInfo.SetValue( settings, calibrationFileName );
 			}
 
 			app.Dispatcher.BeginInvoke( () =>
 			{
-				app.MainWindow.SteeringEffects_UndersteerCalibrationFile_ComboBox.ItemsSource = dictionary;
-				app.MainWindow.SteeringEffects_UndersteerCalibrationFile_ComboBox.SelectedValue = DataContext.DataContext.Instance.Settings.SteeringEffectsUndersteerCalibrationFile;
+				// set label
+
+				var label = (Label) app.MainWindow.FindName( $"SteeringEffects_UndersteerCalibrationFileName{tireIndex}_Label" );
+
+				label.Content = app.Simulator.AvailableTires[ tireIndex - 1 ].TireCompoundType.ToUpper();
+				label.Visibility = Visibility.Visible;
+
+				// set option
+
+				var mairaComboBox = (MairaComboBox) app.MainWindow.FindName( $"SteeringEffects_UndersteerCalibrationFileName{tireIndex}_ComboBox" );
+
+				mairaComboBox.ItemsSource = dictionary;
+				mairaComboBox.SelectedValue = calibrationFileName;
+				mairaComboBox.Visibility = Visibility.Visible;
+			} );
+		}
+		else
+		{
+			steeringEffectsUndersteerCalibrationFileNamePropertyInfo.SetValue( settings, string.Empty );
+
+			app.Dispatcher.BeginInvoke( () =>
+			{
+				// set label
+
+				var label = (Label) app.MainWindow.FindName( $"SteeringEffects_UndersteerCalibrationFileName{tireIndex}_Label" );
+
+				label.Content = string.Empty;
+				label.Visibility = Visibility.Collapsed;
+
+				// set option
+
+				var mairaComboBox = (MairaComboBox) app.MainWindow.FindName( $"SteeringEffects_UndersteerCalibrationFileName{tireIndex}_ComboBox" );
+
+				mairaComboBox.SelectedValue = string.Empty;
+				mairaComboBox.Visibility = Visibility.Collapsed;
 			} );
 		}
 
@@ -183,7 +246,11 @@ public class SteeringEffects
 
 			SaveCalibration();
 
-			// load the calibration data
+			// clear the calibration data
+
+			ClearCalibration();
+
+			// reload the calibration data
 
 			LoadCalibration();
 		}
@@ -225,7 +292,7 @@ public class SteeringEffects
 					{
 						var intensity = Math.Clamp( ( current - warn ) / range, 0f, 1f );
 
-						UndersteerEffectIntensity = MathF.Pow( intensity, Misc.CurveToPower( settings.SteeringEffectsUndersteerCurve ) );
+						UndersteerEffectIntensity = MathF.Pow( intensity, Misc.CurveToPower( settings.SteeringEffectsUndersteerWheelVibrationCurve ) );
 					}
 					else
 					{
@@ -755,6 +822,29 @@ public class SteeringEffects
 		}
 	}
 
+	public void ClearCalibration()
+	{
+		// clear out the data tables
+
+		_numSteeringWheelAnglesRecorded = 0;
+
+		Array.Clear( _steeringWheelAnglesInDegrees );
+		Array.Clear( _yawRateDataInDegrees );
+
+		// clear out calibration
+
+		_calibrationIsValid = false;
+
+		_multipleLinearRegression = null;
+
+		_maximumPredictedLogYawRateFactor = 0f;
+		_minimumPredictedLogYawRateFactor = 0f;
+
+		// reset the currently active calibration file name
+
+		_currentlyActiveCalibrationFileName = string.Empty;
+	}
+
 	private void SaveCalibration()
 	{
 		var app = App.Instance!;
@@ -770,13 +860,13 @@ public class SteeringEffects
 
 		// open file
 
-		var filePath = Path.Combine( CalibrationDirectory, $"{app.Simulator.CarScreenName} - {app.Simulator.CarSetupName} - {app.Simulator.TireCompoundType}.csv" );
+		var filePath = Path.Combine( CalibrationDirectory, $"{app.Simulator.CarScreenName} - {app.Simulator.CarSetupName} - {app.Simulator.CurrentTireCompoundType}.csv" );
 
 		using var writer = new StreamWriter( filePath );
 
 		// write car name and calibration
 
-		writer.WriteLine( $"{app.Simulator.CarScreenName},{app.Simulator.CarSetupName},{app.Simulator.TireCompoundType}" );
+		writer.WriteLine( $"{app.Simulator.CarScreenName},{app.Simulator.CarSetupName},{app.Simulator.CurrentTireCompoundType}" );
 
 		// write header row
 
@@ -812,11 +902,11 @@ public class SteeringEffects
 
 		// update understeer setting to use this calibration file
 
-		DataContext.DataContext.Instance.Settings.SteeringEffectsUndersteerCalibrationFile = Path.GetFileNameWithoutExtension( filePath );
+		DataContext.DataContext.Instance.Settings.SteeringEffectsUndersteerCalibrationFileName1 = Path.GetFileNameWithoutExtension( filePath );
 
 		// update the combo box options
 
-		SetMairaComboBoxItemsSource();
+		SetMairaComboBoxItemsSources();
 
 		//
 
@@ -829,226 +919,269 @@ public class SteeringEffects
 
 		app.Logger.WriteLine( "[SteeringEffects] LoadCalibration >>>" );
 
-		var settings = DataContext.DataContext.Instance.Settings;
+		// don't load the calibration file if we are currently calibrating
 
-		if ( _calibrationPhase == CalibrationPhase.NotCalibrating )
+		if ( _calibrationPhase != CalibrationPhase.NotCalibrating )
 		{
-			// clear out the data tables
+			app.Logger.WriteLine( "[SteeringEffects] We are currently calibrating" );
+		}
+		else
+		{
+			// figure out which calibration file we need to load
 
-			_numSteeringWheelAnglesRecorded = 0;
+			var settings = DataContext.DataContext.Instance.Settings;
 
-			Array.Clear( _steeringWheelAnglesInDegrees );
-			Array.Clear( _yawRateDataInDegrees );
+			var tireIndex = app.Simulator.CurrentTireIndex + 1;
 
-			// clear out calibration
-
-			_calibrationIsValid = false;
-
-			_multipleLinearRegression = null;
-
-			_maximumPredictedLogYawRateFactor = 0f;
-			_minimumPredictedLogYawRateFactor = 0f;
-
-			// keep track of whether the file load was good or not
-
-			var fileLoadWasSuccessful = true;
-
-			// open file
-
-			var filePath = Path.Combine( CalibrationDirectory, $"{settings.SteeringEffectsUndersteerCalibrationFile}.csv" );
-
-			if ( !File.Exists( filePath ) )
+			if ( ( tireIndex < 1 ) || ( tireIndex > 3 ) )
 			{
-				app.Logger.WriteLine( $"[SteeringEffects] Calibration file not found: {filePath}" );
+				app.Logger.WriteLine( $"[SteeringEffects] Current tire index is out of range" );
 
-				fileLoadWasSuccessful = false;
+				ClearCalibration();
 			}
 			else
 			{
-				using var reader = new StreamReader( filePath );
+				var propertyName = $"SteeringEffectsUndersteerCalibrationFileName{tireIndex}";
 
-				// skip the first line
+				var steeringEffectsUndersteerCalibrationFileNamePropertyInfo = settings.GetType().GetProperty( propertyName );
 
-				var carInfoLine = reader.ReadLine();
-
-				// read header line and extract steering wheel angles
-
-				var headerLine = reader.ReadLine();
-
-				if ( string.IsNullOrWhiteSpace( headerLine ) )
+				if ( steeringEffectsUndersteerCalibrationFileNamePropertyInfo == null )
 				{
-					app.Logger.WriteLine( "[SteeringEffects] Missing header line." );
+					app.Logger.WriteLine( $"[SteeringEffects] No such property name '{propertyName}' in settings" );
 
-					fileLoadWasSuccessful = false;
+					ClearCalibration();
 				}
 				else
 				{
-					var headerParts = headerLine.Split( ',' );
+					var calibrationFileName = (string?) steeringEffectsUndersteerCalibrationFileNamePropertyInfo.GetValue( settings );
 
-					if ( headerParts.Length < 2 )
+					if ( calibrationFileName == null )
 					{
-						app.Logger.WriteLine( "[SteeringEffects] Invalid header line." );
+						app.Logger.WriteLine( $"[SteeringEffects] Calibration file name property value is null (shouldn't be possible!)" );
 
-						fileLoadWasSuccessful = false;
+						ClearCalibration();
+					}
+					else if ( calibrationFileName == string.Empty )
+					{
+						app.Logger.WriteLine( $"[SteeringEffects] No calibration file selected for this tire compound" );
+
+						ClearCalibration();
+					}
+					else if ( calibrationFileName == _currentlyActiveCalibrationFileName )
+					{
+						app.Logger.WriteLine( $"[SteeringEffects] Calibration file is already loaded" );
 					}
 					else
 					{
-						var angleLabels = headerParts.Skip( 1 ).ToList();
+						// clear the current calibration
 
-						_numSteeringWheelAnglesRecorded = angleLabels.Count;
+						ClearCalibration();
 
-						for ( var angleIndex = 0; angleIndex < _numSteeringWheelAnglesRecorded; angleIndex++ )
+						// keep track of whether the file load was good or not
+
+						var fileLoadWasSuccessful = true;
+
+						// open file
+
+						var filePath = Path.Combine( CalibrationDirectory, $"{calibrationFileName}.csv" );
+
+						if ( !File.Exists( filePath ) )
 						{
-							if ( !int.TryParse( angleLabels[ angleIndex ].Trim(), out _steeringWheelAnglesInDegrees[ angleIndex ] ) )
+							app.Logger.WriteLine( $"[SteeringEffects] Calibration file not found: {filePath}" );
+
+							fileLoadWasSuccessful = false;
+						}
+						else
+						{
+							using var reader = new StreamReader( filePath );
+
+							// skip the first line
+
+							var carInfoLine = reader.ReadLine();
+
+							// read header line and extract steering wheel angles
+
+							var headerLine = reader.ReadLine();
+
+							if ( string.IsNullOrWhiteSpace( headerLine ) )
 							{
-								app.Logger.WriteLine( "[SteeringEffects] Failed to parse initial steering wheel angle." );
+								app.Logger.WriteLine( "[SteeringEffects] Missing header line." );
 
 								fileLoadWasSuccessful = false;
+							}
+							else
+							{
+								var headerParts = headerLine.Split( ',' );
 
-								break;
+								if ( headerParts.Length < 2 )
+								{
+									app.Logger.WriteLine( "[SteeringEffects] Invalid header line." );
+
+									fileLoadWasSuccessful = false;
+								}
+								else
+								{
+									var angleLabels = headerParts.Skip( 1 ).ToList();
+
+									_numSteeringWheelAnglesRecorded = angleLabels.Count;
+
+									for ( var angleIndex = 0; angleIndex < _numSteeringWheelAnglesRecorded; angleIndex++ )
+									{
+										if ( !int.TryParse( angleLabels[ angleIndex ].Trim(), out _steeringWheelAnglesInDegrees[ angleIndex ] ) )
+										{
+											app.Logger.WriteLine( "[SteeringEffects] Failed to parse initial steering wheel angle." );
+
+											fileLoadWasSuccessful = false;
+
+											break;
+										}
+									}
+
+									// read yaw rate data
+
+									if ( fileLoadWasSuccessful )
+									{
+										while ( !reader.EndOfStream )
+										{
+											var line = reader.ReadLine();
+
+											if ( string.IsNullOrWhiteSpace( line ) ) continue;
+
+											var parts = line.Split( ',' );
+
+											if ( !int.TryParse( parts[ 0 ], out var speedInKPH ) ) continue;
+
+											if ( speedInKPH > MaxSpeedInKPH )
+											{
+												app.Logger.WriteLine( "[SteeringEffects] Invalid speed." );
+
+												fileLoadWasSuccessful = false;
+
+												break;
+											}
+
+											for ( var angleIndex = 0; angleIndex < _numSteeringWheelAnglesRecorded; angleIndex++ )
+											{
+												var partIndex = angleIndex + 1;
+
+												if ( partIndex >= parts.Length ) break;
+
+												if ( float.TryParse( parts[ partIndex ], NumberStyles.Float, CultureInfo.InvariantCulture, out var yawRate ) )
+												{
+													_yawRateDataInDegrees[ angleIndex, speedInKPH ] = yawRate;
+												}
+												else
+												{
+													_yawRateDataInDegrees[ angleIndex, speedInKPH ] = 0f;
+												}
+											}
+										}
+									}
+								}
 							}
 						}
-
-						// read yaw rate data
 
 						if ( fileLoadWasSuccessful )
 						{
-							while ( !reader.EndOfStream )
+							int steeringWheelAngle;
+
+							// clean up the yaw rate spikes
+
+							CleanUpYawRateSpikes();
+
+							// create predictor functions for predicting the peak yaw rates and corresponding speeds
+
+							var yawRateModel = new YawRateModel( _steeringWheelAnglesInDegrees, _yawRateDataInDegrees, MaxSpeedInKPH );
+
+							var (yawRateInterpolator, speedInterpolator, shallowestSteeringWheelAngle) = yawRateModel.FitWithProgressiveRefinement();
+
+							// write to debug file
+
+							filePath = Path.Combine( SteeringEffects.CalibrationDirectory, $"debug_fitted_max_yaw_rates.csv" );
+
+							using var writer = new StreamWriter( filePath );
+
+							writer.WriteLine( "Steering Wheel Angle,Max Yaw Rate,Corresponding Speed" );
+
+							for ( steeringWheelAngle = -MaxSteeringWheelAngleInDegrees; steeringWheelAngle <= shallowestSteeringWheelAngle; steeringWheelAngle++ )
 							{
-								var line = reader.ReadLine();
+								var predictedMaxYawRate = yawRateInterpolator( steeringWheelAngle );
+								var predictedCorrespondingSpeed = speedInterpolator( steeringWheelAngle );
 
-								if ( string.IsNullOrWhiteSpace( line ) ) continue;
+								writer.WriteLine( $"{steeringWheelAngle:F0},{predictedMaxYawRate:F6},{predictedCorrespondingSpeed:F1}" );
+							}
 
-								var parts = line.Split( ',' );
+							// allocate data arrays for curve fitting
 
-								if ( !int.TryParse( parts[ 0 ], out var speedInKPH ) ) continue;
+							steeringWheelAngle = -MaxSteeringWheelAngleInDegrees;
 
-								if ( speedInKPH > MaxSpeedInKPH )
-								{
-									app.Logger.WriteLine( "[SteeringEffects] Invalid speed." );
+							var numAngles = MaxSteeringWheelAngleInDegrees - Math.Abs( shallowestSteeringWheelAngle ) + 1;
 
-									fileLoadWasSuccessful = false;
+							var angles = new double[ numAngles ];
+							var values = new double[ numAngles ];
 
-									break;
-								}
+							// fill out the data arrays
 
-								for ( var angleIndex = 0; angleIndex < _numSteeringWheelAnglesRecorded; angleIndex++ )
-								{
-									var partIndex = angleIndex + 1;
+							for ( var angleIndex = 0; angleIndex < numAngles; angleIndex++ )
+							{
+								angles[ angleIndex ] = steeringWheelAngle;
 
-									if ( partIndex >= parts.Length ) break;
+								var interpolatedMaxYawRate = yawRateInterpolator( steeringWheelAngle );
+								var interpolatedCorrespondingSpeed = speedInterpolator( steeringWheelAngle );
 
-									if ( float.TryParse( parts[ partIndex ], NumberStyles.Float, CultureInfo.InvariantCulture, out var yawRate ) )
-									{
-										_yawRateDataInDegrees[ angleIndex, speedInKPH ] = yawRate;
-									}
-									else
-									{
-										_yawRateDataInDegrees[ angleIndex, speedInKPH ] = 0f;
-									}
-								}
+								values[ angleIndex ] = MathF.Log( ( interpolatedCorrespondingSpeed + 1f ) / ( interpolatedMaxYawRate + 1f ) );
+
+								steeringWheelAngle++;
+							}
+
+							// write to debug file
+
+							filePath = Path.Combine( SteeringEffects.CalibrationDirectory, $"debug_interpolated_log_yaw_rate_factors.csv" );
+
+							using var writer2 = new StreamWriter( filePath );
+
+							writer2.WriteLine( "Steering Wheel Angle,Interpolated Log Yaw Rate Factor" );
+
+							for ( var angleIndex = 0; angleIndex < numAngles; angleIndex++ )
+							{
+								writer2.WriteLine( $"{angles[ angleIndex ]:F0},{values[ angleIndex ]:F6}" );
+							}
+
+							// train the model
+
+							double[][] inputs = ExpandPolynomialFeaturesFast( angles );
+
+							var ols = new OrdinaryLeastSquares();
+
+							_multipleLinearRegression = ols.Learn( inputs, values );
+
+							// figure out the range of the grip-o-meter
+
+							_maximumPredictedLogYawRateFactor = PredictLogYawRateFactor( 0f );
+							_minimumPredictedLogYawRateFactor = PredictLogYawRateFactor( -MaxSteeringWheelAngleInDegrees );
+
+							// all good to go!
+
+							_currentlyActiveCalibrationFileName = calibrationFileName;
+
+							_calibrationIsValid = true;
+
+							// write to debug file
+
+							filePath = Path.Combine( SteeringEffects.CalibrationDirectory, $"debug_predicted_log_yaw_rate_factors.csv" );
+
+							using var writer3 = new StreamWriter( filePath );
+
+							writer3.WriteLine( "Steering Wheel Angle,Predicted Log Yaw Rate Factor" );
+
+							for ( steeringWheelAngle = -MaxSteeringWheelAngleInDegrees; steeringWheelAngle <= 0; steeringWheelAngle++ )
+							{
+								var predictedLogYawRateFactor = PredictLogYawRateFactor( steeringWheelAngle );
+
+								writer3.WriteLine( $"{steeringWheelAngle:F1},{predictedLogYawRateFactor:F6}" );
 							}
 						}
 					}
-				}
-			}
-
-			if ( fileLoadWasSuccessful )
-			{
-				int steeringWheelAngle;
-
-				// clean up the yaw rate spikes
-
-				CleanUpYawRateSpikes();
-
-				// create predictor functions for predicting the peak yaw rates and corresponding speeds
-
-				var yawRateModel = new YawRateModel( _steeringWheelAnglesInDegrees, _yawRateDataInDegrees, MaxSpeedInKPH );
-
-				var (yawRateInterpolator, speedInterpolator, shallowestSteeringWheelAngle) = yawRateModel.FitWithProgressiveRefinement();
-
-				// write to debug file
-
-				filePath = Path.Combine( SteeringEffects.CalibrationDirectory, $"debug_fitted_max_yaw_rates.csv" );
-
-				using var writer = new StreamWriter( filePath );
-
-				writer.WriteLine( "Steering Wheel Angle,Max Yaw Rate,Corresponding Speed" );
-
-				for ( steeringWheelAngle = -MaxSteeringWheelAngleInDegrees; steeringWheelAngle <= shallowestSteeringWheelAngle; steeringWheelAngle++ )
-				{
-					var predictedMaxYawRate = yawRateInterpolator( steeringWheelAngle );
-					var predictedCorrespondingSpeed = speedInterpolator( steeringWheelAngle );
-
-					writer.WriteLine( $"{steeringWheelAngle:F0},{predictedMaxYawRate:F6},{predictedCorrespondingSpeed:F1}" );
-				}
-
-				// allocate data arrays for curve fitting
-
-				steeringWheelAngle = -MaxSteeringWheelAngleInDegrees;
-
-				var numAngles = MaxSteeringWheelAngleInDegrees - Math.Abs( shallowestSteeringWheelAngle ) + 1;
-
-				var angles = new double[ numAngles ];
-				var values = new double[ numAngles ];
-
-				// fill out the data arrays
-
-				for ( var angleIndex = 0; angleIndex < numAngles; angleIndex++ )
-				{
-					angles[ angleIndex ] = steeringWheelAngle;
-
-					var interpolatedMaxYawRate = yawRateInterpolator( steeringWheelAngle );
-					var interpolatedCorrespondingSpeed = speedInterpolator( steeringWheelAngle );
-
-					values[ angleIndex ] = MathF.Log( ( interpolatedCorrespondingSpeed + 1f ) / ( interpolatedMaxYawRate + 1f ) );
-
-					steeringWheelAngle++;
-				}
-
-				// write to debug file
-
-				filePath = Path.Combine( SteeringEffects.CalibrationDirectory, $"debug_interpolated_log_yaw_rate_factors.csv" );
-
-				using var writer2 = new StreamWriter( filePath );
-
-				writer2.WriteLine( "Steering Wheel Angle,Interpolated Log Yaw Rate Factor" );
-
-				for ( var angleIndex = 0; angleIndex < numAngles; angleIndex++ )
-				{
-					writer2.WriteLine( $"{angles[ angleIndex ]:F0},{values[ angleIndex ]:F6}" );
-				}
-
-				// train the model
-
-				double[][] inputs = ExpandPolynomialFeaturesFast( angles );
-
-				var ols = new OrdinaryLeastSquares();
-
-				_multipleLinearRegression = ols.Learn( inputs, values );
-
-				// figure out the range of the grip-o-meter
-
-				_maximumPredictedLogYawRateFactor = PredictLogYawRateFactor( 0f );
-				_minimumPredictedLogYawRateFactor = PredictLogYawRateFactor( -MaxSteeringWheelAngleInDegrees );
-
-				// all good to go!
-
-				_calibrationIsValid = true;
-
-				// write to debug file
-
-				filePath = Path.Combine( SteeringEffects.CalibrationDirectory, $"debug_predicted_log_yaw_rate_factors.csv" );
-
-				using var writer3 = new StreamWriter( filePath );
-
-				writer3.WriteLine( "Steering Wheel Angle,Predicted Log Yaw Rate Factor" );
-
-				for ( steeringWheelAngle = -MaxSteeringWheelAngleInDegrees; steeringWheelAngle <= 0; steeringWheelAngle++ )
-				{
-					var predictedLogYawRateFactor = PredictLogYawRateFactor( steeringWheelAngle );
-
-					writer3.WriteLine( $"{steeringWheelAngle:F1},{predictedLogYawRateFactor:F6}" );
 				}
 			}
 		}
@@ -1262,8 +1395,8 @@ public class SteeringEffects
 				app.MainWindow.SteeringEffects_TargetPosition_Image.Visibility = Visibility.Hidden;
 			}
 
-			app.MainWindow.SteeringEffects_CarSetupName_TextBlock.Text = app.Simulator.CarSetupName;
-			app.MainWindow.SteeringEffects_TireCompoundType_TextBlock.Text = app.Simulator.TireCompoundType;
+			app.MainWindow.SteeringEffects_CarSetupName_TextBlock.Text = $"{localization[ "CurrentCarSetup" ]} {app.Simulator.CarSetupName.ToUpper()}";
+			app.MainWindow.SteeringEffects_TireCompoundType_TextBlock.Text = $"{localization[ "CurrentTireCompound" ]} {app.Simulator.CurrentTireCompoundType.ToUpper()}";
 
 			var disableButtons = ( app.Simulator.TrackDisplayName != "Centripetal Circuit" );
 

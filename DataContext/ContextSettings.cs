@@ -39,12 +39,15 @@ public class ContextSettings
 	public bool RacingWheelCenterWheelWhileRacing { get; set; }
 	public bool RacingWheelCenterWheelWhileParked { get; set; }
 	public bool RacingWheelFadeEnabled { get; set; }
-	public float SteeringEffectsUndersteerStrength { get; set; }
+	public string SteeringEffectsUndersteerCalibrationFileName1 { get; set; } = string.Empty;
+	public string SteeringEffectsUndersteerCalibrationFileName2 { get; set; } = string.Empty;
+	public string SteeringEffectsUndersteerCalibrationFileName3 { get; set; } = string.Empty;
 	public float SteeringEffectsUndersteerWarningThreshold { get; set; }
 	public float SteeringEffectsUndersteerThreshold { get; set; }
-	public float SteeringEffectsUndersteerCurve { get; set; }
-	public float SteeringEffectsUndersteerWarningFrequency { get; set; }
-	public float SteeringEffectsUndersteerFrequency { get; set; }
+	public float SteeringEffectsUndersteerWheelVibrationStrength { get; set; }
+	public float SteeringEffectsUndersteerWheelVibrationCurve { get; set; }
+	public float SteeringEffectsUndersteerWheelVibrationWarningFrequency { get; set; }
+	public float SteeringEffectsUndersteerWheelVibrationFrequency { get; set; }
 	public Pedals.Effect PedalsClutchEffect1 { get; set; }
 	public float PedalsClutchStrength1 { get; set; }
 	public Pedals.Effect PedalsClutchEffect2 { get; set; }

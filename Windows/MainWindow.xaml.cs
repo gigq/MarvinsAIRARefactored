@@ -162,7 +162,7 @@ public partial class MainWindow : Window
 			Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect2_ComboBox );
 			Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect3_ComboBox );
 
-			app.SteeringEffects.SetMairaComboBoxItemsSource();
+			app.SteeringEffects.SetMairaComboBoxItemsSources();
 
 #endif
 

@@ -144,7 +144,7 @@ public partial class GripOMeter : Window
 			{
 				lerpFactor = Math.Clamp( ( app.SteeringEffects.CurrentGrip - app.SteeringEffects.WarningGrip ) / range, 0f, 1f );
 
-				lerpFactor = MathF.Pow( lerpFactor, Misc.CurveToPower( settings.SteeringEffectsUndersteerCurve ) );
+				lerpFactor = MathF.Pow( lerpFactor, Misc.CurveToPower( settings.SteeringEffectsUndersteerWheelVibrationCurve ) );
 			}
 			else
 			{

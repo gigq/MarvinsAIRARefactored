@@ -1053,8 +1053,8 @@
     <value>Reset the Grip-O-Meter window position</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="UndersteerVibrationEffect" xml:space="preserve">
-    <value>Understeer Vibration Effect</value>
+  <data name="UndersteerWheelVibrationEffect" xml:space="preserve">
+    <value>Understeer Wheel Vibration Effect</value>
     <comment>Steering effects</comment>
   </data>
   <data name="WarningThreshold" xml:space="preserve">
@@ -1077,8 +1077,8 @@
     <value>Progress:</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="UndersteerCalibrationFile" xml:space="preserve">
-    <value>Understeer Calibration File</value>
+  <data name="UndersteerCalibrationFiles" xml:space="preserve">
+    <value>Understeer Calibration Files</value>
     <comment>Steering effects</comment>
   </data>
   <data name="CalibrationFileNotSelected" xml:space="preserve">
@@ -1116,5 +1116,13 @@
   <data name="ParkedWheelCenteringStrength" xml:space="preserve">
     <value>Parked Wheel Centering Strength</value>
     <comment>Racing wheel</comment>
+  </data>
+  <data name="CurrentCarSetup" xml:space="preserve">
+    <value>Current Car Setup:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="CurrentTireCompound" xml:space="preserve">
+    <value>Current Tire Compound:</value>
+    <comment>Steering effects</comment>
   </data>
 </root>
