@@ -1129,4 +1129,16 @@
     <value>Understeer Pedal Vibration Effect</value>
     <comment>Steering effects</comment>
   </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Something Went Wrong</value>
+    <comment>Error window</comment>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+    <comment>Error window</comment>
+  </data>
+  <data name="ClassicMAIRAIsRunning" xml:space="preserve">
+    <value>Classic MAIRA is currently running - please exit classic MAIRA before running this version of MAIRA!</value>
+    <comment>Error message</comment>
+  </data>
 </root>
