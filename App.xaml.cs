@@ -2,13 +2,14 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
-
-using Application = System.Windows.Application;
-using Timer = System.Timers.Timer;
+using System.Windows.Threading;
 
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Components;
 using MarvinsAIRARefactored.Windows;
+
+using Application = System.Windows.Application;
+using Timer = System.Timers.Timer;
 
 namespace MarvinsAIRARefactored;
 
@@ -102,8 +103,63 @@ public partial class App : Application
 		_autoResetEvent.Set();
 	}
 
+	public void ShowFatalError( string? message = null, Exception? exception = null )
+	{
+		message ??= DataContext.DataContext.Instance.Localization[ "ExceptionThrown" ];
+
+		var app = App.Instance!;
+
+		var uiDispatcher = app.Dispatcher;
+
+		void ShowAndExit()
+		{
+			try
+			{
+				ErrorWindow.ShowModal( message, exception );
+			}
+			catch
+			{
+				// last-ditch fallback if dialog fails
+			}
+			finally
+			{
+				app.Shutdown( -1 );
+			}
+		}
+
+		if ( uiDispatcher.CheckAccess() )
+		{
+			ShowAndExit(); // already on UI thread
+		}
+		else
+		{
+			uiDispatcher.Invoke( ShowAndExit, DispatcherPriority.Send );
+		}
+	}
+
 	private async void App_Startup( object sender, StartupEventArgs e )
 	{
+		DispatcherUnhandledException += ( sender, args ) =>
+		{
+			args.Handled = true;
+
+			ShowFatalError( null, args.Exception );
+		};
+
+		AppDomain.CurrentDomain.UnhandledException += ( sender, args ) =>
+		{
+			var exception = args.ExceptionObject as Exception ?? new Exception( "Unknown fatal error." );
+
+			ShowFatalError( null, exception );
+		};
+
+		TaskScheduler.UnobservedTaskException += ( sender, args ) =>
+		{
+			args.SetObserved();
+
+			ShowFatalError( null, args.Exception );
+		};
+
 		Logger.WriteLine( "[App] App_Startup >>>" );
 
 		_refactoredMutex = new Mutex( true, RefactoredMutexName, out var createdNew );
@@ -124,9 +180,7 @@ public partial class App : Application
 			{
 				Logger.WriteLine( "[App] Classic MAIRA is currently running!" );
 
-				ErrorWindow.ShowModal( null, DataContext.DataContext.Instance.Localization[ "ClassicMAIRAIsRunning" ] );
-
-				Shutdown();
+				ShowFatalError( DataContext.DataContext.Instance.Localization[ "ClassicMAIRAIsRunning" ] );
 			}
 			else
 			{

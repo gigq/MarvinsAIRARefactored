@@ -1141,4 +1141,8 @@
     <value>Classic MAIRA is currently running - please exit classic MAIRA before running this version of MAIRA!</value>
     <comment>Error message</comment>
   </data>
+  <data name="ExceptionThrown" xml:space="preserve">
+    <value>An exception has been thrown</value>
+    <comment>Error messages</comment>
+  </data>
 </root>

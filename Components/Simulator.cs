@@ -160,30 +160,7 @@ public class Simulator
 
 	private void OnException( Exception exception )
 	{
-		var app = App.Instance!;
-
-		var fullMessage = new StringBuilder();
-
-		fullMessage.AppendLine( "[Simulator] Exception thrown!" );
-		fullMessage.AppendLine( $"[Simulator] Type: {exception.GetType().FullName}" );
-		fullMessage.AppendLine( $"[Simulator] Message: {exception.Message}" );
-		fullMessage.AppendLine( $"[Simulator] Stack Trace: {exception.StackTrace}" );
-
-		var inner = exception.InnerException;
-
-		while ( inner != null )
-		{
-			fullMessage.AppendLine( "[Simulator] --- Inner Exception ---" );
-			fullMessage.AppendLine( $"[Simulator] Type: {inner.GetType().FullName}" );
-			fullMessage.AppendLine( $"[Simulator] Message: {inner.Message}" );
-			fullMessage.AppendLine( $"[Simulator] Stack Trace: {inner.StackTrace}" );
-
-			inner = inner.InnerException;
-		}
-
-		app.Logger.WriteLine( fullMessage.ToString() );
-
-		throw new Exception( "IRSDKSharper exception thrown", exception );
+		App.Instance!.ShowFatalError( null, exception );
 	}
 
 	private void OnConnected()

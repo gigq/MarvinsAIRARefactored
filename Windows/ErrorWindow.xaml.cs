@@ -1,6 +1,7 @@
 ﻿
 using System.Windows;
 
+using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
 
 namespace MarvinsAIRARefactored.Windows;
@@ -20,14 +21,16 @@ public partial class ErrorWindow : Window
 		Details_TextBox.Text = exception?.ToString() ?? string.Empty;
 	}
 
-	public static void ShowModal( Window? owner, string message, Exception? exception = null )
+	public static void ShowModal( string message, Exception? exception = null )
 	{
-		var dialog = new ErrorWindow( message, exception )
-		{
-			Owner = owner
-		};
+		var app = App.Instance!;
 
-		dialog.ShowDialog();
+		app.Dispatcher.Invoke( () =>
+		{
+			var dialog = new ErrorWindow( message, exception );
+
+			dialog.ShowDialog();
+		} );
 	}
 
 	private void CopyDetails_MairaButton_Click( object sender, RoutedEventArgs e )
