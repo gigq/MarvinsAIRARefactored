@@ -1242,11 +1242,11 @@ public class SteeringEffects
 
 	public static double[] ExpandPolynomialFeaturesFast( double x )
 	{
-		var features = new double[ PolynomialDegrees + 1 ];
+		var features = new double[ PolynomialDegrees ];
 
-		features[ 0 ] = 1.0;
+		features[ 0 ] = x;
 
-		for ( var d = 1; d <= PolynomialDegrees; d++ )
+		for ( var d = 1; d < PolynomialDegrees; d++ )
 		{
 			features[ d ] = features[ d - 1 ] * x;
 		}
