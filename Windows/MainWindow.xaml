@@ -1767,6 +1767,86 @@
                                         <TextBlock Text="Italiano" Margin="29,0,0,0"/>
                                     </StackPanel>
 
+                                    <!--DKBjorn-->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="DKBjorn"/>
+                                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/denmark.png"/>
+                                        <TextBlock Text="Dansk" Margin="29,0,0,0"/>
+                                    </StackPanel>
+
+                                    <!--Jarek_iRek-->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Jarek_iRek"/>
+                                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/poland.png"/>
+                                        <TextBlock Text="Polski" Margin="29,0,0,0"/>
+                                    </StackPanel>
+
+                                </UniformGrid>
+
+                            </StackPanel>
+
+                        </GroupBox>
+
+                        <GroupBox Header="{Binding Localization[CalibrationFileContributors]}">
+
+                            <StackPanel>
+
+                                <TextBlock TextWrapping="Wrap">
+                                
+                                <Run Text="{Binding Localization[CalibrationFilesText], Mode=OneWay}" Foreground="White"/>
+
+                                </TextBlock>
+
+                                <TextBlock HorizontalAlignment="Center" Margin="0,20,0,10">
+                                
+                                <Run Text="❤️❤️❤️" Foreground="Red"/>
+                                <Run Text="{Binding Localization[Contributors], Mode=OneWay}" FontWeight="Bold" Foreground="White"/>
+                                <Run Text="❤️❤️❤️" Foreground="Red"/>
+
+                                </TextBlock>
+
+                                <UniformGrid Columns="1" HorizontalAlignment="Center">
+
+                                    <UniformGrid.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Foreground" Value="DeepSkyBlue" />
+                                        </Style>
+                                    </UniformGrid.Resources>
+
+                                    <TextBlock Text="Marvin Herbold (10)"/>
+                                    <!--
+                                    bmw m2 cs racing - baseline - hard.csv
+                                    bmw m2 cs racing - baseline_wet - wet.csv
+                                    chevrolet national impala - limerock - hard.csv
+                                    formula vee - baseline - allpurpose.csv
+                                    mazda mx-5 cup - baseline - hard.csv
+                                    mazda mx-5 cup - baseline_wet - wet.csv
+                                    mini stock - baseline - hard.csv
+                                    ray formula 1600 - baseline - allpurpose.csv
+                                    toyota gr86 - baseline - hard.csv
+                                    toyota gr86 - baseline_wet - wet.csv
+                                    -->
+
+                                    <TextBlock Text="Matthew Brittle (3)"/>
+                                    <!--
+                                    fia f4 - baseline - wet.csv
+                                    super formula sf23 - honda - baseline - hard.csv
+                                    super formula sf23 - toyota - baseline - hard.csv
+                                    -->
+
+                                    <TextBlock Text="Matthew Merciez (9)"/>
+                                    <!--
+                                    acura nsx gt3 evo 22 - baseline - hard.csv
+                                    audi r8 lms evo ii gt3 - baseline - hard.csv
+                                    bmw m4 gt3 - baseline - hard.csv
+                                    chevrolet corvette z06 gt3.r - baseline - hard.csv
+                                    ford mustang gt3 - baseline - hard.csv
+                                    lamborghini huracan gt3 evo - baseline - hard.csv
+                                    mclaren 720s gt3 evo - baseline - hard.csv
+                                    mercedes-amg gt3 2020 - baseline - hard.csv
+                                    porsche 911 gt3 r (992) - baseline - hard.csv
+                                    -->
+
                                 </UniformGrid>
 
                             </StackPanel>
