@@ -1,21 +1,20 @@
 ﻿
-using System.Text;
+using System.Globalization;
 using System.IO;
-
-using PInvoke;
+using System.Text.RegularExpressions;
 
 using IRSDKSharper;
+using PInvoke;
 
 using MarvinsAIRARefactored.Classes;
 
 namespace MarvinsAIRARefactored.Components;
 
-public class Simulator
+public partial class Simulator
 {
 	public const int SamplesPerFrame360Hz = 6;
 	private const int UpdateInterval = 6;
 	private const int MaxNumGears = 10;
-	private const float OneG = 9.80665f; // in meters per second squared
 
 	private readonly IRacingSdk _irsdk = new();
 
@@ -57,7 +56,9 @@ public class Simulator
 	public float ShiftLightsFirstRPM { get; private set; } = 0f;
 	public float ShiftLightsShiftRPM { get; private set; } = 0f;
 	public string SimMode { get; private set; } = string.Empty;
+	public float Speed { get; private set; } = 0f;
 	public bool SteeringFFBEnabled { get; private set; } = false;
+	public float SteeringOffset { get; private set; } = 0f;
 	public float SteeringWheelAngle { get; private set; } = 0f;
 	public float SteeringWheelAngleMax { get; private set; } = 0f;
 	public float[] SteeringWheelTorque_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
@@ -106,6 +107,7 @@ public class Simulator
 	private IRacingSdkDatum? _rpmDatum = null;
 	private IRacingSdkDatum? _rrShockVel_STDatum = null;
 	private IRacingSdkDatum? _sessionFlagsDatum = null;
+	private IRacingSdkDatum? _speedDatum = null;
 	private IRacingSdkDatum? _steeringFFBEnabledDatum = null;
 	private IRacingSdkDatum? _steeringWheelAngleDatum = null;
 	private IRacingSdkDatum? _steeringWheelAngleMaxDatum = null;
@@ -225,10 +227,12 @@ public class Simulator
 		ReplayPlaySpeed = 1;
 		RPM = 0f;
 		SessionFlags = 0;
+		Speed = 0f;
 		ShiftLightsFirstRPM = 0f;
 		ShiftLightsShiftRPM = 0f;
 		SimMode = string.Empty;
 		SteeringFFBEnabled = false;
+		SteeringOffset = 0f;
 		SteeringWheelAngle = 0f;
 		SteeringWheelAngleMax = 0f;
 		Throttle = 0f;
@@ -258,7 +262,7 @@ public class Simulator
 
 		app.AdminBoxx.SimulatorDisconnected();
 		app.MainWindow.UpdateStatus();
-		app.SteeringEffects.SetMairaComboBoxItemsSources();
+		app.SteeringEffects.SetMairaComboBoxItemsSource();
 		app.SteeringEffects.ClearCalibration();
 
 		app.Logger.WriteLine( "[Simulator] <<< OnDisconnected" );
@@ -292,6 +296,24 @@ public class Simulator
 		TrackDisplayName = _irsdk.Data.SessionInfo.WeekendInfo.TrackDisplayName ?? string.Empty;
 		TrackConfigName = _irsdk.Data.SessionInfo.WeekendInfo.TrackConfigName ?? string.Empty;
 
+		if ( sessionInfo.CarSetup?.Chassis?.Front?.SteeringOffset != null )
+		{
+			var numericPart = SteeringOffsetRegex().Replace( sessionInfo.CarSetup.Chassis.Front.SteeringOffset, "" ).Trim();
+
+			if ( float.TryParse( numericPart, NumberStyles.Float | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var result ) )
+			{
+				SteeringOffset = result;
+			}
+			else
+			{
+				SteeringOffset = 0f;
+			}
+		}
+		else
+		{
+			SteeringOffset = 0f;
+		}
+
 		if ( _waitingForFirstSessionInfo )
 		{
 			UpdateTireProperties();
@@ -305,7 +327,7 @@ public class Simulator
 
 		app.MainWindow.UpdateStatus();
 
-		app.SteeringEffects.SetMairaComboBoxItemsSources();
+		app.SteeringEffects.SetMairaComboBoxItemsSource();
 
 #if DEBUG
 
@@ -342,6 +364,7 @@ public class Simulator
 			_replayPlaySpeedDatum = _irsdk.Data.TelemetryDataProperties[ "ReplayPlaySpeed" ];
 			_rpmDatum = _irsdk.Data.TelemetryDataProperties[ "RPM" ];
 			_sessionFlagsDatum = _irsdk.Data.TelemetryDataProperties[ "SessionFlags" ];
+			_speedDatum = _irsdk.Data.TelemetryDataProperties[ "Speed" ];
 			_steeringFFBEnabledDatum = _irsdk.Data.TelemetryDataProperties[ "SteeringFFBEnabled" ];
 			_steeringWheelAngleDatum = _irsdk.Data.TelemetryDataProperties[ "SteeringWheelAngle" ];
 			_steeringWheelAngleMaxDatum = _irsdk.Data.TelemetryDataProperties[ "SteeringWheelAngleMax" ];
@@ -480,7 +503,9 @@ public class Simulator
 
 		app.RacingWheel.UpdateSteeringWheelTorqueBuffer = true;
 
-		// get car body velocity
+		// get car body speed and velocities
+
+		Speed = _irsdk.Data.GetFloat( _speedDatum );
 
 		VelocityX = _irsdk.Data.GetFloat( _velocityXDatum );
 		VelocityY = _irsdk.Data.GetFloat( _velocityYDatum );
@@ -536,7 +561,7 @@ public class Simulator
 
 		if ( _velocityLastFrame != null )
 		{
-			GForce = MathF.Abs( Velocity - (float) _velocityLastFrame ) / deltaSeconds / OneG;
+			GForce = MathF.Abs( Velocity - (float) _velocityLastFrame ) / deltaSeconds / MathZ.OneG;
 		}
 		else
 		{
@@ -629,11 +654,11 @@ public class Simulator
 				}
 				else if ( delta > 0f )
 				{
-					RPMSpeedRatios[ Gear ] = Misc.Lerp( RPMSpeedRatios[ Gear ], CurrentRpmSpeedRatio, 0.001f );
+					RPMSpeedRatios[ Gear ] = MathZ.Lerp( RPMSpeedRatios[ Gear ], CurrentRpmSpeedRatio, 0.001f );
 				}
 				else
 				{
-					RPMSpeedRatios[ Gear ] = Misc.Lerp( RPMSpeedRatios[ Gear ], CurrentRpmSpeedRatio, 0.01f );
+					RPMSpeedRatios[ Gear ] = MathZ.Lerp( RPMSpeedRatios[ Gear ], CurrentRpmSpeedRatio, 0.01f );
 				}
 				/*
 				switch ( Gear )
@@ -722,4 +747,7 @@ public class Simulator
 			app.SteeringEffects.LoadCalibration();
 		}
 	}
+
+	[GeneratedRegex( @"\s*deg\s*$", RegexOptions.IgnoreCase, "en-US" )]
+	private static partial Regex SteeringOffsetRegex();
 }

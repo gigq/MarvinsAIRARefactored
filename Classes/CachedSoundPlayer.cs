@@ -38,7 +38,7 @@ public class CachedSoundPlayer( CachedSound sound, XAudio2 xaudio2 ) : IDisposab
 		buffer.LoopCount = loop ? AudioBuffer.LoopInfinite : 0;
 
 		_sourceVoice.SetFrequencyRatio( frequencyRatio );
-		_sourceVoice.SetVolume( Math.Clamp( volume, 0f, 1f ) );
+		_sourceVoice.SetVolume( MathZ.Saturate( volume ) );
 		_sourceVoice.SubmitSourceBuffer( buffer, _sound.DecodedPacketsInfo );
 		_sourceVoice.Start();
 	}
@@ -48,7 +48,7 @@ public class CachedSoundPlayer( CachedSound sound, XAudio2 xaudio2 ) : IDisposab
 		if ( _sourceVoice != null )
 		{
 			_sourceVoice.SetFrequencyRatio( frequencyRatio );
-			_sourceVoice.SetVolume( Math.Clamp( volume, 0f, 1f ) );
+			_sourceVoice.SetVolume( MathZ.Saturate(volume ) );
 		}
 	}
 

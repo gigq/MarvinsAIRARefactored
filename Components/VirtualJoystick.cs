@@ -93,9 +93,9 @@ public class VirtualJoystick
 		{
 			_joystickState.bDevice = (byte) JoystickId;
 
-			_joystickState.AxisX = (int) MathF.Round( Misc.Lerp( _minimumX, _maximumX, Steering * 0.5f + 0.5f ) );
-			_joystickState.AxisY = (int) MathF.Round( Misc.Lerp( _minimumY, _maximumY, Brake ) );
-			_joystickState.AxisZ = (int) MathF.Round( Misc.Lerp( _minimumZ, _maximumZ, Throttle ) );
+			_joystickState.AxisX = (int) MathF.Round( MathZ.Lerp( _minimumX, _maximumX, Steering * 0.5f + 0.5f ) );
+			_joystickState.AxisY = (int) MathF.Round( MathZ.Lerp( _minimumY, _maximumY, Brake ) );
+			_joystickState.AxisZ = (int) MathF.Round( MathZ.Lerp( _minimumZ, _maximumZ, Throttle ) );
 
 			var shiftUp = ShiftUp ? (uint) 0x00000001 : 0;
 			var shiftDown = ShiftDown ? (uint) 0x00000002 : 0;

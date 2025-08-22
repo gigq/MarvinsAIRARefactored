@@ -9,7 +9,7 @@
         xmlns:datacontext="clr-namespace:MarvinsAIRARefactored.DataContext"
         mc:Ignorable="d"
         Title="{Binding Localization[UpdateButtonMappings]}"
-        Icon="/Artwork/AppIcon/white_icon.ico"
+        Icon="/Artwork/AppIcon/maira-universal.ico"
         MinWidth="600"
         Width="800"
         MinHeight="150"

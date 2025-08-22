@@ -9,7 +9,7 @@
         xmlns:datacontext="clr-namespace:MarvinsAIRARefactored.DataContext"
         mc:Ignorable="d"
         Title="{Binding DataContext.Instance.Localization[SaveThisSetting]}"
-        Icon="/Artwork/AppIcon/white_icon.ico"
+        Icon="/Artwork/AppIcon/maira-universal.ico"
         Width="800"
         SizeToContent="Height"
         ResizeMode="NoResize"

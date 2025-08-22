@@ -39,17 +39,17 @@ public class ContextSettings
 	public bool RacingWheelCenterWheelWhileRacing { get; set; }
 	public bool RacingWheelCenterWheelWhileParked { get; set; }
 	public bool RacingWheelFadeEnabled { get; set; }
-	public string SteeringEffectsUndersteerCalibrationFileName1 { get; set; } = string.Empty;
-	public string SteeringEffectsUndersteerCalibrationFileName2 { get; set; } = string.Empty;
-	public string SteeringEffectsUndersteerCalibrationFileName3 { get; set; } = string.Empty;
-	public float SteeringEffectsUndersteerWarningThreshold { get; set; }
-	public float SteeringEffectsUndersteerThreshold { get; set; }
-	public float SteeringEffectsUndersteerWheelVibrationWarningFrequency { get; set; }
-	public float SteeringEffectsUndersteerWheelVibrationFrequency { get; set; }
+	public string SteeringEffectsCalibrationFileName { get; set; } = string.Empty;
+	public float SteeringEffectsUndersteerMinimumThreshold { get; set; }
+	public float SteeringEffectsUndersteerMaximumThreshold { get; set; }
+	public float SteeringEffectsOversteerMinimumThreshold { get; set; }
+	public float SteeringEffectsOversteerMaximumThreshold { get; set; }
+	public float SteeringEffectsUndersteerWheelVibrationMinimumFrequency { get; set; }
+	public float SteeringEffectsUndersteerWheelVibrationMaximumFrequency { get; set; }
 	public float SteeringEffectsUndersteerWheelVibrationCurve { get; set; }
 	public float SteeringEffectsUndersteerWheelVibrationStrength { get; set; }
-	public float SteeringEffectsUndersteerPedalVibrationWarningFrequency { get; set; }
-	public float SteeringEffectsUndersteerPedalVibrationFrequency { get; set; }
+	public float SteeringEffectsUndersteerPedalVibrationMinimumFrequency { get; set; }
+	public float SteeringEffectsUndersteerPedalVibrationMaximumFrequency { get; set; }
 	public float SteeringEffectsUndersteerPedalVibrationCurve { get; set; }
 	public float PedalsMinimumFrequency { get; set; }
 	public float PedalsMaximumFrequency { get; set; }

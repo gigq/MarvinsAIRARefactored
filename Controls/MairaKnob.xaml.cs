@@ -310,7 +310,7 @@ public partial class MairaKnob : UserControl
 			var imageWidth = (int) Curve_Image.Width;
 			var imageHeight = (int) Curve_Image.Height;
 
-			var power = Misc.CurveToPower( Value );
+			var power = MathZ.CurveToPower( Value );
 
 			var dv = new DrawingVisual();
 

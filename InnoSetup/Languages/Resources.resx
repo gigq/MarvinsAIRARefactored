@@ -347,7 +347,7 @@
   </data>
   <data name="GForceUnits" xml:space="preserve">
     <value> g</value>
-    <comment>Abbreviation for G-Force</comment>
+    <comment>Abbreviation for g-force</comment>
   </data>
   <data name="GForce" xml:space="preserve">
     <value>G-Force</value>
@@ -863,7 +863,7 @@
   </data>
   <data name="Degrees" xml:space="preserve">
     <value>°</value>
-    <comment>Steering effects</comment>
+    <comment>Abbreviation for degrees</comment>
   </data>
   <data name="Master" xml:space="preserve">
     <value>Master</value>
@@ -1155,7 +1155,7 @@
   </data>
   <data name="KPHUnits" xml:space="preserve">
     <value> KPH</value>
-    <comment>Abbreviation for Kilometers per Hour</comment>
+    <comment>Abbreviation for kilometers per hour</comment>
   </data>
   <data name="CalibrationFileContributors" xml:space="preserve">
     <value>Calibration File Contributors</value>
@@ -1164,5 +1164,17 @@
   <data name="CalibrationFilesText" xml:space="preserve">
     <value>These are the folks who have generously contributed some of their spare time, to run steering effects calibrations on some of their favorite cars, and to upload those calibration files!</value>
     <comment>Contribute</comment>
+  </data>
+  <data name="DegreesPerSecond" xml:space="preserve">
+    <value>°/s</value>
+    <comment>Abbreviation for degrees per second</comment>
+  </data>
+  <data name="ParkedStrength" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="Friction" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
   </data>
 </root>

@@ -96,7 +96,7 @@ public class Sounds
 					if ( differencePct > 0f )
 					{
 						_soundEffects[ SoundEffectType.WheelLock ].ShouldBePlaying = true;
-						_soundEffects[ SoundEffectType.WheelLock ].Volume = settings.SoundsMasterVolume * Math.Clamp( differencePct / 0.03f, 0f, 1f ) * ( ( settings.SoundsWheelLockFadeWithBrake ) ? ( app.Simulator.Brake * 0.9f + 0.1f ) : 1f );
+						_soundEffects[ SoundEffectType.WheelLock ].Volume = settings.SoundsMasterVolume * MathZ.Saturate( differencePct / 0.03f ) * ( ( settings.SoundsWheelLockFadeWithBrake ) ? ( app.Simulator.Brake * 0.9f + 0.1f ) : 1f );
 					}
 				}
 			}
@@ -113,7 +113,7 @@ public class Sounds
 					if ( differencePct > 0f )
 					{
 						_soundEffects[ SoundEffectType.WheelSpin ].ShouldBePlaying = true;
-						_soundEffects[ SoundEffectType.WheelSpin ].Volume = settings.SoundsMasterVolume * Math.Clamp( differencePct / 0.03f, 0f, 1f ) * ( ( settings.SoundsWheelSpinFadeWithThrottle ) ? ( app.Simulator.Throttle * 0.9f + 0.1f ) : 1f );
+						_soundEffects[ SoundEffectType.WheelSpin ].Volume = settings.SoundsMasterVolume * MathZ.Saturate( differencePct / 0.03f ) * ( ( settings.SoundsWheelSpinFadeWithThrottle ) ? ( app.Simulator.Throttle * 0.9f + 0.1f ) : 1f );
 					}
 				}
 			}

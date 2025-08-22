@@ -10,7 +10,7 @@
         xmlns:viewers="clr-namespace:MarvinsAIRARefactored.Viewers"
         mc:Ignorable="d"
         Title="{Binding Localization[AppTitle]}"
-        Icon="/Artwork/AppIcon/white_icon.ico"
+        Icon="/Artwork/AppIcon/maira-universal.ico"
         MinWidth="550"
         MinHeight="350"
         Width="1100"
@@ -439,56 +439,23 @@
 
                     <StackPanel Margin="0,10,0,10">
 
-                        <GroupBox Header="{Binding Localization[UndersteerCalibrationFiles]}">
+                        <GroupBox Header="{Binding Localization[CalibrationFile]}">
 
                             <StackPanel>
 
-                                <Border x:Name="SteeringEffects_Status_Border" Background="SkyBlue" Padding="0,2,0,4" Tag="HideWhenGraphIsSoloed" Margin="-20,-18,-20,20">
+                                <Border x:Name="SteeringEffects_Status_Border" Background="SkyBlue" Padding="0,2,0,4" Margin="-20,-18,-20,20">
 
-                                    <Grid HorizontalAlignment="Center">
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="20"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0" x:Name="SteeringEffects_CarSetupName_TextBlock" Text="" d:Text="Current Setup: baseline" Foreground="#000000"/>
-                                        <TextBlock Grid.Column="2" x:Name="SteeringEffects_TireCompoundType_TextBlock" Text="" d:Text="Current Tire Compound: allpurpose" Foreground="#000000"/>
-
-                                    </Grid>
+                                    <TextBlock x:Name="SteeringEffects_CarSetupName_TextBlock" Text="" d:Text="Current Setup: baseline" Foreground="#000000" HorizontalAlignment="Center"/>
 
                                 </Border>
 
-                                <Grid x:Name="SteeringEffects_UndersteerCalibrationFileName1_Grid">
-                                    
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="20"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Label Grid.Row="0" Grid.Column="0" x:Name="SteeringEffects_UndersteerCalibrationFileName1_Label" Content="COMPOUND"/>
-                                    <Label Grid.Row="1" Grid.Column="0" x:Name="SteeringEffects_UndersteerCalibrationFileName2_Label" Content="COMPOUND" Margin="0,20,0,0"/>
-                                    <Label Grid.Row="2" Grid.Column="0" x:Name="SteeringEffects_UndersteerCalibrationFileName3_Label" Content="COMPOUND" Margin="0,20,0,0"/>
-
-                                    <controls:MairaComboBox Grid.Row="0" Grid.Column="2" x:Name="SteeringEffects_UndersteerCalibrationFileName1_ComboBox" Title="" SelectedValue="{Binding Settings.SteeringEffectsUndersteerCalibrationFileName1, Mode=TwoWay}" VerticalContentAlignment="Center"/>
-                                    <controls:MairaComboBox Grid.Row="1" Grid.Column="2" x:Name="SteeringEffects_UndersteerCalibrationFileName2_ComboBox" Title="" SelectedValue="{Binding Settings.SteeringEffectsUndersteerCalibrationFileName2, Mode=TwoWay}" VerticalContentAlignment="Center" Margin="0,20,0,0"/>
-                                    <controls:MairaComboBox Grid.Row="2" Grid.Column="2" x:Name="SteeringEffects_UndersteerCalibrationFileName3_ComboBox" Title="" SelectedValue="{Binding Settings.SteeringEffectsUndersteerCalibrationFileName3, Mode=TwoWay}" VerticalContentAlignment="Center" Margin="0,20,0,0"/>
-
-                                </Grid>
+                                <controls:MairaComboBox x:Name="SteeringEffects_CalibrationFileName_ComboBox" Title="" SelectedValue="{Binding Settings.SteeringEffectsCalibrationFileName, Mode=TwoWay}" VerticalContentAlignment="Center"/>
 
                             </StackPanel>
 
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Localization[UndersteerEffect]}">
+                        <GroupBox Header="{Binding Localization[Understeer]}">
 
                             <StackPanel>
 
@@ -502,8 +469,31 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <controls:MairaKnob Grid.Column="0" Title="{Binding Localization[WarningThreshold]}" Value="{Binding Settings.SteeringEffectsUndersteerWarningThreshold, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerWarningThresholdString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWarningThresholdContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWarningThresholdPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWarningThresholdMinusButtonMappings}" DefaultValue="1"/>
-                                    <controls:MairaKnob Grid.Column="2" Title="{Binding Localization[UndersteerThreshold]}" Value="{Binding Settings.SteeringEffectsUndersteerThreshold, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerThresholdString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerThresholdContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerThresholdPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerThresholdMinusButtonMappings}" DefaultValue="1.1"/>
+                                    <controls:MairaKnob Grid.Column="0" Title="{Binding Localization[MinimumThreshold]}" Value="{Binding Settings.SteeringEffectsUndersteerMinimumThreshold, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdMinusButtonMappings}" DefaultValue="0.05"/>
+                                    <controls:MairaKnob Grid.Column="2" Title="{Binding Localization[MaximumThreshold]}" Value="{Binding Settings.SteeringEffectsUndersteerMaximumThreshold, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdMinusButtonMappings}" DefaultValue="0.13"/>
+
+                                </Grid>
+
+                            </StackPanel>
+
+                        </GroupBox>
+
+                        <GroupBox Header="{Binding Localization[Oversteer]}">
+
+                            <StackPanel>
+
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <controls:MairaKnob Grid.Column="0" Title="{Binding Localization[MinimumThreshold]}" Value="{Binding Settings.SteeringEffectsOversteerMinimumThreshold, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsOversteerMinimumThresholdString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsOversteerMinimumThresholdContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerMinimumThresholdPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerMinimumThresholdMinusButtonMappings}" DefaultValue="0.05"/>
+                                    <controls:MairaKnob Grid.Column="2" Title="{Binding Localization[MaximumThreshold]}" Value="{Binding Settings.SteeringEffectsOversteerMaximumThreshold, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsOversteerMaximumThresholdString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsOversteerMaximumThresholdContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerMaximumThresholdPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerMaximumThresholdMinusButtonMappings}" DefaultValue="0.13"/>
 
                                 </Grid>
 
@@ -525,8 +515,8 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <controls:MairaKnob Grid.Column="0" Title="{Binding Localization[WarningFrequency]}" Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationWarningFrequency, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationWarningFrequencyString}" SmallValueChangeStep="0.1" LargeValueChangeStep="1" RotationMultiplier="0.1" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationWarningFrequencyContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationWarningFrequencyPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationWarningFrequencyMinusButtonMappings}" DefaultValue="35"/>
-                                    <controls:MairaKnob Grid.Column="2" Title="{Binding Localization[UndersteerFrequency]}" Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationFrequency, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationFrequencyString}" SmallValueChangeStep="0.1" LargeValueChangeStep="1" RotationMultiplier="0.1" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationFrequencyContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationFrequencyPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationFrequencyMinusButtonMappings}" DefaultValue="50"/>
+                                    <controls:MairaKnob Grid.Column="0" Title="{Binding Localization[MinimumFrequency]}" Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequency, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyString}" SmallValueChangeStep="0.1" LargeValueChangeStep="1" RotationMultiplier="0.1" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyMinusButtonMappings}" DefaultValue="15"/>
+                                    <controls:MairaKnob Grid.Column="2" Title="{Binding Localization[MaximumFrequency]}" Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequency, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyString}" SmallValueChangeStep="0.1" LargeValueChangeStep="1" RotationMultiplier="0.1" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyMinusButtonMappings}" DefaultValue="50"/>
                                     <controls:MairaKnob Grid.Column="4" Title="{Binding Localization[Curve]}" Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurve, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurveString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurveContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurvePlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurveMinusButtonMappings}" ShowCurve="True" DefaultValue="0"/>
 
                                 </Grid>
@@ -563,8 +553,8 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <controls:MairaKnob Grid.Column="0" Title="{Binding Localization[WarningFrequency]}" Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationWarningFrequency, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationWarningFrequencyString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationWarningFrequencyContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationWarningFrequencyPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationWarningFrequencyMinusButtonMappings}" DefaultValue="0"/>
-                                    <controls:MairaKnob Grid.Column="2" Title="{Binding Localization[UndersteerFrequency]}" Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationFrequency, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationFrequencyString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationFrequencyContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationFrequencyPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationFrequencyMinusButtonMappings}" DefaultValue="1"/>
+                                    <controls:MairaKnob Grid.Column="0" Title="{Binding Localization[MinimumFrequency]}" Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequency, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyMinusButtonMappings}" DefaultValue="0"/>
+                                    <controls:MairaKnob Grid.Column="2" Title="{Binding Localization[MaximumFrequency]}" Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequency, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyMinusButtonMappings}" DefaultValue="1"/>
                                     <controls:MairaKnob Grid.Column="4" Title="{Binding Localization[Curve]}" Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurve, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurvePlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveMinusButtonMappings}" ShowCurve="True" DefaultValue="0"/>
 
                                 </Grid>
@@ -602,7 +592,7 @@
 
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Localization[UndersteerEffectCalibration]}">
+                        <GroupBox Header="{Binding Localization[Calibration]}">
 
                             <StackPanel>
 
@@ -610,64 +600,30 @@
 
                                 <Grid>
 
-                                    <Grid.Resources>
-                                        <Style TargetType="controls:MairaButton">
-                                            <Setter Property="Margin" Value="0,10,0,0" />
-                                        </Style>
-                                    </Grid.Resources>
-
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="20"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
 
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        
-                                        <controls:MairaButton Grid.Row="0" x:Name="SteeringEffects_RunCalibration_MairaButton" Title="{Binding Localization[RunCalibration]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_record_on.png" Click="SteeringEffects_RunCalibration_MairaButton_Click"/>
-                                        <controls:MairaButton Grid.Row="1" x:Name="SteeringEffects_StopCalibration_MairaButton" Title="{Binding Localization[StopCalibration]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_cancel.png" Click="SteeringEffects_StopCalibration_MairaButton_Click"/>
-                                        <controls:MairaKnob Grid.Row="3" Margin="0,20,0,0" Title="{Binding Localization[WarmUpSpeed]}" Value="{Binding Settings.SteeringEffectsWarmUpSpeed, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsWarmUpSpeedString}" SmallValueChangeStep="0.1" LargeValueChangeStep="1" RotationMultiplier="0.1" DefaultValue="120"/>
-                                        <controls:MairaKnob Grid.Row="4" Margin="0,20,0,0" Title="{Binding Localization[WarmUpLapCount]}" Value="{Binding Settings.SteeringEffectsWarmUpLapCount, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsWarmUpLapCountString}" SmallValueChangeStep="0.1" LargeValueChangeStep="1" RotationMultiplier="0.1" DefaultValue="10"/>
-                                        
-                                    </Grid>
+                                    <controls:MairaButton Grid.Row="0" Grid.Column="1" x:Name="SteeringEffects_RunCalibration_MairaButton" Title="{Binding Localization[RunCalibration]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_record_on.png" Click="SteeringEffects_RunCalibration_MairaButton_Click"/>
+                                    <controls:MairaButton Grid.Row="0" Grid.Column="3" x:Name="SteeringEffects_StopCalibration_MairaButton" Title="{Binding Localization[StopCalibration]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_cancel.png" Click="SteeringEffects_StopCalibration_MairaButton_Click"/>
 
-                                    <Image Grid.Column="2" Grid.ColumnSpan="3" Source="/MarvinsAIRARefactored;component/Artwork/Misc/centripetal_circuit.png" Width="640" Height="512" HorizontalAlignment="Center"/>
-                                    <Image Grid.Column="2" Grid.ColumnSpan="3" x:Name="SteeringEffects_RaceCar_Image" Source="/MarvinsAIRARefactored;component/Artwork/Misc/race_car.png" Width="8" Height="22" RenderTransformOrigin="0.5,0.5"/>
-                                    <Image Grid.Column="2" Grid.ColumnSpan="3" x:Name="SteeringEffects_TargetPosition_Image" Source="/MarvinsAIRARefactored;component/Artwork/Misc/target_position.png" Width="8" Height="8" RenderTransformOrigin="0.5,0.5" Visibility="Hidden"/>
+                                    <Border Grid.Row="2" Grid.ColumnSpan="5" BorderThickness="2" BorderBrush="#FFF" Background="#80000000" CornerRadius="5" Padding="0,0,0,6">
+                                        <ScrollViewer x:Name="SteeringEffects_Calibration_ScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=GroupBox}}" PreviewMouseWheel="RacingWheel_Preview_ScrollViewer_PreviewMouseWheel">
+                                            <Image x:Name="SteeringEffects_Calibration_Image" Height="300" Width="900" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        </ScrollViewer>
+                                    </Border>
 
-                                    <StackPanel Grid.Column="2" Grid.ColumnSpan="3">
-                                        <Label x:Name="SteeringEffects_Calibration_Phase_Label" FontSize="18" Padding="0" Content="Phase: " FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                        <Label x:Name="SteeringEffects_Calibration_Progress_Label" FontSize="18" Padding="0" Content="Progress: " FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                    </StackPanel>
-
-                                    <StackPanel Grid.Column="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom">
-                                        <Label x:Name="SteeringEffects_Calibration_RPM_Label" FontSize="18" Padding="0" Content="RPM: 100%" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                        <Label x:Name="SteeringEffects_Calibration_Brake_Label" FontSize="18" Padding="0" Content="Brake: 100%" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                        <Label x:Name="SteeringEffects_Calibration_Throttle_Label" FontSize="18" Padding="0" Content="Throttle: 100%" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                        <Label x:Name="SteeringEffects_Calibration_SteeringWheel_Label" FontSize="18" Padding="0" Content="Steering Wheel: 0°" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                    </StackPanel>
-
-                                    <StackPanel Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Right">
-                                        <Label x:Name="SteeringEffects_Calibration_YawRate_Label" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="Yaw Rate:    0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue" Margin="0,0,0,20"/>
-                                        <Label x:Name="SteeringEffects_Calibration_CarPositionX_Label" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="Car X:    0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                        <Label x:Name="SteeringEffects_Calibration_CarPositionY_Label" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="Car Y:    0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                    </StackPanel>
-
-                                    <StackPanel Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                        <Label x:Name="SteeringEffects_Calibration_Heading_Label" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="Heading:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue" Margin="0,0,0,20"/>
-                                        <Label x:Name="SteeringEffects_Calibration_VelocityX_Label" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="VX:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                        <Label x:Name="SteeringEffects_Calibration_VelocityY_Label" HorizontalContentAlignment="Right" FontSize="18" Padding="0" Content="VY:   0.0" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue"/>
-                                    </StackPanel>
+                                    <TextBlock Grid.Row="2" Grid.ColumnSpan="5" x:Name="SteeringEffects_CalibrationProgress_Label" Text="Progress: 100%" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0" Foreground="White" Background="Black" Padding="20,2,20,6"/>
 
                                 </Grid>
 
@@ -692,9 +648,6 @@
 
                                     <controls:MairaButton Title="{Binding Localization[MinBrake]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_min_brake.png" Click="SteeringEffects_MinBrake_MairaButton_Click"/>
                                     <controls:MairaButton Title="{Binding Localization[MaxBrake]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_max_brake.png" Click="SteeringEffects_MaxBrake_MairaButton_Click"/>
-
-                                    <controls:MairaButton Title="{Binding Localization[ActiveResetSave]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_target.png" Click="SteeringEffects_ActiveResetSave_MairaButton_Click"/>
-                                    <controls:MairaButton Title="{Binding Localization[ActiveResetRun]}" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_magic.png" Click="SteeringEffects_ActiveResetRun_MairaButton_Click"/>
 
                                 </UniformGrid>
 
@@ -1122,7 +1075,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <controls:MairaKnob Grid.Column="0" Title="{Binding Localization[WarningFrequency]}" Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationWarningFrequency, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationWarningFrequencyString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationWarningFrequencyContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationWarningFrequencyPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationWarningFrequencyMinusButtonMappings}" DefaultValue="0.25"/>
-                                <controls:MairaKnob Grid.Column="2" Title="{Binding Localization[UndersteerFrequency]}" Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationFrequency, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationFrequencyString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationFrequencyContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationFrequencyPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationFrequencyMinusButtonMappings}" DefaultValue="1"/>
+                                <controls:MairaKnob Grid.Column="2" Title="{Binding Localization[UndersteerFrequency]}" Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequency, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyPlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyMinusButtonMappings}" DefaultValue="1"/>
                                 <controls:MairaKnob Grid.Column="4" Title="{Binding Localization[Curve]}" Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurve, Mode=TwoWay}" ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveString}" SmallValueChangeStep="0.001" LargeValueChangeStep="0.01" RotationMultiplier="10" ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveContextSwitches}" PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurvePlusButtonMappings}" MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveMinusButtonMappings}" ShowCurve="True" DefaultValue="0"/>
 
                             </Grid>
@@ -1813,38 +1766,49 @@
                                         </Style>
                                     </UniformGrid.Resources>
 
-                                    <TextBlock Text="Marvin Herbold (10)"/>
+                                    <TextBlock Text="Marvin Herbold (13)"/>
                                     <!--
-                                    bmw m2 cs racing - baseline - hard.csv
-                                    bmw m2 cs racing - baseline_wet - wet.csv
-                                    chevrolet national impala - limerock - hard.csv
-                                    formula vee - baseline - allpurpose.csv
-                                    mazda mx-5 cup - baseline - hard.csv
-                                    mazda mx-5 cup - baseline_wet - wet.csv
-                                    mini stock - baseline - hard.csv
-                                    ray formula 1600 - baseline - allpurpose.csv
-                                    toyota gr86 - baseline - hard.csv
-                                    toyota gr86 - baseline_wet - wet.csv
+                                    bmw m2 cs racing - baseline - hard
+                                    bmw m2 cs racing - baseline_wet - wet
+                                    chevrolet national impala - limerock - hard
+                                    Ferrari 499P - baseline - hard
+                                    Ferrari 499P - baseline_wet - wet
+                                    formula vee - baseline - allpurpose
+                                    mazda mx-5 cup - baseline - hard
+                                    mazda mx-5 cup - baseline_wet - wet
+                                    mini stock - baseline - hard
+                                    ray formula 1600 - baseline - allpurpose
+                                    Super Formula Lights 324 - baseline - hard
+                                    toyota gr86 - baseline - hard
+                                    toyota gr86 - baseline_wet - wet
+                                    -->
+
+                                    <TextBlock Text="Matthew Merciez (10)"/>
+                                    <!--
+                                    acura nsx gt3 evo 22 - baseline - hard
+                                    audi r8 lms evo ii gt3 - baseline - hard
+                                    bmw m4 gt3 - baseline - hard
+                                    chevrolet corvette z06 gt3.r - baseline - hard
+                                    Dallara F312 F3 - baseline - hard
+                                    ford mustang gt3 - baseline - hard
+                                    lamborghini huracan gt3 evo - baseline - hard
+                                    mclaren 720s gt3 evo - baseline - hard
+                                    mercedes-amg gt3 2020 - baseline - hard
+                                    porsche 911 gt3 r (992) - baseline - hard
                                     -->
 
                                     <TextBlock Text="Matthew Brittle (3)"/>
                                     <!--
-                                    fia f4 - baseline - wet.csv
-                                    super formula sf23 - honda - baseline - hard.csv
-                                    super formula sf23 - toyota - baseline - hard.csv
+                                    fia f4 - baseline - wet
+                                    super formula sf23 - honda - baseline - hard
+                                    super formula sf23 - toyota - baseline - hard
                                     -->
 
-                                    <TextBlock Text="Matthew Merciez (9)"/>
+                                    <TextBlock Text="SCOSim (3)"/>
                                     <!--
-                                    acura nsx gt3 evo 22 - baseline - hard.csv
-                                    audi r8 lms evo ii gt3 - baseline - hard.csv
-                                    bmw m4 gt3 - baseline - hard.csv
-                                    chevrolet corvette z06 gt3.r - baseline - hard.csv
-                                    ford mustang gt3 - baseline - hard.csv
-                                    lamborghini huracan gt3 evo - baseline - hard.csv
-                                    mclaren 720s gt3 evo - baseline - hard.csv
-                                    mercedes-amg gt3 2020 - baseline - hard.csv
-                                    porsche 911 gt3 r (992) - baseline - hard.csv
+                                    FIA F4 - baseline - hard
+                                    Mercedes-AMG W13 E Performance - baseline - medium
+                                    Mercedes-AMG W13 E Performance - baseline - hard
                                     -->
 
                                 </UniformGrid>

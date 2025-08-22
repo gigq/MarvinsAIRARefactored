@@ -753,7 +753,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelSlewCompressionRate )
 			{
@@ -804,7 +804,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelTotalCompressionThreshold )
 			{
@@ -856,7 +856,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelTotalCompressionRate )
 			{
@@ -1131,7 +1131,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelLFEStrength )
 			{
@@ -1293,7 +1293,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelCrashProtectionForceReduction )
 			{
@@ -1347,7 +1347,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelCurbProtectionShockVelocity )
 			{
@@ -1401,7 +1401,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelCurbProtectionDuration )
 			{
@@ -1455,7 +1455,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelCurbProtectionForceReduction )
 			{
@@ -1509,7 +1509,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelParkedStrength )
 			{
@@ -1563,7 +1563,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelParkedFriction )
 			{
@@ -1617,7 +1617,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelParkedWheelCenteringStrength )
 			{
@@ -1671,7 +1671,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelSoftLockStrength )
 			{
@@ -1725,7 +1725,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelFriction )
 			{
@@ -1779,7 +1779,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelWheelCenteringStrength )
 			{
@@ -2094,19 +2094,19 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
-	#region Steering effects - Understeer calibration file name 1
+	#region Steering effects - Calibration file name
 
-	private string _steeringEffectsUndersteerCalibrationFileName1 = string.Empty;
+	private string _steeringEffectsCalibrationFileName = string.Empty;
 
-	public string SteeringEffectsUndersteerCalibrationFileName1
+	public string SteeringEffectsCalibrationFileName
 	{
-		get => _steeringEffectsUndersteerCalibrationFileName1;
+		get => _steeringEffectsCalibrationFileName;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerCalibrationFileName1 )
+			if ( value != _steeringEffectsCalibrationFileName )
 			{
-				_steeringEffectsUndersteerCalibrationFileName1 = value;
+				_steeringEffectsCalibrationFileName = value;
 
 				OnPropertyChanged();
 			}
@@ -2117,253 +2117,297 @@ public class Settings : INotifyPropertyChanged
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerCalibrationFileName1ContextSwitches { get; set; } = new( false, true, false, false, false );
+	public ContextSwitches SteeringEffectsCalibrationFileNameContextSwitches { get; set; } = new( false, true, false, false, false );
 
 	#endregion
 
-	#region Steering effects - Understeer calibration file name 2
+	#region Steering effects - Understeer minimum threshold
 
-	private string _steeringEffectsUndersteerCalibrationFileName2 = string.Empty;
+	private float _steeringEffectsUndersteerMinimumThreshold = 0.05f;
 
-	public string SteeringEffectsUndersteerCalibrationFileName2
+	public float SteeringEffectsUndersteerMinimumThreshold
 	{
-		get => _steeringEffectsUndersteerCalibrationFileName2;
+		get => _steeringEffectsUndersteerMinimumThreshold;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerCalibrationFileName2 )
+			value = MathZ.Saturate( value );
+
+			if ( value != _steeringEffectsUndersteerMinimumThreshold )
 			{
-				_steeringEffectsUndersteerCalibrationFileName2 = value;
+				_steeringEffectsUndersteerMinimumThreshold = value;
+
+				SteeringEffectsUndersteerMaximumThreshold = MathF.Max( SteeringEffectsUndersteerMaximumThreshold, _steeringEffectsUndersteerMinimumThreshold );
 
 				OnPropertyChanged();
 			}
 
-			var app = App.Instance!;
-
-			app.SteeringEffects.LoadCalibration();
+			SteeringEffectsUndersteerMinimumThresholdString = $"{_steeringEffectsUndersteerMinimumThreshold:F3}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerCalibrationFileName2ContextSwitches { get; set; } = new( false, true, false, false, false );
-
-	#endregion
-
-	#region Steering effects - Understeer calibration file name 3
-
-	private string _steeringEffectsUndersteerCalibrationFileName3 = string.Empty;
-
-	public string SteeringEffectsUndersteerCalibrationFileName3
-	{
-		get => _steeringEffectsUndersteerCalibrationFileName3;
-
-		set
-		{
-			if ( value != _steeringEffectsUndersteerCalibrationFileName3 )
-			{
-				_steeringEffectsUndersteerCalibrationFileName3 = value;
-
-				OnPropertyChanged();
-			}
-
-			var app = App.Instance!;
-
-			app.SteeringEffects.LoadCalibration();
-		}
-	}
-
-	public ContextSwitches SteeringEffectsUndersteerCalibrationFileName3ContextSwitches { get; set; } = new( false, true, false, false, false );
-
-	#endregion
-
-	#region Steering effects - Understeer warning threshold
-
-	private float _steeringEffectsUndersteerWarningThreshold = 1f;
-
-	public float SteeringEffectsUndersteerWarningThreshold
-	{
-		get => _steeringEffectsUndersteerWarningThreshold;
-
-		set
-		{
-			value = Math.Clamp( value, 0f, 2f );
-
-			if ( value != _steeringEffectsUndersteerWarningThreshold )
-			{
-				_steeringEffectsUndersteerWarningThreshold = value;
-
-				SteeringEffectsUndersteerThreshold = MathF.Max( SteeringEffectsUndersteerThreshold, _steeringEffectsUndersteerWarningThreshold );
-
-				OnPropertyChanged();
-			}
-
-			SteeringEffectsUndersteerWarningThresholdString = $"{_steeringEffectsUndersteerWarningThreshold * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
-		}
-	}
-
-	private string _steeringEffectsUndersteerWarningThresholdString = string.Empty;
+	private string _steeringEffectsUndersteerMinimumThresholdString = string.Empty;
 
 	[XmlIgnore]
-	public string SteeringEffectsUndersteerWarningThresholdString
+	public string SteeringEffectsUndersteerMinimumThresholdString
 	{
-		get => _steeringEffectsUndersteerWarningThresholdString;
+		get => _steeringEffectsUndersteerMinimumThresholdString;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerWarningThresholdString )
+			if ( value != _steeringEffectsUndersteerMinimumThresholdString )
 			{
-				_steeringEffectsUndersteerWarningThresholdString = value;
+				_steeringEffectsUndersteerMinimumThresholdString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerWarningThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsUndersteerWarningThresholdPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsUndersteerWarningThresholdMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerMinimumThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerMinimumThresholdPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerMinimumThresholdMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
-	#region Steering effects - Understeer threshold
+	#region Steering effects - Understeer maximum threshold
 
-	private float _steeringEffectsUndersteerThreshold = 1.1f;
+	private float _steeringEffectsUndersteerMaximumThreshold = 0.13f;
 
-	public float SteeringEffectsUndersteerThreshold
+	public float SteeringEffectsUndersteerMaximumThreshold
 	{
-		get => _steeringEffectsUndersteerThreshold;
+		get => _steeringEffectsUndersteerMaximumThreshold;
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 2f );
+			value = MathZ.Saturate( value );
 
-			if ( value != _steeringEffectsUndersteerThreshold )
+			if ( value != _steeringEffectsUndersteerMaximumThreshold )
 			{
-				_steeringEffectsUndersteerThreshold = value;
+				_steeringEffectsUndersteerMaximumThreshold = value;
 
-				SteeringEffectsUndersteerWarningThreshold = MathF.Min( SteeringEffectsUndersteerWarningThreshold, _steeringEffectsUndersteerThreshold );
+				SteeringEffectsUndersteerMinimumThreshold = MathF.Min( SteeringEffectsUndersteerMinimumThreshold, _steeringEffectsUndersteerMaximumThreshold );
 
 				OnPropertyChanged();
 			}
 
-			SteeringEffectsUndersteerThresholdString = $"{_steeringEffectsUndersteerThreshold * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			SteeringEffectsUndersteerMaximumThresholdString = $"{_steeringEffectsUndersteerMaximumThreshold:F3}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
 		}
 	}
 
-	private string _steeringEffectsUndersteerThresholdString = string.Empty;
+	private string _steeringEffectsUndersteerMaximumThresholdString = string.Empty;
 
 	[XmlIgnore]
-	public string SteeringEffectsUndersteerThresholdString
+	public string SteeringEffectsUndersteerMaximumThresholdString
 	{
-		get => _steeringEffectsUndersteerThresholdString;
+		get => _steeringEffectsUndersteerMaximumThresholdString;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerThresholdString )
+			if ( value != _steeringEffectsUndersteerMaximumThresholdString )
 			{
-				_steeringEffectsUndersteerThresholdString = value;
+				_steeringEffectsUndersteerMaximumThresholdString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsUndersteerThresholdPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsUndersteerThresholdMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerMaximumThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerMaximumThresholdPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerMaximumThresholdMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
-	#region Steering effects - Understeer wheel vibration warning frequency
+	#region Steering effects - Oversteer minimum threshold
 
-	private float _steeringEffectsUndersteerWheelVibrationWarningFrequency = 35f;
+	private float _steeringEffectsOversteerMinimumThreshold = 0.05f;
 
-	public float SteeringEffectsUndersteerWheelVibrationWarningFrequency
+	public float SteeringEffectsOversteerMinimumThreshold
 	{
-		get => _steeringEffectsUndersteerWheelVibrationWarningFrequency;
+		get => _steeringEffectsOversteerMinimumThreshold;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _steeringEffectsOversteerMinimumThreshold )
+			{
+				_steeringEffectsOversteerMinimumThreshold = value;
+
+				SteeringEffectsOversteerMaximumThreshold = MathF.Max( SteeringEffectsOversteerMaximumThreshold, _steeringEffectsOversteerMinimumThreshold );
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsOversteerMinimumThresholdString = $"{_steeringEffectsOversteerMinimumThreshold:F3}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
+		}
+	}
+
+	private string _steeringEffectsOversteerMinimumThresholdString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerMinimumThresholdString
+	{
+		get => _steeringEffectsOversteerMinimumThresholdString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerMinimumThresholdString )
+			{
+				_steeringEffectsOversteerMinimumThresholdString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerMinimumThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerMinimumThresholdPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerMinimumThresholdMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Oversteer maximum threshold
+
+	private float _steeringEffectsOversteerMaximumThreshold = 0.13f;
+
+	public float SteeringEffectsOversteerMaximumThreshold
+	{
+		get => _steeringEffectsOversteerMaximumThreshold;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _steeringEffectsOversteerMaximumThreshold )
+			{
+				_steeringEffectsOversteerMaximumThreshold = value;
+
+				SteeringEffectsOversteerMinimumThreshold = MathF.Min( SteeringEffectsOversteerMinimumThreshold, _steeringEffectsOversteerMaximumThreshold );
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsOversteerMaximumThresholdString = $"{_steeringEffectsOversteerMaximumThreshold:F3}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
+		}
+	}
+
+	private string _steeringEffectsOversteerMaximumThresholdString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerMaximumThresholdString
+	{
+		get => _steeringEffectsOversteerMaximumThresholdString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerMaximumThresholdString )
+			{
+				_steeringEffectsOversteerMaximumThresholdString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerMaximumThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerMaximumThresholdPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerMaximumThresholdMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Understeer wheel vibration minimum frequency
+
+	private float _steeringEffectsUndersteerWheelVibrationMinimumFrequency = 15f;
+
+	public float SteeringEffectsUndersteerWheelVibrationMinimumFrequency
+	{
+		get => _steeringEffectsUndersteerWheelVibrationMinimumFrequency;
 
 		set
 		{
 			value = Math.Clamp( value, 0f, 50f );
 
-			if ( value != _steeringEffectsUndersteerWheelVibrationWarningFrequency )
+			if ( value != _steeringEffectsUndersteerWheelVibrationMinimumFrequency )
 			{
-				_steeringEffectsUndersteerWheelVibrationWarningFrequency = value;
+				_steeringEffectsUndersteerWheelVibrationMinimumFrequency = value;
 
 				OnPropertyChanged();
 			}
 
-			SteeringEffectsUndersteerWheelVibrationWarningFrequencyString = $"{_steeringEffectsUndersteerWheelVibrationWarningFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
+			SteeringEffectsUndersteerWheelVibrationMinimumFrequencyString = $"{_steeringEffectsUndersteerWheelVibrationMinimumFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
 		}
 	}
 
-	private string _steeringEffectsUndersteerWheelVibrationWarningFrequencyString = string.Empty;
+	private string _steeringEffectsUndersteerWheelVibrationMinimumFrequencyString = string.Empty;
 
 	[XmlIgnore]
-	public string SteeringEffectsUndersteerWheelVibrationWarningFrequencyString
+	public string SteeringEffectsUndersteerWheelVibrationMinimumFrequencyString
 	{
-		get => _steeringEffectsUndersteerWheelVibrationWarningFrequencyString;
+		get => _steeringEffectsUndersteerWheelVibrationMinimumFrequencyString;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerWheelVibrationWarningFrequencyString )
+			if ( value != _steeringEffectsUndersteerWheelVibrationMinimumFrequencyString )
 			{
-				_steeringEffectsUndersteerWheelVibrationWarningFrequencyString = value;
+				_steeringEffectsUndersteerWheelVibrationMinimumFrequencyString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerWheelVibrationWarningFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsUndersteerWheelVibrationWarningFrequencyPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsUndersteerWheelVibrationWarningFrequencyMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerWheelVibrationMinimumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationMinimumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationMinimumFrequencyMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
-	#region Steering effects - Understeer wheel vibration frequency
+	#region Steering effects - Understeer wheel vibration maximum frequency
 
-	private float _steeringEffectsUndersteerWheelVibrationFrequency = 50f;
+	private float _steeringEffectsUndersteerWheelVibrationMaximumFrequency = 50f;
 
-	public float SteeringEffectsUndersteerWheelVibrationFrequency
+	public float SteeringEffectsUndersteerWheelVibrationMaximumFrequency
 	{
-		get => _steeringEffectsUndersteerWheelVibrationFrequency;
+		get => _steeringEffectsUndersteerWheelVibrationMaximumFrequency;
 
 		set
 		{
 			value = Math.Clamp( value, 0f, 50f );
 
-			if ( value != _steeringEffectsUndersteerWheelVibrationFrequency )
+			if ( value != _steeringEffectsUndersteerWheelVibrationMaximumFrequency )
 			{
-				_steeringEffectsUndersteerWheelVibrationFrequency = value;
+				_steeringEffectsUndersteerWheelVibrationMaximumFrequency = value;
 
 				OnPropertyChanged();
 			}
 
-			SteeringEffectsUndersteerWheelVibrationFrequencyString = $"{_steeringEffectsUndersteerWheelVibrationFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
+			SteeringEffectsUndersteerWheelVibrationMaximumFrequencyString = $"{_steeringEffectsUndersteerWheelVibrationMaximumFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
 		}
 	}
 
-	private string _steeringEffectsUndersteerWheelVibrationFrequencyString = string.Empty;
+	private string _steeringEffectsUndersteerWheelVibrationMaximumFrequencyString = string.Empty;
 
 	[XmlIgnore]
-	public string SteeringEffectsUndersteerWheelVibrationFrequencyString
+	public string SteeringEffectsUndersteerWheelVibrationMaximumFrequencyString
 	{
-		get => _steeringEffectsUndersteerWheelVibrationFrequencyString;
+		get => _steeringEffectsUndersteerWheelVibrationMaximumFrequencyString;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerWheelVibrationFrequencyString )
+			if ( value != _steeringEffectsUndersteerWheelVibrationMaximumFrequencyString )
 			{
-				_steeringEffectsUndersteerWheelVibrationFrequencyString = value;
+				_steeringEffectsUndersteerWheelVibrationMaximumFrequencyString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerWheelVibrationFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsUndersteerWheelVibrationFrequencyPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsUndersteerWheelVibrationFrequencyMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerWheelVibrationMaximumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationMaximumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationMaximumFrequencyMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
@@ -2475,97 +2519,97 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
-	#region Steering effects - Understeer pedal vibration warning frequency
+	#region Steering effects - Understeer pedal vibration minimum frequency
 
-	private float _steeringEffectsUndersteerPedalVibrationWarningFrequency = 0f;
+	private float _steeringEffectsUndersteerPedalVibrationMinimumFrequency = 0f;
 
-	public float SteeringEffectsUndersteerPedalVibrationWarningFrequency
+	public float SteeringEffectsUndersteerPedalVibrationMinimumFrequency
 	{
-		get => _steeringEffectsUndersteerPedalVibrationWarningFrequency;
+		get => _steeringEffectsUndersteerPedalVibrationMinimumFrequency;
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
-			if ( value != _steeringEffectsUndersteerPedalVibrationWarningFrequency )
+			if ( value != _steeringEffectsUndersteerPedalVibrationMinimumFrequency )
 			{
-				_steeringEffectsUndersteerPedalVibrationWarningFrequency = value;
+				_steeringEffectsUndersteerPedalVibrationMinimumFrequency = value;
 
 				OnPropertyChanged();
 			}
 
-			SteeringEffectsUndersteerPedalVibrationWarningFrequencyString = $"{_steeringEffectsUndersteerPedalVibrationWarningFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			SteeringEffectsUndersteerPedalVibrationMinimumFrequencyString = $"{_steeringEffectsUndersteerPedalVibrationMinimumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
 		}
 	}
 
-	private string _steeringEffectsUndersteerPedalVibrationWarningFrequencyString = string.Empty;
+	private string _steeringEffectsUndersteerPedalVibrationMinimumFrequencyString = string.Empty;
 
 	[XmlIgnore]
-	public string SteeringEffectsUndersteerPedalVibrationWarningFrequencyString
+	public string SteeringEffectsUndersteerPedalVibrationMinimumFrequencyString
 	{
-		get => _steeringEffectsUndersteerPedalVibrationWarningFrequencyString;
+		get => _steeringEffectsUndersteerPedalVibrationMinimumFrequencyString;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerPedalVibrationWarningFrequencyString )
+			if ( value != _steeringEffectsUndersteerPedalVibrationMinimumFrequencyString )
 			{
-				_steeringEffectsUndersteerPedalVibrationWarningFrequencyString = value;
+				_steeringEffectsUndersteerPedalVibrationMinimumFrequencyString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerPedalVibrationWarningFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsUndersteerPedalVibrationWarningFrequencyPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsUndersteerPedalVibrationWarningFrequencyMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerPedalVibrationMinimumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerPedalVibrationMinimumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerPedalVibrationMinimumFrequencyMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
-	#region Steering effects - Understeer pedal vibration frequency
+	#region Steering effects - Understeer pedal vibration maximum frequency
 
-	private float _steeringEffectsUndersteerPedalVibrationFrequency = 1f;
+	private float _steeringEffectsUndersteerPedalVibrationMaximumFrequency = 1f;
 
-	public float SteeringEffectsUndersteerPedalVibrationFrequency
+	public float SteeringEffectsUndersteerPedalVibrationMaximumFrequency
 	{
-		get => _steeringEffectsUndersteerPedalVibrationFrequency;
+		get => _steeringEffectsUndersteerPedalVibrationMaximumFrequency;
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
-			if ( value != _steeringEffectsUndersteerPedalVibrationFrequency )
+			if ( value != _steeringEffectsUndersteerPedalVibrationMaximumFrequency )
 			{
-				_steeringEffectsUndersteerPedalVibrationFrequency = value;
+				_steeringEffectsUndersteerPedalVibrationMaximumFrequency = value;
 
 				OnPropertyChanged();
 			}
 
-			SteeringEffectsUndersteerPedalVibrationFrequencyString = $"{_steeringEffectsUndersteerPedalVibrationFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			SteeringEffectsUndersteerPedalVibrationMaximumFrequencyString = $"{_steeringEffectsUndersteerPedalVibrationMaximumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
 		}
 	}
 
-	private string _steeringEffectsUndersteerPedalVibrationFrequencyString = string.Empty;
+	private string _steeringEffectsUndersteerPedalVibrationMaximumFrequencyString = string.Empty;
 
 	[XmlIgnore]
-	public string SteeringEffectsUndersteerPedalVibrationFrequencyString
+	public string SteeringEffectsUndersteerPedalVibrationMaximumFrequencyString
 	{
-		get => _steeringEffectsUndersteerPedalVibrationFrequencyString;
+		get => _steeringEffectsUndersteerPedalVibrationMaximumFrequencyString;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerPedalVibrationFrequencyString )
+			if ( value != _steeringEffectsUndersteerPedalVibrationMaximumFrequencyString )
 			{
-				_steeringEffectsUndersteerPedalVibrationFrequencyString = value;
+				_steeringEffectsUndersteerPedalVibrationMaximumFrequencyString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerPedalVibrationFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsUndersteerPedalVibrationFrequencyPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsUndersteerPedalVibrationFrequencyMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerPedalVibrationMaximumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerPedalVibrationMaximumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerPedalVibrationMaximumFrequencyMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
@@ -2729,92 +2773,6 @@ public class Settings : INotifyPropertyChanged
 			if ( value != _steeringEffectsGripOMeterWindowScaleString )
 			{
 				_steeringEffectsGripOMeterWindowScaleString = value;
-
-				OnPropertyChanged();
-			}
-		}
-	}
-
-	#endregion
-
-	#region Steering effects - Warm up speed
-
-	private float _steeringEffectsWarmUpSpeed = 120f;
-
-	public float SteeringEffectsWarmUpSpeed
-	{
-		get => _steeringEffectsWarmUpSpeed;
-
-		set
-		{
-			value = Math.Clamp( value, 50f, 250f );
-
-			if ( value != _steeringEffectsWarmUpSpeed )
-			{
-				_steeringEffectsWarmUpSpeed = value;
-
-				OnPropertyChanged();
-			}
-
-			SteeringEffectsWarmUpSpeedString = $"{_steeringEffectsWarmUpSpeed:F0}{DataContext.Instance.Localization[ "KPHUnits" ]}";
-		}
-	}
-
-	private string _steeringEffectsWarmUpSpeedString = string.Empty;
-
-	[XmlIgnore]
-	public string SteeringEffectsWarmUpSpeedString
-	{
-		get => _steeringEffectsWarmUpSpeedString;
-
-		set
-		{
-			if ( value != _steeringEffectsWarmUpSpeedString )
-			{
-				_steeringEffectsWarmUpSpeedString = value;
-
-				OnPropertyChanged();
-			}
-		}
-	}
-
-	#endregion
-
-	#region Steering effects - Warm up lap count
-
-	private float _steeringEffectsWarmUpLapCount = 10;
-
-	public float SteeringEffectsWarmUpLapCount
-	{
-		get => _steeringEffectsWarmUpLapCount;
-
-		set
-		{
-			value = Math.Clamp( value, 1f, 50f );
-
-			if ( value != _steeringEffectsWarmUpLapCount )
-			{
-				_steeringEffectsWarmUpLapCount = value;
-
-				OnPropertyChanged();
-			}
-
-			SteeringEffectsWarmUpLapCountString = $"{_steeringEffectsWarmUpLapCount:F0}";
-		}
-	}
-
-	private string _steeringEffectsWarmUpLapCountString = string.Empty;
-
-	[XmlIgnore]
-	public string SteeringEffectsWarmUpLapCountString
-	{
-		get => _steeringEffectsWarmUpLapCountString;
-
-		set
-		{
-			if ( value != _steeringEffectsWarmUpLapCountString )
-			{
-				_steeringEffectsWarmUpLapCountString = value;
 
 				OnPropertyChanged();
 			}
@@ -3013,7 +2971,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsMinimumAmplitude )
 			{
@@ -3062,7 +3020,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsMaximumAmplitude )
 			{
@@ -3188,7 +3146,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsClutchStrength1 )
 			{
@@ -3264,7 +3222,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsClutchStrength2 )
 			{
@@ -3340,7 +3298,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsClutchStrength3 )
 			{
@@ -3416,7 +3374,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsBrakeStrength1 )
 			{
@@ -3492,7 +3450,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsBrakeStrength2 )
 			{
@@ -3568,7 +3526,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsBrakeStrength3 )
 			{
@@ -3644,7 +3602,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsThrottleStrength1 )
 			{
@@ -3720,7 +3678,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsThrottleStrength2 )
 			{
@@ -3796,7 +3754,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsThrottleStrength3 )
 			{
@@ -3849,7 +3807,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsShiftIntoGearFrequency )
 			{
@@ -3896,7 +3854,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsShiftIntoGearAmplitude )
 			{
@@ -3990,7 +3948,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsShiftIntoNeutralFrequency )
 			{
@@ -4037,7 +3995,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsShiftIntoNeutralAmplitude )
 			{
@@ -4131,7 +4089,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsABSEngagedFrequency )
 			{
@@ -4178,7 +4136,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsABSEngagedAmplitude )
 			{
@@ -4248,7 +4206,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsStartingRPM )
 			{
@@ -4341,7 +4299,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsWheelLockFrequency )
 			{
@@ -4388,7 +4346,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsWheelLockSensitivity )
 			{
@@ -4458,7 +4416,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsWheelSpinFrequency )
 			{
@@ -4505,7 +4463,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsWheelSpinSensitivity )
 			{
@@ -4575,7 +4533,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsClutchSlipStart )
 			{
@@ -4624,7 +4582,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _pedalsClutchSlipEnd )
 			{
@@ -4795,7 +4753,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _soundsMasterVolume )
 			{
@@ -4862,7 +4820,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _soundsABSEngagedVolume )
 			{
@@ -4996,7 +4954,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _soundsWheelLockVolume )
 			{
@@ -5088,7 +5046,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _soundsWheelLockSensitivity )
 			{
@@ -5176,7 +5134,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _soundsWheelSpinVolume )
 			{
@@ -5268,7 +5226,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _soundsWheelSpinSensitivity )
 			{
@@ -5356,7 +5314,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _adminBoxxBrightness )
 			{
@@ -5402,7 +5360,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 1f );
+			value = MathZ.Saturate( value );
 
 			if ( value != _adminBoxxVolume )
 			{

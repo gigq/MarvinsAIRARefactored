@@ -156,9 +156,9 @@ public class RacingWheel
 
 			case Algorithm.DetailBooster:
 			{
-				var detailBoost = Misc.Lerp( 1f + settings.RacingWheelDetailBoost, 1f, curbProtectionLerpFactor );
+				var detailBoost = MathZ.Lerp( 1f + settings.RacingWheelDetailBoost, 1f, curbProtectionLerpFactor );
 
-				runningSteeringWheelTorque500Hz = Misc.Lerp( runningSteeringWheelTorque500Hz + ( steeringWheelTorque500Hz - lastSteeringWheelTorque500Hz ) * detailBoost, steeringWheelTorque500Hz, settings.RacingWheelDetailBoostBias );
+				runningSteeringWheelTorque500Hz = MathZ.Lerp( runningSteeringWheelTorque500Hz + ( steeringWheelTorque500Hz - lastSteeringWheelTorque500Hz ) * detailBoost, steeringWheelTorque500Hz, settings.RacingWheelDetailBoostBias );
 
 				outputTorque = runningSteeringWheelTorque500Hz / settings.RacingWheelMaxForce;
 
@@ -167,11 +167,11 @@ public class RacingWheel
 
 			case Algorithm.DeltaLimiter:
 			{
-				var deltaLimit = Misc.Lerp( settings.RacingWheelDeltaLimit / 500f, 0f, curbProtectionLerpFactor );
+				var deltaLimit = MathZ.Lerp( settings.RacingWheelDeltaLimit / 500f, 0f, curbProtectionLerpFactor );
 
 				var limitedDeltaSteeringWheelTorque500Hz = Math.Clamp( steeringWheelTorque500Hz - lastSteeringWheelTorque500Hz, -deltaLimit, deltaLimit );
 
-				runningSteeringWheelTorque500Hz = Misc.Lerp( runningSteeringWheelTorque500Hz + limitedDeltaSteeringWheelTorque500Hz, steeringWheelTorque500Hz, settings.RacingWheelDeltaLimiterBias );
+				runningSteeringWheelTorque500Hz = MathZ.Lerp( runningSteeringWheelTorque500Hz + limitedDeltaSteeringWheelTorque500Hz, steeringWheelTorque500Hz, settings.RacingWheelDeltaLimiterBias );
 
 				outputTorque = runningSteeringWheelTorque500Hz / settings.RacingWheelMaxForce;
 
@@ -180,9 +180,9 @@ public class RacingWheel
 
 			case Algorithm.DetailBoosterOn60Hz:
 			{
-				var detailBoost = Misc.Lerp( 1f + settings.RacingWheelDetailBoost, 1f, curbProtectionLerpFactor );
+				var detailBoost = MathZ.Lerp( 1f + settings.RacingWheelDetailBoost, 1f, curbProtectionLerpFactor );
 
-				runningSteeringWheelTorque500Hz = Misc.Lerp( runningSteeringWheelTorque500Hz + ( steeringWheelTorque500Hz - lastSteeringWheelTorque500Hz ) * detailBoost, steeringWheelTorque60Hz, settings.RacingWheelDetailBoostBias );
+				runningSteeringWheelTorque500Hz = MathZ.Lerp( runningSteeringWheelTorque500Hz + ( steeringWheelTorque500Hz - lastSteeringWheelTorque500Hz ) * detailBoost, steeringWheelTorque60Hz, settings.RacingWheelDetailBoostBias );
 
 				outputTorque = runningSteeringWheelTorque500Hz / settings.RacingWheelMaxForce;
 
@@ -191,11 +191,11 @@ public class RacingWheel
 
 			case Algorithm.DeltaLimiterOn60Hz:
 			{
-				var deltaLimit = Misc.Lerp( settings.RacingWheelDeltaLimit / 500f, 0f, curbProtectionLerpFactor );
+				var deltaLimit = MathZ.Lerp( settings.RacingWheelDeltaLimit / 500f, 0f, curbProtectionLerpFactor );
 
 				var limitedDeltaSteeringWheelTorque500Hz = Math.Clamp( steeringWheelTorque500Hz - lastSteeringWheelTorque500Hz, -deltaLimit, deltaLimit );
 
-				runningSteeringWheelTorque500Hz = Misc.Lerp( runningSteeringWheelTorque500Hz + limitedDeltaSteeringWheelTorque500Hz, steeringWheelTorque60Hz, settings.RacingWheelDeltaLimiterBias );
+				runningSteeringWheelTorque500Hz = MathZ.Lerp( runningSteeringWheelTorque500Hz + limitedDeltaSteeringWheelTorque500Hz, steeringWheelTorque60Hz, settings.RacingWheelDeltaLimiterBias );
 
 				outputTorque = runningSteeringWheelTorque500Hz / settings.RacingWheelMaxForce;
 
@@ -262,7 +262,7 @@ public class RacingWheel
 
 		if ( settings.RacingWheelOutputCurve != 0f )
 		{
-			var power = Misc.CurveToPower( settings.RacingWheelOutputCurve );
+			var power = MathZ.CurveToPower( settings.RacingWheelOutputCurve );
 
 			outputTorque = MathF.Sign( outputTorque ) * MathF.Pow( MathF.Abs( outputTorque ), power );
 		}
@@ -334,9 +334,9 @@ public class RacingWheel
 
 			// understeer steering effect signal generator
 
-			if ( app.SteeringEffects.UndersteerEffectFactor > 0f )
+			if ( app.SteeringEffects.UndersteerEffect > 0f )
 			{
-				var freq = app.SteeringEffects.IsUndersteering ? settings.SteeringEffectsUndersteerWheelVibrationFrequency : settings.SteeringEffectsUndersteerWheelVibrationWarningFrequency;
+				var freq = ( app.SteeringEffects.UndersteerEffect == 1f ) ? settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequency : settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequency;
 
 				var understeerEffectTorque = MathF.Cos( _understeerEffectTimerMS * MathF.Tau * freq ) * settings.SteeringEffectsUndersteerWheelVibrationStrength;
 
@@ -347,7 +347,7 @@ public class RacingWheel
 					_understeerEffectTimerMS += 1f;
 				}
 
-				vibrationTorque += understeerEffectTorque * MathF.Pow( app.SteeringEffects.UndersteerEffectFactor, Misc.CurveToPower( settings.SteeringEffectsUndersteerWheelVibrationCurve ) );
+				vibrationTorque += understeerEffectTorque * MathF.Pow( app.SteeringEffects.UndersteerEffect, MathZ.CurveToPower( settings.SteeringEffectsUndersteerWheelVibrationCurve ) );
 			}
 
 			// check if we want to suspend or unsuspend force feedback
@@ -519,7 +519,7 @@ public class RacingWheel
 			var m3 = _steeringWheelTorque360Hz[ i3 ];
 
 			var steeringWheelTorque60Hz = _steeringWheelTorque360Hz[ 6 ];
-			var steeringWheelTorque500Hz = Misc.InterpolateHermite( m0, m1, m2, m3, t );
+			var steeringWheelTorque500Hz = MathZ.InterpolateHermite( m0, m1, m2, m3, t );
 
 			// update peak torque
 
@@ -532,7 +532,7 @@ public class RacingWheel
 
 			if ( app.Simulator.IsOnTrack && ( app.Simulator.PlayerTrackSurface == IRSDKSharper.IRacingSdkEnum.TrkLoc.OnTrack ) )
 			{
-				_peakTorque = MathF.Max( _peakTorque, Misc.Lerp( _peakTorque, MathF.Abs( steeringWheelTorque500Hz ), 0.01f ) );
+				_peakTorque = MathF.Max( _peakTorque, MathZ.Lerp( _peakTorque, MathF.Abs( steeringWheelTorque500Hz ), 0.01f ) );
 			}
 
 			// update auto torque
@@ -609,13 +609,13 @@ public class RacingWheel
 
 			// calculate parked factor (0-5 MPH)
 
-			var parkedFactor = Math.Clamp( 1f - ( app.Simulator.Velocity / 2.2352f ), 0f, 1f );
+			var parkedFactor = MathZ.Saturate( 1f - ( app.Simulator.Velocity / 2.2352f ) );
 
 			// reduce forces when parked
 
 			if ( settings.RacingWheelParkedStrength < 1f )
 			{
-				outputTorque *= Misc.Lerp( 1f, settings.RacingWheelParkedStrength, parkedFactor );
+				outputTorque *= MathZ.Lerp( 1f, settings.RacingWheelParkedStrength, parkedFactor );
 			}
 
 			// add wheel LFE
@@ -648,14 +648,14 @@ public class RacingWheel
 
 			if ( settings.RacingWheelFriction > 0f )
 			{
-				outputTorque += Misc.Lerp( app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelFriction, 0f, parkedFactor );
+				outputTorque += MathZ.Lerp( app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelFriction, 0f, parkedFactor );
 			}
 
 			// apply parked friction torque
 
 			if ( settings.RacingWheelParkedFriction > 0f )
 			{
-				outputTorque += Misc.Lerp( 0f, app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelParkedFriction, parkedFactor );
+				outputTorque += MathZ.Lerp( 0f, app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelParkedFriction, parkedFactor );
 			}
 
 			// center wheel while racing and parked
@@ -680,7 +680,7 @@ public class RacingWheel
 					parkedCenteringForce = Math.Clamp( centeringForce, -1f, 1f );
 				}
 
-				outputTorque += Misc.Lerp( racingCenteringForce, parkedCenteringForce, parkedFactor );
+				outputTorque += MathZ.Lerp( racingCenteringForce, parkedCenteringForce, parkedFactor );
 			}
 
 			// apply fade

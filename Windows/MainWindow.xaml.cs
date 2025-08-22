@@ -162,7 +162,7 @@ public partial class MainWindow : Window
 			Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect2_ComboBox );
 			Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect3_ComboBox );
 
-			app.SteeringEffects.SetMairaComboBoxItemsSources();
+			app.SteeringEffects.SetMairaComboBoxItemsSource();
 
 #endif
 
@@ -426,7 +426,7 @@ public partial class MainWindow : Window
 
 			if ( MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.AppMinimizeToSystemTray )
 			{
-				var resourceStream = Application.GetResourceStream( new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/AppIcon/white_icon.ico" ) ).Stream;
+				var resourceStream = Application.GetResourceStream( new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/AppIcon/maira-universal.ico" ) ).Stream;
 
 				_notifyIcon = new()
 				{

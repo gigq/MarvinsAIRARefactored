@@ -36,7 +36,7 @@ PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
 OutputBaseFilename=MarvinsAIRARefactored-Setup-{#MyAppVersion}
 OutputDir=userdocs:MarvinsAIRA Refactored
-SetupIconFile=C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\Artwork\AppIcon\white_icon.ico
+SetupIconFile=C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\Artwork\AppIcon\maira-universal.ico
 SolidCompression=yes
 WizardStyle=modern
 
@@ -57,6 +57,7 @@ Name: "{userdocs}\MarvinsAIRA Refactored\Calibration"
 Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\bin\publish\MarvinsAIRARefactored.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\bin\publish\createdump.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\bin\publish\*.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\bin\publish\*.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\InnoSetup\Languages\Resources*.resx"; DestDir: "{userdocs}\MarvinsAIRA Refactored\Languages"; Flags: ignoreversion
 Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\InnoSetup\Sounds\*.wav"; DestDir: "{userdocs}\MarvinsAIRA Refactored\Sounds"; Flags: ignoreversion recursesubdirs
 Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\InnoSetup\Recordings\*.csv"; DestDir: "{userdocs}\MarvinsAIRA Refactored\Recordings"; Flags: ignoreversion

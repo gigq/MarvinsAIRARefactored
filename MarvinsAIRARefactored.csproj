@@ -9,24 +9,22 @@
     <Version>2.0.$([MSBuild]::Subtract($([System.Math]::Floor($([MSBuild]::Divide($([System.DateTimeOffset]::UtcNow.ToUnixTimeSeconds()), 86400)))), 20180)).$([MSBuild]::Divide($([MSBuild]::Modulo($([System.DateTimeOffset]::UtcNow.ToUnixTimeSeconds()), 86400)), 60))</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Platforms>AnyCPU;x64</Platforms>
-    <ApplicationIcon>Artwork\AppIcon\white_icon.ico</ApplicationIcon>
+    <ApplicationIcon>Artwork\AppIcon\maira-universal.ico</ApplicationIcon>
     <UseWindowsForms>True</UseWindowsForms>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>$(DefineConstants);CODER</DefineConstants>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DefineConstants>$(DefineConstants);CODER</DefineConstants>
-  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
 
   <ItemGroup>
+    <None Remove="Artwork\AppIcon\adminboxx.ico" />
+    <None Remove="Artwork\AppIcon\maira-universal.ico" />
     <None Remove="Artwork\ButtonIcons\button_icon_copy.png" />
     <None Remove="Artwork\ButtonIcons\button_icon_dot.png" />
     <None Remove="Artwork\ButtonIcons\button_icon_exit.png" />
@@ -44,7 +42,7 @@
     <None Remove="Artwork\Knob\knob_default.png" />
     <None Remove="Artwork\Knob\knob_pressed.png" />
     <None Remove="Artwork\Misc\adminboxx_logo.png" />
-    <None Remove="Artwork\Misc\grip-o-meter-bar.png" />
+    <None Remove="Artwork\Misc\grip-o-meter-ball.png" />
     <None Remove="Artwork\Misc\grip-o-meter.png" />
     <None Remove="Artwork\Misc\maira_logo_rotated.png" />
   </ItemGroup>
@@ -63,6 +61,8 @@
 
   <ItemGroup>
     <EmbeddedResource Include="AdminBoxx\code.py" />
+    <Resource Include="Artwork\AppIcon\adminboxx.ico" />
+    <Resource Include="Artwork\AppIcon\maira-universal.ico" />
     <Resource Include="Artwork\ButtonIcons\button_icon_copy.png" />
     <Resource Include="Artwork\ButtonIcons\button_icon_dot.png" />
     <Resource Include="Artwork\ButtonIcons\button_icon_exit.png" />
@@ -80,14 +80,13 @@
     <Resource Include="Artwork\Knob\knob_default.png" />
     <Resource Include="Artwork\Knob\knob_pressed.png" />
     <Resource Include="Artwork\Misc\adminboxx_logo.png" />
-    <Resource Include="Artwork\Misc\grip-o-meter-bar.png" />
+    <Resource Include="Artwork\Misc\grip-o-meter-ball.png" />
     <Resource Include="Artwork\Misc\grip-o-meter.png" />
     <Resource Include="Artwork\Misc\maira_logo_rotated.png" />
     <Resource Include="Fonts\FiraCode-VariableFont_wght.ttf" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Artwork\AppIcon\white_icon.ico" />
     <Resource Include="Artwork\Backgrounds\background_adminboxx.png" />
     <Resource Include="Artwork\Backgrounds\background_app.png" />
     <Resource Include="Artwork\Backgrounds\background_buttonmapping.png" />
@@ -181,6 +180,10 @@
     <None Update="vJoyInterfaceWrap.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="InnoSetup\Calibration\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

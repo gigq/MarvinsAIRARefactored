@@ -189,13 +189,13 @@ public class Pedals
 		{
 			if ( _testJustStarted || ( app.Simulator.Gear != 0 ) )
 			{
-				_gearChangeFrequency = Misc.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, settings.PedalsShiftIntoGearFrequency );
+				_gearChangeFrequency = MathZ.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, settings.PedalsShiftIntoGearFrequency );
 				_gearChangeAmplitude = settings.PedalsShiftIntoGearAmplitude;
 				_gearChangeTimer = settings.PedalsShiftIntoGearDuration;
 			}
 			else
 			{
-				_gearChangeFrequency = Misc.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, settings.PedalsShiftIntoNeutralFrequency );
+				_gearChangeFrequency = MathZ.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, settings.PedalsShiftIntoNeutralFrequency );
 				_gearChangeAmplitude = settings.PedalsShiftIntoNeutralAmplitude;
 				_gearChangeTimer = settings.PedalsShiftIntoNeutralDuration;
 			}
@@ -305,7 +305,7 @@ public class Pedals
 		{
 			var settings = DataContext.DataContext.Instance.Settings;
 
-			var frequency = Misc.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( settings.PedalsABSEngagedFrequency, Misc.CurveToPower( settings.PedalsFrequencyCurve ) ) );
+			var frequency = MathZ.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( settings.PedalsABSEngagedFrequency, MathZ.CurveToPower( settings.PedalsFrequencyCurve ) ) );
 
 			amplitude *= settings.PedalsABSEngagedAmplitude;
 
@@ -314,8 +314,8 @@ public class Pedals
 				amplitude *= app.Simulator.Brake;
 			}
 
-			amplitude = Math.Clamp( amplitude, 0f, 1f );
-			amplitude = Misc.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, Misc.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
+			amplitude = MathZ.Saturate(amplitude );
+			amplitude = MathZ.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, MathZ.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
 
 			return (true, frequency, amplitude);
 		}
@@ -343,18 +343,18 @@ public class Pedals
 
 			if ( rpm >= startingRPM )
 			{
-				rpm = Math.Clamp( ( rpm - startingRPM ) / rpmRange, 0f, 1f );
+				rpm = MathZ.Saturate( ( rpm - startingRPM ) / rpmRange );
 
-				var frequency = Misc.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( rpm, Misc.CurveToPower( settings.PedalsFrequencyCurve ) ) );
+				var frequency = MathZ.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( rpm, MathZ.CurveToPower( settings.PedalsFrequencyCurve ) ) );
 
 				if ( !_testing && settings.PedalsRPMFadeWithThrottleEnabled )
 				{
 					amplitude *= app.Simulator.Throttle;
 				}
 
-				amplitude = Math.Clamp( amplitude, 0f, 1f );
-				amplitude = Misc.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, Misc.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
-				amplitude *= MathF.Pow( frequency / 50f, Misc.CurveToPower( settings.PedalsNoiseDamper ) );
+				amplitude = MathZ.Saturate( amplitude );
+				amplitude = MathZ.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, MathZ.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
+				amplitude *= MathF.Pow( frequency / 50f, MathZ.CurveToPower( settings.PedalsNoiseDamper ) );
 
 				return (true, frequency, amplitude);
 			}
@@ -366,7 +366,7 @@ public class Pedals
 	private (bool, float, float) DoUndersteerEffect( App app, float amplitude )
 	{
 		var settings = DataContext.DataContext.Instance.Settings;
-
+		/*
 		var factor = app.SteeringEffects.UndersteerEffectFactor;
 
 		if ( _testing || ( factor > 0f ) )
@@ -376,17 +376,17 @@ public class Pedals
 				factor = _testTimer / TestDuration;
 			}
 
-			factor = MathF.Pow( factor, Misc.CurveToPower( settings.SteeringEffectsUndersteerPedalVibrationCurve ) );
+			factor = MathF.Pow( factor, MathZ.CurveToPower( settings.SteeringEffectsUndersteerPedalVibrationCurve ) );
 
-			var frequency = Misc.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( factor, Misc.CurveToPower( settings.PedalsFrequencyCurve ) ) );
+			var frequency = MathZ.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( factor, MathZ.CurveToPower( settings.PedalsFrequencyCurve ) ) );
 
-			amplitude = Math.Clamp( amplitude, 0f, 1f );
-			amplitude = Misc.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, Misc.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
-			amplitude *= MathF.Pow( frequency / 50f, Misc.CurveToPower( settings.PedalsNoiseDamper ) );
+			amplitude = MathZ.Saturate( amplitude );
+			amplitude = MathZ.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, MathZ.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
+			amplitude *= MathF.Pow( frequency / 50f, MathZ.CurveToPower( settings.PedalsNoiseDamper ) );
 
 			return (true, frequency, amplitude);
 		}
-
+		*/
 		return (false, 0f, 0f);
 	}
 
@@ -401,11 +401,11 @@ public class Pedals
 
 			if ( _testing || ( differencePct > 0f ) )
 			{
-				var frequency = Misc.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( settings.PedalsWheelLockFrequency, Misc.CurveToPower( settings.PedalsFrequencyCurve ) ) );
+				var frequency = MathZ.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( settings.PedalsWheelLockFrequency, MathZ.CurveToPower( settings.PedalsFrequencyCurve ) ) );
 
 				if ( !_testing )
 				{
-					amplitude = Misc.Lerp( 0f, amplitude, differencePct / 0.03f );
+					amplitude = MathZ.Lerp( 0f, amplitude, differencePct / 0.03f );
 
 					if ( settings.PedalsWheelLockFadeWithBrakeEnabled )
 					{
@@ -413,8 +413,8 @@ public class Pedals
 					}
 				}
 
-				amplitude = Math.Clamp( amplitude, 0f, 1f );
-				amplitude = Misc.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, Misc.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
+				amplitude = MathZ.Saturate( amplitude );
+				amplitude = MathZ.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, MathZ.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
 
 				return (true, frequency, amplitude);
 			}
@@ -434,11 +434,11 @@ public class Pedals
 
 			if ( _testing || ( differencePct > 0f ) )
 			{
-				var frequency = Misc.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( settings.PedalsWheelSpinFrequency, Misc.CurveToPower( settings.PedalsFrequencyCurve ) ) );
+				var frequency = MathZ.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( settings.PedalsWheelSpinFrequency, MathZ.CurveToPower( settings.PedalsFrequencyCurve ) ) );
 
 				if ( !_testing )
 				{
-					amplitude = Misc.Lerp( 0f, amplitude, differencePct / 0.03f );
+					amplitude = MathZ.Lerp( 0f, amplitude, differencePct / 0.03f );
 
 					if ( settings.PedalsWheelSpinFadeWithThrottleEnabled )
 					{
@@ -446,8 +446,8 @@ public class Pedals
 					}
 				}
 
-				amplitude = Math.Clamp( amplitude, 0f, 1f );
-				amplitude = Misc.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, Misc.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
+				amplitude = MathZ.Saturate( amplitude );
+				amplitude = MathZ.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, MathZ.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
 
 				return (true, frequency, amplitude);
 			}
@@ -462,9 +462,9 @@ public class Pedals
 
 		if ( _testing || ( app.Simulator.Clutch >= settings.PedalsClutchSlipStart ) && ( app.Simulator.Clutch < settings.PedalsClutchSlipEnd ) )
 		{
-			var frequency = Misc.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( settings.PedalsClutchSlipFrequency, Misc.CurveToPower( settings.PedalsFrequencyCurve ) ) );
+			var frequency = MathZ.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( settings.PedalsClutchSlipFrequency, MathZ.CurveToPower( settings.PedalsFrequencyCurve ) ) );
 
-			amplitude = Math.Clamp( amplitude, 0f, 1f );
+			amplitude = MathZ.Saturate( amplitude );
 			amplitude = MathF.Min( settings.PedalsMaximumAmplitude, MathF.Max( settings.PedalsMinimumAmplitude, amplitude ) );
 
 			return (true, frequency, amplitude);

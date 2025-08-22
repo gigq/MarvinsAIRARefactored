@@ -54,9 +54,9 @@ public class GraphBase
 
 			var absY = Math.Abs( y );
 
-			var r = Misc.Lerp( minR, maxR, absY );
-			var g = Misc.Lerp( minG, maxG, absY );
-			var b = Misc.Lerp( minB, maxB, absY );
+			var r = MathZ.Lerp( minR, maxR, absY );
+			var g = MathZ.Lerp( minG, maxG, absY );
+			var b = MathZ.Lerp( minB, maxB, absY );
 
 			y = y * -0.5f + 0.5f;
 

@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -53,36 +52,6 @@ public class Misc
 		Marshal.FreeHGlobal( processInformationPtr );
 
 		app.Logger.WriteLine( "[Misc] <<< DisableThrottling" );
-	}
-
-	[MethodImpl( MethodImplOptions.AggressiveInlining )]
-	public static float Lerp( float start, float end, float t )
-	{
-		return start + ( end - start ) * Math.Clamp( t, 0f, 1f );
-	}
-
-	[MethodImpl( MethodImplOptions.AggressiveInlining )]
-	public static float CurveToPower( float curve )
-	{
-		if ( curve >= 0f )
-		{
-			return 1f + curve * 4f;
-		}
-		else
-		{
-			return 1f + curve * 0.75f;
-		}
-	}
-
-	[MethodImpl( MethodImplOptions.AggressiveInlining )]
-	public static float InterpolateHermite( float v0, float v1, float v2, float v3, float t )
-	{
-		var a = 2.0f * v1;
-		var b = v2 - v0;
-		var c = 2.0f * v0 - 5.0f * v1 + 4.0f * v2 - v3;
-		var d = -v0 + 3.0f * v1 - 3.0f * v2 + v3;
-
-		return 0.5f * ( a + b * t + c * t * t + d * t * t * t );
 	}
 
 	public static void ForcePropertySetters( object obj )

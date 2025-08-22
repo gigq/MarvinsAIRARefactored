@@ -132,33 +132,11 @@ public partial class GripOMeter : Window
 
 	public void Tick( App app )
 	{
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
-
 		if ( Visibility == Visibility.Visible )
 		{
-			float lerpFactor;
+			var offsetX = app.SteeringEffects.SkidSlip * 144f;
 
-			var range = app.SteeringEffects.MaximumGrip - app.SteeringEffects.WarningGrip;
-
-			if ( range > 0f )
-			{
-				lerpFactor = Math.Clamp( ( app.SteeringEffects.CurrentGrip - app.SteeringEffects.WarningGrip ) / range, 0f, 1f );
-
-				lerpFactor = MathF.Pow( lerpFactor, Misc.CurveToPower( settings.SteeringEffectsUndersteerWheelVibrationCurve ) );
-			}
-			else
-			{
-				lerpFactor = ( app.SteeringEffects.CurrentGrip > app.SteeringEffects.MaximumGrip ) ? 1f : 0f;
-			}
-
-			var r = Misc.Lerp( 0f / 255f, 255f / 255f, lerpFactor );
-			var g = Misc.Lerp( 0f / 255f, 140f / 255f, lerpFactor );
-			var b = Misc.Lerp( 128f / 255f, 0f / 255f, lerpFactor );
-
-			GripOMeter_Fill_Rectangle.Height = Math.Clamp( 324f * app.SteeringEffects.CurrentGrip, 0f, 376f );
-			GripOMeter_Fill_Rectangle.Fill = new SolidColorBrush( System.Windows.Media.Color.FromScRgb( 1f, r, g, b ) );
-
-			GripOMeter_Bar_Image.Margin = new Thickness( 0, 0, 0, Misc.Lerp( 0f, 324f, app.SteeringEffects.MaximumGrip ) - 16f );
+			GripOMeter_Ball_Transform.X = offsetX;
 		}
 	}
 }
