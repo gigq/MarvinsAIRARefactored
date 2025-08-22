@@ -709,6 +709,18 @@ public class SteeringEffects
 		app.Logger.WriteLine( "[SteeringEffects] <<< SaveCalibration" );
 	}
 
+	private static float FilterWeight( float angleDeg, float innerDeg, float outerDeg )
+	{
+		var absAngle = MathF.Abs( angleDeg );
+
+		if ( absAngle <= innerDeg ) return 0f;
+		if ( absAngle >= outerDeg ) return 1f;
+
+		var t = ( absAngle - innerDeg ) / ( outerDeg - innerDeg );
+
+		return MathZ.Smoothstep( 0f, 1f, t );
+	}
+
 	public void ClearCalibration()
 	{
 		// clear out the data tables
@@ -877,6 +889,20 @@ public class SteeringEffects
 								}
 							}
 						}
+					}
+
+					// apply zero-phase low-pass butterworth filter to get rid of suspension / steering noise pollution
+
+					var filteredExpectedYawRateInDegreesPerSecond = Butterworth.FiltfiltLowpass( _expectedYawRateInDegreesPerSecond, 3, 0.07f );
+
+					// blending - full raw inside ±20°, fade to full filtered by ±40°
+
+					for ( var angleIndex = 0; angleIndex < _expectedYawRateInDegreesPerSecond.Length; angleIndex++ )
+					{
+						var weightFiltered = FilterWeight( angleIndex - MaxSteeringWheelAngleInDegrees, 20f, 40f );
+						var weightRaw = 1f - weightFiltered;
+
+						_expectedYawRateInDegreesPerSecond[ angleIndex ] = ( weightRaw * _expectedYawRateInDegreesPerSecond[ angleIndex ] ) + ( weightFiltered * filteredExpectedYawRateInDegreesPerSecond[ angleIndex ] );
 					}
 
 					// calibration is valid
