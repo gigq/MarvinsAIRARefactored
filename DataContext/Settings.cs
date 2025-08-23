@@ -2142,7 +2142,7 @@ public class Settings : INotifyPropertyChanged
 				OnPropertyChanged();
 			}
 
-			SteeringEffectsUndersteerMinimumThresholdString = $"{_steeringEffectsUndersteerMinimumThreshold:F3}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
+			SteeringEffectsUndersteerMinimumThresholdString = $"{_steeringEffectsUndersteerMinimumThreshold:F2}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
 		}
 	}
 
@@ -2191,7 +2191,7 @@ public class Settings : INotifyPropertyChanged
 				OnPropertyChanged();
 			}
 
-			SteeringEffectsUndersteerMaximumThresholdString = $"{_steeringEffectsUndersteerMaximumThreshold:F3}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
+			SteeringEffectsUndersteerMaximumThresholdString = $"{_steeringEffectsUndersteerMaximumThreshold:F2}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
 		}
 	}
 
@@ -2219,101 +2219,80 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
-	#region Steering effects - Oversteer minimum threshold
+	#region Steering effects - Understeer wheel vibration pattern
 
-	private float _steeringEffectsOversteerMinimumThreshold = 0.05f;
+	private RacingWheel.VibrationPattern _steeringEffectsUndersteerWheelVibrationPattern = RacingWheel.VibrationPattern.SineWave;
 
-	public float SteeringEffectsOversteerMinimumThreshold
+	public RacingWheel.VibrationPattern SteeringEffectsUndersteerWheelVibrationPattern
 	{
-		get => _steeringEffectsOversteerMinimumThreshold;
+		get => _steeringEffectsUndersteerWheelVibrationPattern;
 
 		set
 		{
-			value = MathZ.Saturate( value );
-
-			if ( value != _steeringEffectsOversteerMinimumThreshold )
+			if ( value != _steeringEffectsUndersteerWheelVibrationPattern )
 			{
-				_steeringEffectsOversteerMinimumThreshold = value;
-
-				SteeringEffectsOversteerMaximumThreshold = MathF.Max( SteeringEffectsOversteerMaximumThreshold, _steeringEffectsOversteerMinimumThreshold );
-
-				OnPropertyChanged();
-			}
-
-			SteeringEffectsOversteerMinimumThresholdString = $"{_steeringEffectsOversteerMinimumThreshold:F3}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
-		}
-	}
-
-	private string _steeringEffectsOversteerMinimumThresholdString = string.Empty;
-
-	[XmlIgnore]
-	public string SteeringEffectsOversteerMinimumThresholdString
-	{
-		get => _steeringEffectsOversteerMinimumThresholdString;
-
-		set
-		{
-			if ( value != _steeringEffectsOversteerMinimumThresholdString )
-			{
-				_steeringEffectsOversteerMinimumThresholdString = value;
+				_steeringEffectsUndersteerWheelVibrationPattern = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsOversteerMinimumThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsOversteerMinimumThresholdPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsOversteerMinimumThresholdMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerWheelVibrationPatternContextSwitches { get; set; } = new( false, false, false, false, false );
 
 	#endregion
 
-	#region Steering effects - Oversteer maximum threshold
+	#region Steering effects - Understeer wheel vibration strength
 
-	private float _steeringEffectsOversteerMaximumThreshold = 0.13f;
+	private float _steeringEffectsUndersteerWheelVibrationStrength = 0.1f;
 
-	public float SteeringEffectsOversteerMaximumThreshold
+	public float SteeringEffectsUndersteerWheelVibrationStrength
 	{
-		get => _steeringEffectsOversteerMaximumThreshold;
+		get => _steeringEffectsUndersteerWheelVibrationStrength;
 
 		set
 		{
-			value = MathZ.Saturate( value );
+			value = Math.Clamp( value, 0f, 0.3f );
 
-			if ( value != _steeringEffectsOversteerMaximumThreshold )
+			if ( value != _steeringEffectsUndersteerWheelVibrationStrength )
 			{
-				_steeringEffectsOversteerMaximumThreshold = value;
-
-				SteeringEffectsOversteerMinimumThreshold = MathF.Min( SteeringEffectsOversteerMinimumThreshold, _steeringEffectsOversteerMaximumThreshold );
+				_steeringEffectsUndersteerWheelVibrationStrength = value;
 
 				OnPropertyChanged();
 			}
 
-			SteeringEffectsOversteerMaximumThresholdString = $"{_steeringEffectsOversteerMaximumThreshold:F3}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
+			if ( _steeringEffectsUndersteerWheelVibrationStrength == 0f )
+			{
+				SteeringEffectsUndersteerWheelVibrationStrengthString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				SteeringEffectsUndersteerWheelVibrationStrengthString = $"{_steeringEffectsUndersteerWheelVibrationStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
 		}
 	}
 
-	private string _steeringEffectsOversteerMaximumThresholdString = string.Empty;
+	private string _steeringEffectsUndersteerWheelVibrationStrengthString = string.Empty;
 
 	[XmlIgnore]
-	public string SteeringEffectsOversteerMaximumThresholdString
+	public string SteeringEffectsUndersteerWheelVibrationStrengthString
 	{
-		get => _steeringEffectsOversteerMaximumThresholdString;
+		get => _steeringEffectsUndersteerWheelVibrationStrengthString;
 
 		set
 		{
-			if ( value != _steeringEffectsOversteerMaximumThresholdString )
+			if ( value != _steeringEffectsUndersteerWheelVibrationStrengthString )
 			{
-				_steeringEffectsOversteerMaximumThresholdString = value;
+				_steeringEffectsUndersteerWheelVibrationStrengthString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsOversteerMaximumThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
-	public ButtonMappings SteeringEffectsOversteerMaximumThresholdPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsOversteerMaximumThresholdMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerWheelVibrationStrengthContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationStrengthPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerWheelVibrationStrengthMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
@@ -2465,80 +2444,80 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
-	#region Steering effects - Understeer wheel vibration pattern
+	#region Steering effects - Understeer wheel constant force direction
 
-	private RacingWheel.VibrationPattern _steeringEffectsUndersteerWheelVibrationPattern = RacingWheel.VibrationPattern.SineWave;
+	private RacingWheel.ConstantForceDirection _steeringEffectsUndersteerWheelConstantForceDirection = RacingWheel.ConstantForceDirection.None;
 
-	public RacingWheel.VibrationPattern SteeringEffectsUndersteerWheelVibrationPattern
+	public RacingWheel.ConstantForceDirection SteeringEffectsUndersteerWheelConstantForceDirection
 	{
-		get => _steeringEffectsUndersteerWheelVibrationPattern;
+		get => _steeringEffectsUndersteerWheelConstantForceDirection;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerWheelVibrationPattern )
+			if ( value != _steeringEffectsUndersteerWheelConstantForceDirection )
 			{
-				_steeringEffectsUndersteerWheelVibrationPattern = value;
+				_steeringEffectsUndersteerWheelConstantForceDirection = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerWheelVibrationPatternContextSwitches { get; set; } = new( false, false, false, false, false );
+	public ContextSwitches SteeringEffectsUndersteerWheelConstantForceDirectionContextSwitches { get; set; } = new( false, false, false, false, false );
 
 	#endregion
 
-	#region Steering effects - Understeer wheel vibration strength
+	#region Steering effects - Understeer wheel constant force strength
 
-	private float _steeringEffectsUndersteerWheelVibrationStrength = 0.1f;
+	private float _steeringEffectsUndersteerWheelConstantForceStrength = 0.1f;
 
-	public float SteeringEffectsUndersteerWheelVibrationStrength
+	public float SteeringEffectsUndersteerWheelConstantForceStrength
 	{
-		get => _steeringEffectsUndersteerWheelVibrationStrength;
+		get => _steeringEffectsUndersteerWheelConstantForceStrength;
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 0.3f );
+			value = Math.Clamp( value, 0f, 1f );
 
-			if ( value != _steeringEffectsUndersteerWheelVibrationStrength )
+			if ( value != _steeringEffectsUndersteerWheelConstantForceStrength )
 			{
-				_steeringEffectsUndersteerWheelVibrationStrength = value;
+				_steeringEffectsUndersteerWheelConstantForceStrength = value;
 
 				OnPropertyChanged();
 			}
 
-			if ( _steeringEffectsUndersteerWheelVibrationStrength == 0f )
+			if ( _steeringEffectsUndersteerWheelConstantForceStrength == 0f )
 			{
-				SteeringEffectsUndersteerWheelVibrationStrengthString = DataContext.Instance.Localization[ "OFF" ];
+				SteeringEffectsUndersteerWheelConstantForceStrengthString = DataContext.Instance.Localization[ "OFF" ];
 			}
 			else
 			{
-				SteeringEffectsUndersteerWheelVibrationStrengthString = $"{_steeringEffectsUndersteerWheelVibrationStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+				SteeringEffectsUndersteerWheelConstantForceStrengthString = $"{_steeringEffectsUndersteerWheelConstantForceStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
 			}
 		}
 	}
 
-	private string _steeringEffectsUndersteerWheelVibrationStrengthString = string.Empty;
+	private string _steeringEffectsUndersteerWheelConstantForceStrengthString = string.Empty;
 
 	[XmlIgnore]
-	public string SteeringEffectsUndersteerWheelVibrationStrengthString
+	public string SteeringEffectsUndersteerWheelConstantForceStrengthString
 	{
-		get => _steeringEffectsUndersteerWheelVibrationStrengthString;
+		get => _steeringEffectsUndersteerWheelConstantForceStrengthString;
 
 		set
 		{
-			if ( value != _steeringEffectsUndersteerWheelVibrationStrengthString )
+			if ( value != _steeringEffectsUndersteerWheelConstantForceStrengthString )
 			{
-				_steeringEffectsUndersteerWheelVibrationStrengthString = value;
+				_steeringEffectsUndersteerWheelConstantForceStrengthString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
 
-	public ContextSwitches SteeringEffectsUndersteerWheelVibrationStrengthContextSwitches { get; set; } = new( true, false, false, false, false );
-	public ButtonMappings SteeringEffectsUndersteerWheelVibrationStrengthPlusButtonMappings { get; set; } = new();
-	public ButtonMappings SteeringEffectsUndersteerWheelVibrationStrengthMinusButtonMappings { get; set; } = new();
+	public ContextSwitches SteeringEffectsUndersteerWheelConstantForceStrengthContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsUndersteerWheelConstantForceStrengthPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsUndersteerWheelConstantForceStrengthMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
@@ -2687,6 +2666,554 @@ public class Settings : INotifyPropertyChanged
 	public ContextSwitches SteeringEffectsUndersteerPedalVibrationCurveContextSwitches { get; set; } = new( true, true, false, false, false );
 	public ButtonMappings SteeringEffectsUndersteerPedalVibrationCurvePlusButtonMappings { get; set; } = new();
 	public ButtonMappings SteeringEffectsUndersteerPedalVibrationCurveMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Oversteer minimum threshold
+
+	private float _steeringEffectsOversteerMinimumThreshold = 0.05f;
+
+	public float SteeringEffectsOversteerMinimumThreshold
+	{
+		get => _steeringEffectsOversteerMinimumThreshold;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _steeringEffectsOversteerMinimumThreshold )
+			{
+				_steeringEffectsOversteerMinimumThreshold = value;
+
+				SteeringEffectsOversteerMaximumThreshold = MathF.Max( SteeringEffectsOversteerMaximumThreshold, _steeringEffectsOversteerMinimumThreshold );
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsOversteerMinimumThresholdString = $"{_steeringEffectsOversteerMinimumThreshold:F2}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
+		}
+	}
+
+	private string _steeringEffectsOversteerMinimumThresholdString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerMinimumThresholdString
+	{
+		get => _steeringEffectsOversteerMinimumThresholdString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerMinimumThresholdString )
+			{
+				_steeringEffectsOversteerMinimumThresholdString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerMinimumThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerMinimumThresholdPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerMinimumThresholdMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Oversteer maximum threshold
+
+	private float _steeringEffectsOversteerMaximumThreshold = 0.13f;
+
+	public float SteeringEffectsOversteerMaximumThreshold
+	{
+		get => _steeringEffectsOversteerMaximumThreshold;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _steeringEffectsOversteerMaximumThreshold )
+			{
+				_steeringEffectsOversteerMaximumThreshold = value;
+
+				SteeringEffectsOversteerMinimumThreshold = MathF.Min( SteeringEffectsOversteerMinimumThreshold, _steeringEffectsOversteerMaximumThreshold );
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsOversteerMaximumThresholdString = $"{_steeringEffectsOversteerMaximumThreshold:F2}{DataContext.Instance.Localization[ "DegreesPerSecond" ]}";
+		}
+	}
+
+	private string _steeringEffectsOversteerMaximumThresholdString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerMaximumThresholdString
+	{
+		get => _steeringEffectsOversteerMaximumThresholdString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerMaximumThresholdString )
+			{
+				_steeringEffectsOversteerMaximumThresholdString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerMaximumThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerMaximumThresholdPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerMaximumThresholdMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Oversteer wheel vibration pattern
+
+	private RacingWheel.VibrationPattern _steeringEffectsOversteerWheelVibrationPattern = RacingWheel.VibrationPattern.SineWave;
+
+	public RacingWheel.VibrationPattern SteeringEffectsOversteerWheelVibrationPattern
+	{
+		get => _steeringEffectsOversteerWheelVibrationPattern;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerWheelVibrationPattern )
+			{
+				_steeringEffectsOversteerWheelVibrationPattern = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerWheelVibrationPatternContextSwitches { get; set; } = new( false, false, false, false, false );
+
+	#endregion
+
+	#region Steering effects - Oversteer wheel vibration strength
+
+	private float _steeringEffectsOversteerWheelVibrationStrength = 0.1f;
+
+	public float SteeringEffectsOversteerWheelVibrationStrength
+	{
+		get => _steeringEffectsOversteerWheelVibrationStrength;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 0.3f );
+
+			if ( value != _steeringEffectsOversteerWheelVibrationStrength )
+			{
+				_steeringEffectsOversteerWheelVibrationStrength = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _steeringEffectsOversteerWheelVibrationStrength == 0f )
+			{
+				SteeringEffectsOversteerWheelVibrationStrengthString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				SteeringEffectsOversteerWheelVibrationStrengthString = $"{_steeringEffectsOversteerWheelVibrationStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _steeringEffectsOversteerWheelVibrationStrengthString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerWheelVibrationStrengthString
+	{
+		get => _steeringEffectsOversteerWheelVibrationStrengthString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerWheelVibrationStrengthString )
+			{
+				_steeringEffectsOversteerWheelVibrationStrengthString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerWheelVibrationStrengthContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerWheelVibrationStrengthPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerWheelVibrationStrengthMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Oversteer wheel vibration minimum frequency
+
+	private float _steeringEffectsOversteerWheelVibrationMinimumFrequency = 15f;
+
+	public float SteeringEffectsOversteerWheelVibrationMinimumFrequency
+	{
+		get => _steeringEffectsOversteerWheelVibrationMinimumFrequency;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 50f );
+
+			if ( value != _steeringEffectsOversteerWheelVibrationMinimumFrequency )
+			{
+				_steeringEffectsOversteerWheelVibrationMinimumFrequency = value;
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsOversteerWheelVibrationMinimumFrequencyString = $"{_steeringEffectsOversteerWheelVibrationMinimumFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
+		}
+	}
+
+	private string _steeringEffectsOversteerWheelVibrationMinimumFrequencyString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerWheelVibrationMinimumFrequencyString
+	{
+		get => _steeringEffectsOversteerWheelVibrationMinimumFrequencyString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerWheelVibrationMinimumFrequencyString )
+			{
+				_steeringEffectsOversteerWheelVibrationMinimumFrequencyString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerWheelVibrationMinimumFrequencyContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerWheelVibrationMinimumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerWheelVibrationMinimumFrequencyMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Oversteer wheel vibration maximum frequency
+
+	private float _steeringEffectsOversteerWheelVibrationMaximumFrequency = 50f;
+
+	public float SteeringEffectsOversteerWheelVibrationMaximumFrequency
+	{
+		get => _steeringEffectsOversteerWheelVibrationMaximumFrequency;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 50f );
+
+			if ( value != _steeringEffectsOversteerWheelVibrationMaximumFrequency )
+			{
+				_steeringEffectsOversteerWheelVibrationMaximumFrequency = value;
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsOversteerWheelVibrationMaximumFrequencyString = $"{_steeringEffectsOversteerWheelVibrationMaximumFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
+		}
+	}
+
+	private string _steeringEffectsOversteerWheelVibrationMaximumFrequencyString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerWheelVibrationMaximumFrequencyString
+	{
+		get => _steeringEffectsOversteerWheelVibrationMaximumFrequencyString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerWheelVibrationMaximumFrequencyString )
+			{
+				_steeringEffectsOversteerWheelVibrationMaximumFrequencyString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerWheelVibrationMaximumFrequencyContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerWheelVibrationMaximumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerWheelVibrationMaximumFrequencyMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Oversteer wheel vibration curve
+
+	private float _steeringEffectsOversteerWheelVibrationCurve = 0.25f;
+
+	public float SteeringEffectsOversteerWheelVibrationCurve
+	{
+		get => _steeringEffectsOversteerWheelVibrationCurve;
+
+		set
+		{
+			value = Math.Clamp( value, -1f, 1f );
+
+			if ( value != _steeringEffectsOversteerWheelVibrationCurve )
+			{
+				_steeringEffectsOversteerWheelVibrationCurve = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _steeringEffectsOversteerWheelVibrationCurve == 0f )
+			{
+				SteeringEffectsOversteerWheelVibrationCurveString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				SteeringEffectsOversteerWheelVibrationCurveString = $"{_steeringEffectsOversteerWheelVibrationCurve * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _steeringEffectsOversteerWheelVibrationCurveString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerWheelVibrationCurveString
+	{
+		get => _steeringEffectsOversteerWheelVibrationCurveString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerWheelVibrationCurveString )
+			{
+				_steeringEffectsOversteerWheelVibrationCurveString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerWheelVibrationCurveContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerWheelVibrationCurvePlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerWheelVibrationCurveMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Oversteer wheel constant force direction
+
+	private RacingWheel.ConstantForceDirection _steeringEffectsOversteerWheelConstantForceDirection = RacingWheel.ConstantForceDirection.None;
+
+	public RacingWheel.ConstantForceDirection SteeringEffectsOversteerWheelConstantForceDirection
+	{
+		get => _steeringEffectsOversteerWheelConstantForceDirection;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerWheelConstantForceDirection )
+			{
+				_steeringEffectsOversteerWheelConstantForceDirection = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerWheelConstantForceDirectionContextSwitches { get; set; } = new( false, false, false, false, false );
+
+	#endregion
+
+	#region Steering effects - Oversteer wheel constant force strength
+
+	private float _steeringEffectsOversteerWheelConstantForceStrength = 0.1f;
+
+	public float SteeringEffectsOversteerWheelConstantForceStrength
+	{
+		get => _steeringEffectsOversteerWheelConstantForceStrength;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 1f );
+
+			if ( value != _steeringEffectsOversteerWheelConstantForceStrength )
+			{
+				_steeringEffectsOversteerWheelConstantForceStrength = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _steeringEffectsOversteerWheelConstantForceStrength == 0f )
+			{
+				SteeringEffectsOversteerWheelConstantForceStrengthString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				SteeringEffectsOversteerWheelConstantForceStrengthString = $"{_steeringEffectsOversteerWheelConstantForceStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _steeringEffectsOversteerWheelConstantForceStrengthString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerWheelConstantForceStrengthString
+	{
+		get => _steeringEffectsOversteerWheelConstantForceStrengthString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerWheelConstantForceStrengthString )
+			{
+				_steeringEffectsOversteerWheelConstantForceStrengthString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerWheelConstantForceStrengthContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerWheelConstantForceStrengthPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerWheelConstantForceStrengthMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Oversteer pedal vibration minimum frequency
+
+	private float _steeringEffectsOversteerPedalVibrationMinimumFrequency = 0f;
+
+	public float SteeringEffectsOversteerPedalVibrationMinimumFrequency
+	{
+		get => _steeringEffectsOversteerPedalVibrationMinimumFrequency;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _steeringEffectsOversteerPedalVibrationMinimumFrequency )
+			{
+				_steeringEffectsOversteerPedalVibrationMinimumFrequency = value;
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsOversteerPedalVibrationMinimumFrequencyString = $"{_steeringEffectsOversteerPedalVibrationMinimumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+		}
+	}
+
+	private string _steeringEffectsOversteerPedalVibrationMinimumFrequencyString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerPedalVibrationMinimumFrequencyString
+	{
+		get => _steeringEffectsOversteerPedalVibrationMinimumFrequencyString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerPedalVibrationMinimumFrequencyString )
+			{
+				_steeringEffectsOversteerPedalVibrationMinimumFrequencyString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerPedalVibrationMinimumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerPedalVibrationMinimumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerPedalVibrationMinimumFrequencyMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Oversteer pedal vibration maximum frequency
+
+	private float _steeringEffectsOversteerPedalVibrationMaximumFrequency = 1f;
+
+	public float SteeringEffectsOversteerPedalVibrationMaximumFrequency
+	{
+		get => _steeringEffectsOversteerPedalVibrationMaximumFrequency;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _steeringEffectsOversteerPedalVibrationMaximumFrequency )
+			{
+				_steeringEffectsOversteerPedalVibrationMaximumFrequency = value;
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsOversteerPedalVibrationMaximumFrequencyString = $"{_steeringEffectsOversteerPedalVibrationMaximumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+		}
+	}
+
+	private string _steeringEffectsOversteerPedalVibrationMaximumFrequencyString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerPedalVibrationMaximumFrequencyString
+	{
+		get => _steeringEffectsOversteerPedalVibrationMaximumFrequencyString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerPedalVibrationMaximumFrequencyString )
+			{
+				_steeringEffectsOversteerPedalVibrationMaximumFrequencyString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerPedalVibrationMaximumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerPedalVibrationMaximumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerPedalVibrationMaximumFrequencyMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Oversteer pedal vibration curve
+
+	private float _steeringEffectsOversteerPedalVibrationCurve = 0f;
+
+	public float SteeringEffectsOversteerPedalVibrationCurve
+	{
+		get => _steeringEffectsOversteerPedalVibrationCurve;
+
+		set
+		{
+			value = Math.Clamp( value, -1f, 1f );
+
+			if ( value != _steeringEffectsOversteerPedalVibrationCurve )
+			{
+				_steeringEffectsOversteerPedalVibrationCurve = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _steeringEffectsOversteerPedalVibrationCurve == 0f )
+			{
+				SteeringEffectsOversteerPedalVibrationCurveString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				SteeringEffectsOversteerPedalVibrationCurveString = $"{_steeringEffectsOversteerPedalVibrationCurve * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _steeringEffectsOversteerPedalVibrationCurveString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsOversteerPedalVibrationCurveString
+	{
+		get => _steeringEffectsOversteerPedalVibrationCurveString;
+
+		set
+		{
+			if ( value != _steeringEffectsOversteerPedalVibrationCurveString )
+			{
+				_steeringEffectsOversteerPedalVibrationCurveString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsOversteerPedalVibrationCurveContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsOversteerPedalVibrationCurvePlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsOversteerPedalVibrationCurveMinusButtonMappings { get; set; } = new();
 
 	#endregion
 

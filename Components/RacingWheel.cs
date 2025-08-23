@@ -29,6 +29,13 @@ public class RacingWheel
 		SawtoothWaveOut
 	};
 
+	public enum ConstantForceDirection
+	{
+		None,
+		DecreaseForce,
+		IncreaseForce,
+	};
+
 	private const int UpdateInterval = 6;
 	private const int MaxSteeringWheelTorque360HzIndex = Simulator.SamplesPerFrame360Hz + 1;
 
@@ -61,6 +68,7 @@ public class RacingWheel
 	private float _crashProtectionTimerMS = 0f;
 	private float _curbProtectionTimerMS = 0f;
 	private float _understeerEffectTimerMS = 0f;
+	private float _oversteerEffectTimerMS = 0f;
 
 	private readonly float[] _steeringWheelTorque360Hz = new float[ Simulator.SamplesPerFrame360Hz + 2 ];
 
@@ -342,7 +350,7 @@ public class RacingWheel
 				vibrationTorque += MathF.Cos( _testSignalTimerMS * MathF.Tau / 20f ) * MathF.Sin( _testSignalTimerMS * MathF.Tau / TestSignalTimeMS * 2f ) * 0.2f;
 			}
 
-			// understeer steering effect signal generator
+			// understeer vibration effect
 
 			if ( app.SteeringEffects.UndersteerEffect > 0f )
 			{
@@ -382,14 +390,14 @@ public class RacingWheel
 					case VibrationPattern.SawtoothWaveIn:
 					{
 						var phase = ( timeInSeconds * frequency ) % 1f;
-						understeerEffectTorque = ( phase - 1f ) * MathF.Sign( app.Simulator.SteeringWheelAngle );
+						understeerEffectTorque = ( phase - 1f ) * -MathF.Sign( app.Simulator.SteeringWheelAngle );
 						break;
 					}
 
 					case VibrationPattern.SawtoothWaveOut:
 					{
 						var phase = ( timeInSeconds * frequency ) % 1f;
-						understeerEffectTorque = ( 1f - phase ) * MathF.Sign( app.Simulator.SteeringWheelAngle );
+						understeerEffectTorque = ( 1f - phase ) * -MathF.Sign( app.Simulator.SteeringWheelAngle );
 						break;
 					}
 				}
@@ -404,6 +412,70 @@ public class RacingWheel
 				}
 
 				vibrationTorque += understeerEffectTorque * settings.SteeringEffectsUndersteerWheelVibrationStrength * MathF.Pow( app.SteeringEffects.UndersteerEffect, MathZ.CurveToPower( settings.SteeringEffectsUndersteerWheelVibrationCurve ) );
+			}
+
+			// oversteer vibration effect
+
+			if ( app.SteeringEffects.OversteerEffect > 0f )
+			{
+				var isOversteering = ( app.SteeringEffects.OversteerEffect == 1f );
+
+				var frequency = isOversteering ? settings.SteeringEffectsOversteerWheelVibrationMaximumFrequency : settings.SteeringEffectsOversteerWheelVibrationMinimumFrequency;
+
+				frequency = MathF.Max( 0.01f, frequency );
+
+				var timeInSeconds = _oversteerEffectTimerMS * 0.001f;
+
+				var oversteerEffectTorque = 0f;
+
+				switch ( settings.SteeringEffectsOversteerWheelVibrationPattern )
+				{
+					case VibrationPattern.SineWave:
+					{
+						var sine = MathF.Sin( timeInSeconds * MathF.Tau * frequency );
+						oversteerEffectTorque = sine;
+						break;
+					}
+
+					case VibrationPattern.SquareWave:
+					{
+						var sine = MathF.Sin( timeInSeconds * MathF.Tau * frequency );
+						oversteerEffectTorque = ( sine >= 0f ) ? 1f : -1f;
+						break;
+					}
+
+					case VibrationPattern.TriangleWave:
+					{
+						var phase = ( timeInSeconds * frequency ) % 1f;
+						oversteerEffectTorque = 4f * MathF.Abs( phase - 0.5f ) - 1f;
+						break;
+					}
+
+					case VibrationPattern.SawtoothWaveIn:
+					{
+						var phase = ( timeInSeconds * frequency ) % 1f;
+						oversteerEffectTorque = ( phase - 1f ) * -MathF.Sign( app.Simulator.SteeringWheelAngle );
+						break;
+					}
+
+					case VibrationPattern.SawtoothWaveOut:
+					{
+						var phase = ( timeInSeconds * frequency ) % 1f;
+						oversteerEffectTorque = ( 1f - phase ) * -MathF.Sign( app.Simulator.SteeringWheelAngle );
+						break;
+					}
+				}
+
+				_oversteerEffectTimerMS += deltaMilliseconds;
+
+				var periodMS = 1000f / frequency;
+
+				if ( _oversteerEffectTimerMS >= periodMS )
+				{
+					_oversteerEffectTimerMS -= periodMS * MathF.Floor( _oversteerEffectTimerMS / periodMS );
+				}
+
+				vibrationTorque += oversteerEffectTorque * settings.SteeringEffectsOversteerWheelVibrationStrength * MathF.Pow( app.SteeringEffects.OversteerEffect, MathZ.CurveToPower( settings.SteeringEffectsOversteerWheelVibrationCurve ) );
 			}
 
 			// check if we want to suspend or unsuspend force feedback
@@ -658,6 +730,46 @@ public class RacingWheel
 			// save last 500Hz steering wheel torque
 
 			_lastSteeringWheelTorque500Hz = steeringWheelTorque500Hz;
+
+			// understeer constant force effect
+
+			if ( app.SteeringEffects.UndersteerEffect > 0f )
+			{
+				switch ( settings.SteeringEffectsUndersteerWheelConstantForceDirection )
+				{
+					case ConstantForceDirection.DecreaseForce:
+					{
+						outputTorque = MathZ.Lerp( outputTorque, 0f, app.SteeringEffects.UndersteerEffect * settings.SteeringEffectsUndersteerWheelConstantForceStrength );
+						break;
+					}
+
+					case ConstantForceDirection.IncreaseForce:
+					{
+						outputTorque += app.SteeringEffects.UndersteerEffect * settings.SteeringEffectsUndersteerWheelConstantForceStrength * MathF.Sign( app.Simulator.VelocityY );
+						break;
+					}
+				}
+			}
+
+			// oversteer constant force effect
+
+			if ( app.SteeringEffects.OversteerEffect > 0f )
+			{
+				switch ( settings.SteeringEffectsOversteerWheelConstantForceDirection )
+				{
+					case ConstantForceDirection.DecreaseForce:
+					{
+						outputTorque = MathZ.Lerp( outputTorque, 0f, app.SteeringEffects.OversteerEffect * settings.SteeringEffectsOversteerWheelConstantForceStrength );
+						break;
+					}
+
+					case ConstantForceDirection.IncreaseForce:
+					{
+						outputTorque += app.SteeringEffects.OversteerEffect * settings.SteeringEffectsOversteerWheelConstantForceStrength * MathF.Sign( app.Simulator.VelocityY );
+						break;
+					}
+				}
+			}
 
 			// apply crash protection
 

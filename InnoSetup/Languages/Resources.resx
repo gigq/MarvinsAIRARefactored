@@ -1113,4 +1113,32 @@
     <value>Sawtooth Wave (Out)</value>
     <comment>Steering effects</comment>
   </data>
+  <data name="DecreaseForce" xml:space="preserve">
+    <value>Decrease Force</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="IncreaseForce" xml:space="preserve">
+    <value>Increase Force</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="UndersteerWheelConstantForceEffect" xml:space="preserve">
+    <value>Understeer Wheel Constant Force Effect</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direction</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="OversteerWheelVibrationEffect" xml:space="preserve">
+    <value>Oversteer Wheel Vibration Effect</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="OversteerWheelConstantForceEffect" xml:space="preserve">
+    <value>Oversteer Wheel Constant Force Effect</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="OversteerPedalVibrationEffect" xml:space="preserve">
+    <value>Oversteer Pedal Vibration Effect</value>
+    <comment>Steering effects</comment>
+  </data>
 </root>

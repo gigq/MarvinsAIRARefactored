@@ -983,28 +983,16 @@ public partial class App : Application
 				settings.SteeringEffectsUndersteerMaximumThreshold -= 0.01f;
 			}
 
-			// steering effects oversteer minimum threshold
+			// steering effects understeer wheel vibration strength
 
-			if ( CheckMappedButtons( settings.SteeringEffectsOversteerMinimumThresholdPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsOversteerMinimumThreshold += 0.01f;
+				settings.SteeringEffectsUndersteerWheelVibrationStrength += 0.01f;
 			}
 
-			if ( CheckMappedButtons( settings.SteeringEffectsOversteerMinimumThresholdMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsOversteerMinimumThreshold -= 0.01f;
-			}
-
-			// steering effects oversteer maximum threshold
-
-			if ( CheckMappedButtons( settings.SteeringEffectsOversteerMaximumThresholdPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
-			{
-				settings.SteeringEffectsOversteerMaximumThreshold += 0.01f;
-			}
-
-			if ( CheckMappedButtons( settings.SteeringEffectsOversteerMaximumThresholdMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
-			{
-				settings.SteeringEffectsOversteerMaximumThreshold -= 0.01f;
+				settings.SteeringEffectsUndersteerWheelVibrationStrength -= 0.01f;
 			}
 
 			// steering effects understeer wheel vibration minimum frequency
@@ -1043,16 +1031,16 @@ public partial class App : Application
 				settings.SteeringEffectsUndersteerWheelVibrationCurve -= 0.05f;
 			}
 
-			// steering effects understeer wheel vibration strength
+			// steering effects understeer wheel constant force strength
 
-			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelConstantForceStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsUndersteerWheelVibrationStrength += 0.01f;
+				settings.SteeringEffectsUndersteerWheelConstantForceStrength += 0.01f;
 			}
 
-			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelVibrationStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerWheelConstantForceStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
-				settings.SteeringEffectsUndersteerWheelVibrationStrength -= 0.01f;
+				settings.SteeringEffectsUndersteerWheelConstantForceStrength -= 0.01f;
 			}
 
 			// steering effects understeer pedal vibration minimum frequency
@@ -1089,6 +1077,126 @@ public partial class App : Application
 			if ( CheckMappedButtons( settings.SteeringEffectsUndersteerPedalVibrationCurveMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
 				settings.SteeringEffectsUndersteerPedalVibrationCurve -= 0.05f;
+			}
+
+			// steering effects oversteer minimum threshold
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerMinimumThresholdPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerMinimumThreshold += 0.01f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerMinimumThresholdMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerMinimumThreshold -= 0.01f;
+			}
+
+			// steering effects oversteer maximum threshold
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerMaximumThresholdPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerMaximumThreshold += 0.01f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerMaximumThresholdMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerMaximumThreshold -= 0.01f;
+			}
+
+			// steering effects oversteer wheel vibration strength
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerWheelVibrationStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerWheelVibrationStrength += 0.01f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerWheelVibrationStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerWheelVibrationStrength -= 0.01f;
+			}
+
+			// steering effects oversteer wheel vibration minimum frequency
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerWheelVibrationMinimumFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerWheelVibrationMinimumFrequency += 1f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerWheelVibrationMinimumFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerWheelVibrationMinimumFrequency -= 1f;
+			}
+
+			// steering effects oversteer wheel vibration maximum frequency
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerWheelVibrationMaximumFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerWheelVibrationMaximumFrequency += 1f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerWheelVibrationMaximumFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerWheelVibrationMaximumFrequency -= 1f;
+			}
+
+			// steering effects oversteer wheel vibration curve
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerWheelVibrationCurvePlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerWheelVibrationCurve += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerWheelVibrationCurveMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerWheelVibrationCurve -= 0.05f;
+			}
+
+			// steering effects oversteer wheel constant force strength
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerWheelConstantForceStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerWheelConstantForceStrength += 0.01f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerWheelConstantForceStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerWheelConstantForceStrength -= 0.01f;
+			}
+
+			// steering effects oversteer pedal vibration minimum frequency
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerPedalVibrationMinimumFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerPedalVibrationMinimumFrequency += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerPedalVibrationMinimumFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerPedalVibrationMinimumFrequency -= 0.05f;
+			}
+
+			// steering effects oversteer pedal vibration maximum frequency
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerPedalVibrationMaximumFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerPedalVibrationMaximumFrequency += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerPedalVibrationMaximumFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerPedalVibrationMaximumFrequency -= 0.05f;
+			}
+
+			// steering effects oversteer pedal vibration curve
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerPedalVibrationCurvePlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerPedalVibrationCurve += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsOversteerPedalVibrationCurveMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsOversteerPedalVibrationCurve -= 0.05f;
 			}
 
 			// pedals clutch strength 1 knob

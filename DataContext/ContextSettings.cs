@@ -42,16 +42,28 @@ public class ContextSettings
 	public string SteeringEffectsCalibrationFileName { get; set; } = string.Empty;
 	public float SteeringEffectsUndersteerMinimumThreshold { get; set; }
 	public float SteeringEffectsUndersteerMaximumThreshold { get; set; }
-	public float SteeringEffectsOversteerMinimumThreshold { get; set; }
-	public float SteeringEffectsOversteerMaximumThreshold { get; set; }
+	public RacingWheel.VibrationPattern SteeringEffectsUndersteerWheelVibrationPattern { get; set; }
+	public float SteeringEffectsUndersteerWheelVibrationStrength { get; set; }
 	public float SteeringEffectsUndersteerWheelVibrationMinimumFrequency { get; set; }
 	public float SteeringEffectsUndersteerWheelVibrationMaximumFrequency { get; set; }
 	public float SteeringEffectsUndersteerWheelVibrationCurve { get; set; }
-	public RacingWheel.VibrationPattern SteeringEffectsUndersteerWheelVibrationPattern { get; set; }
-	public float SteeringEffectsUndersteerWheelVibrationStrength { get; set; }
+	public RacingWheel.ConstantForceDirection SteeringEffectsUndersteerWheelConstantForceDirection { get; set; }
+	public float SteeringEffectsUndersteerWheelConstantForceStrength { get; set; }
 	public float SteeringEffectsUndersteerPedalVibrationMinimumFrequency { get; set; }
 	public float SteeringEffectsUndersteerPedalVibrationMaximumFrequency { get; set; }
 	public float SteeringEffectsUndersteerPedalVibrationCurve { get; set; }
+	public float SteeringEffectsOversteerMinimumThreshold { get; set; }
+	public float SteeringEffectsOversteerMaximumThreshold { get; set; }
+	public RacingWheel.VibrationPattern SteeringEffectsOversteerWheelVibrationPattern { get; set; }
+	public float SteeringEffectsOversteerWheelVibrationStrength { get; set; }
+	public float SteeringEffectsOversteerWheelVibrationMinimumFrequency { get; set; }
+	public float SteeringEffectsOversteerWheelVibrationMaximumFrequency { get; set; }
+	public float SteeringEffectsOversteerWheelVibrationCurve { get; set; }
+	public RacingWheel.ConstantForceDirection SteeringEffectsOversteerWheelConstantForceDirection { get; set; }
+	public float SteeringEffectsOversteerWheelConstantForceStrength { get; set; }
+	public float SteeringEffectsOversteerPedalVibrationMinimumFrequency { get; set; }
+	public float SteeringEffectsOversteerPedalVibrationMaximumFrequency { get; set; }
+	public float SteeringEffectsOversteerPedalVibrationCurve { get; set; }
 	public float PedalsMinimumFrequency { get; set; }
 	public float PedalsMaximumFrequency { get; set; }
 	public float PedalsFrequencyCurve { get; set; }

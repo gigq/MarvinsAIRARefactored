@@ -164,7 +164,8 @@ public partial class MainWindow : Window
 
 			app.SteeringEffects.SetCalibrationFileNameMairaComboBoxItemsSource();
 
-			SteeringEffects.SetMairaComboBoxItemsSource( SteeringEffects_UndersteerWheelVibrationPattern_ComboBox );
+			SteeringEffects.SetVibrationPatternMairaComboBoxItemsSource( SteeringEffects_UndersteerWheelVibrationPattern_ComboBox );
+			SteeringEffects.SetConstantForceDirectionMairaComboBoxItemsSource( SteeringEffects_UndersteerWheelConstantForceDirection_ComboBox );
 
 #endif
 

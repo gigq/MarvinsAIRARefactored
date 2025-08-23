@@ -1,16 +1,18 @@
 ﻿
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Controls;
 using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 using FlowDirection = System.Windows.FlowDirection;
 using Pen = System.Windows.Media.Pen;
 using Point = System.Windows.Point;
+
+using MarvinsAIRARefactored.Classes;
+using MarvinsAIRARefactored.Controls;
 
 namespace MarvinsAIRARefactored.Components;
 
@@ -126,11 +128,11 @@ public class SteeringEffects
 #endif
 	}
 
-	public static void SetMairaComboBoxItemsSource( MairaComboBox mairaComboBox )
+	public static void SetVibrationPatternMairaComboBoxItemsSource( MairaComboBox mairaComboBox )
 	{
 		var app = App.Instance!;
 
-		app.Logger.WriteLine( "[SteeringEffects] SetMairaComboBoxItemsSource >>>" );
+		app.Logger.WriteLine( "[SteeringEffects] SetVibrationPatternMairaComboBoxItemsSource >>>" );
 
 		var selectedEffect = mairaComboBox.SelectedValue as RacingWheel.VibrationPattern?;
 
@@ -141,7 +143,7 @@ public class SteeringEffects
 			{ RacingWheel.VibrationPattern.SquareWave, DataContext.DataContext.Instance.Localization[ "SquareWave" ] },
 			{ RacingWheel.VibrationPattern.TriangleWave, DataContext.DataContext.Instance.Localization[ "TriangleWave" ] },
 			{ RacingWheel.VibrationPattern.SawtoothWaveIn, DataContext.DataContext.Instance.Localization[ "SawtoothWaveIn" ] },
-			{ RacingWheel.VibrationPattern.SawtoothWaveOut, DataContext.DataContext.Instance.Localization[ "SawtoothWaveOut" ] },
+			{ RacingWheel.VibrationPattern.SawtoothWaveOut, DataContext.DataContext.Instance.Localization[ "SawtoothWaveOut" ] }
 		};
 
 		mairaComboBox.ItemsSource = dictionary;
@@ -155,7 +157,36 @@ public class SteeringEffects
 			mairaComboBox.SelectedValue = RacingWheel.VibrationPattern.None;
 		}
 
-		app.Logger.WriteLine( "[SteeringEffects] <<< SetMairaComboBoxItemsSource" );
+		app.Logger.WriteLine( "[SteeringEffects] <<< SetVibrationPatternMairaComboBoxItemsSource" );
+	}
+
+	public static void SetConstantForceDirectionMairaComboBoxItemsSource( MairaComboBox mairaComboBox )
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[SteeringEffects] SetConstantForceDirectionMairaComboBoxItemsSource >>>" );
+
+		var selectedEffect = mairaComboBox.SelectedValue as RacingWheel.ConstantForceDirection?;
+
+		var dictionary = new Dictionary<RacingWheel.ConstantForceDirection, string>
+		{
+			{ RacingWheel.ConstantForceDirection.None, DataContext.DataContext.Instance.Localization[ "None" ] },
+			{ RacingWheel.ConstantForceDirection.DecreaseForce, DataContext.DataContext.Instance.Localization[ "DecreaseForce" ] },
+			{ RacingWheel.ConstantForceDirection.IncreaseForce, DataContext.DataContext.Instance.Localization[ "IncreaseForce" ] }
+		};
+
+		mairaComboBox.ItemsSource = dictionary;
+
+		if ( selectedEffect != null )
+		{
+			mairaComboBox.SelectedValue = selectedEffect;
+		}
+		else
+		{
+			mairaComboBox.SelectedValue = RacingWheel.ConstantForceDirection.None;
+		}
+
+		app.Logger.WriteLine( "[SteeringEffects] <<< SetConstantForceDirectionMairaComboBoxItemsSource" );
 	}
 
 	public void Update( App app, float deltaSeconds )
@@ -821,7 +852,7 @@ public class SteeringEffects
 
 				// keep track of whether the file load was good or not
 
-				var fileLoadWasSuccessful = true;
+				var calibrationDataSeemsGood = false;
 
 				// open file
 
@@ -830,8 +861,6 @@ public class SteeringEffects
 				if ( !File.Exists( filePath ) )
 				{
 					app.Logger.WriteLine( $"[SteeringEffects] Calibration file not found: {filePath}" );
-
-					fileLoadWasSuccessful = false;
 				}
 				else
 				{
@@ -840,29 +869,62 @@ public class SteeringEffects
 					// skip the first two lines
 
 					var carInfoLine = reader.ReadLine();
-					var headerLine = reader.ReadLine();
 
-					// read header line and extract steering wheel angles
-
-					while ( !reader.EndOfStream )
+					if ( string.IsNullOrWhiteSpace( carInfoLine ) )
 					{
-						var line = reader.ReadLine();
+						app.Logger.WriteLine( "[SteeringEffects] Car info line is missing" );
+					}
+					else
+					{
+						var carInfoParts = carInfoLine.Split( ',' );
 
-						if ( string.IsNullOrWhiteSpace( line ) ) continue;
+						if ( ( carInfoParts.Length < 1 ) || !int.TryParse( carInfoParts[ 0 ], NumberStyles.Integer, CultureInfo.InvariantCulture, out var version ) )
+						{
+							app.Logger.WriteLine( "[SteeringEffects] Car info line does not contain a valid version number" );
+						}
+						else
+						{
+							if ( version != CalibrationFileVersion )
+							{
+								app.Logger.WriteLine( "[SteeringEffects] Calibration file is not not the right version" );
+							}
+							else
+							{
+								var headerLine = reader.ReadLine();
 
-						var parts = line.Split( ',' );
+								if ( string.IsNullOrWhiteSpace( headerLine ) )
+								{
+									app.Logger.WriteLine( "[SteeringEffects] Header line is missing" );
+								}
+								else
+								{
+									// read header line and extract steering wheel angles
 
-						if ( !float.TryParse( parts[ 0 ], NumberStyles.Float, CultureInfo.InvariantCulture, out var steeringWheelAngleInDegrees ) ) continue;
-						if ( !float.TryParse( parts[ 1 ], NumberStyles.Float, CultureInfo.InvariantCulture, out var yawRateInDegreesPerSecond ) ) continue;
+									while ( !reader.EndOfStream )
+									{
+										var line = reader.ReadLine();
 
-						_steeringWheelAnglesInDegrees[ _numSteeringWheelAnglesRecorded ] = steeringWheelAngleInDegrees;
-						_yawRateInDegreesPerSecond[ _numSteeringWheelAnglesRecorded ] = yawRateInDegreesPerSecond;
+										if ( string.IsNullOrWhiteSpace( line ) ) continue;
 
-						_numSteeringWheelAnglesRecorded++;
+										var parts = line.Split( ',' );
+
+										if ( !float.TryParse( parts[ 0 ], NumberStyles.Float, CultureInfo.InvariantCulture, out var steeringWheelAngleInDegrees ) ) continue;
+										if ( !float.TryParse( parts[ 1 ], NumberStyles.Float, CultureInfo.InvariantCulture, out var yawRateInDegreesPerSecond ) ) continue;
+
+										_steeringWheelAnglesInDegrees[ _numSteeringWheelAnglesRecorded ] = steeringWheelAngleInDegrees;
+										_yawRateInDegreesPerSecond[ _numSteeringWheelAnglesRecorded ] = yawRateInDegreesPerSecond;
+
+										_numSteeringWheelAnglesRecorded++;
+									}
+
+									calibrationDataSeemsGood = true;
+								}
+							}
+						}
 					}
 				}
 
-				if ( fileLoadWasSuccessful )
+				if ( calibrationDataSeemsGood )
 				{
 					var descComparer = Comparer<float>.Create( ( a, b ) => b.CompareTo( a ) ); // reverse order
 
