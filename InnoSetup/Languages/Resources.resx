@@ -1089,4 +1089,28 @@
     <value>Calibration</value>
     <comment>Steering effects</comment>
   </data>
+  <data name="VibrationPattern" xml:space="preserve">
+    <value>Vibration Pattern</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SineWave" xml:space="preserve">
+    <value>Sine Wave</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SquareWave" xml:space="preserve">
+    <value>Square Wave</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="TriangleWave" xml:space="preserve">
+    <value>Triangle Wave</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SawtoothWaveIn" xml:space="preserve">
+    <value>Sawtooth Wave (In)</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SawtoothWaveOut" xml:space="preserve">
+    <value>Sawtooth Wave (Out)</value>
+    <comment>Steering effects</comment>
+  </data>
 </root>
