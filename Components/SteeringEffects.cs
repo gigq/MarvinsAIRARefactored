@@ -116,7 +116,7 @@ public class SteeringEffects
 			app.Dispatcher.BeginInvoke( () =>
 			{
 				app.MainWindow.SteeringEffects_CalibrationFileName_ComboBox.ItemsSource = dictionary;
-				app.MainWindow.SteeringEffects_CalibrationFileName_ComboBox.SelectedValue = settings.SteeringEffectsCalibrationFileName;
+				app.MainWindow.SteeringEffects_CalibrationFileName_ComboBox.SelectedValue = settings.SteeringEffectsCalibrationFileName ?? string.Empty;
 				app.MainWindow.SteeringEffects_CalibrationFileName_ComboBox.Visibility = Visibility.Visible;
 			} );
 		}
@@ -710,7 +710,9 @@ public class SteeringEffects
 
 		// update setting to use this calibration file
 
-		DataContext.DataContext.Instance.Settings.SteeringEffectsCalibrationFileName = Path.GetFileNameWithoutExtension( filePath );
+		var settings = DataContext.DataContext.Instance.Settings;
+
+		settings.SteeringEffectsCalibrationFileName = Path.GetFileNameWithoutExtension( filePath );
 
 		//
 
@@ -967,7 +969,7 @@ public class SteeringEffects
 			}
 			else
 			{
-				app.MainWindow.SteeringEffects_CalibrationProgress_Label.Text = $"{localization[ "Progress" ]} {_calibrationProgress * 100f:F0}{localization[ "Percent" ]}";
+				app.MainWindow.SteeringEffects_CalibrationProgress_Label.Text = $"{localization[ "Progress:" ]} {_calibrationProgress * 100f:F0}{localization[ "Percent" ]}";
 				app.MainWindow.SteeringEffects_CalibrationProgress_Label.Visibility = Visibility.Visible;
 			}
 
