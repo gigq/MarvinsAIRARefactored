@@ -180,6 +180,8 @@ public partial class AdminBoxx
 	{
 		var app = App.Instance!;
 
+		app.Logger.WriteLine( "[AdminBoxx] Initialize >>>" );
+
 		string[] soundKeys = [
 			"adminboxx_tone", "iracing_tone", "replay_tone",
 			"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
@@ -194,11 +196,19 @@ public partial class AdminBoxx
 		app.AudioManager.LoadSounds( "AdminBoxx", soundKeys );
 
 		_timer.Start();
+
+		app.Logger.WriteLine( "[AdminBoxx] <<< Initialize" );
 	}
 
 	public void Shutdown()
 	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[AdminBoxx] Shutdown >>>" );
+
 		_timer.Stop();
+
+		app.Logger.WriteLine( "[AdminBoxx] <<< Shutdown" );
 	}
 
 	public bool Connect()
