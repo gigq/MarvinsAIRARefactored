@@ -1153,4 +1153,8 @@
     <value>Configuration File Is Invalid!</value>
     <comment>Steering effects</comment>
   </data>
+  <data name="CalibrationGraph" xml:space="preserve">
+    <value>Calibration Graph</value>
+    <comment>Steering effects</comment>
+  </data>
 </root>
