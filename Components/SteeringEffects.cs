@@ -72,7 +72,13 @@ public class SteeringEffects
 
 	private readonly RenderTargetBitmap _calibrationGraphRenderTargetBitmap = new( CalibrationGraphWidth, CalibrationGraphHeight, 96.0, 96.0, PixelFormats.Pbgra32 );
 
-	private readonly Pen _calibrationGraphPen = new( Brushes.Lime, 1.0 )
+	private readonly Pen _calibrationGraphRawDataPen = new( Brushes.Black, 3.0 )
+	{
+		StartLineCap = PenLineCap.Round,
+		EndLineCap = PenLineCap.Round
+	};
+
+	private readonly Pen _calibrationGraphSmoothedDataPen = new( Brushes.SkyBlue, 2.0 )
 	{
 		StartLineCap = PenLineCap.Round,
 		EndLineCap = PenLineCap.Round
@@ -80,7 +86,8 @@ public class SteeringEffects
 
 	public SteeringEffects()
 	{
-		_calibrationGraphPen.Freeze();
+		_calibrationGraphRawDataPen.Freeze();
+		_calibrationGraphSmoothedDataPen.Freeze();
 	}
 
 	public void SetCalibrationFileNameMairaComboBoxItemsSource( bool forceRefresh = false )
@@ -512,7 +519,7 @@ public class SteeringEffects
 					var p1 = new Point( MaxSteeringWheelAngleInDegrees + _steeringWheelAnglesInDegrees[ _numSteeringWheelAnglesRecorded - 1 ] + 0.5, CalibrationGraphHeight - _yawRateInDegreesPerSecond[ _numSteeringWheelAnglesRecorded - 1 ] * 100.0 + 0.5 );
 					var p2 = new Point( MaxSteeringWheelAngleInDegrees + _steeringWheelAnglesInDegrees[ _numSteeringWheelAnglesRecorded - 0 ] + 0.5, CalibrationGraphHeight - _yawRateInDegreesPerSecond[ _numSteeringWheelAnglesRecorded - 0 ] * 100.0 + 0.5 );
 
-					drawingContext.DrawLine( _calibrationGraphPen, p1, p2 );
+					drawingContext.DrawLine( _calibrationGraphSmoothedDataPen, p1, p2 );
 					drawingContext.Close();
 
 					_calibrationGraphRenderTargetBitmap.Render( drawingVisual );
@@ -1035,12 +1042,32 @@ public class SteeringEffects
 
 						using var drawingContext = drawingVisual.RenderOpen();
 
+						for ( var angleIndex = 1; angleIndex < _numSteeringWheelAnglesRecorded; angleIndex++ )
+						{
+							var a1 = _steeringWheelAnglesInDegrees[ angleIndex - 1 ] + MaxSteeringWheelAngleInDegrees;
+							var a2 = _steeringWheelAnglesInDegrees[ angleIndex - 0 ] + MaxSteeringWheelAngleInDegrees;
+
+							var y1 = _yawRateInDegreesPerSecond[ angleIndex - 1 ];
+							var y2 = _yawRateInDegreesPerSecond[ angleIndex - 0 ];
+
+							var p1 = new Point( a1 - 0.5, CalibrationGraphHeight - y1 * 100.0 + 0.5 );
+							var p2 = new Point( a2 + 0.5, CalibrationGraphHeight - y2 * 100.0 + 0.5 );
+
+							drawingContext.DrawLine( _calibrationGraphRawDataPen, p1, p2 );
+						}
+
 						for ( var angleIndex = 1; angleIndex < _expectedYawRateInDegreesPerSecond.Length; angleIndex++ )
 						{
-							var p1 = new Point( angleIndex - 0.5, CalibrationGraphHeight - _expectedYawRateInDegreesPerSecond[ angleIndex - 1 ] * 100.0 + 0.5 );
-							var p2 = new Point( angleIndex + 0.5, CalibrationGraphHeight - _expectedYawRateInDegreesPerSecond[ angleIndex - 0 ] * 100.0 + 0.5 );
+							var a1 = angleIndex - 0.5;
+							var a2 = angleIndex + 0.5;
 
-							drawingContext.DrawLine( _calibrationGraphPen, p1, p2 );
+							var y1 = _expectedYawRateInDegreesPerSecond[ angleIndex - 1 ];
+							var y2 = _expectedYawRateInDegreesPerSecond[ angleIndex - 0 ];
+
+							var p1 = new Point( a1, CalibrationGraphHeight - y1 * 100.0 + 0.5 );
+							var p2 = new Point( a2, CalibrationGraphHeight - y2 * 100.0 + 0.5 );
+
+							drawingContext.DrawLine( _calibrationGraphSmoothedDataPen, p1, p2 );
 						}
 
 						drawingContext.Close();
