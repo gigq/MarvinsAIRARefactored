@@ -52,6 +52,7 @@ Name: "{userdocs}\MarvinsAIRA Refactored\Languages"
 Name: "{userdocs}\MarvinsAIRA Refactored\Sounds"
 Name: "{userdocs}\MarvinsAIRA Refactored\Recordings"
 Name: "{userdocs}\MarvinsAIRA Refactored\Calibration"
+Name: "{userdocs}\MarvinsAIRA Refactored\SimHub Plugin"
 
 [Files]
 Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\bin\publish\MarvinsAIRARefactored.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -62,6 +63,8 @@ Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\InnoSetup\Languag
 Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\InnoSetup\Sounds\*.wav"; DestDir: "{userdocs}\MarvinsAIRA Refactored\Sounds"; Flags: ignoreversion recursesubdirs
 Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\InnoSetup\Recordings\*.csv"; DestDir: "{userdocs}\MarvinsAIRA Refactored\Recordings"; Flags: ignoreversion
 Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactored\InnoSetup\Calibration\*.csv"; DestDir: "{userdocs}\MarvinsAIRA Refactored\Calibration"; Flags: ignoreversion
+Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactoredSimHub\bin\Release\MarvinsAIRARefactoredSimHub.dll"; DestDir: "{userdocs}\MarvinsAIRA Refactored\SimHub Plugin"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\marvi\Documents\GitHub\MarvinsAIRARefactoredSimHub\bin\Release\MarvinsAIRARefactoredSimHub.dll"; DestDir: "{code:SimHubRoot}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -76,3 +79,179 @@ Type: files; Name: "{userstartup}\MarvinsAIRA Refactored.lnk"
 
 [UninstallDelete]
 Type: files; Name: "{userstartup}\MarvinsAIRA Refactored.lnk"
+
+[Code]
+var
+  GSimHubRoot: string;
+  GSimHubExe:  string;
+
+function DirExistsAndHasSimHubExe(const Dir: string): Boolean;
+begin
+  Result := FileExists(AddBackslash(Dir) + 'SimHubWPF.exe');
+end;
+
+function TryCheckKeyForPath(RootKey: Integer; const SubKey: string; var OutDir: string): Boolean;
+var
+  DispName, InstallLoc: string;
+begin
+  Result := False;
+
+  if RegQueryStringValue(RootKey, SubKey, 'DisplayName', DispName) then
+  begin
+    Log(Format('Found uninstall entry "%s" DisplayName="%s"', [SubKey, DispName]));
+
+    // Be tolerant of minor name changes: just look for "SimHub" anywhere
+    if Pos(UpperCase('SimHub'), UpperCase(DispName)) > 0 then
+    begin
+      // First try InstallLocation
+      if RegQueryStringValue(RootKey, SubKey, 'InstallLocation', InstallLoc) then
+      begin
+        Log('InstallLocation=' + InstallLoc);
+        if DirExistsAndHasSimHubExe(InstallLoc) then
+        begin
+          OutDir := InstallLoc;
+          Result := True;
+          Exit;
+        end;
+      end;
+
+      // Then try Inno Setup specific value
+      if RegQueryStringValue(RootKey, SubKey, 'Inno Setup: App Path', InstallLoc) then
+      begin
+        Log('Inno Setup: App Path=' + InstallLoc);
+        if DirExistsAndHasSimHubExe(InstallLoc) then
+        begin
+          OutDir := InstallLoc;
+          Result := True;
+          Exit;
+        end;
+      end;
+    end;
+  end
+  else
+    Log('No DisplayName for ' + SubKey);
+end;
+
+function TryFindSimHubDirFromUninstall(var Dir: string): Boolean;
+var
+  RootKeys: array[0..1] of Integer;
+  BaseKeys: array[0..1] of String;
+  I, B, J: Integer;
+  UninstKey, SubKey: string;
+  SubKeys: TArrayOfString;
+begin
+  Result := False;
+
+  RootKeys[0] := HKEY_LOCAL_MACHINE;
+  RootKeys[1] := HKEY_CURRENT_USER;
+
+  // Enumerate both 64-bit and WOW6432 uninstall views explicitly
+  BaseKeys[0] := 'Software\Microsoft\Windows\CurrentVersion\Uninstall';
+  BaseKeys[1] := 'Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall';
+
+  // Fast path: SimHub's typical Inno key name
+  for I := 0 to High(RootKeys) do
+    for B := 0 to High(BaseKeys) do
+    begin
+      UninstKey := BaseKeys[B] + '\SimHub_is1';
+      Log('Checking direct key: ' + UninstKey);
+      if TryCheckKeyForPath(RootKeys[I], UninstKey, Dir) then
+      begin
+        Result := True;
+        Exit;
+      end;
+    end;
+
+  // Fallback: enumerate all uninstall subkeys looking for DisplayName containing "SimHub"
+  for I := 0 to High(RootKeys) do
+    for B := 0 to High(BaseKeys) do
+    begin
+      UninstKey := BaseKeys[B];
+      Log('Enumerating uninstall key: ' + UninstKey);
+
+      if RegGetSubkeyNames(RootKeys[I], UninstKey, SubKeys) then
+      begin
+        for J := 0 to GetArrayLength(SubKeys) - 1 do
+        begin
+          SubKey := UninstKey + '\' + SubKeys[J];
+          if TryCheckKeyForPath(RootKeys[I], SubKey, Dir) then
+          begin
+            Result := True;
+            Exit;
+          end;
+        end;
+      end
+      else
+        Log('No subkeys under ' + UninstKey + ' or access denied');
+    end;
+end;
+
+function TryFindSimHubInCommonLocations(var Dir: string): Boolean;
+var
+  Candidates: array[0..3] of String;
+  K: Integer;
+begin
+  Candidates[0] := 'C:\Program Files (x86)\SimHub';
+  Candidates[1] := 'C:\Program Files\SimHub';
+  Candidates[2] := ExpandConstant('{pf32}\SimHub');
+  Candidates[3] := ExpandConstant('{pf}\SimHub');
+
+  for K := 0 to High(Candidates) do
+  begin
+    Log('Checking common path: ' + Candidates[K]);
+    if DirExistsAndHasSimHubExe(Candidates[K]) then
+    begin
+      Dir := Candidates[K];
+      Result := True;
+      Exit;
+    end;
+  end;
+
+  Result := False;
+end;
+
+function SimHubRoot(Param: string): string;
+begin
+  // Cache once
+  if GSimHubRoot = '' then
+  begin
+    Log('Starting SimHub detection...');
+    if TryFindSimHubDirFromUninstall(GSimHubRoot) then
+      Log('SimHub found via uninstall registry at: ' + GSimHubRoot)
+    else if TryFindSimHubInCommonLocations(GSimHubRoot) then
+      Log('SimHub found via common locations at: ' + GSimHubRoot)
+    else
+      Log('SimHub NOT found; using fallback folder.');
+
+    if GSimHubRoot <> '' then
+    begin
+      if DirExistsAndHasSimHubExe(GSimHubRoot) then
+      begin
+        GSimHubExe := AddBackslash(GSimHubRoot) + 'SimHubWPF.exe';
+        Log('SimHub exe resolved to: ' + GSimHubExe);
+      end
+      else
+      begin
+        Log('Warning: Chosen SimHubRoot does not contain SimHubWPF.exe, switching to fallback.');
+        GSimHubRoot := '';
+      end;
+    end;
+
+    if GSimHubRoot = '' then
+    begin
+      // Silent fallback (no UI) — still place the DLL somewhere predictable
+      GSimHubRoot := ExpandConstant('{userdocs}\MarvinsAIRA Refactored\SimHub Plugin');
+      ForceDirectories(GSimHubRoot);
+      GSimHubExe := '';
+      Log('Fallback plugin folder: ' + GSimHubRoot);
+    end;
+  end;
+
+  Result := GSimHubRoot;
+end;
+
+// Optional helper if you ever want to reference it in [Run]
+function SimHubExe(Param: string): string;
+begin
+  Result := GSimHubExe;
+end;
