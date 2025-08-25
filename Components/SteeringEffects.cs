@@ -342,7 +342,7 @@ public class SteeringEffects
 		}
 
 		skidSlip = speedFade * skidSlip;
-		
+
 		if ( steeringWheelAngleInDegrees > _steeringWheelAngleAtMinimumExpectedYawRate )
 		{
 			skidSlip *= -1;
@@ -922,7 +922,7 @@ public class SteeringEffects
 
 		for ( var angleIndex = 0; angleIndex < _numSteeringWheelAnglesRecorded; angleIndex++ )
 		{
-			writer.WriteLine( $"{_steeringWheelAnglesInDegrees[ angleIndex ]:F6},{_yawRateInDegreesPerSecond[ angleIndex ]:F6}" );
+			writer.WriteLine( $"{_steeringWheelAnglesInDegrees[ angleIndex ].ToString( "F6", CultureInfo.InvariantCulture )}," + $"{_yawRateInDegreesPerSecond[ angleIndex ].ToString( "F6", CultureInfo.InvariantCulture )}" );
 		}
 
 		// close the file
@@ -1182,7 +1182,7 @@ public class SteeringEffects
 
 					for ( var angleIndex = 0; angleIndex < _expectedYawRateInDegreesPerSecond.Length; angleIndex++ )
 					{
-						if ( _expectedYawRateInDegreesPerSecond [ angleIndex ] < minimumExpectedYawRate )
+						if ( _expectedYawRateInDegreesPerSecond[ angleIndex ] < minimumExpectedYawRate )
 						{
 							minimumExpectedYawRate = _expectedYawRateInDegreesPerSecond[ angleIndex ];
 
