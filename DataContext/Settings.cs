@@ -1,11 +1,11 @@
 ﻿
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Components;
 using System.ComponentModel;
-using System.Configuration;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
+
+using MarvinsAIRARefactored.Classes;
+using MarvinsAIRARefactored.Components;
 
 namespace MarvinsAIRARefactored.DataContext;
 
@@ -1121,7 +1121,7 @@ public class Settings : INotifyPropertyChanged
 
 				var app = App.Instance!;
 
-				app.LFE.NextRecordingDeviceGuid = _racingWheelLFERecordingDeviceGuid;
+				app.LFE.NextCaptureDeviceGuid = _racingWheelLFERecordingDeviceGuid;
 			}
 		}
 	}
@@ -3259,7 +3259,7 @@ public class Settings : INotifyPropertyChanged
 
 			var app = App.Instance!;
 
-			app.GripOMeter.UpdateVisibility();
+			app.GripOMeterWindow.UpdateVisibility();
 		}
 	}
 
@@ -3284,7 +3284,7 @@ public class Settings : INotifyPropertyChanged
 
 			var app = App.Instance!;
 
-			app.GripOMeter.MakeDraggable();
+			app.GripOMeterWindow.MakeDraggable();
 		}
 	}
 
@@ -6082,19 +6082,94 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
-	#region AdminBoxx - Connect on startup
+	#region Speech to text - Enabled
 
-	private bool _adminBoxxConnectOnStartup = false;
+	private bool _speechToTextEnabled = false;
 
-	public bool AdminBoxxConnectOnStartup
+	public bool SpeechToTextEnabled
 	{
-		get => _adminBoxxConnectOnStartup;
+		get => _speechToTextEnabled;
 
 		set
 		{
-			if ( value != _adminBoxxConnectOnStartup )
+			if ( value != _speechToTextEnabled )
 			{
-				_adminBoxxConnectOnStartup = value;
+				_speechToTextEnabled = value;
+
+				OnPropertyChanged();
+
+				var app = App.Instance!;
+
+				app.SpeechToText.Toggle( _speechToTextEnabled );
+			}
+		}
+	}
+
+	#endregion
+
+	#region Speech to text - Show overlay window
+
+	private bool _speechToTextShowOverlayWindow = false;
+
+	public bool SpeechToTextShowOverlayWindow
+	{
+		get => _speechToTextShowOverlayWindow;
+
+		set
+		{
+			if ( value != _speechToTextShowOverlayWindow )
+			{
+				_speechToTextShowOverlayWindow = value;
+
+				OnPropertyChanged();
+			}
+
+			var app = App.Instance!;
+
+			app.SpeechToTextWindow.UpdateVisibility();
+		}
+	}
+
+	#endregion
+
+	#region Speech to text - Make overlay window draggable
+
+	private bool _speechToTextMakeOverlayWindowDraggable = false;
+
+	public bool SpeechToTextMakeOverlayWindowDraggable
+	{
+		get => _speechToTextMakeOverlayWindowDraggable;
+
+		set
+		{
+			if ( value != _speechToTextMakeOverlayWindowDraggable )
+			{
+				_speechToTextMakeOverlayWindowDraggable = value;
+
+				OnPropertyChanged();
+			}
+
+			var app = App.Instance!;
+
+			app.SpeechToTextWindow.MakeDraggable();
+		}
+	}
+
+	#endregion
+
+	#region Speech to text - Overlay window position
+
+	private Rectangle _speechToTextOverlayWindowPosition = Rectangle.Empty;
+
+	public Rectangle SpeechToTextOverlayWindowPosition
+	{
+		get => _speechToTextOverlayWindowPosition;
+
+		set
+		{
+			if ( value != _speechToTextOverlayWindowPosition )
+			{
+				_speechToTextOverlayWindowPosition = value;
 
 				OnPropertyChanged();
 			}
@@ -6103,95 +6178,46 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
-	#region AdminBoxx - Brightness
+	#region Speech to text - Overlay window scale
 
-	private float _adminBoxxBrightness = 0.15f;
+	private float _speechToTextOverlayWindowScale = 1f;
 
-	public float AdminBoxxBrightness
+	public float SpeechToTextOverlayWindowScale
 	{
-		get => _adminBoxxBrightness;
+		get => _speechToTextOverlayWindowScale;
 
 		set
 		{
-			value = MathZ.Saturate( value );
+			value = Math.Clamp( value, 0.5f, 2f );
 
-			if ( value != _adminBoxxBrightness )
+			if ( value != _speechToTextOverlayWindowScale )
 			{
-				_adminBoxxBrightness = value;
+				_speechToTextOverlayWindowScale = value;
 
 				OnPropertyChanged();
 			}
 
-			AdminBoxxBrightnessString = $"{_adminBoxxBrightness * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			SpeechToTextOverlayWindowScaleString = $"{_speechToTextOverlayWindowScale * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
 		}
 	}
 
-	private string _adminBoxxBrightnessString = string.Empty;
+	private string _speechToTextOverlayWindowScaleString = string.Empty;
 
 	[XmlIgnore]
-	public string AdminBoxxBrightnessString
+	public string SpeechToTextOverlayWindowScaleString
 	{
-		get => _adminBoxxBrightnessString;
+		get => _speechToTextOverlayWindowScaleString;
 
 		set
 		{
-			if ( value != _adminBoxxBrightnessString )
+			if ( value != _speechToTextOverlayWindowScaleString )
 			{
-				_adminBoxxBrightnessString = value;
+				_speechToTextOverlayWindowScaleString = value;
 
 				OnPropertyChanged();
 			}
 		}
 	}
-
-	public ButtonMappings AdminBoxxBrightnessPlusButtonMappings { get; set; } = new();
-	public ButtonMappings AdminBoxxBrightnessMinusButtonMappings { get; set; } = new();
-
-	#endregion
-
-	#region AdminBoxx - Volume
-
-	private float _adminBoxxVolume = 0.75f;
-
-	public float AdminBoxxVolume
-	{
-		get => _adminBoxxVolume;
-
-		set
-		{
-			value = MathZ.Saturate( value );
-
-			if ( value != _adminBoxxVolume )
-			{
-				_adminBoxxVolume = value;
-
-				OnPropertyChanged();
-			}
-
-			AdminBoxxVolumeString = $"{_adminBoxxVolume * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
-		}
-	}
-
-	private string _adminBoxxVolumeString = string.Empty;
-
-	[XmlIgnore]
-	public string AdminBoxxVolumeString
-	{
-		get => _adminBoxxVolumeString;
-
-		set
-		{
-			if ( value != _adminBoxxBrightnessString )
-			{
-				_adminBoxxVolumeString = value;
-
-				OnPropertyChanged();
-			}
-		}
-	}
-
-	public ButtonMappings AdminBoxxVolumePlusButtonMappings { get; set; } = new();
-	public ButtonMappings AdminBoxxVolumeMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
@@ -6381,6 +6407,119 @@ public class Settings : INotifyPropertyChanged
 			}
 		}
 	}
+
+	#endregion
+
+	#region AdminBoxx - Connect on startup
+
+	private bool _adminBoxxConnectOnStartup = false;
+
+	public bool AdminBoxxConnectOnStartup
+	{
+		get => _adminBoxxConnectOnStartup;
+
+		set
+		{
+			if ( value != _adminBoxxConnectOnStartup )
+			{
+				_adminBoxxConnectOnStartup = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	#endregion
+
+	#region AdminBoxx - Brightness
+
+	private float _adminBoxxBrightness = 0.15f;
+
+	public float AdminBoxxBrightness
+	{
+		get => _adminBoxxBrightness;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _adminBoxxBrightness )
+			{
+				_adminBoxxBrightness = value;
+
+				OnPropertyChanged();
+			}
+
+			AdminBoxxBrightnessString = $"{_adminBoxxBrightness * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+		}
+	}
+
+	private string _adminBoxxBrightnessString = string.Empty;
+
+	[XmlIgnore]
+	public string AdminBoxxBrightnessString
+	{
+		get => _adminBoxxBrightnessString;
+
+		set
+		{
+			if ( value != _adminBoxxBrightnessString )
+			{
+				_adminBoxxBrightnessString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ButtonMappings AdminBoxxBrightnessPlusButtonMappings { get; set; } = new();
+	public ButtonMappings AdminBoxxBrightnessMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region AdminBoxx - Volume
+
+	private float _adminBoxxVolume = 0.75f;
+
+	public float AdminBoxxVolume
+	{
+		get => _adminBoxxVolume;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _adminBoxxVolume )
+			{
+				_adminBoxxVolume = value;
+
+				OnPropertyChanged();
+			}
+
+			AdminBoxxVolumeString = $"{_adminBoxxVolume * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+		}
+	}
+
+	private string _adminBoxxVolumeString = string.Empty;
+
+	[XmlIgnore]
+	public string AdminBoxxVolumeString
+	{
+		get => _adminBoxxVolumeString;
+
+		set
+		{
+			if ( value != _adminBoxxBrightnessString )
+			{
+				_adminBoxxVolumeString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ButtonMappings AdminBoxxVolumePlusButtonMappings { get; set; } = new();
+	public ButtonMappings AdminBoxxVolumeMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
