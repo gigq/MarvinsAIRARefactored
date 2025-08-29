@@ -64,11 +64,24 @@ public class SettingsFile
 
 		Settings.SuppressUpdatingOfContextSettings = true;
 
-		var settings = (Settings?) Serializer.Load( SettingsFilePath, typeof( Settings ) );
-
-		if ( settings != null )
+		if ( File.Exists( SettingsFilePath ) )
 		{
-			DataContext.DataContext.Instance.Settings = settings;
+			var settings = (Settings?) Serializer.Load( SettingsFilePath, typeof( Settings ) );
+
+			if ( settings != null )
+			{
+				app.Logger.WriteLine( "[SettingsFile] Loaded existing settings file" );
+
+				DataContext.DataContext.Instance.Settings = settings;
+			}
+			else
+			{
+				throw new Exception( "[SettingsFile] Could not load existing settings file - check log for the specific error" );
+			}
+		}
+		else
+		{
+			app.Logger.WriteLine( "[SettingsFile] Settings file does not exist - we will create a new one" );
 		}
 
 		Settings.SuppressUpdatingOfContextSettings = false;
