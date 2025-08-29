@@ -2,39 +2,34 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 
 using PInvoke;
 
 using static PInvoke.User32;
 
-using MarvinsAIRARefactored.Classes;
-
-using Brushes = System.Windows.Media.Brushes;
-
 namespace MarvinsAIRARefactored.Windows;
 
-public partial class GripOMeter : Window
+public partial class GripOMeterWindow : Window
 {
 	private bool _initialized = false;
 	private bool _isDraggable = false;
 
-	public GripOMeter()
+	public GripOMeterWindow()
 	{
 		var app = App.Instance!;
 
-		app.Logger.WriteLine( "[GripOMeter] Constructor >>>" );
+		app.Logger.WriteLine( "[GripOMeterWindow] Constructor >>>" );
 
 		InitializeComponent();
 
-		app.Logger.WriteLine( "[GripOMeter] <<< Constructor" );
+		app.Logger.WriteLine( "[GripOMeterWindow] <<< Constructor" );
 	}
 
 	public void Initialize()
 	{
 		var app = App.Instance!;
 
-		app.Logger.WriteLine( "[GripOMeter] Initialize >>>" );
+		app.Logger.WriteLine( "[GripOMeterWindow] Initialize >>>" );
 
 		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 
@@ -49,7 +44,7 @@ public partial class GripOMeter : Window
 
 		_initialized = true;
 
-		app.Logger.WriteLine( "[GripOMeter] <<< Initialize" );
+		app.Logger.WriteLine( "[GripOMeterWindow] <<< Initialize" );
 	}
 
 	private void Window_Loaded( object sender, RoutedEventArgs e )
