@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:MarvinsAIRARefactored"
              xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
+             xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
              Startup="App_Startup"
              Exit="App_Exit"
-             xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+             ShutdownMode="OnMainWindowClose">
 
     <Application.Resources>
 

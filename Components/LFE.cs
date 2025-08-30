@@ -43,7 +43,7 @@ public class LFE
 	private CaptureBuffer? _captureBuffer = null;
 	private readonly AutoResetEvent _autoResetEvent = new( false );
 
-	private readonly Thread _workerThread = new( WorkerThread ) { IsBackground = true, Priority = ThreadPriority.Highest };
+	private readonly Thread _workerThread = new( WorkerThread ) { IsBackground = true, Priority = ThreadPriority.Highest, Name = "MAIRA LFE Worker Thread" };
 
 	private bool _running = true;
 	private bool _stopped = false;

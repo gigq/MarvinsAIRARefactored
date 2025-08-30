@@ -64,9 +64,10 @@ public partial class App : Application
 
 	private readonly AutoResetEvent _autoResetEvent = new( false );
 
-	private readonly Thread _workerThread = new( WorkerThread ) { IsBackground = true, Priority = ThreadPriority.Normal };
+	private readonly Thread _workerThread = new( WorkerThread ) { IsBackground = true, Priority = ThreadPriority.Normal, Name = "MAIRA App Worker Thread" };
 
 	private bool _running = true;
+	private bool _stopped = false;
 
 	private readonly Timer _timer = new( TimerPeriodInMilliseconds );
 
@@ -285,10 +286,17 @@ public partial class App : Application
 
 		_running = false;
 
-		_autoResetEvent.Set();
+		TriggerWorkerThread();
+
+		while ( !_stopped )
+		{
+			Thread.Sleep( 50 );
+		}
 
 		SpeechToTextWindow.Close();
 		GripOMeterWindow.Close();
+
+		_ = SpeechToText.DisableAsync();
 
 		Telemetry.Shutdown();
 		Simulator.Shutdown();
@@ -1895,39 +1903,38 @@ public partial class App : Application
 
 	private static void WorkerThread()
 	{
-		var app = Instance;
+		var app = Instance!;
 
-		if ( app != null )
+		while ( app._running )
 		{
-			while ( app._running )
+			app._autoResetEvent.WaitOne();
+
+			if ( Interlocked.Exchange( ref app._tickMutex, 1 ) == 0 )
 			{
-				app._autoResetEvent.WaitOne();
-
-				if ( Interlocked.Exchange( ref app._tickMutex, 1 ) == 0 )
+				app.Dispatcher.Invoke( () =>
 				{
-					app.Dispatcher.Invoke( () =>
-					{
-						app.RacingWheel.Tick( app );
-						app.SettingsFile.Tick( app );
-						app.Pedals.Tick( app );
-						app.AdminBoxx.Tick( app );
-						app.Debug.Tick( app );
-						app.ChatQueue.Tick( app );
-						app.MainWindow.Tick( app );
-						app.MultimediaTimer.Tick( app );
-						app.Simulator.Tick( app );
-						app.Sounds.Tick( app );
-						app.Graph.Tick( app );
-						app.SteeringEffects.Tick( app );
-						app.VirtualJoystick.Tick( app );
-						app.GripOMeterWindow.Tick( app );
-						app.Telemetry.Tick( app );
-						app.SpeechToTextWindow.Tick( app );
+					app.RacingWheel.Tick( app );
+					app.SettingsFile.Tick( app );
+					app.Pedals.Tick( app );
+					app.AdminBoxx.Tick( app );
+					app.Debug.Tick( app );
+					app.ChatQueue.Tick( app );
+					app.MainWindow.Tick( app );
+					app.MultimediaTimer.Tick( app );
+					app.Simulator.Tick( app );
+					app.Sounds.Tick( app );
+					app.Graph.Tick( app );
+					app.SteeringEffects.Tick( app );
+					app.VirtualJoystick.Tick( app );
+					app.GripOMeterWindow.Tick( app );
+					app.Telemetry.Tick( app );
+					app.SpeechToTextWindow.Tick( app );
 
-						app._tickMutex = 0;
-					} );
-				}
+					app._tickMutex = 0;
+				} );
 			}
 		}
+
+		app._stopped = true;
 	}
 }
