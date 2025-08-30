@@ -15,7 +15,8 @@
         SizeToContent="WidthAndHeight"
         Loaded="Window_Loaded"
         LocationChanged="Window_LocationChanged"
-        Cursor="SizeAll">
+        Cursor="SizeAll"
+        Opacity="0.9">
 
     <Window.DataContext>
         <Binding Source="{x:Static datacontext:DataContext.Instance}"/>
@@ -27,8 +28,16 @@
             <ScaleTransform x:Name="RootScaleTransform" ScaleX="{Binding Settings.SpeechToTextOverlayWindowScale}" ScaleY="{Binding Settings.SpeechToTextOverlayWindowScale}"/>
         </Grid.LayoutTransform>
 
-        <Border Width="1024" BorderThickness="2" BorderBrush="White" Background="Black" CornerRadius="10" Padding="10" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <TextBlock x:Name="TextBlock" d:Text="This is some text inside the border. The border will always be 1024 pixels wide, but its height grows automatically to wrap the text content." TextWrapping="Wrap" FontSize="24" Foreground="White"/>
+        <Border Width="1024" BorderThickness="2" BorderBrush="White" Background="Black" CornerRadius="10" Padding="20,0,20,20" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <StackPanel>
+
+                <TextBlock x:Name="Final_Driver_TextBlock" Margin="0,20,0,0" d:Text="Person speaking" FontSize="18" Foreground="Yellow" Visibility="Collapsed"/>
+                <TextBlock x:Name="Final_Message_TextBlock" d:Text="This is some text inside the border. The border will always be 1024 pixels wide, but its height grows automatically to wrap the text content." TextWrapping="Wrap" FontSize="24" Foreground="White" Visibility="Collapsed"/>
+
+                <TextBlock x:Name="Partial_Driver_TextBlock" Margin="0,20,0,0" d:Text="Person speaking" FontSize="18" Foreground="Yellow" Visibility="Collapsed"/>
+                <TextBlock x:Name="Partial_Message_TextBlock" d:Text="This is some text inside the border. The border will always be 1024 pixels wide, but its height grows automatically to wrap the text content." TextWrapping="Wrap" FontSize="24" Foreground="White" Visibility="Collapsed"/>
+
+            </StackPanel>
         </Border>
 
     </Grid>

@@ -14,10 +14,10 @@ public partial class SpeechToTextWindow : Window
 	private bool _initialized = false;
 	private bool _isDraggable = false;
 
-	private string _finalText = string.Empty;
-
-	private float _finalTextTimer = 0f;
 	private float _windowVisibilityTimer = 0f;
+	private float _finalVisibilityTimer = 0f;
+
+	private int _partialCarIdx = -1;
 
 	public SpeechToTextWindow()
 	{
@@ -136,18 +136,31 @@ public partial class SpeechToTextWindow : Window
 		{
 			Dispatcher.BeginInvoke( () =>
 			{
-				_finalTextTimer += 1f / 10f;
+				var app = App.Instance!;
 
-				if ( ( _finalTextTimer > 10f ) || ( _finalText == string.Empty ) )
+				if ( _partialCarIdx == -1 )
 				{
-					TextBlock.Text = text;
+					_partialCarIdx = app.Simulator.LastRadioTransmitCarIdx;
+				}
+
+				var driver = app.Simulator.GetDriver( _partialCarIdx );
+
+				if ( driver != null )
+				{
+					Partial_Driver_TextBlock.Visibility = Visibility.Visible;
+					Partial_Driver_TextBlock.Text = $"#{driver.CarNumber} {driver.UserName}";
 				}
 				else
 				{
-					TextBlock.Text = $"{_finalText}\r\n{text}";
+					Partial_Driver_TextBlock.Visibility = Visibility.Collapsed;
 				}
 
-				_windowVisibilityTimer = 0f;
+				Partial_Message_TextBlock.Text = text;
+
+				Partial_Driver_TextBlock.Visibility = Visibility.Visible;
+				Partial_Message_TextBlock.Visibility = Visibility.Visible;
+
+				_windowVisibilityTimer = 10f;
 
 				Show();
 			} );
@@ -160,11 +173,32 @@ public partial class SpeechToTextWindow : Window
 		{
 			Dispatcher.BeginInvoke( () =>
 			{
-				_windowVisibilityTimer = 0f;
-				_finalTextTimer = 0f;
-				_finalText = text;
+				var app = App.Instance!;
 
-				TextBlock.Text = _finalText;
+				var driver = app.Simulator.GetDriver( _partialCarIdx );
+
+				_partialCarIdx = -1;
+
+				if ( driver != null )
+				{
+					Final_Driver_TextBlock.Visibility = Visibility.Visible;
+					Final_Driver_TextBlock.Text = $"#{driver.CarNumber} {driver.UserName}";
+				}
+				else
+				{
+					Final_Driver_TextBlock.Visibility = Visibility.Collapsed;
+				}
+
+				Final_Message_TextBlock.Text = text;
+
+				Final_Driver_TextBlock.Visibility = Visibility.Visible;
+				Final_Message_TextBlock.Visibility = Visibility.Visible;
+
+				Partial_Driver_TextBlock.Visibility = Visibility.Collapsed;
+				Partial_Message_TextBlock.Visibility = Visibility.Collapsed;
+
+				_windowVisibilityTimer = 10f;
+				_finalVisibilityTimer = 10f;
 
 				Show();
 			} );
@@ -177,13 +211,35 @@ public partial class SpeechToTextWindow : Window
 		{
 			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 
-			if ( ( Visibility == Visibility.Visible ) && !settings.SpeechToTextShowOverlayWindow )
+			if ( _windowVisibilityTimer > 0f )
 			{
-				_windowVisibilityTimer += 1f / 60f;
+				_windowVisibilityTimer -= 1f / 60f;
 
-				if ( _windowVisibilityTimer > 10f )
+				if ( _windowVisibilityTimer <= 0f )
 				{
-					Hide();
+					_finalVisibilityTimer = 0f;
+
+					Final_Driver_TextBlock.Visibility = Visibility.Collapsed;
+					Final_Message_TextBlock.Visibility = Visibility.Collapsed;
+
+					Partial_Driver_TextBlock.Visibility = Visibility.Collapsed;
+					Partial_Message_TextBlock.Visibility = Visibility.Collapsed;
+
+					if ( !settings.SpeechToTextShowOverlayWindow )
+					{
+						Hide();
+					}
+				}
+			}
+
+			if ( _finalVisibilityTimer > 0f )
+			{
+				_finalVisibilityTimer -= 1f / 60f;
+
+				if ( _finalVisibilityTimer <= 0f )
+				{
+					Final_Driver_TextBlock.Visibility = Visibility.Collapsed;
+					Final_Message_TextBlock.Visibility = Visibility.Collapsed;
 				}
 			}
 		}

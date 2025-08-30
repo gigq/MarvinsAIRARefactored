@@ -267,6 +267,8 @@ function createRecognizer()
         }
     };
 
+    warmupElement.classList.add( 'hidden' )
+
     return speechRecognition;
 }
 
@@ -364,8 +366,6 @@ warmupElement.addEventListener( 'click', async () =>
         speechRecognition.stop();
 
         setStatus( 1 );
-
-        warmupElement.classList.add( 'hidden' )
     }
     catch ( e )
     {

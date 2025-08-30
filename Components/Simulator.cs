@@ -39,6 +39,7 @@ public partial class Simulator
 	public bool IsOnTrack { get; private set; } = false;
 	public bool IsReplayPlaying { get; private set; } = false;
 	public float LapDistPct { get; private set; } = 0f;
+	public int LastRadioTransmitCarIdx { get; private set; } = -1;
 	public float[] LFShockVel_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
 	public float[] LRShockVel_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
 	public int NumForwardGears { get; private set; } = 0;
@@ -161,6 +162,24 @@ public partial class Simulator
 		_irsdk.Start();
 	}
 
+	public IRacingSdkSessionInfo.DriverInfoModel.DriverModel? GetDriver( int carIdx )
+	{
+		var sessionInfo = _irsdk.Data.SessionInfo;
+
+		if ( ( sessionInfo != null ) && ( sessionInfo.DriverInfo != null ) && ( sessionInfo.DriverInfo.Drivers != null ) )
+		{
+			foreach ( var driver in sessionInfo.DriverInfo.Drivers )
+			{
+				if ( driver.CarIdx == carIdx )
+				{
+					return driver;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private void OnException( Exception exception )
 	{
 		App.Instance!.ShowFatalError( null, exception );
@@ -221,6 +240,7 @@ public partial class Simulator
 		IsOnTrack = false;
 		IsReplayPlaying = false;
 		LapDistPct = 0f;
+		LastRadioTransmitCarIdx = -1;
 		NumForwardGears = 0;
 		PaceMode = IRacingSdkEnum.PaceMode.NotPacing;
 		PlayerCarIdx = 0;
@@ -487,6 +507,11 @@ public partial class Simulator
 		// get the car index using the radio
 
 		RadioTransmitCarIdx = _irsdk.Data.GetInt( _radioTransmitCarIdxDatum );
+
+		if ( RadioTransmitCarIdx != -1 )
+		{
+			LastRadioTransmitCarIdx = RadioTransmitCarIdx;
+		}
 
 		// get the replay play status
 
