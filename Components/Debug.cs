@@ -31,16 +31,16 @@ public class Debug
 
 			if ( app.MainWindow.DebugTabItemIsVisible )
 			{
-				app.MainWindow.Debug_Label_1.Content = Label_1;
-				app.MainWindow.Debug_Label_2.Content = Label_2;
-				app.MainWindow.Debug_Label_3.Content = Label_3;
-				app.MainWindow.Debug_Label_4.Content = Label_4;
-				app.MainWindow.Debug_Label_5.Content = Label_5;
-				app.MainWindow.Debug_Label_6.Content = Label_6;
-				app.MainWindow.Debug_Label_7.Content = Label_7;
-				app.MainWindow.Debug_Label_8.Content = Label_8;
-				app.MainWindow.Debug_Label_9.Content = Label_9;
-				app.MainWindow.Debug_Label_10.Content = Label_10;
+				//FIX app.MainWindow.Debug_Label_1.Content = Label_1;
+				//FIX app.MainWindow.Debug_Label_2.Content = Label_2;
+				//FIX app.MainWindow.Debug_Label_3.Content = Label_3;
+				//FIX app.MainWindow.Debug_Label_4.Content = Label_4;
+				//FIX app.MainWindow.Debug_Label_5.Content = Label_5;
+				//FIX app.MainWindow.Debug_Label_6.Content = Label_6;
+				//FIX app.MainWindow.Debug_Label_7.Content = Label_7;
+				//FIX app.MainWindow.Debug_Label_8.Content = Label_8;
+				//FIX app.MainWindow.Debug_Label_9.Content = Label_9;
+				//FIX app.MainWindow.Debug_Label_10.Content = Label_10;
 			}
 		}
 	}

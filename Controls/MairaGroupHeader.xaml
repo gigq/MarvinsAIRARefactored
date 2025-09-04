@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="MarvinsAIRARefactored.Controls.MairaGroupHeader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MarvinsAIRARefactored.Controls"
+             mc:Ignorable="d">
+    
+    <Grid Margin="0,40,0,20">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock x:Name="TextBlock" Grid.Column="0" Text="{Binding HeaderText, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="#979797" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Aptos Narrow" FontSize="20"/>
+
+        <Border Grid.Column="1" BorderThickness="0,0,0,1" BorderBrush="#979797" Margin="10,0,0,5"/>
+
+    </Grid>
+
+</UserControl>

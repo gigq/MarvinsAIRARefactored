@@ -115,7 +115,7 @@ public sealed class RecordingManager : IDisposable
 			{
 				LoadRecording( e.FullPath );
 
-				app.RecordingManager.SetMairaComboBoxItemsSource( app.MainWindow.RacingWheel_PreviewRecordings_ComboBox );
+				//FIX app.RecordingManager.SetMairaComboBoxItemsSource( app.MainWindow.RacingWheel_PreviewRecordings_ComboBox );
 
 				app.Logger.WriteLine( $"[RecordingManager] Hot-reloaded recording: {e.FullPath}" );
 			}

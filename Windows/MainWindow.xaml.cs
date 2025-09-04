@@ -51,11 +51,11 @@ public partial class MainWindow : Window
 
 		app.Logger.WriteLine( $"[MainWindow] Version is {version}" );
 
-		Components.Localization.SetLanguageComboBoxItemsSource( App_Language_ComboBox );
+		//FIX		Components.Localization.SetLanguageComboBoxItemsSource( App_Language_ComboBox );
 
-		Simulator_HeaderData_HeaderDataViewer.Initialize( Simulator_HeaderData_ScrollBar );
-		Simulator_SessionInfo_SessionInfoViewer.Initialize( Simulator_SessionInfo_ScrollBar );
-		Simulator_TelemetryData_TelemetryDataViewer.Initialize( Simulator_TelemetryData_ScrollBar );
+		//FIX		Simulator_HeaderData_HeaderDataViewer.Initialize( Simulator_HeaderData_ScrollBar );
+		//FIX		Simulator_SessionInfo_SessionInfoViewer.Initialize( Simulator_SessionInfo_ScrollBar );
+		//FIX		Simulator_TelemetryData_TelemetryDataViewer.Initialize( Simulator_TelemetryData_ScrollBar );
 
 #if ADMINBOXX
 
@@ -82,7 +82,7 @@ public partial class MainWindow : Window
 
 #else
 
-	var iconUri = new Uri("pack://application:,,,/MarvinsAIRARefactored;component/Artwork/AppIcon/maira-universal.ico");
+		var iconUri = new Uri("pack://application:,,,/MarvinsAIRARefactored;component/Artwork/AppIcon/maira-universal.ico");
 
 #endif
 
@@ -90,9 +90,9 @@ public partial class MainWindow : Window
 
 #if !CODER
 
-		Debug_TabItem.Visibility = Visibility.Collapsed;
+		//FIX Debug_TabItem.Visibility = Visibility.Collapsed;
 
-		TabItemPositionHelper.SetIsLast( Donate_TabItem, true );
+		//FIX TabItemPositionHelper.SetIsLast( Donate_TabItem, true );
 
 #endif
 
@@ -154,33 +154,33 @@ public partial class MainWindow : Window
 
 			app.DirectInput.SetMairaComboBoxItemsSource( RacingWheel_SteeringDevice_ComboBox );
 
-			app.LFE.SetMairaComboBoxItemsSource( RacingWheel_LFERecordingDevice_ComboBox );
+			//FIX app.LFE.SetMairaComboBoxItemsSource( RacingWheel_LFERecordingDevice_ComboBox );
 
-			app.RecordingManager.SetMairaComboBoxItemsSource( RacingWheel_PreviewRecordings_ComboBox );
+			//FIX app.RecordingManager.SetMairaComboBoxItemsSource( RacingWheel_PreviewRecordings_ComboBox );
 
-			Graph.SetMairaComboBoxItemsSource( Graph_Statistics_ComboBox );
+			//FIX Graph.SetMairaComboBoxItemsSource( Graph_Statistics_ComboBox );
 
-			RacingWheel.SetMairaComboBoxItemsSource( RacingWheel_Algorithm_ComboBox );
+			//FIX RacingWheel.SetMairaComboBoxItemsSource( RacingWheel_Algorithm_ComboBox );
 
-			Pedals.SetMairaComboBoxItemsSource( Pedals_ClutchEffect1_ComboBox );
-			Pedals.SetMairaComboBoxItemsSource( Pedals_ClutchEffect2_ComboBox );
-			Pedals.SetMairaComboBoxItemsSource( Pedals_ClutchEffect3_ComboBox );
-			Pedals.SetMairaComboBoxItemsSource( Pedals_BrakeEffect1_ComboBox );
-			Pedals.SetMairaComboBoxItemsSource( Pedals_BrakeEffect2_ComboBox );
-			Pedals.SetMairaComboBoxItemsSource( Pedals_BrakeEffect3_ComboBox );
-			Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect1_ComboBox );
-			Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect2_ComboBox );
-			Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect3_ComboBox );
+			//FIX Pedals.SetMairaComboBoxItemsSource( Pedals_ClutchEffect1_ComboBox );
+			//FIX Pedals.SetMairaComboBoxItemsSource( Pedals_ClutchEffect2_ComboBox );
+			//FIX Pedals.SetMairaComboBoxItemsSource( Pedals_ClutchEffect3_ComboBox );
+			//FIX Pedals.SetMairaComboBoxItemsSource( Pedals_BrakeEffect1_ComboBox );
+			//FIX Pedals.SetMairaComboBoxItemsSource( Pedals_BrakeEffect2_ComboBox );
+			//FIX Pedals.SetMairaComboBoxItemsSource( Pedals_BrakeEffect3_ComboBox );
+			//FIX Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect1_ComboBox );
+			//FIX Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect2_ComboBox );
+			//FIX Pedals.SetMairaComboBoxItemsSource( Pedals_ThrottleEffect3_ComboBox );
 
 			SteeringEffects.SetCalibrationFileNameMairaComboBoxItemsSource();
 
-			SteeringEffects.SetVibrationPatternMairaComboBoxItemsSource( SteeringEffects_UndersteerWheelVibrationPattern_ComboBox );
-			SteeringEffects.SetVibrationPatternMairaComboBoxItemsSource( SteeringEffects_OversteerWheelVibrationPattern_ComboBox );
+			//FIX SteeringEffects.SetVibrationPatternMairaComboBoxItemsSource( SteeringEffects_UndersteerWheelVibrationPattern_ComboBox );
+			//FIX SteeringEffects.SetVibrationPatternMairaComboBoxItemsSource( SteeringEffects_OversteerWheelVibrationPattern_ComboBox );
 
-			SteeringEffects.SetConstantForceDirectionMairaComboBoxItemsSource( SteeringEffects_UndersteerWheelConstantForceDirection_ComboBox );
-			SteeringEffects.SetConstantForceDirectionMairaComboBoxItemsSource( SteeringEffects_OversteerWheelConstantForceDirection_ComboBox );
+			//FIX SteeringEffects.SetConstantForceDirectionMairaComboBoxItemsSource( SteeringEffects_UndersteerWheelConstantForceDirection_ComboBox );
+			//FIX SteeringEffects.SetConstantForceDirectionMairaComboBoxItemsSource( SteeringEffects_OversteerWheelConstantForceDirection_ComboBox );
 
-			SpeechToText.SetMairaComboBoxItemsSource( SpeechToText_Language_ComboBox );
+			//FIX SpeechToText.SetMairaComboBoxItemsSource( SpeechToText_Language_ComboBox );
 
 			app.SpeechToText.UpdateStrings();
 
@@ -241,46 +241,46 @@ public partial class MainWindow : Window
 				panel1Message = localization[ "SimulatorNotRunning" ];
 			}
 
-			Status_Border.Background = backgroundColor;
+			//FIX Status_Border.Background = backgroundColor;
 
 			if ( panel1Message == string.Empty )
 			{
-				Status_Panel1_Label.Visibility = Visibility.Collapsed;
+				//FIX Status_Panel1_Label.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
-				Status_Panel1_Label.Content = panel1Message;
-				Status_Panel1_Label.Visibility = Visibility.Visible;
+				//FIX Status_Panel1_Label.Content = panel1Message;
+				//FIX Status_Panel1_Label.Visibility = Visibility.Visible;
 			}
 
 			if ( panel2Message == string.Empty )
 			{
-				Status_Panel2_Label.Visibility = Visibility.Collapsed;
+				//FIX Status_Panel2_Label.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
-				Status_Panel2_Label.Content = panel2Message;
-				Status_Panel2_Label.Visibility = Visibility.Visible;
+				//FIX Status_Panel2_Label.Content = panel2Message;
+				//FIX Status_Panel2_Label.Visibility = Visibility.Visible;
 			}
 
 			if ( panel3Message == string.Empty )
 			{
-				Status_Panel3_Label.Visibility = Visibility.Collapsed;
+				//FIX Status_Panel3_Label.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
-				Status_Panel3_Label.Content = panel3Message;
-				Status_Panel3_Label.Visibility = Visibility.Visible;
+				//FIX Status_Panel3_Label.Content = panel3Message;
+				//FIX Status_Panel3_Label.Visibility = Visibility.Visible;
 			}
 
 			if ( panel4Message == string.Empty )
 			{
-				Status_Panel4_Label.Visibility = Visibility.Collapsed;
+				//FIX Status_Panel4_Label.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
-				Status_Panel4_Label.Content = panel4Message;
-				Status_Panel4_Label.Visibility = Visibility.Visible;
+				//FIX Status_Panel4_Label.Content = panel4Message;
+				//FIX Status_Panel4_Label.Visibility = Visibility.Visible;
 			}
 		} );
 	}
@@ -291,33 +291,31 @@ public partial class MainWindow : Window
 
 		Dispatcher.Invoke( () =>
 		{
-			RacingWheel_Power_MairaMappableButton.Blink = false;
-
 			ImageSource? imageSource;
 
 			if ( !MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelEnableForceFeedback )
 			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_power_led_red.png" ) as ImageSource;
-
-				RacingWheel_Power_MairaMappableButton.Blink = true;
+				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-large-red.png" ) as ImageSource;
 			}
 			else if ( app.RacingWheel.SuspendForceFeedback || !app.DirectInput.ForceFeedbackInitialized )
 			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_power_led_yellow.png" ) as ImageSource;
-
 				if ( app.Simulator.IsConnected )
 				{
-					RacingWheel_Power_MairaMappableButton.Blink = true;
+					imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-large-yellow.png" ) as ImageSource;
+				}
+				else
+				{
+					imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-large-orange.png" ) as ImageSource;
 				}
 			}
 			else
 			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_power_led_green.png" ) as ImageSource;
+				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-large-green.png" ) as ImageSource;
 			}
 
 			if ( imageSource != null )
 			{
-				RacingWheel_Power_MairaMappableButton.ButtonIcon = imageSource;
+				RacingWheel_Power_MairaMappableButton.Icon = imageSource;
 			}
 		} );
 	}
@@ -328,12 +326,12 @@ public partial class MainWindow : Window
 
 		Dispatcher.Invoke( () =>
 		{
-			var disableButtons = !app.DirectInput.ForceFeedbackInitialized;
+			var isEnabled = app.DirectInput.ForceFeedbackInitialized;
 
-			RacingWheel_Test_MairaMappableButton.Disabled = disableButtons;
-			RacingWheel_Reset_MairaMappableButton.Disabled = disableButtons;
-			RacingWheel_Set_MairaMappableButton.Disabled = disableButtons;
-			RacingWheel_Clear_MairaMappableButton.Disabled = disableButtons;
+			RacingWheel_Test_MairaMappableButton.IsEnabled = isEnabled;
+			RacingWheel_Reset_MairaMappableButton.IsEnabled = isEnabled;
+			//FIX RacingWheel_Set_MairaMappableButton.IsEnabled = isEnabled;
+			//FIX RacingWheel_Clear_MairaMappableButton.IsEnabled = isEnabled;
 		} );
 	}
 
@@ -380,17 +378,17 @@ public partial class MainWindow : Window
 					break;
 			}
 
-			RacingWheel_DetailBoost_KnobControl.Visibility = racingWheelDetailBoostKnobControlVisibility;
-			RacingWheel_DeltaLimit_KnobControl.Visibility = racingWheelDeltaLimitKnobControlVisibility;
-			RacingWheel_DetailBoostBias_KnobControl.Visibility = racingWheelDetailBoostBiasKnobControlVisibility;
-			RacingWheel_DeltaLimiterBias_KnobControl.Visibility = racingWheelDeltaLimiterBiasKnobControlVisibility;
-			RacingWheel_SlewCompressionThreshold.Visibility = racingWheelSlewCompressionThresholdVisibility;
-			RacingWheel_SlewCompressionRate.Visibility = racingWheelSlewCompressionRateVisibility;
-			RacingWheel_TotalCompressionThreshold.Visibility = racingWheelTotalCompressionThresholdVisibility;
-			RacingWheel_TotalCompressionRate.Visibility = racingWheelTotalCompressionRateVisibility;
+			//FIX RacingWheel_DetailBoost_KnobControl.Visibility = racingWheelDetailBoostKnobControlVisibility;
+			//FIX RacingWheel_DeltaLimit_KnobControl.Visibility = racingWheelDeltaLimitKnobControlVisibility;
+			//FIX RacingWheel_DetailBoostBias_KnobControl.Visibility = racingWheelDetailBoostBiasKnobControlVisibility;
+			//FIX RacingWheel_DeltaLimiterBias_KnobControl.Visibility = racingWheelDeltaLimiterBiasKnobControlVisibility;
+			//FIX RacingWheel_SlewCompressionThreshold.Visibility = racingWheelSlewCompressionThresholdVisibility;
+			//FIX RacingWheel_SlewCompressionRate.Visibility = racingWheelSlewCompressionRateVisibility;
+			//FIX RacingWheel_TotalCompressionThreshold.Visibility = racingWheelTotalCompressionThresholdVisibility;
+			//FIX RacingWheel_TotalCompressionRate.Visibility = racingWheelTotalCompressionRateVisibility;
 
-			RacingWheel_AlgorithmRowTwo_Grid.Visibility = racingWheelAlgorithmRowTwoGridVisibility;
-			RacingWheel_CurbProtection_GroupBox.Visibility = racingWheelCurbProtectionGroupBoxVisibility;
+			//FIX RacingWheel_AlgorithmRowTwo_Grid.Visibility = racingWheelAlgorithmRowTwoGridVisibility;
+			//FIX RacingWheel_CurbProtection_GroupBox.Visibility = racingWheelCurbProtectionGroupBoxVisibility;
 		} );
 	}
 
@@ -415,15 +413,15 @@ public partial class MainWindow : Window
 			switch ( app.Pedals.PedalsDevice )
 			{
 				case HPR.PedalsDevice.None:
-					app.MainWindow.Pedals_Device_Label.Content = localization[ "PedalsNone" ];
+					//FIX app.MainWindow.Pedals_Device_Label.Content = localization[ "PedalsNone" ];
 					break;
 
 				case HPR.PedalsDevice.P1000:
-					app.MainWindow.Pedals_Device_Label.Content = localization[ "PedalsP1000" ];
+					//FIX app.MainWindow.Pedals_Device_Label.Content = localization[ "PedalsP1000" ];
 					break;
 
 				case HPR.PedalsDevice.P2000:
-					app.MainWindow.Pedals_Device_Label.Content = localization[ "PedalsP2000" ];
+					//FIX app.MainWindow.Pedals_Device_Label.Content = localization[ "PedalsP2000" ];
 					break;
 			}
 		} );
@@ -513,9 +511,9 @@ public partial class MainWindow : Window
 		}
 		else if ( TabControl.SelectedItem is TabItem selectedTab )
 		{
-			SteeringEffectsTabItemIsVisible = ( selectedTab == SteeringEffects_TabItem );
-			GraphTabItemIsVisible = ( selectedTab == Graph_TabItem );
-			DebugTabItemIsVisible = ( selectedTab == Debug_TabItem );
+			//FIX SteeringEffectsTabItemIsVisible = ( selectedTab == SteeringEffects_TabItem );
+			//FIX GraphTabItemIsVisible = ( selectedTab == Graph_TabItem );
+			//FIX DebugTabItemIsVisible = ( selectedTab == Debug_TabItem );
 		}
 	}
 
@@ -618,12 +616,12 @@ public partial class MainWindow : Window
 
 		if ( tabPanel != null )
 		{
-			Logo_Image.Width = tabPanel.ActualWidth - 10;
-			Logo_Image.Visibility = Visibility.Visible;
+			//FIX Logo_Image.Width = tabPanel.ActualWidth - 10;
+			//FIX Logo_Image.Visibility = Visibility.Visible;
 
 			tabPanel.SizeChanged += ( s, args ) =>
 			{
-				Logo_Image.Width = tabPanel.ActualWidth - 10;
+				//FIX Logo_Image.Width = tabPanel.ActualWidth - 10;
 			};
 		}
 
@@ -886,14 +884,14 @@ public partial class MainWindow : Window
 	{
 		var app = App.Instance!;
 
-		if ( AdminBoxx_ConnectToAdminBoxx_MairaSwitch.IsOn )
+		//FIX if ( AdminBoxx_ConnectToAdminBoxx_MairaSwitch.IsOn )
 		{
 			if ( !app.AdminBoxx.IsConnected )
 			{
 				app.AdminBoxx.Connect();
 			}
 		}
-		else
+		//FIX else
 		{
 			app.AdminBoxx.Disconnect();
 		}
@@ -922,23 +920,23 @@ public partial class MainWindow : Window
 
 	private void Graph_Target_MairaButton_Click( object sender, RoutedEventArgs e )
 	{
-		if ( Graph_BottomPanel_StackPanel.Visibility == Visibility.Visible )
+		//FIX if ( Graph_BottomPanel_StackPanel.Visibility == Visibility.Visible )
 		{
 			Misc.ApplyToTaggedElements( MainGrid, "HideWhenGraphIsSoloed", element => element.Visibility = Visibility.Collapsed );
 
-			Graph_Main_StackPanel.Margin = new Thickness( 0 );
-			Graph_Border.Margin = new Thickness( 0 );
+			//FIX Graph_Main_StackPanel.Margin = new Thickness( 0 );
+			//FIX Graph_Border.Margin = new Thickness( 0 );
 
 			WindowStyle = WindowStyle.None;
 			ResizeMode = ResizeMode.NoResize;
 			SizeToContent = SizeToContent.Height;
 		}
-		else
+		//FIX else
 		{
 			Misc.ApplyToTaggedElements( MainGrid, "HideWhenGraphIsSoloed", element => element.Visibility = Visibility.Visible );
 
-			Graph_Main_StackPanel.Margin = new Thickness( 10, 10, 10, 20 );
-			Graph_Border.Margin = new Thickness( 0, 10, 0, 0 );
+			//FIX Graph_Main_StackPanel.Margin = new Thickness( 10, 10, 10, 20 );
+			//FIX Graph_Border.Margin = new Thickness( 0, 10, 0, 0 );
 
 			WindowStyle = WindowStyle.SingleBorderWindow;
 			ResizeMode = ResizeMode.CanResizeWithGrip;
@@ -959,14 +957,14 @@ public partial class MainWindow : Window
 			delta = MathF.Min( -1, delta );
 		}
 
-		Simulator_HeaderData_ScrollBar.Value -= delta;
+		//FIX Simulator_HeaderData_ScrollBar.Value -= delta;
 
-		Simulator_HeaderData_HeaderDataViewer.ScrollIndex = (int) Simulator_HeaderData_ScrollBar.Value;
+		//FIX Simulator_HeaderData_HeaderDataViewer.ScrollIndex = (int) Simulator_HeaderData_ScrollBar.Value;
 	}
 
 	private void Simulator_HeaderData_ScrollBar_Scroll( object sender, ScrollEventArgs e )
 	{
-		Simulator_HeaderData_HeaderDataViewer.ScrollIndex = (int) e.NewValue;
+		//FIX Simulator_HeaderData_HeaderDataViewer.ScrollIndex = (int) e.NewValue;
 	}
 
 	private void Simulator_SessionInfo_SessionInfoViewer_MouseWheel( object sender, MouseWheelEventArgs e )
@@ -982,14 +980,14 @@ public partial class MainWindow : Window
 			delta = MathF.Min( -1, delta );
 		}
 
-		Simulator_SessionInfo_ScrollBar.Value -= delta;
+		//FIX Simulator_SessionInfo_ScrollBar.Value -= delta;
 
-		Simulator_SessionInfo_SessionInfoViewer.ScrollIndex = (int) Simulator_SessionInfo_ScrollBar.Value;
+		//FIX Simulator_SessionInfo_SessionInfoViewer.ScrollIndex = (int) Simulator_SessionInfo_ScrollBar.Value;
 	}
 
 	private void Simulator_SessionInfo_ScrollBar_Scroll( object sender, ScrollEventArgs e )
 	{
-		Simulator_SessionInfo_SessionInfoViewer.ScrollIndex = (int) e.NewValue;
+		//FIX Simulator_SessionInfo_SessionInfoViewer.ScrollIndex = (int) e.NewValue;
 	}
 
 	private void Simulator_TelemetryData_TelemetryDataViewer_MouseWheel( object sender, MouseWheelEventArgs e )
@@ -1005,14 +1003,14 @@ public partial class MainWindow : Window
 			delta = MathF.Min( -1, delta );
 		}
 
-		Simulator_TelemetryData_ScrollBar.Value -= delta;
+		//FIX Simulator_TelemetryData_ScrollBar.Value -= delta;
 
-		Simulator_TelemetryData_TelemetryDataViewer.ScrollIndex = (int) Simulator_TelemetryData_ScrollBar.Value;
+		//FIX Simulator_TelemetryData_TelemetryDataViewer.ScrollIndex = (int) Simulator_TelemetryData_ScrollBar.Value;
 	}
 
 	private void Simulator_TelemetryData_ScrollBar_Scroll( object sender, ScrollEventArgs e )
 	{
-		Simulator_TelemetryData_TelemetryDataViewer.ScrollIndex = (int) e.NewValue;
+		//FIX Simulator_TelemetryData_TelemetryDataViewer.ScrollIndex = (int) e.NewValue;
 	}
 
 	private async void App_CheckNow_MairaButton_Click( object sender, RoutedEventArgs e )
@@ -1051,9 +1049,9 @@ public partial class MainWindow : Window
 		{
 			_updateCounter = UpdateInterval;
 
-			Simulator_HeaderData_HeaderDataViewer.InvalidateVisual();
-			Simulator_SessionInfo_SessionInfoViewer.InvalidateVisual();
-			Simulator_TelemetryData_TelemetryDataViewer.InvalidateVisual();
+			//FIX Simulator_HeaderData_HeaderDataViewer.InvalidateVisual();
+			//FIX Simulator_SessionInfo_SessionInfoViewer.InvalidateVisual();
+			//FIX Simulator_TelemetryData_TelemetryDataViewer.InvalidateVisual();
 		}
 	}
 }

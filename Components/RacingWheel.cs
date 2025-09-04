@@ -98,7 +98,7 @@ public class RacingWheel
 		app.Graph.SetLayerColors( Graph.LayerIndex.InputLFE, 0.1f, 0.5f, 1f, 1f, 1f, 1f );
 		app.Graph.SetLayerColors( Graph.LayerIndex.OutputTorque, 0f, 1f, 1f, 0f, 1f, 1f );
 
-		_algorithmPreviewGraphBase.Initialize( app.MainWindow.RacingWheel_AlgorithmPreview_Image );
+		//FIX _algorithmPreviewGraphBase.Initialize( app.MainWindow.RacingWheel_AlgorithmPreview_Image );
 
 		app.Logger.WriteLine( "[RacingWheel] <<< Initialize" );
 	}
@@ -940,7 +940,7 @@ public class RacingWheel
 
 			// update auto force label
 
-			app.MainWindow.RacingWheel_AutoForce_Label.Content = $"{_autoTorque:F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
+			//FIX app.MainWindow.RacingWheel_AutoForce_Label.Content = $"{_autoTorque:F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
 
 			// update logitech rpm lights
 

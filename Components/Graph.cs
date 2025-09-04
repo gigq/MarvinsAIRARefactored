@@ -34,7 +34,7 @@ public class Graph : GraphBase
 
 		app.Logger.WriteLine( "[Graph] Initialize >>>" );
 
-		Initialize( app.MainWindow.Graph_Image );
+		//FIX Initialize( app.MainWindow.Graph_Image );
 
 		for ( var layerIndex = 0; layerIndex < (int) LayerIndex.Count; layerIndex++ )
 		{
@@ -154,11 +154,11 @@ public class Graph : GraphBase
 
 				var statistics = _statisticsArray[ (int) DataContext.DataContext.Instance.Settings.GraphStatisticsLayerIndex ];
 
-				app.MainWindow.Graph_Minimum_Label.Content = $"{statistics.MinimumValue:F2}";
-				app.MainWindow.Graph_Maximum_Label.Content = $"{statistics.MaximumValue:F2}";
-				app.MainWindow.Graph_Average_Label.Content = $"{statistics.AverageValue:F2}";
-				app.MainWindow.Graph_Variance_Label.Content = $"{statistics.Variance:F2}";
-				app.MainWindow.Graph_StandardDeviation_Label.Content = $"{statistics.StandardDeviation:F2}";
+				//FIX app.MainWindow.Graph_Minimum_Label.Content = $"{statistics.MinimumValue:F2}";
+				//FIX app.MainWindow.Graph_Maximum_Label.Content = $"{statistics.MaximumValue:F2}";
+				//FIX app.MainWindow.Graph_Average_Label.Content = $"{statistics.AverageValue:F2}";
+				//FIX app.MainWindow.Graph_Variance_Label.Content = $"{statistics.Variance:F2}";
+				//FIX app.MainWindow.Graph_StandardDeviation_Label.Content = $"{statistics.StandardDeviation:F2}";
 			}
 		}
 	}

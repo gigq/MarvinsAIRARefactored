@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
              mc:Ignorable="d">
-
+    
     <Grid>
 
         <Grid.Style>
@@ -16,7 +16,7 @@
 
                 <Style.Triggers>
 
-                    <DataTrigger Binding="{Binding TitleOnRight, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                    <DataTrigger Binding="{Binding LabelOnRight, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
                         <Setter Property="HorizontalAlignment" Value="Left"/>
                     </DataTrigger>
 
@@ -36,39 +36,37 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="Label" Content="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock x:Name="TextBlock" Text="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#ffffff" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Aptos Narrow" FontSize="20">
 
-            <Label.Style>
+            <TextBlock.Style>
 
-                <Style TargetType="Label">
+                <Style TargetType="TextBlock">
 
                     <Setter Property="Visibility" Value="Visible"/>
-                    <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                    <Setter Property="Foreground" Value="#ffffff"/>
                     <Setter Property="Grid.Row" Value="0"/>
                     <Setter Property="Grid.Column" Value="0"/>
-                    <Setter Property="Margin" Value="0,0,0,10"/>
 
                     <Style.Triggers>
 
-                        <DataTrigger Binding="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="">
+                        <DataTrigger Binding="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="">
                             <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
 
-                        <DataTrigger Binding="{Binding TitleOnRight, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                        <DataTrigger Binding="{Binding LabelOnRight, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
                             <Setter Property="Grid.Row" Value="1"/>
                             <Setter Property="Grid.Column" Value="1"/>
-                            <Setter Property="Margin" Value="5,0,0,0"/>
                         </DataTrigger>
 
                     </Style.Triggers>
 
                 </Style>
 
-            </Label.Style>
+            </TextBlock.Style>
 
-        </Label>
+        </TextBlock>
 
-        <Button Grid.Row="1" Grid.Column="0" x:Name="Button" Focusable="False" IsTabStop="False" Background="Transparent" BorderThickness="0" Click="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" PreviewMouseDown="Button_PreviewMouseDown" PreviewMouseUp="Button_PreviewMouseUp">
+        <Button Grid.Row="1" Grid.Column="0" x:Name="Button" Focusable="False" IsTabStop="False" Background="Transparent" BorderThickness="0" Click="Button_Click">
 
             <Button.Style>
 
@@ -86,7 +84,7 @@
                     </Setter>
 
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Disabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                        <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False">
                             <Setter Property="Cursor" Value="Arrow"/>
                         </DataTrigger>
                     </Style.Triggers>
@@ -97,35 +95,130 @@
 
             <Grid>
 
-                <Image x:Name="ButtonFace_Default_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_face_default.png" Width="48" Height="48"/>
-                <Image x:Name="ButtonFace_Disabled_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_face_disabled.png" Width="48" Height="48" Visibility="Hidden"/>
-                <Image x:Name="ButtonFace_Hover_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_face_hover.png" Width="48" Height="48" Visibility="Hidden"/>
-                <Image x:Name="ButtonFace_Pressed_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_face_pressed.png" Width="48" Height="48" Visibility="Hidden"/>
-
-                <Image x:Name="ButtonBorder_Default_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_border_default.png" Width="48" Height="48"/>
-                <Image x:Name="ButtonBorder_Mapped_Image" Source="/MarvinsAIRARefactored;component/Artwork/Button/button_border_mapped.png" Width="48" Height="48" Visibility="Hidden"/>
-
-                <Image x:Name="BehindIcon_Image" Source="{Binding BehindIcon, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="48" Height="48" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <Image x:Name="ButtonIcon_Image" Source="{Binding ButtonIcon, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="48" Height="48" RenderOptions.BitmapScalingMode="HighQuality">
-
+                <Image RenderOptions.BitmapScalingMode="HighQuality">
                     <Image.Style>
-
                         <Style TargetType="Image">
-
-                            <Setter Property="Opacity" Value="1.0"/>
-
+                            <Setter Property="Source" Value="{Binding DefaultFrame, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Width" Value="{Binding IconWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Height" Value="{Binding IconHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Visibility" Value="Hidden"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Disabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
-                                    <Setter Property="Opacity" Value="0.5"/>
+                                <DataTrigger Binding="{Binding IsSmall, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                    <Setter Property="Source" Value="/MarvinsAIRARefactored;component/Artwork/Buttons/ring-small-default.png"/>
+                                    <Setter Property="Width" Value="32"/>
+                                    <Setter Property="Height" Value="32"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible"/>
                                 </DataTrigger>
                             </Style.Triggers>
-
                         </Style>
-
                     </Image.Style>
-
                 </Image>
 
+                <Image RenderOptions.BitmapScalingMode="HighQuality">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Source" Value="{Binding PressedFrame, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Width" Value="{Binding IconWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Height" Value="{Binding IconHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSmall, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                    <Setter Property="Source" Value="/MarvinsAIRARefactored;component/Artwork/Buttons/ring-small-pressed.png"/>
+                                    <Setter Property="Width" Value="32"/>
+                                    <Setter Property="Height" Value="32"/>
+                                </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True"/>
+                                        <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource AncestorType=Button}}" Value="True"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+
+                <Image RenderOptions.BitmapScalingMode="HighQuality">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Source" Value="{Binding MappedFrame, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Width" Value="{Binding IconWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Height" Value="{Binding IconHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSmall, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                    <Setter Property="Source" Value="/MarvinsAIRARefactored;component/Artwork/Buttons/ring-small-mapped.png"/>
+                                    <Setter Property="Width" Value="32"/>
+                                    <Setter Property="Height" Value="32"/>
+                                </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True"/>
+                                        <Condition Binding="{Binding IsMapped, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True"/>
+                                        <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource AncestorType=Button}}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+
+                <Image RenderOptions.BitmapScalingMode="HighQuality">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Source" Value="{Binding DefaultFrame, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Width" Value="{Binding IconWidth, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Height" Value="{Binding IconHeight, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <Setter Property="Visibility" Value="Hidden"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSmall, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                    <Setter Property="Source" Value="/MarvinsAIRARefactored;component/Artwork/Buttons/ring-small-default.png"/>
+                                    <Setter Property="Width" Value="32"/>
+                                    <Setter Property="Height" Value="32"/>
+                                </DataTrigger>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True"/>
+                                        <Condition Binding="{Binding IsMapped, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False"/>
+                                        <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource AncestorType=Button}}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+
+                <Image x:Name="Icon_Image" Source="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="{Binding IconWidth, RelativeSource={RelativeSource AncestorType=UserControl}}" Height="{Binding IconHeight, RelativeSource={RelativeSource AncestorType=UserControl}}" RenderOptions.BitmapScalingMode="HighQuality">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Opacity" Value="1"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False">
+                                    <Setter Property="Opacity" Value="0.25"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+
+                <Image x:Name="Blink_Image" Source="{Binding BlinkIcon, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="{Binding IconWidth, RelativeSource={RelativeSource AncestorType=UserControl}}" Height="{Binding IconHeight, RelativeSource={RelativeSource AncestorType=UserControl}}" RenderOptions.BitmapScalingMode="HighQuality">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsBlinking, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                
             </Grid>
 
         </Button>

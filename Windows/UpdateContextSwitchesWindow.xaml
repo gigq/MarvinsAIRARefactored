@@ -54,7 +54,7 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_thumbs_up.png" Margin="10,10,10,0" Click="ThumbsUp_MairaButton_Click"/>
+                <controls:MairaButton Icon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_thumbs_up.png" Margin="10,10,10,0" Click="ThumbsUp_MairaButton_Click"/>
                 
             </StackPanel>
 

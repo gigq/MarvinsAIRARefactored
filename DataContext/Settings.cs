@@ -6713,7 +6713,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region App - UI scale
 
-	private float _appUIScale = 0.85f;
+	private float _appUIScale = 1f;
 
 	public float AppUIScale
 	{

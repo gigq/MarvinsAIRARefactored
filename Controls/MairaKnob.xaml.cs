@@ -24,8 +24,6 @@ public partial class MairaKnob : UserControl
 {
 	private const int ResetHoldMilliseconds = 1000;
 
-	private readonly RotateTransform _knobRotation = new( 0 );
-
 	private POINT _draggingCenter;
 
 	private readonly DispatcherTimer _resetDispatcherTimer = new() { Interval = TimeSpan.FromMilliseconds( 20 ) };
@@ -36,11 +34,7 @@ public partial class MairaKnob : UserControl
 	{
 		InitializeComponent();
 
-		Knob_Image.RenderTransform = _knobRotation;
-
 		_resetDispatcherTimer.Tick += ResetDispatcherTimer_Tick;
-
-		UpdateLabelVisual();
 	}
 
 	#region Dependency Properties
@@ -53,19 +47,12 @@ public partial class MairaKnob : UserControl
 		set => SetValue( IsDraggingProperty, value );
 	}
 
-	public static readonly DependencyProperty TitleProperty = DependencyProperty.Register( nameof( Title ), typeof( string ), typeof( MairaKnob ), new PropertyMetadata( string.Empty, OnTitleChanged ) );
+	public static readonly DependencyProperty TitleProperty = DependencyProperty.Register( nameof( Title ), typeof( string ), typeof( MairaKnob ), new PropertyMetadata( string.Empty ) );
 
 	public string Title
 	{
 		get => (string) GetValue( TitleProperty );
 		set => SetValue( TitleProperty, value );
-	}
-
-	private static void OnTitleChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
-	{
-		var control = (MairaKnob) d;
-
-		control.UpdateLabelVisual();
 	}
 
 	public static readonly DependencyProperty ValueProperty = DependencyProperty.Register( nameof( Value ), typeof( float ), typeof( MairaKnob ), new PropertyMetadata( 0f, OnValueChanged ) );
@@ -266,7 +253,7 @@ public partial class MairaKnob : UserControl
 	private void Value_Label_MouseLeave( object sender, MouseEventArgs e ) => CancelReset();
 
 	#endregion
-
+	
 	#region Logic
 
 	private void AdjustValue( float amount )
@@ -287,23 +274,9 @@ public partial class MairaKnob : UserControl
 		Mouse.Capture( null );
 	}
 
-	private void UpdateLabelVisual()
-	{
-		if ( Title == string.Empty )
-		{
-			Label.Visibility = Visibility.Collapsed;
-		}
-		else
-		{
-			Label.Visibility = Visibility.Visible;
-		}
-	}
-
 	private void UpdateKnobVisual( float oldValue, float newValue )
 	{
 		float delta = newValue - oldValue;
-
-		_knobRotation.Angle += delta * RotationMultiplier * 50f;
 
 		if ( ShowCurve )
 		{

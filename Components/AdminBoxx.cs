@@ -237,7 +237,7 @@ public partial class AdminBoxx
 
 		app.Dispatcher.Invoke( () =>
 		{
-			app.MainWindow.AdminBoxx_ConnectToAdminBoxx_MairaSwitch.IsOn = IsConnected;
+			//FIX app.MainWindow.AdminBoxx_ConnectToAdminBoxx_MairaSwitch.IsOn = IsConnected;
 		} );
 
 		return IsConnected;
@@ -253,7 +253,7 @@ public partial class AdminBoxx
 
 		app.Dispatcher.Invoke( () =>
 		{
-			app.MainWindow.AdminBoxx_ConnectToAdminBoxx_MairaSwitch.IsOn = false;
+			//FIX app.MainWindow.AdminBoxx_ConnectToAdminBoxx_MairaSwitch.IsOn = false;
 		} );
 	}
 

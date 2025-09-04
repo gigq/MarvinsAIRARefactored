@@ -132,8 +132,8 @@ public class SteeringEffects
 		{
 			app.Logger.WriteLine( "[SteeringEffects] Setting new option list" );
 
-			app.MainWindow.SteeringEffects_CalibrationFileName_ComboBox.ItemsSource = dictionary;
-			app.MainWindow.SteeringEffects_CalibrationFileName_ComboBox.SelectedValue = string.Empty;
+			//FIX app.MainWindow.SteeringEffects_CalibrationFileName_ComboBox.ItemsSource = dictionary;
+			//FIX app.MainWindow.SteeringEffects_CalibrationFileName_ComboBox.SelectedValue = string.Empty;
 		} );
 
 		app.Logger.WriteLine( "[SteeringEffects] <<< SetCalibrationFileNameMairaComboBoxItemsSource" );
@@ -772,7 +772,7 @@ public class SteeringEffects
 
 			// set new image source
 
-			app.MainWindow.SteeringEffects_Calibration_Image.Source = _calibrationGraphRenderTargetBitmap;
+			//FIX app.MainWindow.SteeringEffects_Calibration_Image.Source = _calibrationGraphRenderTargetBitmap;
 		} );
 	}
 
@@ -1202,7 +1202,7 @@ public class SteeringEffects
 
 			app.Dispatcher.Invoke( () =>
 			{
-				app.MainWindow.SteeringEffects_InvalidConfigurationFile_Border.Visibility = ( ( settings.SteeringEffectsCalibrationFileName == string.Empty ) || _calibrationIsValid ) ? Visibility.Collapsed : Visibility.Visible;
+				//FIX app.MainWindow.SteeringEffects_InvalidConfigurationFile_Border.Visibility = ( ( settings.SteeringEffectsCalibrationFileName == string.Empty ) || _calibrationIsValid ) ? Visibility.Collapsed : Visibility.Visible;
 			} );
 		}
 
@@ -1219,44 +1219,44 @@ public class SteeringEffects
 
 			if ( app.Simulator.CarSetupName == string.Empty )
 			{
-				app.MainWindow.SteeringEffects_Status_Border.Visibility = Visibility.Collapsed;
+				//FIX app.MainWindow.SteeringEffects_Status_Border.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
-				app.MainWindow.SteeringEffects_CarSetupName_TextBlock.Text = $"{localization[ "CurrentCarSetup" ]} {app.Simulator.CarSetupName.ToUpper()}";
-				app.MainWindow.SteeringEffects_Status_Border.Visibility = Visibility.Visible;
+				//FIX app.MainWindow.SteeringEffects_CarSetupName_TextBlock.Text = $"{localization[ "CurrentCarSetup" ]} {app.Simulator.CarSetupName.ToUpper()}";
+				//FIX app.MainWindow.SteeringEffects_Status_Border.Visibility = Visibility.Visible;
 			}
 
 			if ( _calibrationPhase == CalibrationPhase.NotCalibrating )
 			{
-				app.MainWindow.SteeringEffects_CalibrationProgress_Label.Visibility = Visibility.Collapsed;
+				//FIX app.MainWindow.SteeringEffects_CalibrationProgress_Label.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
-				app.MainWindow.SteeringEffects_CalibrationProgress_Label.Text = $"{localization[ "Progress:" ]} {_calibrationProgress * 100f:F0}{localization[ "Percent" ]}";
-				app.MainWindow.SteeringEffects_CalibrationProgress_Label.Visibility = Visibility.Visible;
+				//FIX app.MainWindow.SteeringEffects_CalibrationProgress_Label.Text = $"{localization[ "Progress:" ]} {_calibrationProgress * 100f:F0}{localization[ "Percent" ]}";
+				//FIX app.MainWindow.SteeringEffects_CalibrationProgress_Label.Visibility = Visibility.Visible;
 			}
 
 			if ( app.Simulator.TrackDisplayName != "Centripetal Circuit" )
 			{
-				app.MainWindow.SteeringEffects_NotOnCentripetalCircuitTrack_TextBlock.Visibility = Visibility.Visible;
+				//FIX app.MainWindow.SteeringEffects_NotOnCentripetalCircuitTrack_TextBlock.Visibility = Visibility.Visible;
 
-				app.MainWindow.SteeringEffects_RunCalibration_MairaButton.Disabled = true;
-				app.MainWindow.SteeringEffects_StopCalibration_MairaButton.Disabled = true;
+				//FIX app.MainWindow.SteeringEffects_RunCalibration_MairaButton.Disabled = true;
+				//FIX app.MainWindow.SteeringEffects_StopCalibration_MairaButton.Disabled = true;
 			}
 			else
 			{
-				app.MainWindow.SteeringEffects_NotOnCentripetalCircuitTrack_TextBlock.Visibility = Visibility.Collapsed;
+				//FIX app.MainWindow.SteeringEffects_NotOnCentripetalCircuitTrack_TextBlock.Visibility = Visibility.Collapsed;
 
 				if ( _calibrationPhase == CalibrationPhase.NotCalibrating )
 				{
-					app.MainWindow.SteeringEffects_RunCalibration_MairaButton.Disabled = false;
-					app.MainWindow.SteeringEffects_StopCalibration_MairaButton.Disabled = true;
+					//FIX app.MainWindow.SteeringEffects_RunCalibration_MairaButton.Disabled = false;
+					//FIX app.MainWindow.SteeringEffects_StopCalibration_MairaButton.Disabled = true;
 				}
 				else
 				{
-					app.MainWindow.SteeringEffects_RunCalibration_MairaButton.Disabled = true;
-					app.MainWindow.SteeringEffects_StopCalibration_MairaButton.Disabled = false;
+					//FIX app.MainWindow.SteeringEffects_RunCalibration_MairaButton.Disabled = true;
+					//FIX app.MainWindow.SteeringEffects_StopCalibration_MairaButton.Disabled = false;
 				}
 			}
 

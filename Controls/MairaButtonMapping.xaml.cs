@@ -22,7 +22,7 @@ public partial class MairaButtonMapping : UserControl
 
 		UpdateLabels();
 
-		Record_MairaButton.ButtonIcon_Image.Visibility = Visibility.Hidden;
+		// FIX Record_MairaButton.ButtonIcon_Image.Visibility = Visibility.Hidden;
 	}
 
 	private void Record_MairaButton_Click( object sender, RoutedEventArgs e )
@@ -61,7 +61,7 @@ public partial class MairaButtonMapping : UserControl
 			Dispatcher.Invoke( () =>
 			{
 				Record_MairaButton.Blink = true;
-				Record_MairaButton.ButtonIcon_Image.Visibility = Visibility.Visible;
+				// FIX Record_MairaButton.ButtonIcon_Image.Visibility = Visibility.Visible;
 			} );
 
 			UpdateLabels();
@@ -81,7 +81,7 @@ public partial class MairaButtonMapping : UserControl
 			Dispatcher.Invoke( () =>
 			{
 				Record_MairaButton.Blink = false;
-				Record_MairaButton.ButtonIcon_Image.Visibility = Visibility.Hidden;
+				// FIX Record_MairaButton.ButtonIcon_Image.Visibility = Visibility.Hidden;
 			} );
 
 			UpdateLabels();

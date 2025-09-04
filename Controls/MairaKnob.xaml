@@ -4,9 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
-             mc:Ignorable="d"
-             d:Width="300"
-             d:Height="Auto">
+             mc:Ignorable="d">
 
     <Grid>
 
@@ -15,65 +13,76 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label x:Name="Label" Grid.Row="0" Content="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" PreviewMouseRightButtonDown="Label_PreviewMouseRightButtonDown"/>
+        <TextBlock Grid.Row="0" x:Name="Label_TextBlock" d:Text="Just a test!"
+                   Foreground="#ffffff"
+                   FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Aptos Narrow"
+                   FontSize="20"
+                   Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   PreviewMouseRightButtonDown="Label_PreviewMouseRightButtonDown"/>
 
-        <Border Grid.Row="1" BorderBrush="White" BorderThickness="2" Background="#FF111111" Padding="10,4,10,4" CornerRadius="4">
+        <Grid Grid.Row="1">
 
-            <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="0" x:Name="Curve_Image"
+                   Width="48"
+                   Height="48"
+                   Visibility="Collapsed"/>
+            
+            <TextBlock Grid.Column="1" x:Name="Value_TextBlock"
+                       FontSize="30"
+                       FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code"
+                       Foreground="#ff5b2e"
+                       Text="{Binding ValueString, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       PreviewMouseRightButtonDown="Value_Label_PreviewMouseRightButtonDown"
+                       PreviewMouseRightButtonUp="Value_Label_PreviewMouseRightButtonUp"
+                       MouseLeave="Value_Label_MouseLeave"/>
+
+            <Grid Grid.Column="2">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+                
+                <controls:MairaMappableButton Grid.Column="0"
+                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/minus-small.png"
+                                              IconWidth="32"
+                                              IconHeight="32"
+                                              DefaultFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-minus-default.png"
+                                              MappedFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-minus-mapped.png"
+                                              PressedFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-minus-pressed.png"
+                                              Click="Minus_MairaMappableButton_Click"
+                                              ButtonMappings="{Binding PlusButtonMappings, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Image Grid.Column="0" Grid.RowSpan="2" x:Name="Knob_Image" Width="24" Height="24" RenderTransformOrigin="0.5,0.5" MouseDown="KnobImage_Image_MouseDown" MouseMove="KnobImage_Image_MouseMove" MouseUp="KnobImage_Image_MouseUp" LostMouseCapture="KnobImage_Image_LostMouseCapture" Cursor="SizeWE" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" UseLayoutRounding="True">
-
-                    <Image.Style>
-
-                        <Style TargetType="Image">
-
-                            <Setter Property="Source" Value="/MarvinsAIRARefactored;component/Artwork/Knob/knob_default.png"/>
-
-                            <Style.Triggers>
-
-                                <DataTrigger Binding="{Binding IsDragging, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
-                                    <Setter Property="Source" Value="/MarvinsAIRARefactored;component/Artwork/Knob/knob_pressed.png"/>
-                                </DataTrigger>
-
-                            </Style.Triggers>
-
-                        </Style>
-
-                    </Image.Style>
-
-                </Image>
-
-                <Grid Grid.Column="2" Grid.RowSpan="2">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Image Grid.Column="0" x:Name="Curve_Image" Width="48" Height="48" Visibility="Collapsed"/>
-                    <Label Grid.Column="1" x:Name="Value_Label" FontSize="32" FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Fira Code" Foreground="SkyBlue" Padding="0" Margin="0" Content="{Binding ValueString, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalContentAlignment="Center" PreviewMouseRightButtonDown="Value_Label_PreviewMouseRightButtonDown" PreviewMouseRightButtonUp="Value_Label_PreviewMouseRightButtonUp" MouseLeave="Value_Label_MouseLeave"/>
-
-                </Grid>
-
-                <controls:MairaMappableButton Grid.Column="4" Grid.Row="0" Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_plus.png" Width="24" Height="24" Padding="0" Margin="0,0,0,1" Click="Plus_MairaMappableButton_Click" Small="True" ButtonMappings="{Binding PlusButtonMappings, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                <controls:MairaMappableButton Grid.Column="4" Grid.Row="1" Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_minus.png" Width="24" Height="24" Padding="0" Margin="0,1,0,0" Click="Minus_MairaMappableButton_Click" Small="True" ButtonMappings="{Binding MinusButtonMappings, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <controls:MairaButton Grid.Column="1"
+                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/drag-small.png"
+                                      IconWidth="52"
+                                      IconHeight="32"
+                                      DefaultFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-middle-default.png"
+                                      PressedFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-middle-pressed.png"/>
+                
+                <controls:MairaMappableButton Grid.Column="2"
+                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/plus-small.png"
+                                              IconWidth="32"
+                                              IconHeight="32"
+                                              DefaultFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-plus-default.png"
+                                              MappedFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-plus-mapped.png"
+                                              PressedFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-plus-pressed.png"
+                                              Click="Plus_MairaMappableButton_Click"
+                                              ButtonMappings="{Binding PlusButtonMappings, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
 
             </Grid>
 
-        </Border>
+        </Grid>
+
+
+
 
     </Grid>
 

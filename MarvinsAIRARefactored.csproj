@@ -22,6 +22,50 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
 
   <ItemGroup>
+    <None Remove="Artwork\Buttons\button-default.png" />
+    <None Remove="Artwork\Buttons\button-hover.png" />
+    <None Remove="Artwork\Buttons\button-mapped.png" />
+    <None Remove="Artwork\Buttons\combo-box-checked.png" />
+    <None Remove="Artwork\Buttons\combo-box-default.png" />
+    <None Remove="Artwork\Buttons\combo-box-hover.png" />
+    <None Remove="Artwork\Buttons\combo_box_checked.png" />
+    <None Remove="Artwork\Buttons\combo_box_default.png" />
+    <None Remove="Artwork\Buttons\combo_box_hover.png" />
+    <None Remove="Artwork\Buttons\drag-small.png" />
+    <None Remove="Artwork\Buttons\knob-middle-default.png" />
+    <None Remove="Artwork\Buttons\knob-middle-pressed.png" />
+    <None Remove="Artwork\Buttons\knob-middle.png" />
+    <None Remove="Artwork\Buttons\knob-minus-default.png" />
+    <None Remove="Artwork\Buttons\knob-minus-mapped.png" />
+    <None Remove="Artwork\Buttons\knob-minus-pressed.png" />
+    <None Remove="Artwork\Buttons\knob-plus-default.png" />
+    <None Remove="Artwork\Buttons\knob-plus-mapped.png" />
+    <None Remove="Artwork\Buttons\knob-plus-pressed.png" />
+    <None Remove="Artwork\Buttons\minus-small.png" />
+    <None Remove="Artwork\Buttons\plus-small.png" />
+    <None Remove="Artwork\Buttons\power-disabled.png" />
+    <None Remove="Artwork\Buttons\power-large-white.png" />
+    <None Remove="Artwork\Buttons\reset-default.png" />
+    <None Remove="Artwork\Buttons\reset-disabled.png" />
+    <None Remove="Artwork\Buttons\reset-hover.png" />
+    <None Remove="Artwork\Buttons\reset-large.png" />
+    <None Remove="Artwork\Buttons\reset-mapped.png" />
+    <None Remove="Artwork\Buttons\ring-large-default.png" />
+    <None Remove="Artwork\Buttons\ring-large-mapped.png" />
+    <None Remove="Artwork\Buttons\ring-large-pressed.png" />
+    <None Remove="Artwork\Buttons\ring-small-default.png" />
+    <None Remove="Artwork\Buttons\ring-small-mapped.png" />
+    <None Remove="Artwork\Buttons\ring-small-pressed.png" />
+    <None Remove="Artwork\Buttons\vibrate-default.png" />
+    <None Remove="Artwork\Buttons\vibrate-disabled.png" />
+    <None Remove="Artwork\Buttons\vibrate-hover.png" />
+    <None Remove="Artwork\Buttons\vibrate-large.png" />
+    <None Remove="Artwork\Buttons\vibrate-mapped.png" />
+    <None Remove="Fonts\Aptos-Narrow.ttf" />
+    <None Remove="Fonts\Aptos.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
       <WrapperTool>tlbimp</WrapperTool>
       <VersionMinor>0</VersionMinor>
@@ -49,6 +93,33 @@
     <Resource Include="Artwork\ButtonIcons\button_icon_steering_wheel_center.png" />
     <Resource Include="Artwork\ButtonIcons\button_icon_steering_wheel_left.png" />
     <Resource Include="Artwork\ButtonIcons\button_icon_steering_wheel_right.png" />
+    <Resource Include="Artwork\Buttons\combo-box-checked.png" />
+    <Resource Include="Artwork\Buttons\combo-box-default.png" />
+    <Resource Include="Artwork\Buttons\combo-box-hover.png" />
+    <Resource Include="Artwork\Buttons\drag-small.png" />
+    <Resource Include="Artwork\Buttons\knob-middle-default.png" />
+    <Resource Include="Artwork\Buttons\knob-middle-pressed.png" />
+    <Resource Include="Artwork\Buttons\knob-minus-default.png" />
+    <Resource Include="Artwork\Buttons\knob-minus-mapped.png" />
+    <Resource Include="Artwork\Buttons\knob-minus-pressed.png" />
+    <Resource Include="Artwork\Buttons\knob-plus-default.png" />
+    <Resource Include="Artwork\Buttons\knob-plus-mapped.png" />
+    <Resource Include="Artwork\Buttons\knob-plus-pressed.png" />
+    <Resource Include="Artwork\Buttons\minus-small.png" />
+    <Resource Include="Artwork\Buttons\plus-small.png" />
+    <Resource Include="Artwork\Buttons\power-large-green.png" />
+    <Resource Include="Artwork\Buttons\power-large-orange.png" />
+    <Resource Include="Artwork\Buttons\power-large-red.png" />
+    <Resource Include="Artwork\Buttons\power-large-white.png" />
+    <Resource Include="Artwork\Buttons\power-large-yellow.png" />
+    <Resource Include="Artwork\Buttons\reset-large.png" />
+    <Resource Include="Artwork\Buttons\ring-large-default.png" />
+    <Resource Include="Artwork\Buttons\ring-large-mapped.png" />
+    <Resource Include="Artwork\Buttons\ring-large-pressed.png" />
+    <Resource Include="Artwork\Buttons\ring-small-default.png" />
+    <Resource Include="Artwork\Buttons\ring-small-mapped.png" />
+    <Resource Include="Artwork\Buttons\ring-small-pressed.png" />
+    <Resource Include="Artwork\Buttons\vibrate-large.png" />
     <Resource Include="Artwork\Flags\denmark.png" />
     <Resource Include="Artwork\Flags\poland.png" />
     <Resource Include="Artwork\Knob\knob_default.png" />
@@ -57,6 +128,8 @@
     <Resource Include="Artwork\Misc\grip-o-meter-ball.png" />
     <Resource Include="Artwork\Misc\grip-o-meter.png" />
     <Resource Include="Artwork\Misc\maira_logo_rotated.png" />
+    <Resource Include="Fonts\Aptos-Narrow.ttf" />
+    <Resource Include="Fonts\Aptos.ttf" />
     <Resource Include="Fonts\FiraCode-VariableFont_wght.ttf" />
     <Resource Include="Artwork\ButtonIcons\button_icon_binoculars.png" />
     <Resource Include="Artwork\ButtonIcons\button_icon_cancel.png" />
@@ -140,6 +213,9 @@
   <ItemGroup>
     <None Update="LogitechSteeringWheelEnginesWrapper.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Obsolete\OldMainWnidowXaml.txt">
+      <Generator>MSBuild:Compile</Generator>
     </None>
     <None Update="vJoyInterface.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

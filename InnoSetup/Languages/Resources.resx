@@ -194,7 +194,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="RacingWheel" xml:space="preserve">
-    <value>Racing Wheel</value>
+    <value>RACING WHEEL</value>
     <comment>Tab item</comment>
   </data>
   <data name="SteeringDevice" xml:space="preserve">
@@ -306,11 +306,11 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Device" xml:space="preserve">
-    <value>Device</value>
+    <value>DEVICE</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="OverallStrength" xml:space="preserve">
-    <value>Overall Strength</value>
+    <value>OVERALL STRENGTH</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="AutoMargin" xml:space="preserve">
@@ -1196,5 +1196,9 @@
   <data name="STT_Button" xml:space="preserve">
     <value>Enable Speech-To-Text</value>
     <comment>Speech-to-text bridge</comment>
+  </data>
+  <data name="FFBDeviceNotSelected" xml:space="preserve">
+    <value>[Force Feedback Device Not Selected]</value>
+    <comment>Racing wheel</comment>
   </data>
 </root>

@@ -68,8 +68,8 @@
             </Expander>
 
             <StackPanel Grid.Row="5" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
-                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_copy.png" Margin="5,0,5,0" Click="CopyDetails_MairaButton_Click"/>
-                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_exit.png" Margin="5,0,5,0" Click="Exit_MairaButton_Click"/>
+                <controls:MairaButton Icon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_copy.png" Margin="5,0,5,0" Click="CopyDetails_MairaButton_Click"/>
+                <controls:MairaButton Icon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_exit.png" Margin="5,0,5,0" Click="Exit_MairaButton_Click"/>
             </StackPanel>
 
         </Grid>
