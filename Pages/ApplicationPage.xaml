@@ -1,0 +1,118 @@
+﻿<UserControl x:Class="MarvinsAIRARefactored.Pages.ApplicationPage"
+             x:Name="Root"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MarvinsAIRARefactored.Pages"
+             xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
+             xmlns:datacontext="clr-namespace:MarvinsAIRARefactored.DataContext"
+             mc:Ignorable="d"
+             d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <Binding Source="{x:Static datacontext:DataContext.Instance}" />
+    </UserControl.DataContext>
+
+    <StackPanel>
+
+        <controls:MairaGroupHeader Label="{Binding Localization[Language_UC]}" />
+
+        <controls:MairaComboBox x:Name="Language_MairaComboBox"
+                                SelectedValue="{Binding Settings.AppCurrentLanguageCode}" />
+
+        <controls:MairaGroupHeader Label="{Binding Localization[AppWindow_UC]}" />
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <controls:MairaSwitch Grid.Row="0"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Margin="0"
+                                  IsOn="{Binding Settings.AppTopmostWindowEnabled, Mode=TwoWay}"
+                                  Label="{Binding Localization[TopmostWindow]}" />
+
+            <controls:MairaSwitch Grid.Row="1"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Margin="0,10,0,0"
+                                  IsOn="{Binding Settings.AppRememberWindowPositionAndSize, Mode=TwoWay}"
+                                  Label="{Binding Localization[RememberWindowPositionAndSize]}" />
+
+            <controls:MairaSwitch Grid.Row="2"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Margin="0,10,0,0"
+                                  IsOn="{Binding Settings.AppStartWithWindows, Mode=TwoWay}"
+                                  Label="{Binding Localization[StartWithWindows]}" />
+
+            <controls:MairaSwitch Grid.Row="3"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Margin="0,10,0,0"
+                                  IsOn="{Binding Settings.AppStartMinimized, Mode=TwoWay}"
+                                  Label="{Binding Localization[StartMinimized]}" />
+
+            <controls:MairaSwitch Grid.Row="4"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Margin="0,10,0,0"
+                                  IsOn="{Binding Settings.AppMinimizeToSystemTray, Mode=TwoWay}"
+                                  Label="{Binding Localization[MinimizeToSystemTray]}" />
+
+            <controls:MairaKnob Grid.Row="0"
+                                Grid.Column="4"
+                                Grid.RowSpan="5"
+                                Label="{Binding Localization[UIScale]}"
+                                Value="{Binding Settings.AppUIScale, Mode=TwoWay}"
+                                ValueString="{Binding Settings.AppUIScaleString}"
+                                StepSize="0.05"
+                                DefaultValue="1" />
+
+        </Grid>
+
+        <controls:MairaGroupHeader Label="{Binding Localization[CloudService_UC]}" />
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <controls:MairaSwitch Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  IsOn="{Binding Settings.AppCheckForUpdates, Mode=TwoWay}"
+                                  Label="{Binding Localization[CheckForUpdates]}"
+                                  VerticalAlignment="Top" />
+
+            <controls:MairaButton x:Name="CheckNow_MairaButton"
+                                  Grid.Column="4"
+                                  Label="{Binding Localization[CheckNow]}"
+                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/missing-icon.png"
+                                  Click="CheckNow_MairaButton_Click" />
+
+        </Grid>
+
+    </StackPanel>
+
+</UserControl>

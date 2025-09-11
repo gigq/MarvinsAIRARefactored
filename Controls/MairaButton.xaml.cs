@@ -95,20 +95,28 @@ public partial class MairaButton : UserControl
 		set => SetValue( PressedFrameProperty, value );
 	}
 
-	public static readonly DependencyProperty IconWidthProperty = DependencyProperty.Register( nameof( IconWidth ), typeof( int ), typeof( MairaButton ), new PropertyMetadata( 48 ) );
+	public static readonly DependencyProperty IconWidthProperty = DependencyProperty.Register( nameof( IconWidth ), typeof( double ), typeof( MairaButton ), new PropertyMetadata( 48.0 ) );
 
-	public int IconWidth
+	public double IconWidth
 	{
-		get => (int) GetValue( IconWidthProperty );
+		get => (double) GetValue( IconWidthProperty );
 		set => SetValue( IconWidthProperty, value );
 	}
 
-	public static readonly DependencyProperty IconHeightProperty = DependencyProperty.Register( nameof( IconHeight ), typeof( int ), typeof( MairaButton ), new PropertyMetadata( 48 ) );
+	public static readonly DependencyProperty IconHeightProperty = DependencyProperty.Register( nameof( IconHeight ), typeof( double ), typeof( MairaButton ), new PropertyMetadata( 48.0 ) );
 
-	public int IconHeight
+	public double IconHeight
 	{
-		get => (int) GetValue( IconHeightProperty );
+		get => (double) GetValue( IconHeightProperty );
 		set => SetValue( IconHeightProperty, value );
+	}
+
+	public static readonly DependencyProperty IsPressedProperty = DependencyProperty.Register( nameof( IsPressed ), typeof( bool ), typeof( MairaButton ), new PropertyMetadata( false ) );
+
+	public bool IsPressed
+	{
+		get => (bool) GetValue( IsPressedProperty );
+		set => SetValue( IsPressedProperty, value );
 	}
 
 	public static readonly DependencyProperty IsMappedProperty = DependencyProperty.Register( nameof( IsMapped ), typeof( bool ), typeof( MairaButton ), new PropertyMetadata( false ) );
@@ -141,6 +149,14 @@ public partial class MairaButton : UserControl
 	{
 		get => (bool) GetValue( IsSmallProperty );
 		set => SetValue( IsSmallProperty, value );
+	}
+
+	public static readonly DependencyProperty DisabledProperty = DependencyProperty.Register( nameof( Disabled ), typeof( bool ), typeof( MairaButton ), new PropertyMetadata( false ) );
+
+	public bool Disabled
+	{
+		get => (bool) GetValue( DisabledProperty );
+		set => SetValue( DisabledProperty, value );
 	}
 
 	#endregion

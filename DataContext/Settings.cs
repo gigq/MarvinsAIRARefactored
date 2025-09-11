@@ -6721,7 +6721,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0.25f, 4f );
+			value = Math.Clamp( value, 0.5f, 2f );
 
 			if ( value != _appUIScale )
 			{

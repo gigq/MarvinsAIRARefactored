@@ -2,14 +2,18 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
+
+using Application = System.Windows.Application;
+using ComboBox = System.Windows.Controls.ComboBox;
+using Timer = System.Timers.Timer;
 
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Components;
 using MarvinsAIRARefactored.Windows;
-
-using Application = System.Windows.Application;
-using Timer = System.Timers.Timer;
 
 namespace MarvinsAIRARefactored;
 
@@ -75,6 +79,8 @@ public partial class App : Application
 	App()
 	{
 		Instance = this;
+
+		InitializeComponent();
 
 		Logger = new();
 		CloudService = new();
@@ -308,6 +314,27 @@ public partial class App : Application
 #endif
 
 		Logger.WriteLine( "[App] <<< App_Exit" );
+	}
+
+	private void ComboBox_PreviewMouseWheel( object sender, MouseWheelEventArgs e )
+	{
+		if ( sender is not ComboBox comboBox ) return;
+
+		if ( comboBox.IsDropDownOpen ) return;
+
+		e.Handled = true;
+
+		var scrollViewer = Misc.FindAncestor<ScrollViewer>( comboBox );
+
+		if ( scrollViewer is null ) return;
+
+		var forwardArgs = new MouseWheelEventArgs( e.MouseDevice, e.Timestamp, e.Delta )
+		{
+			RoutedEvent = UIElement.MouseWheelEvent,
+			Source = sender
+		};
+
+		scrollViewer.RaiseEvent( forwardArgs );
 	}
 
 	private void OnInput( string deviceProductName, Guid deviceInstanceGuid, int buttonNumber, bool isPressed )

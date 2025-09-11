@@ -3,11 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:windows="clr-namespace:MarvinsAIRARefactored.Windows"
         xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
-        xmlns:components="clr-namespace:MarvinsAIRARefactored.Components"
         xmlns:datacontext="clr-namespace:MarvinsAIRARefactored.DataContext"
-        xmlns:viewers="clr-namespace:MarvinsAIRARefactored.Viewers"
         mc:Ignorable="d"
         Title="{Binding Localization[AppTitle]}"
         Icon="/Artwork/AppIcon/maira-universal.ico"
@@ -24,126 +21,80 @@
         SizeChanged="Window_SizeChanged"
         ContentRendered="Window_ContentRendered"
         StateChanged="Window_StateChanged"
-        Closing="Window_Closing"
-        Loaded="Window_Loaded">
+        Closing="Window_Closing">
 
     <Window.DataContext>
-        <Binding Source="{x:Static datacontext:DataContext.Instance}"/>
+        <Binding Source="{x:Static datacontext:DataContext.Instance}" />
     </Window.DataContext>
 
     <Grid x:Name="MainGrid">
 
         <Grid.LayoutTransform>
-            <ScaleTransform x:Name="RootScaleTransform" ScaleX="{Binding Settings.AppUIScale}" ScaleY="{Binding Settings.AppUIScale}"/>
+            <ScaleTransform x:Name="RootScaleTransform"
+                            ScaleX="{Binding Settings.AppUIScale}"
+                            ScaleY="{Binding Settings.AppUIScale}" />
         </Grid.LayoutTransform>
 
-        <TabControl x:Name="TabControl" TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <TabItem x:Name="RacingWheel_TabItem" Header="{Binding Localization[RacingWheel]}" controls:TabItemPositionHelper.IsFirst="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-                <StackPanel>
+        <controls:MairaAppMenuButton x:Name="AppMenuButton"
+                                     Grid.Row="0"
+                                     Grid.Column="0"
+                                     Margin="20"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left" />
 
-                    <controls:MairaTabPanelHeader HeaderText="{Binding Localization[RacingWheel]}" StatusText1="Mazda MX-5 Cup" StatusText2="Virginia International Raceway" StatusText3="Grand Course" StatusText4="Dry"/>
+        <TextBlock x:Name="PageName_TextBlock"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   Style="{StaticResource MairaTextBlockStyle}"
+                   FontSize="40"
+                   VerticalAlignment="Center"
+                   Foreground="#979797"
+                   Text="{Binding ElementName=AppMenuPopup, Path=SelectedAppPageText, Mode=OneWay}" />
 
-                    <controls:MairaGroupHeader HeaderText="{Binding Localization[Device]}"/>
+        <controls:MairaStatusBar x:Name="StatusBar"
+                                 Grid.Row="0"
+                                 Grid.Column="2"
+                                 Margin="20"
+                                 HorizontalAlignment="Right"
+                                 VerticalAlignment="Top"
+                                 d:StatusText1="Mazda MX-5 Cup"
+                                 d:StatusText2="Virginia International Raceway"
+                                 d:StatusText3="Grand Course"
+                                 d:StatusText4="Dry" />
 
-                    <Grid>
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      VerticalScrollBarVisibility="Auto">
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="40"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="40"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+            <ContentControl Content="{Binding ElementName=AppMenuPopup, Path=SelectedAppPageUserControl}"
+                            Margin="20,0,20,20" />
 
-                        <controls:MairaComboBox Grid.Column="0" Grid.ColumnSpan="3" x:Name="RacingWheel_SteeringDevice_ComboBox"
-                                                Label="{Binding Localization[SteeringDevice]}"
-                                                SelectedValue="{Binding Settings.RacingWheelSteeringDeviceGuid, Mode=TwoWay}"/>
+        </ScrollViewer>
 
-                        <Grid Grid.Column="5" HorizontalAlignment="Center">
+        <Grid Grid.Row="0"
+              Grid.Column="0"
+              Grid.RowSpan="2"
+              Grid.ColumnSpan="3"
+              Panel.ZIndex="999"
+              Visibility="{Binding ElementName=AppMenuButton, Path=IsMenuOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
+              IsHitTestVisible="{Binding ElementName=AppMenuButton, Path=IsMenuOpen}">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+            <controls:MairaAppMenuPopup x:Name="AppMenuPopup"
+                                        IsMenuOpen="{Binding ElementName=AppMenuButton, Path=IsMenuOpen, Mode=TwoWay}" />
 
-                            <controls:MairaMappableButton Grid.Column="0" x:Name="RacingWheel_Power_MairaMappableButton"
-                                                          Label="{Binding Localization[Power]}"
-                                                          Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/power-large-white.png"
-                                                          ContextSwitches="{Binding Settings.RacingWheelEnableForceFeedbackContextSwitches}"
-                                                          ButtonMappings="{Binding Settings.RacingWheelEnableForceFeedbackButtonMappings}"
-                                                          Click="RacingWheel_Power_MairaMappableButton_Click"/>
-
-                            <controls:MairaMappableButton Grid.Column="2" x:Name="RacingWheel_Test_MairaMappableButton"
-                                                          Label="{Binding Localization[Test]}"
-                                                          Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate-large.png"
-                                                          ButtonMappings="{Binding Settings.RacingWheelTestButtonMappings}"
-                                                          Click="RacingWheel_Test_MairaMappableButton_Click"/>
-
-                            <controls:MairaMappableButton Grid.Column="4" x:Name="RacingWheel_Reset_MairaMappableButton"
-                                                          Label="{Binding Localization[Reset]}"
-                                                          Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset-large.png"
-                                                          ButtonMappings="{Binding Settings.RacingWheelResetButtonMappings}"
-                                                          Click="RacingWheel_Reset_MairaMappableButton_Click"/>
-
-                        </Grid>
-
-                    </Grid>
-
-                    <controls:MairaGroupHeader HeaderText="{Binding Localization[OverallStrength]}"/>
-
-                    <Grid>
-
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="40"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="40"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <controls:MairaKnob Grid.Column="0"
-                                                    Title="{Binding Localization[WheelForce]}"
-                                                    Value="{Binding Settings.RacingWheelWheelForce, Mode=TwoWay}"
-                                                    ValueString="{Binding Settings.RacingWheelWheelForceString}"
-                                                    SmallValueChangeStep="0.01"
-                                                    LargeValueChangeStep="1"
-                                                    ContextSwitches="{Binding Settings.RacingWheelWheelForceContextSwitches}"
-                                                    DefaultValue="5"/>
-                        
-                                <controls:MairaKnob Grid.Column="2"
-                                                    Title="{Binding Localization[Strength]}"
-                                                    Value="{Binding Settings.RacingWheelStrength, Mode=TwoWay}"
-                                                    ValueString="{Binding Settings.RacingWheelStrengthString}"
-                                                    SmallValueChangeStep="0.001"
-                                                    LargeValueChangeStep="0.01"
-                                                    ContextSwitches="{Binding Settings.RacingWheelStrengthContextSwitches}"
-                                                    PlusButtonMappings="{Binding Settings.RacingWheelStrengthPlusButtonMappings}"
-                                                    MinusButtonMappings="{Binding Settings.RacingWheelStrengthMinusButtonMappings}"
-                                                    DefaultValue="0.1"/>
-                        
-                                <controls:MairaKnob Grid.Column="4"
-                                                    Title="{Binding Localization[MaxForce]}"
-                                                    Value="{Binding Settings.RacingWheelMaxForce, Mode=TwoWay}"
-                                                    ValueString="{Binding Settings.RacingWheelMaxForceString}"
-                                                    SmallValueChangeStep="0.01"
-                                                    LargeValueChangeStep="1"
-                                                    ContextSwitches="{Binding Settings.RacingWheelMaxForceContextSwitches}"
-                                                    PlusButtonMappings="{Binding Settings.RacingWheelMaxForcePlusButtonMappings}"
-                                                    MinusButtonMappings="{Binding Settings.RacingWheelMaxForceMinusButtonMappings}"
-                                                    DefaultValue="50"/>
-
-                            </Grid>
-                        
-                </StackPanel>
-
-            </TabItem>
-
-        </TabControl>
+        </Grid>
 
     </Grid>
 

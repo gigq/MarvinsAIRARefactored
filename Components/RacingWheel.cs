@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Controls;
+using MarvinsAIRARefactored.Windows;
 
 namespace MarvinsAIRARefactored.Components;
 
@@ -98,7 +99,7 @@ public class RacingWheel
 		app.Graph.SetLayerColors( Graph.LayerIndex.InputLFE, 0.1f, 0.5f, 1f, 1f, 1f, 1f );
 		app.Graph.SetLayerColors( Graph.LayerIndex.OutputTorque, 0f, 1f, 1f, 0f, 1f, 1f );
 
-		//FIX _algorithmPreviewGraphBase.Initialize( app.MainWindow.RacingWheel_AlgorithmPreview_Image );
+		_algorithmPreviewGraphBase.Initialize( MainWindow._racingWheelPage.AlgorithmPreview_Image );
 
 		app.Logger.WriteLine( "[RacingWheel] <<< Initialize" );
 	}
@@ -940,7 +941,7 @@ public class RacingWheel
 
 			// update auto force label
 
-			//FIX app.MainWindow.RacingWheel_AutoForce_Label.Content = $"{_autoTorque:F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
+			MainWindow._racingWheelPage.AutoForce_TextBlock.Text = $"{_autoTorque:F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
 
 			// update logitech rpm lights
 

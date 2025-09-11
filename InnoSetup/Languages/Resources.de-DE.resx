@@ -126,11 +126,11 @@
     <comment>Tab item</comment>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>Marvin's Awesome iRacing App</value>
+    <value>Marvins Awesome iRacing App</value>
     <comment>Window title</comment>
   </data>
   <data name="DetailBoostBias" xml:space="preserve">
-    <value>Detail-Verstärkung Verteilung</value>
+    <value>Verteilung der Detail-Verstärkung </value>
     <comment>Racing wheel</comment>
   </data>
   <data name="Debug" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Graph" xml:space="preserve">
-    <value>Kurve</value>
+    <value>Diagramm</value>
     <comment>Tab item</comment>
   </data>
   <data name="HeaderData" xml:space="preserve">
@@ -162,7 +162,7 @@
     <comment>App</comment>
   </data>
   <data name="DetailBooster" xml:space="preserve">
-    <value>Detailverstärker</value>
+    <value>Detailverstärkung</value>
     <comment>Racing wheel algorithms list</comment>
   </data>
   <data name="DeltaLimiter" xml:space="preserve">
@@ -347,7 +347,7 @@
   </data>
   <data name="GForceUnits" xml:space="preserve">
     <value> g</value>
-    <comment>Abbreviation for G-Force</comment>
+    <comment>Abbreviation for g-force</comment>
   </data>
   <data name="GForce" xml:space="preserve">
     <value>G-Kraft</value>
@@ -447,7 +447,7 @@
   </data>
   <data name="SteeringEffects" xml:space="preserve">
     <value>Lenkeffekte</value>
-    <comment>Pedal effects list</comment>
+    <comment>Tab item, Pedal effects list</comment>
   </data>
   <data name="WheelLock" xml:space="preserve">
     <value>Lenkeinschlag</value>
@@ -603,7 +603,7 @@
   </data>
   <data name="ABSEngaged" xml:space="preserve">
     <value>ABS Aktiv</value>
-    <comment>Pedal effects list</comment>
+    <comment>Pedal effects list, Sounds</comment>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>[Deaktiviert]</value>
@@ -720,11 +720,11 @@ Hier ist der Link zum Spenden:</value>
     <value>Spenden</value>
     <comment>Tab item</comment>
   </data>
-  <data name="CodeContributions" xml:space="preserve">
+  <data name="CodeContributions_UC" xml:space="preserve">
     <value>Code-Unterstützung</value>
     <comment>Contribute</comment>
   </data>
-  <data name="TranslationContributions" xml:space="preserve">
+  <data name="TranslationContributions_UC" xml:space="preserve">
     <value>Übersetzungen</value>
     <comment>Contribute</comment>
   </data>
@@ -820,7 +820,7 @@ Hier ist der Link zum Spenden:</value>
     <value></value>
     <comment>Racing wheel algorithms list</comment>
   </data>
-  <data name="DiscordModerators" xml:space="preserve">
+  <data name="DiscordModerators_UC" xml:space="preserve">
     <value>Discord Moderatoren</value>
     <comment>Contribute</comment>
   </data>
@@ -839,5 +839,369 @@ Hier ist der Link zum Spenden:</value>
   <data name="ON" xml:space="preserve">
     <value>EIN</value>
     <comment>Generic</comment>
+  </data>
+  <data name="Sounds" xml:space="preserve">
+    <value>Audio</value>
+    <comment>Tab item</comment>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Aktiviert</value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="FrequencyRatio" xml:space="preserve">
+    <value>Frequenzverhältnis</value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="Fade" xml:space="preserve">
+    <value>ausblenden</value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="SendChatMessages" xml:space="preserve">
+    <value>Sende private Nachrichten an den Fahrer</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="EnableLogitechRPMLights" xml:space="preserve">
+    <value>Aktiviere Logitech Drehzahl-Leuchten</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="Degrees" xml:space="preserve">
+    <value>°</value>
+    <comment>Abbreviation for degrees</comment>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>Gesamtlautstärke</value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="CrashProtectionActivated" xml:space="preserve">
+    <value>Crash-Schutz wurde aktiviert!</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CurbProtectionActivated" xml:space="preserve">
+    <value>Randstein-Schutz wurde aktiviert!</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="PrivateMessages" xml:space="preserve">
+    <value>Private Nachrichten</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CurbProtectionMessagesEnabled" xml:space="preserve">
+    <value>Aktiviere Randstein-Schutz Nachrichten</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CrashProtectionMessagesEnabled" xml:space="preserve">
+    <value>Aktiviere Crash-Schutz Nachrichten</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="InputMappedSettingUpdateEnabled" xml:space="preserve">
+    <value>Nachrichten bei Änderungen der Eingabemappings aktivieren</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="NotOnCentripetalCircuitTrack" xml:space="preserve">
+    <value>Du bist nicht auf dem Centripetal Circuit</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="RunCalibration" xml:space="preserve">
+    <value>Kalibrierung starten</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="StopCalibration" xml:space="preserve">
+    <value>Kalibrierung beenden</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SteeringWheelLeft" xml:space="preserve">
+    <value>Lenkrad links</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SteeringWheelCenter" xml:space="preserve">
+    <value>Lenkrad mitte</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SteeringWheelRight" xml:space="preserve">
+    <value>Lenkrad rechts</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SteeringWheel90Left" xml:space="preserve">
+    <value>Lenkrad 90 Grad Links</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MinThrottle" xml:space="preserve">
+    <value>Minimale Gasstellung</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MaxThrottle" xml:space="preserve">
+    <value>Maximale Gasstellung</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ShiftUp" xml:space="preserve">
+    <value>Hochschalten</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ShiftDown" xml:space="preserve">
+    <value>Runterschalten</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MinBrake" xml:space="preserve">
+    <value>Minimale Bremse</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MaxBrake" xml:space="preserve">
+    <value>Maximale Bremse</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="NotCalibrating" xml:space="preserve">
+    <value>kalibriert nicht</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ResetCalibration" xml:space="preserve">
+    <value>Kalibrierung zurücksetzen</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ShowGripOMeter" xml:space="preserve">
+    <value>Zeige das Grip-O-Meter Fenster</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MakeGripOMeterDraggable" xml:space="preserve">
+    <value>Grip-O-Meter Fenster verschiebbar machen</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="GripOMeter" xml:space="preserve">
+    <value>Grip-O-Meter</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="GripOMeterScale" xml:space="preserve">
+    <value>Grip-O-Meter Skalierung </value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ResetGripOMeter" xml:space="preserve">
+    <value>Grip-O-Meter Fensterposition zurücksetzen</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="UndersteerWheelVibrationEffect" xml:space="preserve">
+    <value>Untersteuern – Lenkradvibrations-Effekt</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Progress:" xml:space="preserve">
+    <value>Fortschritt:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="CalibrationFileNotSelected" xml:space="preserve">
+    <value>[Kalibrierungsdatei nicht ausgewählt]</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ParkedEffects" xml:space="preserve">
+    <value>Effekte bei stehendem Fahrzeug</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="ForceFeedbackStrength" xml:space="preserve">
+    <value>Force Feedback Stärke</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="WheelCenteringStrength" xml:space="preserve">
+    <value>Lenkrad-Zentrierkraft</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CenterWheelWhileRacing" xml:space="preserve">
+    <value>Lenkradzentrierung während der Fahrt</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CenterWheelWhileParked" xml:space="preserve">
+    <value>Lenkrad im Stillstand zentrieren</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="ParkedFriction" xml:space="preserve">
+    <value>Lenkwiderstand</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="ParkedWheelCenteringStrength" xml:space="preserve">
+    <value>Lenkrad-Zentrierkraft</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="CurrentCarSetup" xml:space="preserve">
+    <value>Aktuelles Setup:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="CurrentTireCompound" xml:space="preserve">
+    <value>Aktuelle Reifenmischung:</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="UndersteerPedalVibrationEffect" xml:space="preserve">
+    <value>Untersteuern – Pedalvibrations-Effekt</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Etwas ist schiefgelaufen</value>
+    <comment>Error window</comment>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+    <comment>Error window</comment>
+  </data>
+  <data name="ClassicMAIRAIsRunning" xml:space="preserve">
+    <value>Maira 1 läuft gerade, bitte schliesse Maira V1 bevor Du diese Version startest!</value>
+    <comment>Error message</comment>
+  </data>
+  <data name="ExceptionThrown" xml:space="preserve">
+    <value>Eine Ausnahme ist aufgetreten</value>
+    <comment>Error messages</comment>
+  </data>
+  <data name="KPHUnits" xml:space="preserve">
+    <value>Kmh</value>
+    <comment>Abbreviation for kilometers per hour</comment>
+  </data>
+  <data name="CalibrationFileContributors" xml:space="preserve">
+    <value>Beitragende zur Kalibrierungsdatei</value>
+    <comment>Contribute</comment>
+  </data>
+  <data name="CalibrationFilesText" xml:space="preserve">
+    <value>Das sind die Personen, die großzügig einen Teil ihrer Freizeit investiert haben, um Lenkeffekt-Kalibrierungen an einigen ihrer Lieblingsautos durchzuführen und diese Kalibrierungsdateien hochzuladen!</value>
+    <comment>Contribute</comment>
+  </data>
+  <data name="DegreesPerSecond" xml:space="preserve">
+    <value>°/s</value>
+    <comment>Abbreviation for degrees per second</comment>
+  </data>
+  <data name="CalibrationFile" xml:space="preserve">
+    <value>Kalibrierungsdatei</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Understeer" xml:space="preserve">
+    <value>Untersteuern</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Oversteer" xml:space="preserve">
+    <value>Übersteuern</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MinimumThreshold" xml:space="preserve">
+    <value>Minimaler Schwellenwert</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MaximumThreshold" xml:space="preserve">
+    <value>Maximaler Schwellenwert</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MinimumFrequency" xml:space="preserve">
+    <value>Minimale Frequenz</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MaximumFrequency" xml:space="preserve">
+    <value>Maximale Frequenz</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Calibration" xml:space="preserve">
+    <value>Kalibrierung</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="VibrationPattern" xml:space="preserve">
+    <value>Vibrationsmuster</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SineWave" xml:space="preserve">
+    <value>Sinuskurve</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SquareWave" xml:space="preserve">
+    <value>Rechteckwelle</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="TriangleWave" xml:space="preserve">
+    <value>Dreieckswelle</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SawtoothWaveIn" xml:space="preserve">
+    <value>Sägezahn (Eingang)</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SawtoothWaveOut" xml:space="preserve">
+    <value>Sägezahn (Ausgang)</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="DecreaseForce" xml:space="preserve">
+    <value>Kraft verringern</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="IncreaseForce" xml:space="preserve">
+    <value>Kraft erhöhen</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="UndersteerWheelConstantForceEffect" xml:space="preserve">
+    <value>Untersteuern – konstante Lenkradkraft</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Richtung</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="OversteerWheelVibrationEffect" xml:space="preserve">
+    <value>Übersteuern – Lenkradvibrations-Effekt</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="OversteerWheelConstantForceEffect" xml:space="preserve">
+    <value>Übersteuern – konstanter Lenkradkraft-Effekt</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="OversteerPedalVibrationEffect" xml:space="preserve">
+    <value>Übersteuern – Pedalvibrations-Effekt</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="UndersteerEffect" xml:space="preserve">
+    <value>Untersteuern-Effekt</value>
+    <comment>Pedals</comment>
+  </data>
+  <data name="OversteerEffect" xml:space="preserve">
+    <value>Übersteuern-Effekt</value>
+    <comment>Pedals</comment>
+  </data>
+  <data name="ConfigurationFileIsInvalid" xml:space="preserve">
+    <value>Konfigurationsdatei ist ungültig!</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="CalibrationGraph" xml:space="preserve">
+    <value>Kalibrierungsdiagramm</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SpeechToText" xml:space="preserve">
+    <value>Sprache zu Text</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="Overlay" xml:space="preserve">
+    <value>Overlay</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="OverlayWindow" xml:space="preserve">
+    <value>Overlay-Fenster</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="ShowOverlayWindow" xml:space="preserve">
+    <value>Zeige das Overlay-Fenster</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="MakeOverlayWindowDraggable" xml:space="preserve">
+    <value>Overlay-Fenster verschiebbar machen</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="ResetOverlayWindow" xml:space="preserve">
+    <value>Position des Overlay-Fensters zurücksetzen</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="OverlayWindowScale" xml:space="preserve">
+    <value>Overlay-Fenster Skalierung</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="STT_Title" xml:space="preserve">
+    <value>MAIRA Sprache-zu-Text Schnittstelle</value>
+    <comment>Speech-to-text bridge</comment>
+  </data>
+  <data name="STT_Hint" xml:space="preserve">
+    <value>Wähle ein Audiogerät zur Aufnahme und klicke dann auf die Aktivieren-Schaltfläche.
+</value>
+    <comment>Speech-to-text bridge</comment>
+  </data>
+  <data name="STT_Button" xml:space="preserve">
+    <value>Sprache-zu-Text aktivieren</value>
+    <comment>Speech-to-text bridge</comment>
+  </data>
+  <data name="Moderators" xml:space="preserve">
+    <value>Discord Moderatoren</value>
   </data>
 </root>

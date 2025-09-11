@@ -1,0 +1,13 @@
+﻿
+            <TabItem x:Name="Debug_TabItem" Header="{Binding Localization[Debug]}" controls:TabItemPositionHelper.IsLast="True">
+
+                <StackPanel Background="#FF333333">
+
+                    <StackPanel Margin="0,10,0,10">
+
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </TabItem>

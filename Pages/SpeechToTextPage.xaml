@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="MarvinsAIRARefactored.Pages.SpeechToTextPage"
+             x:Name="Root"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MarvinsAIRARefactored.Pages"
+             xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
+             xmlns:datacontext="clr-namespace:MarvinsAIRARefactored.DataContext"
+             mc:Ignorable="d"
+             d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <Binding Source="{x:Static datacontext:DataContext.Instance}" />
+    </UserControl.DataContext>
+
+    <StackPanel>
+
+        <controls:MairaGroupHeader Label="{Binding Localization[SpeechToText_UC]}" />
+
+        <StackPanel>
+
+            <controls:MairaSwitch Margin="0"
+                                  IsOn="{Binding Settings.SpeechToTextEnabled, Mode=TwoWay}"
+                                  Label="{Binding Localization[Enabled]}" />
+
+        </StackPanel>
+
+        <controls:MairaGroupHeader Label="{Binding Localization[Language_UC]}" />
+
+        <controls:MairaComboBox x:Name="Language_MairaComboBox"
+                                SelectedValue="{Binding Settings.SpeechToTextLanguageCode, Mode=TwoWay}" />
+
+        <controls:MairaGroupHeader Label="{Binding Localization[OverlayWindow_UC]}" />
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <controls:MairaSwitch Grid.Row="0"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Margin="0"
+                                  IsOn="{Binding Settings.SpeechToTextShowOverlayWindow, Mode=TwoWay}"
+                                  Label="{Binding Localization[ShowOverlayWindow]}" />
+
+            <controls:MairaSwitch Grid.Row="1"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Margin="0,10,0,0"
+                                  IsOn="{Binding Settings.SpeechToTextMakeOverlayWindowDraggable, Mode=TwoWay}"
+                                  Label="{Binding Localization[MakeOverlayWindowDraggable]}" />
+
+            <controls:MairaButton x:Name="ResetOverlayWindow_MairaButton"
+                                  Grid.Row="2"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Margin="0,10,0,0"
+                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
+                                  Label="{Binding Localization[ResetOverlayWindow]}"
+                                  LabelOnRight="True"
+                                  Click="ResetOverlayWindow_MairaButton_Click" />
+
+            <controls:MairaKnob Grid.Row="0"
+                                Grid.Column="4"
+                                Grid.RowSpan="5"
+                                VerticalAlignment="Center"
+                                Margin="0,0,0,10"
+                                Label="{Binding Localization[OverlayWindowScale]}"
+                                Value="{Binding Settings.SpeechToTextOverlayWindowScale, Mode=TwoWay}"
+                                ValueString="{Binding Settings.SpeechToTextOverlayWindowScaleString}"
+                                StepSize="0.05"
+                                DefaultValue="1" />
+
+        </Grid>
+
+    </StackPanel>
+
+</UserControl>

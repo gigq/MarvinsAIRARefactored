@@ -5,8 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 using MarvinsAIRARefactored.Classes;
-
-using ComboBox = System.Windows.Controls.ComboBox;
+using MarvinsAIRARefactored.Controls;
 
 namespace MarvinsAIRARefactored.Components;
 
@@ -28,11 +27,11 @@ public partial class Localization : INotifyPropertyChanged
 		{
 			if ( _translations.TryGetValue( key, out var value ) )
 			{
-				return value;
+				return value?.Trim() ?? string.Empty;
 			}
 			else if ( _defaults.TryGetValue( key, out value ) )
 			{
-				return value;
+				return value?.Trim() ?? string.Empty;
 			}
 			else
 			{
@@ -100,7 +99,7 @@ public partial class Localization : INotifyPropertyChanged
 		app?.Logger.WriteLine( "[Localization] <<< LoadDefaultLanguage" );
 	}
 
-	public static void SetLanguageComboBoxItemsSource( ComboBox comboBox )
+	public static void SetLanguageComboBoxItemsSource( MairaComboBox mairaComboBox )
 	{
 		var app = App.Instance!;
 
@@ -136,7 +135,7 @@ public partial class Localization : INotifyPropertyChanged
 			}
 		}
 
-		comboBox.ItemsSource = comboBoxItemsDictionary;
+		mairaComboBox.ItemsSource = comboBoxItemsDictionary;
 
 		app.Logger.WriteLine( "[Localization] <<< SetLanguageComboBoxItemsSource" );
 	}

@@ -133,10 +133,6 @@
     <value>Viés do Boost de Detalhes</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Debug" xml:space="preserve">
-    <value>Debug</value>
-    <comment>Tab item</comment>
-  </data>
   <data name="DetailBoost" xml:space="preserve">
     <value>Boost de Detalhes</value>
     <comment>Racing wheel</comment>
@@ -305,10 +301,6 @@
     <value>Taxa de Compressão</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Device" xml:space="preserve">
-    <value>Dispositivo</value>
-    <comment>Racing wheel</comment>
-  </data>
   <data name="OverallStrength" xml:space="preserve">
     <value>Intensidade Geral</value>
     <comment>Racing wheel</comment>
@@ -333,21 +325,21 @@
     <value>Intensidade Automática</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="OtherFeatures" xml:space="preserve">
+  <data name="OtherFeatures_UC" xml:space="preserve">
     <value>Outras Funcionalidades</value>
     <comment>Racing wheel, Pedals</comment>
   </data>
-  <data name="Switches" xml:space="preserve">
+  <data name="Switches_UC" xml:space="preserve">
     <value>Outros</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="CrashProtection" xml:space="preserve">
+  <data name="CrashProtection_UC" xml:space="preserve">
     <value>Proteção de Batidas</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="GForceUnits" xml:space="preserve">
     <value> g</value>
-    <comment>Abbreviation for G-Force</comment>
+    <comment>Abbreviation for g-force</comment>
   </data>
   <data name="GForce" xml:space="preserve">
     <value>Força-G</value>
@@ -369,7 +361,7 @@
     <value> m/s</value>
     <comment>Abbreviation for meters per second</comment>
   </data>
-  <data name="CurbProtection" xml:space="preserve">
+  <data name="CurbProtection_UC" xml:space="preserve">
     <value>Proteção de Zebras</value>
     <comment>Racing wheel</comment>
   </data>
@@ -377,7 +369,7 @@
     <value>Velocidade de Impacto</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Pedals" xml:space="preserve">
+  <data name="Pedals_UC" xml:space="preserve">
     <value>Pedais</value>
     <comment>Tab item</comment>
   </data>
@@ -393,15 +385,15 @@
     <value>[Pedais Simagic Não Encontrado]</value>
     <comment>Pedals device</comment>
   </data>
-  <data name="Clutch" xml:space="preserve">
+  <data name="Clutch_UC" xml:space="preserve">
     <value>Embreagem</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Brake" xml:space="preserve">
+  <data name="Brake_UC" xml:space="preserve">
     <value>Freio</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Throttle" xml:space="preserve">
+  <data name="Throttle_UC" xml:space="preserve">
     <value>Acelerador</value>
     <comment>Pedals</comment>
   </data>
@@ -417,11 +409,11 @@
     <value> Hz</value>
     <comment>Abbreviation for Hertz</comment>
   </data>
-  <data name="Frequency" xml:space="preserve">
+  <data name="Frequency_UC" xml:space="preserve">
     <value>Frequência</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Amplitude" xml:space="preserve">
+  <data name="Amplitude_UC" xml:space="preserve">
     <value>Amplitude</value>
     <comment>Pedals</comment>
   </data>
@@ -441,23 +433,26 @@
     <value>Troca de Marcha</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="ClutchSlip" xml:space="preserve">
+  <data name="ClutchSlip_UC" xml:space="preserve">
     <value>Ponto da Embreagem</value>
     <comment>Pedal effects list</comment>
+  </data>
+  <data name="SteeringEffects_UC" xml:space="preserve">
+    <value>Efeitos de Direção</value>
   </data>
   <data name="SteeringEffects" xml:space="preserve">
     <value>Efeitos de Direção</value>
     <comment>Tab item, Pedal effects list</comment>
   </data>
-  <data name="WheelLock" xml:space="preserve">
+  <data name="WheelLock_UC" xml:space="preserve">
     <value>Batente Virtual</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="WheelSpin" xml:space="preserve">
+  <data name="WheelSpin_UC" xml:space="preserve">
     <value>Patinagem das Rodas</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="RPM" xml:space="preserve">
+  <data name="RPM_UC" xml:space="preserve">
     <value>RPM</value>
     <comment>Pedal effects list</comment>
   </data>
@@ -557,11 +552,11 @@
     <value>Balanceamento do Limite Delta</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Output" xml:space="preserve">
+  <data name="Output_UC" xml:space="preserve">
     <value>Saída</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="WheelLFE" xml:space="preserve">
+  <data name="WheelLFE_UC" xml:space="preserve">
     <value>Efeito LFE</value>
     <comment>Racing wheel</comment>
   </data>
@@ -601,7 +596,7 @@
     <value>Entrada LFE</value>
     <comment>Graph</comment>
   </data>
-  <data name="ABSEngaged" xml:space="preserve">
+  <data name="ABSEngaged_UC" xml:space="preserve">
     <value>ABS Ativado</value>
     <comment>Pedal effects list, Sounds</comment>
   </data>
@@ -637,11 +632,11 @@
     <value>Ponto Final</value>
     <comment>Pedals</comment>
   </data>
-  <data name="GearChangeShiftIntoGear" xml:space="preserve">
+  <data name="GearChangeShiftIntoGear_UC" xml:space="preserve">
     <value>Troca de Marcha - Engatar Marcha</value>
     <comment>Pedals</comment>
   </data>
-  <data name="GearChangeShiftIntoNeutral" xml:space="preserve">
+  <data name="GearChangeShiftIntoNeutral_UC" xml:space="preserve">
     <value>Troca de Marcha - Engatar Neutro</value>
     <comment>Pedals</comment>
   </data>
@@ -689,7 +684,7 @@
     <value>Baixando Atualizações...</value>
     <comment>Status</comment>
   </data>
-  <data name="Contribute" xml:space="preserve">
+  <data name="Contribute_UC" xml:space="preserve">
     <value>Contribua</value>
     <comment>Tab item</comment>
   </data>
@@ -701,15 +696,15 @@
     <value>Doações são completamente opcionais. Eu nunca vou cobrar nenhuma taxa para usar o MAIRA. Dito isso, doações são um grande motivador para eu continuar aprimorando o MAIRA. Muito obrigado a todos que doaram até agora! Link para doação:</value>
     <comment>Contribute</comment>
   </data>
-  <data name="Donations" xml:space="preserve">
+  <data name="Donate_UC" xml:space="preserve">
     <value>Doações</value>
     <comment>Contribute</comment>
   </data>
-  <data name="Donors" xml:space="preserve">
+  <data name="Donors_UC" xml:space="preserve">
     <value>Doadores</value>
     <comment>Contribute</comment>
   </data>
-  <data name="SuperDonors" xml:space="preserve">
+  <data name="SuperDonors_UC" xml:space="preserve">
     <value>Super Doadores</value>
     <comment>Contribute</comment>
   </data>
@@ -717,11 +712,11 @@
     <value>Doar</value>
     <comment>Tab item</comment>
   </data>
-  <data name="CodeContributions" xml:space="preserve">
+  <data name="CodeContributions_UC" xml:space="preserve">
     <value>Contribuições de Código</value>
     <comment>Contribute</comment>
   </data>
-  <data name="TranslationContributions" xml:space="preserve">
+  <data name="TranslationContributions_UC" xml:space="preserve">
     <value>Contribuições de Traduções</value>
     <comment>Contribute</comment>
   </data>
@@ -793,7 +788,7 @@
     <value>Setar</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Preview" xml:space="preserve">
+  <data name="Preview_UC" xml:space="preserve">
     <value>Prévia</value>
     <comment>Racing wheel</comment>
   </data>
@@ -817,7 +812,7 @@
     <value>Velocidade de Reação e Compressão Total</value>
     <comment>Racing wheel algorithms list</comment>
   </data>
-  <data name="DiscordModerators" xml:space="preserve">
+  <data name="DiscordModerators_UC" xml:space="preserve">
     <value>Moderadores do Discord</value>
     <comment>Contribute</comment>
   </data>
@@ -837,7 +832,7 @@
     <value>Ligado</value>
     <comment>Generic</comment>
   </data>
-  <data name="Sounds" xml:space="preserve">
+  <data name="Sounds_UC" xml:space="preserve">
     <value>Sons</value>
     <comment>Tab item</comment>
   </data>
@@ -863,7 +858,7 @@
   </data>
   <data name="Degrees" xml:space="preserve">
     <value>°</value>
-    <comment>Steering effects</comment>
+    <comment>Abbreviation for degrees</comment>
   </data>
   <data name="Master" xml:space="preserve">
     <value>Master</value>
@@ -877,7 +872,7 @@
     <value>Proteção de zebras ativada!</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="PrivateMessages" xml:space="preserve">
+  <data name="PrivateMessages_UC" xml:space="preserve">
     <value>Mensagens</value>
     <comment>Racing wheel</comment>
   </data>
@@ -961,7 +956,7 @@
     <value>Permitir Arrastar Janela de Nível de Aderência</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="GripOMeter" xml:space="preserve">
+  <data name="GripOMeter_UC" xml:space="preserve">
     <value>Nível de Aderência</value>
     <comment>Steering effects</comment>
   </data>
@@ -973,7 +968,7 @@
     <value>Resetar posição do nível de aderência</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="UndersteerWheelVibrationEffect" xml:space="preserve">
+  <data name="UndersteerWheelVibrationEffect_UC" xml:space="preserve">
     <value>Efeito de Vibração de Subesterço</value>
     <comment>Steering effects</comment>
   </data>
@@ -985,7 +980,7 @@
     <value>[Nenhum Arquivo de Calibração Selecionado]</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="ParkedEffects" xml:space="preserve">
+  <data name="ParkedEffects_UC" xml:space="preserve">
     <value>Efeitos de Estacionamento</value>
     <comment>Racing wheel</comment>
   </data>
@@ -1021,7 +1016,7 @@
     <value>Composto de Pneu Atual:</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="UndersteerPedalVibrationEffect" xml:space="preserve">
+  <data name="UndersteerPedalVibrationEffect_UC" xml:space="preserve">
     <value>Efeito de Vibração no Pedal Durante Subesterço</value>
     <comment>Steering effects</comment>
   </data>
@@ -1040,5 +1035,170 @@
   <data name="ExceptionThrown" xml:space="preserve">
     <value>Uma exceção foi gerada</value>
     <comment>Error messages</comment>
+  </data>
+  <data name="KPHUnits" xml:space="preserve">
+    <value>km/h</value>
+    <comment>Abbreviation for kilometers per hour</comment>
+  </data>
+  <data name="CalibrationFileContributors" xml:space="preserve">
+    <value>Colaboradores de Arquivos de Calibração</value>
+    <comment>Contribute</comment>
+  </data>
+  <data name="CalibrationFilesText" xml:space="preserve">
+    <value>Essas são pessoas que generosamente contribuíram com seu tempo livre, para criar arquivos de calibração para os efeitos de direção para seus carros preferidos!</value>
+    <comment>Contribute</comment>
+  </data>
+  <data name="DegreesPerSecond" xml:space="preserve">
+    <value>°/s</value>
+    <comment>Abbreviation for degrees per second</comment>
+  </data>
+  <data name="CalibrationFile_UC" xml:space="preserve">
+    <value>Arquivo de Calibração</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Understeer_UC" xml:space="preserve">
+    <value>Subesterço</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Oversteer_UC" xml:space="preserve">
+    <value>Sobresterço</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MinimumThreshold" xml:space="preserve">
+    <value>Limite Mínimo</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MaximumThreshold" xml:space="preserve">
+    <value>Limite Máximo</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MinimumFrequency" xml:space="preserve">
+    <value>Frequência Mínima</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="MaximumFrequency" xml:space="preserve">
+    <value>Frequência Máxima</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Calibration_UC" xml:space="preserve">
+    <value>Calibração</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="VibrationPattern" xml:space="preserve">
+    <value>Padrão de Vibração</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SineWave" xml:space="preserve">
+    <value>Onda Senoidal</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SquareWave" xml:space="preserve">
+    <value>Onda Quadrada</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="TriangleWave" xml:space="preserve">
+    <value>Onda Triangular</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SawtoothWaveIn" xml:space="preserve">
+    <value>Onda Dente de Serra (Entrada)</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SawtoothWaveOut" xml:space="preserve">
+    <value>Onda Dente de Serra (Saída)</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="DecreaseForce" xml:space="preserve">
+    <value>Diminuir Intensidade</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="IncreaseForce" xml:space="preserve">
+    <value>Aumentar Intensidade</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="UndersteerWheelConstantForceEffect_UC" xml:space="preserve">
+    <value>Efeito Constante de Subesterço</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direção</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="OversteerWheelVibrationEffect_UC" xml:space="preserve">
+    <value>Efeito de Vibração de Sobresterço</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="OversteerWheelConstantForceEffect_UC" xml:space="preserve">
+    <value>Efeito de Força Constante de Sobresterço</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="OversteerPedalVibrationEffect_UC" xml:space="preserve">
+    <value>Efeito de Vibração de Sobresterço no Pedal</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="UndersteerEffect" xml:space="preserve">
+    <value>Efeito de Subesterço</value>
+    <comment>Pedals</comment>
+  </data>
+  <data name="OversteerEffect" xml:space="preserve">
+    <value>Efeito de Sobresterço</value>
+    <comment>Pedals</comment>
+  </data>
+  <data name="ConfigurationFileIsInvalid" xml:space="preserve">
+    <value>Arquivo de Configuração Inválido!</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="CalibrationGraph_UC" xml:space="preserve">
+    <value>Gráfico de Calibração</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SpeechToText" xml:space="preserve">
+    <value>Reconhecimento de Voz</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="Overlay" xml:space="preserve">
+    <value>Sobreposição</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="OverlayWindow" xml:space="preserve">
+    <value>Janela de Sobreposição</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="ShowOverlayWindow" xml:space="preserve">
+    <value>Exibir janela de sobreposição</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="MakeOverlayWindowDraggable" xml:space="preserve">
+    <value>Tornar a janela de sobreposição arrastável</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="ResetOverlayWindow" xml:space="preserve">
+    <value>Resetar a posição da sobreposição</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="OverlayWindowScale" xml:space="preserve">
+    <value>Escala da Sobreposição</value>
+    <comment>Speech to text</comment>
+  </data>
+  <data name="STT_Title" xml:space="preserve">
+    <value>Reconhecimento de Voz MAIRA</value>
+    <comment>Speech-to-text bridge</comment>
+  </data>
+  <data name="STT_Hint" xml:space="preserve">
+    <value>Selecione um dispositivo de captura de áudio e clique no botão Habilitar.</value>
+    <comment>Speech-to-text bridge</comment>
+  </data>
+  <data name="STT_Button" xml:space="preserve">
+    <value>Habilitar Reconhecimento de Voz</value>
+    <comment>Speech-to-text bridge</comment>
+  </data>
+  <data name="Device_UC" xml:space="preserve">
+    <value>Dispositivo</value>
+  </data>
+  <data name="Contribute" xml:space="preserve">
+    <value>Contribua</value>
+  </data>
+  <data name="Moderators" xml:space="preserve">
+    <value>Moderadores do Discord</value>
   </data>
 </root>

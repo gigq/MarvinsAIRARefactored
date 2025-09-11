@@ -59,10 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root"
-    xmlns=""
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -136,10 +133,6 @@
     <value>Մանրամասնության Ոււժեղացման Շեղում</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Debug" xml:space="preserve">
-    <value>Դեբագ</value>
-    <comment>Tab item</comment>
-  </data>
   <data name="DetailBoost" xml:space="preserve">
     <value>Մանրամասնության Ոււժեղացում</value>
     <comment>Racing wheel</comment>
@@ -197,6 +190,9 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="RacingWheel" xml:space="preserve">
+    <value>Մրցարշավային ղեկ</value>
+  </data>
+  <data name="RacingWheel_UC" xml:space="preserve">
     <value>Մրցարշավային ղեկ</value>
     <comment>Tab item</comment>
   </data>
@@ -308,11 +304,11 @@
     <value>Սեղմման Արագություն</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Device" xml:space="preserve">
+  <data name="Device_UC" xml:space="preserve">
     <value>Սարք</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="OverallStrength" xml:space="preserve">
+  <data name="OverallStrength_UC" xml:space="preserve">
     <value>Ընդհանուր Ուժ</value>
     <comment>Racing wheel</comment>
   </data>
@@ -332,19 +328,19 @@
     <value>Գագաթնակետային Ուժ</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="AutoForce" xml:space="preserve">
+  <data name="AutoMaxForce" xml:space="preserve">
     <value>Ավտոմատ Ուժ</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="OtherFeatures" xml:space="preserve">
+  <data name="OtherFeatures_UC" xml:space="preserve">
     <value>Այլ Հատկություններ</value>
     <comment>Racing wheel, Pedals</comment>
   </data>
-  <data name="Switches" xml:space="preserve">
+  <data name="Switches_UC" xml:space="preserve">
     <value>Անջատիչներ</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="CrashProtection" xml:space="preserve">
+  <data name="CrashProtection_UC" xml:space="preserve">
     <value>Վթարի Պաշտպանություն</value>
     <comment>Racing wheel</comment>
   </data>
@@ -372,7 +368,7 @@
     <value>մ/վ</value>
     <comment>Abbreviation for meters per second</comment>
   </data>
-  <data name="CurbProtection" xml:space="preserve">
+  <data name="CurbProtection_UC" xml:space="preserve">
     <value>Բորդյուրի Պաշտպանություն</value>
     <comment>Racing wheel</comment>
   </data>
@@ -380,7 +376,7 @@
     <value>Հարվածի Արագություն</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Pedals" xml:space="preserve">
+  <data name="Pedals_UC" xml:space="preserve">
     <value>Ոտնակներ</value>
     <comment>Tab item</comment>
   </data>
@@ -396,15 +392,15 @@
     <value>[Համատեղելի Simagic ոտնակներ չեն գտնվել]</value>
     <comment>Pedals device</comment>
   </data>
-  <data name="Clutch" xml:space="preserve">
+  <data name="Clutch_UC" xml:space="preserve">
     <value>Կցիչ</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Brake" xml:space="preserve">
+  <data name="Brake_UC" xml:space="preserve">
     <value>Արգելակ</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Throttle" xml:space="preserve">
+  <data name="Throttle_UC" xml:space="preserve">
     <value>Գազ</value>
     <comment>Pedals</comment>
   </data>
@@ -420,11 +416,11 @@
     <value> Հց</value>
     <comment>Abbreviation for Hertz</comment>
   </data>
-  <data name="Frequency" xml:space="preserve">
+  <data name="Frequency_UC" xml:space="preserve">
     <value>Հաճախականություն</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Amplitude" xml:space="preserve">
+  <data name="Amplitude_UC" xml:space="preserve">
     <value>Ամպլիտուդ</value>
     <comment>Pedals</comment>
   </data>
@@ -444,23 +440,26 @@
     <value>Փոխանցման Փոփոխություն</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="ClutchSlip" xml:space="preserve">
+  <data name="ClutchSlip_UC" xml:space="preserve">
     <value>Կցիչի սահք</value>
     <comment>Pedal effects list</comment>
+  </data>
+  <data name="SteeringEffects_UC" xml:space="preserve">
+    <value>Ղեկի էֆեկտներ</value>
   </data>
   <data name="SteeringEffects" xml:space="preserve">
     <value>Ղեկի էֆեկտներ</value>
     <comment>Tab item, Pedal effects list</comment>
   </data>
-  <data name="WheelLock" xml:space="preserve">
+  <data name="WheelLock_UC" xml:space="preserve">
     <value>Անիվների արգելափակում</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="WheelSpin" xml:space="preserve">
+  <data name="WheelSpin_UC" xml:space="preserve">
     <value>Անիվների սահք</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="RPM" xml:space="preserve">
+  <data name="RPM_UC" xml:space="preserve">
     <value>RPM</value>
     <comment>Pedal effects list</comment>
   </data>
@@ -560,11 +559,11 @@
     <value>Դելտայի սահմանափակիչի շեղում</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Output" xml:space="preserve">
+  <data name="Output_UC" xml:space="preserve">
     <value>Ելք</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="WheelLFE" xml:space="preserve">
+  <data name="WheelLFE_UC" xml:space="preserve">
     <value>Ղեկի LFE</value>
     <comment>Racing wheel</comment>
   </data>
@@ -604,7 +603,7 @@
     <value>Մուտքային LFE</value>
     <comment>Graph</comment>
   </data>
-  <data name="ABSEngaged" xml:space="preserve">
+  <data name="ABSEngaged_UC" xml:space="preserve">
     <value>ABS-ը միացված է</value>
     <comment>Pedal effects list, Sounds</comment>
   </data>
@@ -640,11 +639,11 @@
     <value>Ավարտական կետ</value>
     <comment>Pedals</comment>
   </data>
-  <data name="GearChangeShiftIntoGear" xml:space="preserve">
+  <data name="GearChangeShiftIntoGear_UC" xml:space="preserve">
     <value>Փոխանցում՝ Ներդնել Փոխանցում</value>
     <comment>Pedals</comment>
   </data>
-  <data name="GearChangeShiftIntoNeutral" xml:space="preserve">
+  <data name="GearChangeShiftIntoNeutral_UC" xml:space="preserve">
     <value>Փոխանցում՝ Տեղադրել Նեյտրալ</value>
     <comment>Pedals</comment>
   </data>
@@ -692,7 +691,7 @@
     <value>Ներբեռնում է թարմացումը...</value>
     <comment>Status</comment>
   </data>
-  <data name="Contribute" xml:space="preserve">
+  <data name="Contribute_UC" xml:space="preserve">
     <value>Ներդրում կատարել</value>
     <comment>Tab item</comment>
   </data>
@@ -704,15 +703,15 @@
     <value>Եթե ցանկանում եք աջակցել այս նախագծին, կարող եք կատարել նվիրատվություն՝ օգնելով զարգացմանը և նոր հնարավորություններին։</value>
     <comment>Contribute</comment>
   </data>
-  <data name="Donations" xml:space="preserve">
+  <data name="Donate_UC" xml:space="preserve">
     <value>Նվիրատվություններ</value>
     <comment>Contribute</comment>
   </data>
-  <data name="Donors" xml:space="preserve">
+  <data name="Donors_UC" xml:space="preserve">
     <value>Նվիրատուներ</value>
     <comment>Contribute</comment>
   </data>
-  <data name="SuperDonors" xml:space="preserve">
+  <data name="SuperDonors_UC" xml:space="preserve">
     <value>Սուպեր նվիրատուներ</value>
     <comment>Contribute</comment>
   </data>
@@ -720,11 +719,11 @@
     <value>Նվիրաբերել</value>
     <comment>Tab item</comment>
   </data>
-  <data name="CodeContributions" xml:space="preserve">
+  <data name="CodeContributions_UC" xml:space="preserve">
     <value>Կոդի ներդրումներ</value>
     <comment>Contribute</comment>
   </data>
-  <data name="TranslationContributions" xml:space="preserve">
+  <data name="TranslationContributions_UC" xml:space="preserve">
     <value>Թարգմանությունների ներդրումներ</value>
     <comment>Contribute</comment>
   </data>
@@ -796,7 +795,7 @@
     <value>Սահմանել</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Preview" xml:space="preserve">
+  <data name="Preview_UC" xml:space="preserve">
     <value>Նախադիտում</value>
     <comment>Racing wheel</comment>
   </data>
@@ -820,7 +819,7 @@
     <value>Slew և Ընդհանուր Սեղմում</value>
     <comment>Racing wheel algorithms list</comment>
   </data>
-  <data name="DiscordModerators" xml:space="preserve">
+  <data name="DiscordModerators_UC" xml:space="preserve">
     <value>Discord մոդերատորներ</value>
     <comment>Contribute</comment>
   </data>
@@ -840,7 +839,7 @@
     <value>Միացված</value>
     <comment>Generic</comment>
   </data>
-  <data name="Sounds" xml:space="preserve">
+  <data name="Sounds_UC" xml:space="preserve">
     <value>Ձայներ</value>
     <comment>Tab item</comment>
   </data>
@@ -880,7 +879,7 @@
     <value>Բորդյուրի պաշտպանությունը ակտիվացվել է!</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="PrivateMessages" xml:space="preserve">
+  <data name="PrivateMessages_UC" xml:space="preserve">
     <value>Անձնական հաղորդագրություններ</value>
     <comment>Racing wheel</comment>
   </data>
@@ -964,7 +963,7 @@
     <value>Թույլ տալ տեղափոխել Grip-O-Meter պատուհանը</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="GripOMeter" xml:space="preserve">
+  <data name="GripOMeter_UC" xml:space="preserve">
     <value>Grip-O-Meter</value>
     <comment>Steering effects</comment>
   </data>
@@ -976,7 +975,7 @@
     <value>Վերականգնել Grip-O-Meter պատուհանի դիրքը</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="UndersteerWheelVibrationEffect" xml:space="preserve">
+  <data name="UndersteerWheelVibrationEffect_UC" xml:space="preserve">
     <value>Անդերստիրի՝ ղեկի թրթռման էֆեկտ</value>
     <comment>Steering effects</comment>
   </data>
@@ -988,7 +987,7 @@
     <value>[Կալիբրացիոն ֆայլը ընտրված չէ]</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="ParkedEffects" xml:space="preserve">
+  <data name="ParkedEffects_UC" xml:space="preserve">
     <value>Կայանած Վիճակի Էֆեկտներ</value>
     <comment>Racing wheel</comment>
   </data>
@@ -1024,7 +1023,7 @@
     <value>Ընթացիկ Անվադողի Խառնուրդ:</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="UndersteerPedalVibrationEffect" xml:space="preserve">
+  <data name="UndersteerPedalVibrationEffect_UC" xml:space="preserve">
     <value>Անդերստիրի Ոտնակի Թրթռման Էֆեկտ</value>
     <comment>Steering effects</comment>
   </data>
@@ -1060,15 +1059,15 @@
     <value>°/վ</value>
     <comment>Abbreviation for degrees per second</comment>
   </data>
-  <data name="CalibrationFile" xml:space="preserve">
+  <data name="CalibrationFile_UC" xml:space="preserve">
     <value>Կալիբրացիոն Ֆայլ</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="Understeer" xml:space="preserve">
+  <data name="Understeer_UC" xml:space="preserve">
     <value>Անդերստիր</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="Oversteer" xml:space="preserve">
+  <data name="Oversteer_UC" xml:space="preserve">
     <value>Օվերստիր</value>
     <comment>Steering effects</comment>
   </data>
@@ -1088,7 +1087,7 @@
     <value>Առավելագույն Հաճախականություն</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="Calibration" xml:space="preserve">
+  <data name="Calibration_UC" xml:space="preserve">
     <value>Կալիբրացիա</value>
     <comment>Steering effects</comment>
   </data>
@@ -1124,7 +1123,7 @@
     <value>Աճեցնել Ուժը</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="UndersteerWheelConstantForceEffect" xml:space="preserve">
+  <data name="UndersteerWheelConstantForceEffect_UC" xml:space="preserve">
     <value>Անդերստիրի՝ ղեկի մշտական ուժի էֆեկտ</value>
     <comment>Steering effects</comment>
   </data>
@@ -1132,15 +1131,15 @@
     <value>Ուղղություն</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="OversteerWheelVibrationEffect" xml:space="preserve">
+  <data name="OversteerWheelVibrationEffect_UC" xml:space="preserve">
     <value>Օվերստիրի՝ ղեկի թրթռման էֆեկտ</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="OversteerWheelConstantForceEffect" xml:space="preserve">
+  <data name="OversteerWheelConstantForceEffect_UC" xml:space="preserve">
     <value>Օվերստիրի՝ ղեկի մշտական ուժի էֆեկտ</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="OversteerPedalVibrationEffect" xml:space="preserve">
+  <data name="OversteerPedalVibrationEffect_UC" xml:space="preserve">
     <value>Օվերստիրի՝ ոտնակի թրթռման էֆեկտ</value>
     <comment>Steering effects</comment>
   </data>
@@ -1156,12 +1155,21 @@
     <value>Կազմաձևման ֆայլը անվավեր է</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="CalibrationGraph" xml:space="preserve">
+  <data name="CalibrationGraph_UC" xml:space="preserve">
     <value>Կալիբրացիայի գրաֆիկ</value>
     <comment>Steering effects</comment>
   </data>
   <data name="SpeechToText" xml:space="preserve">
     <value>Խոսքից Տեքստ</value>
     <comment>Speech to text</comment>
+  </data>
+  <data name="Algorithm_UC" xml:space="preserve">
+    <value>Ալգորիթմ</value>
+  </data>
+  <data name="Contribute" xml:space="preserve">
+    <value>Ներդրում կատարել</value>
+  </data>
+  <data name="Moderators" xml:space="preserve">
+    <value>Discord մոդերատորներ</value>
   </data>
 </root>

@@ -6,7 +6,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 using Cursors = System.Windows.Input.Cursors;
-using Image = System.Windows.Controls.Image;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Pen = System.Windows.Media.Pen;
 using Point = System.Windows.Point;
@@ -37,6 +36,103 @@ public partial class MairaKnob : UserControl
 		_resetDispatcherTimer.Tick += ResetDispatcherTimer_Tick;
 	}
 
+	#region User Control Events
+
+	private void Middle_MairaButton_PreviewMouseLeftButtonDown( object sender, MouseButtonEventArgs e )
+	{
+		if ( e.LeftButton == MouseButtonState.Pressed )
+		{
+			IsDragging = true;
+
+			Middle_MairaButton.IsPressed = true;
+
+			User32.GetCursorPos( out _draggingCenter );
+
+			_ = User32.ShowCursor( false );
+
+			Mouse.Capture( (MairaButton) sender );
+		}
+	}
+
+	private void Middle_MairaButton_PreviewMouseLeftButtonUp( object sender, MouseButtonEventArgs e )
+	{
+		if ( IsDragging && ( e.ChangedButton == MouseButton.Left ) )
+		{
+			EndDrag();
+		}
+	}
+
+	private void Middle_MairaButton_PreviewMouseMove( object sender, MouseEventArgs e )
+	{
+		if ( IsDragging )
+		{
+			User32.GetCursorPos( out POINT current );
+
+			var delta = ( current.x - _draggingCenter.x ) + ( current.y - _draggingCenter.y );
+
+			if ( delta != 0 )
+			{
+				AdjustValue( delta * 0.01f );
+
+				User32.SetCursorPos( _draggingCenter.x, _draggingCenter.y );
+			}
+		}
+	}
+
+	private void Middle_MairaButton_LostMouseCapture( object sender, MouseEventArgs e )
+	{
+		if ( IsDragging )
+		{
+			EndDrag();
+		}
+	}
+
+	private void Plus_MairaMappableButton_Click( object sender, RoutedEventArgs e ) => AdjustValue( 1f );
+	private void Minus_MairaMappableButton_Click( object sender, RoutedEventArgs e ) => AdjustValue( -1f );
+
+	private void Label_TextBlock_PreviewMouseRightButtonDown( object sender, MouseButtonEventArgs e )
+	{
+		var app = App.Instance!;
+
+		e.Handled = true;
+
+		if ( ContextSwitches != null )
+		{
+			app.Logger.WriteLine( "[MairaKnob] Showing update context switches window" );
+
+			var updateContextSwitchesWindow = new UpdateContextSwitchesWindow( ContextSwitches )
+			{
+				Owner = app.MainWindow
+			};
+
+			updateContextSwitchesWindow.ShowDialog();
+		}
+	}
+
+	private void Value_TextBlock_PreviewMouseRightButtonDown( object sender, MouseButtonEventArgs e )
+	{
+		if ( ( Keyboard.Modifiers != ModifierKeys.None ) || ( DefaultValue == null ) )
+		{
+			return;
+		}
+
+		e.Handled = true;
+
+		_resetStartTime = DateTime.Now;
+		_isResetting = true;
+
+		_resetDispatcherTimer.Start();
+
+		Mouse.OverrideCursor = Cursors.None;
+
+		CursorCountdownOverlay.Start();
+	}
+
+	private void Value_TextBlock_PreviewMouseRightButtonUp( object sender, MouseButtonEventArgs e ) => CancelReset();
+	private void Value_TextBlock_MouseLeave( object sender, MouseEventArgs e ) => CancelReset();
+
+	#endregion
+
 	#region Dependency Properties
 
 	public static readonly DependencyProperty IsDraggingProperty = DependencyProperty.Register( nameof( IsDragging ), typeof( bool ), typeof( MairaKnob ), new PropertyMetadata( false ) );
@@ -47,12 +143,12 @@ public partial class MairaKnob : UserControl
 		set => SetValue( IsDraggingProperty, value );
 	}
 
-	public static readonly DependencyProperty TitleProperty = DependencyProperty.Register( nameof( Title ), typeof( string ), typeof( MairaKnob ), new PropertyMetadata( string.Empty ) );
+	public static readonly DependencyProperty LabelProperty = DependencyProperty.Register( nameof( Label ), typeof( string ), typeof( MairaKnob ), new PropertyMetadata( string.Empty ) );
 
-	public string Title
+	public string Label
 	{
-		get => (string) GetValue( TitleProperty );
-		set => SetValue( TitleProperty, value );
+		get => (string) GetValue( LabelProperty );
+		set => SetValue( LabelProperty, value );
 	}
 
 	public static readonly DependencyProperty ValueProperty = DependencyProperty.Register( nameof( Value ), typeof( float ), typeof( MairaKnob ), new PropertyMetadata( 0f, OnValueChanged ) );
@@ -63,13 +159,6 @@ public partial class MairaKnob : UserControl
 		set => SetValue( ValueProperty, value );
 	}
 
-	private static void OnValueChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
-	{
-		var control = (MairaKnob) d;
-
-		control.UpdateKnobVisual( (float) e.OldValue, (float) e.NewValue );
-	}
-
 	public static readonly DependencyProperty ValueStringProperty = DependencyProperty.Register( nameof( ValueString ), typeof( string ), typeof( MairaKnob ), new PropertyMetadata( "0" ) );
 
 	public string ValueString
@@ -78,28 +167,12 @@ public partial class MairaKnob : UserControl
 		set => SetValue( ValueStringProperty, value );
 	}
 
-	public static readonly DependencyProperty SmallValueChangeStepProperty = DependencyProperty.Register( nameof( SmallValueChangeStep ), typeof( float ), typeof( MairaKnob ), new PropertyMetadata( 0.01f ) );
+	public static readonly DependencyProperty StepSizeProperty = DependencyProperty.Register( nameof( StepSize ), typeof( float ), typeof( MairaKnob ), new PropertyMetadata( 0.01f ) );
 
-	public float SmallValueChangeStep
+	public float StepSize
 	{
-		get => (float) GetValue( SmallValueChangeStepProperty );
-		set => SetValue( SmallValueChangeStepProperty, value );
-	}
-
-	public static readonly DependencyProperty LargeValueChangeStepProperty = DependencyProperty.Register( nameof( LargeValueChangeStep ), typeof( float ), typeof( MairaKnob ), new PropertyMetadata( 0.1f ) );
-
-	public float LargeValueChangeStep
-	{
-		get => (float) GetValue( LargeValueChangeStepProperty );
-		set => SetValue( LargeValueChangeStepProperty, value );
-	}
-
-	public static readonly DependencyProperty RotationMultiplierProperty = DependencyProperty.Register( nameof( RotationMultiplier ), typeof( float ), typeof( MairaKnob ), new PropertyMetadata( 1f ) );
-
-	public float RotationMultiplier
-	{
-		get => (float) GetValue( RotationMultiplierProperty );
-		set => SetValue( RotationMultiplierProperty, value );
+		get => (float) GetValue( StepSizeProperty );
+		set => SetValue( StepSizeProperty, value );
 	}
 
 	public static readonly DependencyProperty ValueChangedCallbackProperty = DependencyProperty.Register( nameof( ValueChangedCallback ), typeof( Action<float> ), typeof( MairaKnob ) );
@@ -142,13 +215,6 @@ public partial class MairaKnob : UserControl
 		set => SetValue( ShowCurveProperty, value );
 	}
 
-	private static void OnShowCurveChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
-	{
-		var control = (MairaKnob) d;
-
-		control.UpdateKnobVisual( control.Value, control.Value );
-	}
-
 	public static readonly DependencyProperty DefaultValueProperty = DependencyProperty.Register( nameof( DefaultValue ), typeof( float? ), typeof( MairaKnob ), new PropertyMetadata( null ) );
 
 	public float? DefaultValue
@@ -159,107 +225,32 @@ public partial class MairaKnob : UserControl
 
 	#endregion
 
-	#region Event Handlers
+	#region Dependency Property Changed Events
 
-	private void KnobImage_Image_MouseDown( object sender, MouseButtonEventArgs e )
+	private static void OnValueChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
 	{
-		if ( e.LeftButton == MouseButtonState.Pressed )
+		if ( d is MairaKnob mairaKnob )
 		{
-			IsDragging = true;
-
-			User32.GetCursorPos( out _draggingCenter );
-
-			_ = User32.ShowCursor( false );
-
-			Mouse.Capture( (Image) sender );
+			mairaKnob.UpdateKnobVisual();
 		}
 	}
 
-	private void KnobImage_Image_MouseMove( object sender, MouseEventArgs e )
+	private static void OnShowCurveChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
 	{
-		if ( IsDragging )
+		if ( d is MairaKnob mairaKnob )
 		{
-			User32.GetCursorPos( out POINT current );
-
-			var delta = ( current.x - _draggingCenter.x ) + ( current.y - _draggingCenter.y );
-
-			if ( delta != 0 )
-			{
-				AdjustValue( delta * SmallValueChangeStep * 0.25f );
-
-				User32.SetCursorPos( _draggingCenter.x, _draggingCenter.y );
-			}
+			mairaKnob.UpdateKnobVisual();
 		}
 	}
-
-	private void KnobImage_Image_MouseUp( object sender, MouseButtonEventArgs e )
-	{
-		if ( IsDragging && ( e.ChangedButton == MouseButton.Left ) )
-		{
-			EndDrag();
-		}
-	}
-
-	private void KnobImage_Image_LostMouseCapture( object sender, MouseEventArgs e )
-	{
-		if ( IsDragging )
-		{
-			EndDrag();
-		}
-	}
-
-	private void Plus_MairaMappableButton_Click( object sender, RoutedEventArgs e ) => AdjustValue( LargeValueChangeStep );
-	private void Minus_MairaMappableButton_Click( object sender, RoutedEventArgs e ) => AdjustValue( -LargeValueChangeStep );
-
-	private void Label_PreviewMouseRightButtonDown( object sender, MouseButtonEventArgs e )
-	{
-		var app = App.Instance!;
-
-		e.Handled = true;
-
-		if ( ContextSwitches != null )
-		{
-			app.Logger.WriteLine( "[MairaKnob] Showing update context switches window" );
-
-			var updateContextSwitchesWindow = new UpdateContextSwitchesWindow( ContextSwitches )
-			{
-				Owner = app.MainWindow
-			};
-
-			updateContextSwitchesWindow.ShowDialog();
-		}
-	}
-
-	private void Value_Label_PreviewMouseRightButtonDown( object sender, MouseButtonEventArgs e )
-	{
-		if ( ( Keyboard.Modifiers != ModifierKeys.None ) || ( DefaultValue == null ) )
-		{
-			return;
-		}
-
-		e.Handled = true;
-
-		_resetStartTime = DateTime.Now;
-		_isResetting = true;
-
-		_resetDispatcherTimer.Start();
-
-		Mouse.OverrideCursor = Cursors.None;
-
-		CursorCountdownOverlay.Start();
-	}
-
-	private void Value_Label_PreviewMouseRightButtonUp( object sender, MouseButtonEventArgs e ) => CancelReset();
-	private void Value_Label_MouseLeave( object sender, MouseEventArgs e ) => CancelReset();
 
 	#endregion
-	
+
 	#region Logic
 
 	private void AdjustValue( float amount )
 	{
 		float oldValue = Value;
-		float newValue = oldValue + amount;
+		float newValue = oldValue + amount * StepSize;
 
 		Value = newValue;
 
@@ -269,15 +260,15 @@ public partial class MairaKnob : UserControl
 	{
 		IsDragging = false;
 
+		Middle_MairaButton.IsPressed = false;
+
 		_ = User32.ShowCursor( true );
 
 		Mouse.Capture( null );
 	}
 
-	private void UpdateKnobVisual( float oldValue, float newValue )
+	private void UpdateKnobVisual()
 	{
-		float delta = newValue - oldValue;
-
 		if ( ShowCurve )
 		{
 			var imageWidth = (int) Curve_Image.Width;

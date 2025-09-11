@@ -10,47 +10,61 @@
 
     <Application.Resources>
 
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
         <!-- Colors -->
 
-        <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#313131"/>
-        <SolidColorBrush x:Key="Background.Default" Color="#313131"/>
-        <SolidColorBrush x:Key="Foreground.Normal" Color="#979797"/>
+        <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}"
+                         Color="#313131" />
+        <SolidColorBrush x:Key="Background.Default"
+                         Color="#313131" />
+        <SolidColorBrush x:Key="Foreground.Normal"
+                         Color="#979797" />
 
         <!-- Window -->
 
         <Style TargetType="{x:Type Window}">
 
-            <Setter Property="Background" Value="{StaticResource Background.Default}"/>
+            <Setter Property="Background"
+                    Value="{StaticResource Background.Default}" />
 
         </Style>
 
-        <!-- TabControl -->
+        <!-- TextBlock -->
 
-        <Style TargetType="{x:Type TabControl}">
+        <Style x:Key="MairaTextBlockStyle"
+               TargetType="{x:Type TextBlock}">
 
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="20"/>
-
-        </Style>
-
-        <!-- TabItem -->
-
-        <Style TargetType="{x:Type TabItem}">
-
-            <Setter Property="Foreground" Value="{StaticResource Foreground.Normal}"/>
+            <Setter Property="FontFamily"
+                    Value="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Aptos Narrow" />
+            <Setter Property="Typography.NumeralAlignment"
+                    Value="Tabular" />
+            <Setter Property="Typography.NumeralStyle"
+                    Value="Lining" />
+            <Setter Property="Typography.SlashedZero"
+                    Value="True" />
+            <Setter Property="FontSize"
+                    Value="20" />
+            <Setter Property="Foreground"
+                    Value="#ffffff" />
 
         </Style>
 
         <!-- ToggleButton -->
 
-        <Style TargetType="{x:Type ToggleButton}">
+        <Style x:Key="MairaToggleButtonStyle"
+               TargetType="{x:Type ToggleButton}">
 
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderBrush" Value="#444444"/>
-            <Setter Property="BorderThickness" Value="0,0,0,2"/>
-            <Setter Property="FontSize" Value="30"/>
-            <Setter Property="FontFamily" Value="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Aptos Narrow"/>
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="BorderBrush"
+                    Value="#444444" />
+            <Setter Property="BorderThickness"
+                    Value="0,0,0,2" />
+            <Setter Property="FontSize"
+                    Value="30" />
+            <Setter Property="FontFamily"
+                    Value="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Aptos Narrow" />
 
             <Setter Property="Template">
 
@@ -61,29 +75,55 @@
                         <Grid>
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <Border Grid.Column="0" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" RecognizesAccessKey="True" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" ContentStringFormat="{TemplateBinding ContentStringFormat}"/>
+                            <Border Grid.Column="0"
+                                    Padding="0"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"
+                                                  RecognizesAccessKey="True"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                  ContentStringFormat="{TemplateBinding ContentStringFormat}" />
+
                             </Border>
 
-                            <Image x:Name="Glyph" Grid.Column="2" Source="/MarvinsAIRARefactored;component/Artwork/Buttons/combo-box-default.png" Width="32" Height="32" HorizontalAlignment="Right" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image x:Name="Glyph"
+                                   Grid.Column="2"
+                                   Source="/MarvinsAIRARefactored;component/Artwork/Buttons/combo-box-default.png"
+                                   Width="32"
+                                   Height="32"
+                                   HorizontalAlignment="Right"
+                                   RenderOptions.BitmapScalingMode="HighQuality" />
 
                         </Grid>
-                        
+
                         <ControlTemplate.Triggers>
 
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="BorderBrush" Value="#666666"/>
-                                <Setter TargetName="Glyph" Property="Source" Value="pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/combo-box-hover.png"/>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter Property="BorderBrush"
+                                        Value="#666666" />
+                                <Setter TargetName="Glyph"
+                                        Property="Source"
+                                        Value="pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/combo-box-hover.png" />
                             </Trigger>
 
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter Property="BorderBrush" Value="Transparent"/>
-                                <Setter TargetName="Glyph" Property="Source" Value="pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/combo-box-checked.png"/>
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter Property="BorderBrush"
+                                        Value="Transparent" />
+                                <Setter TargetName="Glyph"
+                                        Property="Source"
+                                        Value="pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/combo-box-checked.png" />
                             </Trigger>
 
                         </ControlTemplate.Triggers>
@@ -100,10 +140,14 @@
 
         <Style TargetType="{x:Type ComboBoxItem}">
 
-            <Setter Property="Foreground" Value="#dddddd"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground"
+                    Value="#dddddd" />
+            <Setter Property="Padding"
+                    Value="10,5" />
+            <Setter Property="FontSize"
+                    Value="20" />
+            <Setter Property="Cursor"
+                    Value="Hand" />
 
             <Setter Property="Template">
 
@@ -111,21 +155,92 @@
 
                     <ControlTemplate TargetType="ComboBoxItem">
 
-                        <Border Background="Transparent" Padding="{TemplateBinding Padding}">
-                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        </Border>
+                        <Grid>
 
-                        <ControlTemplate.Triggers>
+                            <Border BorderBrush="Transparent"
+                                    BorderThickness="0"
+                                    CornerRadius="5"
+                                    Margin="5,0">
 
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Foreground" Value="#ff5b2e"/>
-                            </Trigger>
+                                <Border.Style>
 
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="#ff5b2e"/>
-                            </Trigger>
+                                    <Style TargetType="Border">
 
-                        </ControlTemplate.Triggers>
+                                        <Setter Property="BorderBrush"
+                                                Value="Transparent" />
+
+                                        <Style.Triggers>
+
+                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                         Value="True">
+                                                <Setter Property="Background"
+                                                        Value="#10ffffff" />
+                                            </DataTrigger>
+
+                                        </Style.Triggers>
+
+                                    </Style>
+
+                                </Border.Style>
+
+                            </Border>
+
+                            <Grid>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="1"
+                                        BorderThickness="2,0,0,0"
+                                        Margin="0,10">
+
+                                    <Border.Style>
+
+                                        <Style TargetType="Border">
+
+                                            <Setter Property="BorderBrush"
+                                                    Value="Transparent" />
+
+                                            <Style.Triggers>
+
+                                                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                             Value="True">
+                                                    <Setter Property="BorderBrush"
+                                                            Value="#666" />
+                                                </DataTrigger>
+
+                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                                             Value="True">
+                                                    <Setter Property="BorderBrush"
+                                                            Value="#ff5b2e" />
+                                                </DataTrigger>
+
+                                            </Style.Triggers>
+
+                                        </Style>
+
+                                    </Border.Style>
+
+                                </Border>
+
+                                <TextBlock Grid.Column="3"
+                                           Style="{StaticResource MairaTextBlockStyle}"
+                                           Foreground="#ddd"
+                                           Padding="0,5">
+
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left" />
+
+                                </TextBlock>
+
+                            </Grid>
+
+                        </Grid>
 
                     </ControlTemplate>
 
@@ -139,12 +254,21 @@
 
         <Style TargetType="{x:Type ComboBox}">
 
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
-            <Setter Property="DisplayMemberPath" Value="Value"/>
-            <Setter Property="SelectedValuePath" Value="Key"/>
-            <Setter Property="Cursor" Value="Hand"/>
+            <EventSetter Event="PreviewMouseWheel"
+                         Handler="ComboBox_PreviewMouseWheel" />
+
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
+                    Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
+                    Value="Auto" />
+            <Setter Property="ScrollViewer.CanContentScroll"
+                    Value="True" />
+            <Setter Property="DisplayMemberPath"
+                    Value="Value" />
+            <Setter Property="SelectedValuePath"
+                    Value="Key" />
+            <Setter Property="Cursor"
+                    Value="Hand" />
 
             <Setter Property="Template">
 
@@ -154,20 +278,39 @@
 
                         <Grid>
 
-                            <ToggleButton Name="ToggleButton" Focusable="False" Foreground="{TemplateBinding Foreground}" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ToggleButton Name="ToggleButton"
+                                          Style="{StaticResource MairaToggleButtonStyle}"
+                                          Focusable="False"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
 
                                 <Grid ClipToBounds="True">
-                                    <TextBlock Text="{Binding SelectedItem.Value, RelativeSource={RelativeSource TemplatedParent}}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding SelectedItem.Value, RelativeSource={RelativeSource TemplatedParent}}"
+                                               TextTrimming="CharacterEllipsis"
+                                               TextWrapping="NoWrap"
+                                               VerticalAlignment="Center" />
                                 </Grid>
 
                             </ToggleButton>
 
-                            <Popup Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False">
-                                <Border Background="#383838" BorderBrush="#666666" BorderThickness="1" CornerRadius="4" Padding="4">
+                            <Popup Name="Popup"
+                                   Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True"
+                                   Focusable="False">
+
+                                <Border Background="#222"
+                                        Padding="0,5"
+                                        BorderBrush="#444"
+                                        BorderThickness="2"
+                                        SnapsToDevicePixels="True">
+
                                     <ScrollViewer>
-                                        <ItemsPresenter/>
+                                        <ItemsPresenter />
                                     </ScrollViewer>
+
                                 </Border>
+
                             </Popup>
 
                         </Grid>

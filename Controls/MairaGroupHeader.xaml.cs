@@ -14,12 +14,20 @@ public partial class MairaGroupHeader : UserControl
 
 	#region Dependency Properties
 
-	public static readonly DependencyProperty HeaderTextProperty = DependencyProperty.Register( nameof( HeaderText ), typeof( string ), typeof( MairaGroupHeader ), new PropertyMetadata( string.Empty ) );
+	public static readonly DependencyProperty LabelProperty = DependencyProperty.Register( nameof( Label ), typeof( string ), typeof( MairaGroupHeader ), new PropertyMetadata( string.Empty ) );
 
-	public string HeaderText
+	public string Label
 	{
-		get => (string) GetValue( HeaderTextProperty );
-		set => SetValue( HeaderTextProperty, value );
+		get => (string) GetValue( LabelProperty );
+		set => SetValue( LabelProperty, value );
+	}
+
+	public static readonly DependencyProperty SubLabelProperty = DependencyProperty.Register( nameof( SubLabel ), typeof( string ), typeof( MairaGroupHeader ), new PropertyMetadata( string.Empty ) );
+
+	public string SubLabel
+	{
+		get => (string) GetValue( SubLabelProperty );
+		set => SetValue( SubLabelProperty, value );
 	}
 
 	#endregion

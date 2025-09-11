@@ -1,0 +1,363 @@
+﻿<UserControl x:Class="MarvinsAIRARefactored.Pages.DonatePage"
+             x:Name="Root"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MarvinsAIRARefactored.Pages"
+             xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
+             xmlns:datacontext="clr-namespace:MarvinsAIRARefactored.DataContext"
+             mc:Ignorable="d"
+             d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <Binding Source="{x:Static datacontext:DataContext.Instance}" />
+    </UserControl.DataContext>
+
+    <StackPanel>
+
+        <controls:MairaGroupHeader Label="{Binding Localization[SuperDonors_UC]}"
+                                   SubLabel="❤️❤️❤️" />
+
+        <UniformGrid Columns="3">
+
+            <UniformGrid.Resources>
+                <Style TargetType="TextBlock"
+                       BasedOn="{StaticResource MairaTextBlockStyle}">
+                </Style>
+            </UniformGrid.Resources>
+
+            <TextBlock Text="Bruno Cerdeira Santos" />
+            <TextBlock Text="@lucciano.netto" />
+            <TextBlock Text="@xristospapaxristopoulos" />
+            <TextBlock Text="DIOGO XAVIER OLIVEIRA" />
+            <TextBlock Text="Peter Maddocks" />
+            <TextBlock Text="Herbert Heissenberger" />
+            <TextBlock Text="Robert JL Henry" />
+            <TextBlock Text="Ken Osborne" />
+            <TextBlock Text="Joseph Lemmer" />
+            <TextBlock Text="Chad McNeese" />
+            <TextBlock Text="Marcos Martins de Souza" />
+            <TextBlock Text="Erin Andrusak" />
+            <TextBlock Text="Thiago G de O Morgado" />
+            <TextBlock Text="Matthew Davids" />
+            <TextBlock Text="Jesse Moseley" />
+            <TextBlock Text="Travis Boudreaux" />
+
+        </UniformGrid>
+
+        <Grid Margin="0,40,0,0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="1"
+                    Background="#444"
+                    Padding="20"
+                    CornerRadius="10">
+
+                <StackPanel>
+
+                    <TextBlock TextWrapping="Wrap"
+                               Style="{StaticResource MairaTextBlockStyle}"
+                               FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Aptos Narrow Italic"
+                               Text="{Binding Localization[DonationsText], Mode=OneWay}" />
+
+                    <TextBlock TextWrapping="Wrap"
+                               Style="{StaticResource MairaTextBlockStyle}"
+                               FontFamily="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Aptos Narrow Italic"
+                               Text="- Marvin"
+                               HorizontalAlignment="Right" />
+
+                </StackPanel>
+
+            </Border>
+
+        </Grid>
+
+        <TextBlock Margin="0,10,0,10"
+                   Style="{StaticResource MairaTextBlockStyle}"
+                   Text="{Binding Localization[ReadyToDonate], Mode=OneWay}"
+                   HorizontalAlignment="Center" />
+
+        <Border BorderBrush="#666"
+                BorderThickness="1"
+                CornerRadius="5"
+                HorizontalAlignment="Center">
+
+            <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                       Padding="15,5">
+
+                <Hyperlink NavigateUri="https://buymeacoffee.com/marvinherbold"
+                           RequestNavigate="Hyperlink_RequestNavigate"
+                           Foreground="#ff5b2e"
+                           TextDecorations="None">
+
+                    <InlineUIContainer BaselineAlignment="Center">
+                        
+                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Misc/buy-me-a-coffee-logo.png"
+                               Height="25"
+                               Margin="0,0,5,0" />
+                        
+                    </InlineUIContainer>
+
+                    <Run Text="{Binding Localization[BuyMeACoffee], Mode=OneWay}" />
+
+                </Hyperlink>
+            
+            </TextBlock>
+
+        </Border>
+
+        <controls:MairaGroupHeader Label="{Binding Localization[Donors_UC]}"
+                                   SubLabel="❤️" />
+
+        <UniformGrid Columns="3">
+
+            <UniformGrid.Resources>
+                <Style TargetType="TextBlock"
+                       BasedOn="{StaticResource MairaTextBlockStyle}">
+                </Style>
+            </UniformGrid.Resources>
+
+            <TextBlock Text="Adam" />
+            <TextBlock Text="Ade" />
+            <TextBlock Text="Adrian G Rubio" />
+            <TextBlock Text="Ahmad El Baba" />
+            <TextBlock Text="Alan" />
+            <TextBlock Text="Alan King" />
+            <TextBlock Text="Alberto" />
+            <TextBlock Text="Alberto Rama" />
+            <TextBlock Text="@alcir_lima_dp" />
+            <TextBlock Text="Alexander Socher" />
+            <TextBlock Text="Alexander von Kreutz" />
+            <TextBlock Text="Andreas Mauchle" />
+            <TextBlock Text="arcaias" />
+            <TextBlock Text="Ari D Sherwood" />
+            <TextBlock Text="arkaitz" />
+            <TextBlock Text="ARMracing" />
+            <TextBlock Text="AUSTIN ELLIOTT" />
+            <TextBlock Text="@azmath16" />
+            <TextBlock Text="Ba Anh Vu" />
+            <TextBlock Text="@beeee.58" />
+            <TextBlock Text="ben" />
+            <TextBlock Text="Ben Holmes" />
+            <TextBlock Text="Ben Watkins" />
+            <TextBlock Text="Bill Christopulos" />
+            <TextBlock Text="Binesh Lad" />
+            <TextBlock Text="BorkulusRift" />
+            <TextBlock Text="Brendan Hobbart" />
+            <TextBlock Text="@broch_evans" />
+            <TextBlock Text="BZ" />
+            <TextBlock Text="Camron Frederick" />
+            <TextBlock Text="candido martinez" />
+            <TextBlock Text="Carlos Mancuso" />
+            <TextBlock Text="Chad Buchanan" />
+            <TextBlock Text="Chao Du" />
+            <TextBlock Text="Chase" />
+            <TextBlock Text="choppy bristow" />
+            <TextBlock Text="Chris wilson" />
+            <TextBlock Text="Christian Elsinger" />
+            <TextBlock Text="Christian O" />
+            <TextBlock Text="Christian Scherf" />
+            <TextBlock Text="Christopher Harp" />
+            <TextBlock Text="CJ Kent" />
+            <TextBlock Text="Cori Pandolfi" />
+            <TextBlock Text="Craig Miller" />
+            <TextBlock Text="Crispin Williamson" />
+            <TextBlock Text="CRISTIAN VILLENA SANCHEZ" />
+            <TextBlock Text="Dan" />
+            <TextBlock Text="Daniel Cohen" />
+            <TextBlock Text="Daniel König" />
+            <TextBlock Text="Daniel R" />
+            <TextBlock Text="Dave Cam" />
+            <TextBlock Text="Dave G" />
+            <TextBlock Text="David" />
+            <TextBlock Text="David Henger" />
+            <TextBlock Text="David Payne" />
+            <TextBlock Text="david701gibson" />
+            <TextBlock Text="didier porte" />
+            <TextBlock Text="Dirk Ehrhardt" />
+            <TextBlock Text="EatisLee" />
+            <TextBlock Text="@eliassomo97" />
+            <TextBlock Text="@elimendozaaltamira" />
+            <TextBlock Text="Elprimartin" />
+            <TextBlock Text="Emanuele Lecchi" />
+            <TextBlock Text="Enrico castellano" />
+            <TextBlock Text="f1iq.bsky.social" />
+            <TextBlock Text="FABIO R QUEIROZ" />
+            <TextBlock Text="Flavio A Mendes" />
+            <TextBlock Text="Franck PELLOUX" />
+            <TextBlock Text="Frederick J Haag" />
+            <TextBlock Text="@fuelpodcast" />
+            <TextBlock Text="G. Balla" />
+            <TextBlock Text="@G83MIKE" />
+            <TextBlock Text="Gareth Bowen" />
+            <TextBlock Text="Geert Van Laere" />
+            <TextBlock Text="Gerrit van Bommel" />
+            <TextBlock Text="GingaNinjaRacing" />
+            <TextBlock Text="Glen D Blanchard DDS" />
+            <TextBlock Text="Grahame Coleman" />
+            <TextBlock Text="Greg Obrigavitch" />
+            <TextBlock Text="Greg Ogilvie" />
+            <TextBlock Text="Grimaldi Jean" />
+            <TextBlock Text="Grimax Racing" />
+            <TextBlock Text="GUIDOTTI" />
+            <TextBlock Text="Halan Williams" />
+            <TextBlock Text="hamilton smith" />
+            <TextBlock Text="Haralambos Babaletskos" />
+            <TextBlock Text="HG Vosmeijer" />
+            <TextBlock Text="Hugo" />
+            <TextBlock Text="illuminodie" />
+            <TextBlock Text="J van Zuijlekom" />
+            <TextBlock Text="Jai Cook" />
+            <TextBlock Text="Jakub Trinkl" />
+            <TextBlock Text="james birdsong" />
+            <TextBlock Text="Janekeyu" />
+            <TextBlock Text="Jarno Iprenburg" />
+            <TextBlock Text="Jason" />
+            <TextBlock Text="Javier Montero Isusi" />
+            <TextBlock Text="Jeff Fritscher" />
+            <TextBlock Text="jeremy" />
+            <TextBlock Text="Jeroni Fajardo" />
+            <TextBlock Text="Joachim Osbeck" />
+            <TextBlock Text="JOAO BATISTA" />
+            <TextBlock Text="Joe Pearson" />
+            <TextBlock Text="@joeyladouceur" />
+            <TextBlock Text="Johan Grankvist" />
+            <TextBlock Text="John Cherry" />
+            <TextBlock Text="John Ebersole" />
+            <TextBlock Text="John McCallion" />
+            <TextBlock Text="John Millet" />
+            <TextBlock Text="Jonathan E Marshall" />
+            <TextBlock Text="Jose-Paolo Roldan" />
+            <TextBlock Text="@joshgabry182" />
+            <TextBlock Text="joy perez" />
+            <TextBlock Text="João Carriço" />
+            <TextBlock Text="Juan Lu" />
+            <TextBlock Text="Julian" />
+            <TextBlock Text="Karl Thoroddsen" />
+            <TextBlock Text="Kevin Burke" />
+            <TextBlock Text="Kevin J Fanning" />
+            <TextBlock Text="klaas lageman" />
+            <TextBlock Text="Knosby" />
+            <TextBlock Text="Lufino" />
+            <TextBlock Text="Luka" />
+            <TextBlock Text="M C Hastrich" />
+            <TextBlock Text="Maciej Tonderski" />
+            <TextBlock Text="Maksym Palazov" />
+            <TextBlock Text="Manhar G Dalal" />
+            <TextBlock Text="Marco" />
+            <TextBlock Text="marcus iglesias de souza oliveira" />
+            <TextBlock Text="Marin Marinov" />
+            <TextBlock Text="Mark Fleming" />
+            <TextBlock Text="Mark G" />
+            <TextBlock Text="Mark R McLewee" />
+            <TextBlock Text="Markus Kathan" />
+            <TextBlock Text="Marshall" />
+            <TextBlock Text="Martin Heidenbluth" />
+            <TextBlock Text="Massimo Martiglia" />
+            <TextBlock Text="Matt Swift" />
+            <TextBlock Text="Matteo Di Francesxo" />
+            <TextBlock Text="Matusz Attila" />
+            <TextBlock Text="Maxwell Giacomazzi" />
+            <TextBlock Text="Michael Buckley" />
+            <TextBlock Text="Michael Gair" />
+            <TextBlock Text="Michael Othon" />
+            <TextBlock Text="Michie" />
+            <TextBlock Text="Miguel Angel Casado González" />
+            <TextBlock Text="Mike M" />
+            <TextBlock Text="miker0n3" />
+            <TextBlock Text="Mikey Polard" />
+            <TextBlock Text="@millsdo" />
+            <TextBlock Text="Mitchell Bowen" />
+            <TextBlock Text="MR A M HALL" />
+            <TextBlock Text="Mr Kurt Nicholson" />
+            <TextBlock Text="Nash Milincic" />
+            <TextBlock Text="Nelson Rivera" />
+            <TextBlock Text="Nicholas Williams" />
+            <TextBlock Text="Nikolay Ivanov" />
+            <TextBlock Text="Noah Rusk" />
+            <TextBlock Text="@ nzkrems" />
+            <TextBlock Text="Ole" />
+            <TextBlock Text="olegs hanins" />
+            <TextBlock Text="Olly" />
+            <TextBlock Text="Omar Carlet" />
+            <TextBlock Text="Pan-Am Racing" />
+            <TextBlock Text="Panayiotis Papaioannou" />
+            <TextBlock Text="Paolo" />
+            <TextBlock Text="parmand" />
+            <TextBlock Text="Patrick Park" />
+            <TextBlock Text="Patrick Rochadel" />
+            <TextBlock Text="Paul Mathie" />
+            <TextBlock Text="Peynado" />
+            <TextBlock Text="Philippe Jean" />
+            <TextBlock Text="Raphael" />
+            <TextBlock Text="Rene Stangl" />
+            <TextBlock Text="Rene Vorwerk" />
+            <TextBlock Text="Rick" />
+            <TextBlock Text="Robert Gerke" />
+            <TextBlock Text="Robert Perry" />
+            <TextBlock Text="Robert Watson" />
+            <TextBlock Text="Rodrigo Ribeiro R S lima" />
+            <TextBlock Text="Rony Issak" />
+            <TextBlock Text="Rowly" />
+            <TextBlock Text="roymedawar" />
+            <TextBlock Text="Rubén Ropero-Ruiz" />
+            <TextBlock Text="Ryan Bath" />
+            <TextBlock Text="Ryan Feltrin" />
+            <TextBlock Text="S.Schels" />
+            <TextBlock Text="Salvatore Palomba" />
+            <TextBlock Text="Sascha" />
+            <TextBlock Text="Sean Symes" />
+            <TextBlock Text="Sebastian" />
+            <TextBlock Text="SEBASTIAO FERREIRA" />
+            <TextBlock Text="semir dzankovic" />
+            <TextBlock Text="serge.montembault" />
+            <TextBlock Text="Sergio Junior" />
+            <TextBlock Text="Sergio Macias" />
+            <TextBlock Text="Shane Cochran" />
+            <TextBlock Text="Shane Gleeson" />
+            <TextBlock Text="Shawn L Parrish" />
+            <TextBlock Text="@sidgeracing" />
+            <TextBlock Text="Simon A Todd" />
+            <TextBlock Text="Simon Racicot" />
+            <TextBlock Text="Spieler.Ralf" />
+            <TextBlock Text="Spieler.Ralf" />
+            <TextBlock Text="Stanislav Boldyryev" />
+            <TextBlock Text="Stephane THIBAUT" />
+            <TextBlock Text="Stephen Clay" />
+            <TextBlock Text="Steve  T" />
+            <TextBlock Text="Steve Saunders" />
+            <TextBlock Text="Steven Barker" />
+            <TextBlock Text="steven slater" />
+            <TextBlock Text="stuart h ware" />
+            <TextBlock Text="T" />
+            <TextBlock Text="Theodore J Tadeusiak" />
+            <TextBlock Text="Thomas M Crow" />
+            <TextBlock Text="Tim Corder" />
+            <TextBlock Text="Timothy Craig" />
+            <TextBlock Text="Timothy Moore" />
+            <TextBlock Text="Todd Hayne" />
+            <TextBlock Text="Tom Weston" />
+            <TextBlock Text="Tomáš Šulek" />
+            <TextBlock Text="Tony M" />
+            <TextBlock Text="Travis Rhoads" />
+            <TextBlock Text="Tripp Lanier" />
+            <TextBlock Text="Tyler Hagan" />
+            <TextBlock Text="V A Parnell Jr MD" />
+            <TextBlock Text="William Daily Jr" />
+            <TextBlock Text="xiaofan shi" />
+            <TextBlock Text="Yafar Abdala." />
+            <TextBlock Text="YAMINE TAIEB" />
+            <TextBlock Text="Yann LE DOUSSAL" />
+            <TextBlock Text="zdenek.kaska" />
+
+        </UniformGrid>
+
+    </StackPanel>
+
+</UserControl>

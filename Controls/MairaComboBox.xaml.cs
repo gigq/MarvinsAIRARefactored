@@ -98,16 +98,18 @@ public partial class MairaComboBox : UserControl
 
 	private static void SelectedValueChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
 	{
-		var mairaComboBox = (MairaComboBox) d;
-
-		mairaComboBox.UpdateSelectedValueVisuals();
+		if ( d is MairaComboBox mairaComboBox )
+		{
+			mairaComboBox.UpdateSelectedValueVisuals();
+		}
 	}
 
 	private static void OffValueChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
 	{
-		var mairaComboBox = (MairaComboBox) d;
-
-		mairaComboBox.UpdateSelectedValueVisuals();
+		if ( d is MairaComboBox mairaComboBox )
+		{
+			mairaComboBox.UpdateSelectedValueVisuals();
+		}
 	}
 
 	#endregion
