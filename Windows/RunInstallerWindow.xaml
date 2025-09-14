@@ -22,28 +22,28 @@
 
     <StackPanel Margin="40">
 
-        <StackPanel.LayoutTransform>
-            <ScaleTransform x:Name="RootScaleTransform"
-                            ScaleX="{Binding Settings.AppUIScale}"
-                            ScaleY="{Binding Settings.AppUIScale}" />
-        </StackPanel.LayoutTransform>
-
         <TextBlock Style="{StaticResource MairaTextBlockStyle}"
                    Text="{Binding Localization[RunInstallerQuestion]}"
                    HorizontalAlignment="Center" />
 
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Center">
-        
-            <controls:MairaButton Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/set.png"
-                                  Margin="10,10,10,0"
+        <Grid HorizontalAlignment="Center"
+              Margin="0,10,0,0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <controls:MairaButton Grid.Column="0"
+                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/set.png"
                                   Click="Install_MairaButton_Click" />
 
-            <controls:MairaButton Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/clear.png"
-                                  Margin="10,10,10,0"
+            <controls:MairaButton Grid.Column="2"
+                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/clear.png"
                                   Click="Cancel_MairaButton_Click" />
 
-        </StackPanel>
+        </Grid>
 
     </StackPanel>
 

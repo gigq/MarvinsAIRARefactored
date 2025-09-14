@@ -401,7 +401,6 @@ public class Settings : INotifyPropertyChanged
 		RacingWheelMaxForceString = $"{_racingWheelMaxForce:F1}{DataContext.Instance.Localization[ "TorqueUnits" ]}";
 	}
 
-	public ContextSwitches RacingWheelMaxForceContextSwitches { get; set; } = new( true, true, true, false, false );
 	public ButtonMappings RacingWheelMaxForcePlusButtonMappings { get; set; } = new();
 	public ButtonMappings RacingWheelMaxForceMinusButtonMappings { get; set; } = new();
 

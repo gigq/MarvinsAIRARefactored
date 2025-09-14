@@ -94,29 +94,29 @@ public partial class MairaButtonMapping : UserControl
 		{
 			if ( _isRecording )
 			{
-				FirstButton_Label.Content = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "WaitingForInput" ];
+				FirstButton_Label.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "WaitingForInput" ];
 
 				FirstButton_Label.Visibility = Visibility.Visible;
 				SecondButton_Label.Visibility = Visibility.Collapsed;
 			}
 			else if ( MappedButton.ClickButton.DeviceInstanceGuid == Guid.Empty )
 			{
-				FirstButton_Label.Content = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "PressTheRecordButton" ];
+				FirstButton_Label.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "PressTheRecordButton" ];
 
 				FirstButton_Label.Visibility = Visibility.Visible;
 				SecondButton_Label.Visibility = Visibility.Collapsed;
 			}
 			else if ( MappedButton.HoldButton.DeviceInstanceGuid == Guid.Empty )
 			{
-				FirstButton_Label.Content = $"{MappedButton.ClickButton.DeviceProductName} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Button" ]} {MappedButton.ClickButton.ButtonNumber} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Click" ]}";
+				FirstButton_Label.Text = $"{MappedButton.ClickButton.DeviceProductName} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Button" ]} {MappedButton.ClickButton.ButtonNumber} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Click" ]}";
 
 				FirstButton_Label.Visibility = Visibility.Visible;
 				SecondButton_Label.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
-				FirstButton_Label.Content = $"{MappedButton.HoldButton.DeviceProductName} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Button" ]} {MappedButton.HoldButton.ButtonNumber} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Hold" ]}";
-				SecondButton_Label.Content = $"{MappedButton.ClickButton.DeviceProductName} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Button" ]} {MappedButton.ClickButton.ButtonNumber} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Click" ]}";
+				FirstButton_Label.Text = $"{MappedButton.HoldButton.DeviceProductName} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Button" ]} {MappedButton.HoldButton.ButtonNumber} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Hold" ]}";
+				SecondButton_Label.Text = $"{MappedButton.ClickButton.DeviceProductName} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Button" ]} {MappedButton.ClickButton.ButtonNumber} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Click" ]}";
 
 				FirstButton_Label.Visibility = Visibility.Visible;
 				SecondButton_Label.Visibility = Visibility.Visible;

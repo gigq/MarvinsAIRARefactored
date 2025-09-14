@@ -1941,24 +1941,33 @@ public partial class App : Application
 			{
 				app.Dispatcher.InvokeAsync( () =>
 				{
-					app.RacingWheel.Tick( app );
-					app.SettingsFile.Tick( app );
-					app.Pedals.Tick( app );
-					app.AdminBoxx.Tick( app );
-					app.Debug.Tick( app );
-					app.ChatQueue.Tick( app );
-					app.MainWindow.Tick( app );
-					app.MultimediaTimer.Tick( app );
-					app.Simulator.Tick( app );
-					app.Sounds.Tick( app );
-					app.Graph.Tick( app );
-					app.SteeringEffects.Tick( app );
-					app.VirtualJoystick.Tick( app );
-					app.GripOMeterWindow.Tick( app );
-					app.Telemetry.Tick( app );
-					app.SpeechToTextWindow.Tick( app );
-
-					app._tickMutex = 0;
+					try
+					{
+						app.RacingWheel.Tick( app );
+						app.SettingsFile.Tick( app );
+						app.Pedals.Tick( app );
+						app.AdminBoxx.Tick( app );
+						app.Debug.Tick( app );
+						app.ChatQueue.Tick( app );
+						app.MainWindow.Tick( app );
+						app.MultimediaTimer.Tick( app );
+						app.Simulator.Tick( app );
+						app.Sounds.Tick( app );
+						app.Graph.Tick( app );
+						app.SteeringEffects.Tick( app );
+						app.VirtualJoystick.Tick( app );
+						app.GripOMeterWindow.Tick( app );
+						app.Telemetry.Tick( app );
+						app.SpeechToTextWindow.Tick( app );
+					}
+					catch ( Exception exception )
+					{
+						app.ShowFatalError( "An exception was thrown while performing Tick() calls on the app worker thread.", exception );
+					}
+					finally
+					{
+						app._tickMutex = 0;
+					}
 				} );
 			}
 		}

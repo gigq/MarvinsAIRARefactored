@@ -8,7 +8,6 @@ public class ContextSettings
 	public bool RacingWheelEnableForceFeedback { get; set; }
 	public float RacingWheelWheelForce { get; set; }
 	public float RacingWheelStrength { get; set; }
-	public float RacingWheelMaxForce { get; set; }
 	public float RacingWheelAutoMargin { get; set; }
 	public RacingWheel.Algorithm RacingWheelAlgorithm { get; set; }
 	public float RacingWheelDetailBoost { get; set; }

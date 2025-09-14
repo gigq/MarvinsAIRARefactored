@@ -17,6 +17,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <ItemGroup>
+    <None Remove="Artwork\Buttons\plus-large.png" />
+    <None Remove="Artwork\Buttons\record-orange.png" />
+    <None Remove="Artwork\Buttons\record-white.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
@@ -51,6 +56,7 @@
     <Resource Include="Artwork\Buttons\minus.png" />
     <Resource Include="Artwork\Buttons\pedal-maximum.png" />
     <Resource Include="Artwork\Buttons\pedal-minimum.png" />
+    <Resource Include="Artwork\Buttons\plus-large.png" />
     <Resource Include="Artwork\Buttons\plus.png" />
     <Resource Include="Artwork\Buttons\missing-icon.png" />
     <Resource Include="Artwork\Buttons\power-green.png" />
@@ -58,6 +64,8 @@
     <Resource Include="Artwork\Buttons\power-red.png" />
     <Resource Include="Artwork\Buttons\power-white.png" />
     <Resource Include="Artwork\Buttons\power-yellow.png" />
+    <Resource Include="Artwork\Buttons\record-orange.png" />
+    <Resource Include="Artwork\Buttons\record-white.png" />
     <Resource Include="Artwork\Buttons\reset.png" />
     <Resource Include="Artwork\Buttons\ring-large-default.png" />
     <Resource Include="Artwork\Buttons\ring-large-mapped.png" />

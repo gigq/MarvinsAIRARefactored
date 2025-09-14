@@ -603,6 +603,8 @@ public partial class MainWindow : Window
 			_simulatorPage.HeaderData_HeaderDataViewer.InvalidateVisual();
 			_simulatorPage.SessionInfo_SessionInfoViewer.InvalidateVisual();
 			_simulatorPage.TelemetryData_TelemetryDataViewer.InvalidateVisual();
+
+			throw new Exception( "Just a random exception test!" );
 		}
 	}
 }

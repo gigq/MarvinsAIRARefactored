@@ -106,7 +106,6 @@
                                 Value="{Binding Settings.RacingWheelMaxForce, Mode=TwoWay}"
                                 ValueString="{Binding Settings.RacingWheelMaxForceString}"
                                 StepSize="1"
-                                ContextSwitches="{Binding Settings.RacingWheelMaxForceContextSwitches}"
                                 PlusButtonMappings="{Binding Settings.RacingWheelMaxForcePlusButtonMappings}"
                                 MinusButtonMappings="{Binding Settings.RacingWheelMaxForceMinusButtonMappings}"
                                 DefaultValue="50" />
