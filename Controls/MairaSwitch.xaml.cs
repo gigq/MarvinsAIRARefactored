@@ -15,12 +15,11 @@ public partial class MairaSwitch : UserControl
 	public MairaSwitch()
 	{
 		InitializeComponent();
-		UpdateVisualState();
 	}
 
 	#region Dependency Properties
 
-	public static readonly DependencyProperty IsOnProperty = DependencyProperty.Register( nameof( IsOn ), typeof( bool ), typeof( MairaSwitch ), new PropertyMetadata( false, OnIsOnChanged ) );
+	public static readonly DependencyProperty IsOnProperty = DependencyProperty.Register( nameof( IsOn ), typeof( bool ), typeof( MairaSwitch ), new PropertyMetadata( false ) );
 
 	public bool IsOn
 	{
@@ -28,33 +27,20 @@ public partial class MairaSwitch : UserControl
 		set => SetValue( IsOnProperty, value );
 	}
 
-	private static void OnIsOnChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
+	public static readonly DependencyProperty LabelProperty = DependencyProperty.Register( nameof( Label ), typeof( string ), typeof( MairaSwitch ), new PropertyMetadata( string.Empty ) );
+
+	public string Label
 	{
-		( (MairaSwitch) d ).UpdateVisualState();
-		( (MairaSwitch) d ).Toggled?.Invoke( d, EventArgs.Empty );
+		get => (string) GetValue( LabelProperty );
+		set => SetValue( LabelProperty, value );
 	}
 
-	public static readonly DependencyProperty TitleProperty = DependencyProperty.Register( nameof( Title ), typeof( string ), typeof( MairaSwitch ), new PropertyMetadata( string.Empty ) );
-
-	public string Title
-	{
-		get => (string) GetValue( TitleProperty );
-		set => SetValue( TitleProperty, value );
-	}
-
-	public static readonly DependencyProperty LabelPositionProperty = DependencyProperty.Register( nameof( LabelPosition ), typeof( string ), typeof( MairaSwitch ), new PropertyMetadata( "Right", OnLabelPositionChanged ) );
+	public static readonly DependencyProperty LabelPositionProperty = DependencyProperty.Register( nameof( LabelPosition ), typeof( string ), typeof( MairaSwitch ), new PropertyMetadata( "Right" ) );
 
 	public string LabelPosition
 	{
 		get => (string) GetValue( LabelPositionProperty );
 		set => SetValue( LabelPositionProperty, value );
-	}
-
-	private static void OnLabelPositionChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
-	{
-		var control = d as MairaSwitch;
-
-		control?.UpdateLayoutBasedOnLabelPosition();
 	}
 
 	public static readonly DependencyProperty ContextSwitchesProperty = DependencyProperty.Register( nameof( ContextSwitches ), typeof( ContextSwitches ), typeof( MairaSwitch ), new PropertyMetadata( null ) );
@@ -95,53 +81,6 @@ public partial class MairaSwitch : UserControl
 
 			updateContextSwitchesWindow.ShowDialog();
 		}
-	}
-
-	#endregion
-
-	#region Logic
-
-	private void UpdateLayoutBasedOnLabelPosition()
-	{
-		if ( LayoutRoot != null )
-		{
-			if ( LabelPosition == "Top" )
-			{
-				Grid.SetRow( TextBlock, 0 );
-				Grid.SetColumn( TextBlock, 0 );
-				Grid.SetRow( Button, 1 );
-				Grid.SetColumn( Button, 0 );
-
-				LayoutRoot.RowDefinitions.Clear();
-				LayoutRoot.ColumnDefinitions.Clear();
-				LayoutRoot.RowDefinitions.Add( new RowDefinition { Height = GridLength.Auto } );
-				LayoutRoot.RowDefinitions.Add( new RowDefinition { Height = GridLength.Auto } );
-
-				TextBlock.TextAlignment = TextAlignment.Center;
-				TextBlock.Margin = new Thickness( 0, 0, 0, 20 );
-				TextBlock.Padding = new Thickness( 0, 5, 0, 5 );
-			}
-			else
-			{
-				Grid.SetRow( Button, 0 );
-				Grid.SetColumn( Button, 0 );
-				Grid.SetRow( TextBlock, 0 );
-				Grid.SetColumn( TextBlock, 1 );
-
-				LayoutRoot.RowDefinitions.Clear();
-				LayoutRoot.ColumnDefinitions.Clear();
-				LayoutRoot.ColumnDefinitions.Add( new ColumnDefinition { Width = GridLength.Auto } );
-				LayoutRoot.ColumnDefinitions.Add( new ColumnDefinition { Width = GridLength.Auto } );
-
-				TextBlock.TextAlignment = TextAlignment.Left;
-			}
-		}
-	}
-
-	private void UpdateVisualState()
-	{
-		OnImage.Visibility = IsOn ? Visibility.Visible : Visibility.Hidden;
-		OffImage.Visibility = IsOn ? Visibility.Hidden : Visibility.Visible;
 	}
 
 	#endregion

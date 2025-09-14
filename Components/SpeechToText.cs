@@ -174,52 +174,6 @@ public sealed class SpeechToText : IDisposable
 
 			_chromeSTTBridge.Start();
 
-			var existingProcess = ChromeLauncher.FindExistingBridgeProcess( port );
-
-			if ( existingProcess != null )
-			{
-				_browserProcess = existingProcess;
-
-				try
-				{
-					_browserProcess.EnableRaisingEvents = true;
-
-					_browserProcess.Exited += ( s, e ) =>
-					{
-						app.Logger.WriteLine( "[SpeechToText] Existing bridge process exited." );
-
-						_ = DisableAsync();
-					};
-				}
-				catch
-				{
-				}
-
-				var connectedExisting = await _chromeSTTBridge.WaitUntilConnectedAsync( TimeSpan.FromSeconds( 3 ) );
-
-				if ( !connectedExisting )
-				{
-					app.Logger.WriteLine( "[SpeechToText] Existing bridge window found, waiting longer for WS connect…" );
-
-					connectedExisting = await _chromeSTTBridge.WaitUntilConnectedAsync( TimeSpan.FromSeconds( 7 ) );
-				}
-
-				if ( connectedExisting )
-				{
-					await _chromeSTTBridge.SendSetLanguageAsync( _language );
-
-					app.Logger.WriteLine( "[SpeechToText] Reused existing bridge window." );
-
-					_isEnabled = true;
-
-					return;
-				}
-				else
-				{
-					app.Logger.WriteLine( "[SpeechToText] Existing window didn’t connect — will launch a new one." );
-				}
-			}
-
 			// Launch the minimal browser window to the hosted page
 
 			_browserProcess = ChromeLauncher.LaunchChromeTo( _chromeSTTBridge.HostURL );

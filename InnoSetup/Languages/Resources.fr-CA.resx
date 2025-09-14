@@ -121,7 +121,7 @@
     <value>Algorithme</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="App" xml:space="preserve">
+  <data name="AppSettings" xml:space="preserve">
     <value>App</value>
     <comment>Tab item</comment>
   </data>
@@ -132,10 +132,6 @@
   <data name="DetailBoostBias" xml:space="preserve">
     <value>Biais du niveau de détail</value>
     <comment>Racing wheel</comment>
-  </data>
-  <data name="Debug" xml:space="preserve">
-    <value>Déboguer</value>
-    <comment>Tab item</comment>
   </data>
   <data name="DetailBoost" xml:space="preserve">
     <value>Niveau de détail</value>
@@ -153,11 +149,11 @@
     <value>Graphique</value>
     <comment>Tab item</comment>
   </data>
-  <data name="HeaderData" xml:space="preserve">
+  <data name="HeaderData_UC" xml:space="preserve">
     <value>Header Data</value>
     <comment>Simulator</comment>
   </data>
-  <data name="Language" xml:space="preserve">
+  <data name="Language_UC" xml:space="preserve">
     <value>Langue</value>
     <comment>App</comment>
   </data>
@@ -195,6 +191,9 @@
   </data>
   <data name="RacingWheel" xml:space="preserve">
     <value>Volant</value>
+  </data>
+  <data name="RacingWheel_UC" xml:space="preserve">
+    <value>Volant</value>
     <comment>Tab item</comment>
   </data>
   <data name="SteeringDevice" xml:space="preserve">
@@ -205,7 +204,7 @@
     <value>Réinitialiser</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="SessionInformation" xml:space="preserve">
+  <data name="SessionInformation_UC" xml:space="preserve">
     <value>Informations sur la session</value>
     <comment>Simulator</comment>
   </data>
@@ -221,7 +220,7 @@
     <value>Force du verrouillage progressif</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="TelemetryData" xml:space="preserve">
+  <data name="TelemetryData_UC" xml:space="preserve">
     <value>Données de télémétrie</value>
     <comment>Simulator</comment>
   </data>
@@ -305,11 +304,11 @@
     <value>Taux de compression</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Device" xml:space="preserve">
+  <data name="Device_UC" xml:space="preserve">
     <value>Périphérique</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="OverallStrength" xml:space="preserve">
+  <data name="OverallStrength_UC" xml:space="preserve">
     <value>Force Général</value>
     <comment>Racing wheel</comment>
   </data>
@@ -329,19 +328,19 @@
     <value>Force maximale</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="AutoForce" xml:space="preserve">
+  <data name="AutoMaxForce" xml:space="preserve">
     <value>Force auto</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="OtherFeatures" xml:space="preserve">
+  <data name="OtherFeatures_UC" xml:space="preserve">
     <value>Autres fonctionnalité</value>
     <comment>Racing wheel, Pedals</comment>
   </data>
-  <data name="Switches" xml:space="preserve">
+  <data name="Switches_UC" xml:space="preserve">
     <value>Commutateurs</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="CrashProtection" xml:space="preserve">
+  <data name="CrashProtection_UC" xml:space="preserve">
     <value>Protection contre les accidents</value>
     <comment>Racing wheel</comment>
   </data>
@@ -369,7 +368,7 @@
     <value> m/s</value>
     <comment>Abbreviation for meters per second</comment>
   </data>
-  <data name="CurbProtection" xml:space="preserve">
+  <data name="CurbProtection_UC" xml:space="preserve">
     <value>Protection des vibreurs</value>
     <comment>Racing wheel</comment>
   </data>
@@ -377,7 +376,7 @@
     <value>Vitesse du choc</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Pedals" xml:space="preserve">
+  <data name="Pedals_UC" xml:space="preserve">
     <value>Pédales</value>
     <comment>Tab item</comment>
   </data>
@@ -393,15 +392,15 @@
     <value>[Aucun périphérique Simagic compatible trouvée]</value>
     <comment>Pedals device</comment>
   </data>
-  <data name="Clutch" xml:space="preserve">
+  <data name="Clutch_UC" xml:space="preserve">
     <value>Embrayage</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Brake" xml:space="preserve">
+  <data name="Brake_UC" xml:space="preserve">
     <value>Frein</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Throttle" xml:space="preserve">
+  <data name="Throttle_UC" xml:space="preserve">
     <value>Accélérateur</value>
     <comment>Pedals</comment>
   </data>
@@ -417,11 +416,11 @@
     <value> Hz</value>
     <comment>Abbreviation for Hertz</comment>
   </data>
-  <data name="Frequency" xml:space="preserve">
+  <data name="Frequency_UC" xml:space="preserve">
     <value>Fréquence</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Amplitude" xml:space="preserve">
+  <data name="Amplitude_UC" xml:space="preserve">
     <value>Amplitude</value>
     <comment>Pedals</comment>
   </data>
@@ -441,23 +440,26 @@
     <value>Changement de vitesse</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="ClutchSlip" xml:space="preserve">
+  <data name="ClutchSlip_UC" xml:space="preserve">
     <value>Point de friction</value>
     <comment>Pedal effects list</comment>
+  </data>
+  <data name="SteeringEffects_UC" xml:space="preserve">
+    <value>Effets du volant</value>
   </data>
   <data name="SteeringEffects" xml:space="preserve">
     <value>Effets du volant</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="WheelLock" xml:space="preserve">
+  <data name="WheelLock_UC" xml:space="preserve">
     <value>Blocage des roues</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="WheelSpin" xml:space="preserve">
+  <data name="WheelSpin_UC" xml:space="preserve">
     <value>Patinage</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="RPM" xml:space="preserve">
+  <data name="RPM_UC" xml:space="preserve">
     <value>RPM</value>
     <comment>Pedal effects list</comment>
   </data>
@@ -557,11 +559,11 @@
     <value>Delta Limiter Bias</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Output" xml:space="preserve">
+  <data name="Output_UC" xml:space="preserve">
     <value>Sortie</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="WheelLFE" xml:space="preserve">
+  <data name="WheelLFE_UC" xml:space="preserve">
     <value>Wheel LFE</value>
     <comment>Racing wheel</comment>
   </data>
@@ -601,7 +603,7 @@
     <value>Input LFE</value>
     <comment>Graph</comment>
   </data>
-  <data name="ABSEngaged" xml:space="preserve">
+  <data name="ABSEngaged_UC" xml:space="preserve">
     <value>ABS Activé</value>
     <comment>Pedal effects list</comment>
   </data>
@@ -637,11 +639,11 @@
     <value>Point final</value>
     <comment>Pedals</comment>
   </data>
-  <data name="GearChangeShiftIntoGear" xml:space="preserve">
+  <data name="GearChangeShiftIntoGear_UC" xml:space="preserve">
     <value>Changement de vitesse - Engager la vitesse</value>
     <comment>Pedals</comment>
   </data>
-  <data name="GearChangeShiftIntoNeutral" xml:space="preserve">
+  <data name="GearChangeShiftIntoNeutral_UC" xml:space="preserve">
     <value>Changement de vitesse - Passer au point mort</value>
     <comment>Pedals</comment>
   </data>
@@ -665,7 +667,7 @@
     <value>Amortisseur de bruit</value>
     <comment>Pedals</comment>
   </data>
-  <data name="AppWindow" xml:space="preserve">
+  <data name="AppWindow_UC" xml:space="preserve">
     <value>Fenêtre de l'application</value>
     <comment>App</comment>
   </data>
@@ -673,7 +675,7 @@
     <value>Dimension de l'interface</value>
     <comment>App</comment>
   </data>
-  <data name="CloudService" xml:space="preserve">
+  <data name="CloudService_UC" xml:space="preserve">
     <value>Service infonuagique</value>
     <comment>App</comment>
   </data>
@@ -689,7 +691,7 @@
     <value>Téléchargement de la mise à jour...</value>
     <comment>Status</comment>
   </data>
-  <data name="Contribute" xml:space="preserve">
+  <data name="Contribute_UC" xml:space="preserve">
     <value>Contribuer</value>
     <comment>Tab item</comment>
   </data>
@@ -701,15 +703,15 @@
     <value>Les dons sont entièrement facultatifs. Je ne facturerai jamais de frais pour l'utilisation de MAIRA. Cela dit, les dons me font chaud au cœur et me motivent énormément à continuer à travailler sur MAIRA. Un grand merci à tous ceux qui ont déjà fait un don ! Voici le lien pour faire un don :</value>
     <comment>Contribute</comment>
   </data>
-  <data name="Donations" xml:space="preserve">
+  <data name="Donate_UC" xml:space="preserve">
     <value>Dons</value>
     <comment>Contribute</comment>
   </data>
-  <data name="Donors" xml:space="preserve">
+  <data name="Donors_UC" xml:space="preserve">
     <value>Donateurs</value>
     <comment>Contribute</comment>
   </data>
-  <data name="SuperDonors" xml:space="preserve">
+  <data name="SuperDonors_UC" xml:space="preserve">
     <value>Super donateurs</value>
     <comment>Contribute</comment>
   </data>
@@ -717,11 +719,11 @@
     <value>Faire un don</value>
     <comment>Tab item</comment>
   </data>
-  <data name="CodeContributions" xml:space="preserve">
+  <data name="CodeContributions_UC" xml:space="preserve">
     <value>Contributions au code</value>
     <comment>Contribute</comment>
   </data>
-  <data name="TranslationContributions" xml:space="preserve">
+  <data name="TranslationContributions_UC" xml:space="preserve">
     <value>Contributions à la traduction</value>
     <comment>Contribute</comment>
   </data>
@@ -764,5 +766,44 @@
   <data name="StartWithWindows" xml:space="preserve">
     <value>Démarrage automatique</value>
     <comment>App</comment>
+  </data>
+  <data name="Algorithm_UC" xml:space="preserve">
+    <value>Algorithme</value>
+  </data>
+  <data name="Contribute" xml:space="preserve">
+    <value>Contribuer</value>
+  </data>
+  <data name="AppSettings_UC" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="Simulator_UC" xml:space="preserve">
+    <value>Simulateur</value>
+  </data>
+  <data name="Graph_UC" xml:space="preserve">
+    <value>Graphique</value>
+  </data>
+  <data name="ABSEngaged" xml:space="preserve">
+    <value>ABS Activé</value>
+  </data>
+  <data name="Amplitude" xml:space="preserve">
+    <value>Amplitude</value>
+  </data>
+  <data name="ClutchSlip" xml:space="preserve">
+    <value>Point de friction</value>
+  </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>Fréquence</value>
+  </data>
+  <data name="RPM" xml:space="preserve">
+    <value>RPM</value>
+  </data>
+  <data name="Pedals" xml:space="preserve">
+    <value>Pédales</value>
+  </data>
+  <data name="WheelSpin" xml:space="preserve">
+    <value>Patinage</value>
+  </data>
+  <data name="WheelLock" xml:space="preserve">
+    <value>Blocage des roues</value>
   </data>
 </root>

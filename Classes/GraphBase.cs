@@ -102,7 +102,7 @@ public class GraphBase
 
 				if ( _colorArray[ y, _x ] == 0 )
 				{
-					_colorArray[ y, _x ] = 0x8080C080;
+					_colorArray[ y, _x ] = 0xFF444444;
 				}
 			}
 

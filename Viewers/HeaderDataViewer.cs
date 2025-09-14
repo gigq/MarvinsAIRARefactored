@@ -18,21 +18,28 @@ public class HeaderDataViewer : Control
 	public int NumVisibleLines { get; private set; } = 0;
 	public int ScrollIndex { private get; set; } = 0;
 
-	private readonly CultureInfo _cultureInfo = CultureInfo.GetCultureInfo( "en-us" );
-	private readonly Typeface _typeface = new( "Courier New" );
+	private static readonly CultureInfo _cultureInfo = CultureInfo.GetCultureInfo( "en-us" );
+	private static readonly Typeface typeface = new( "Consolas" );
 
-	private readonly SolidColorBrush _oddLineBrush = new( Color.FromArgb( 224, 32, 32, 32 ) );
-	private readonly SolidColorBrush _evenLineBrush = new( Color.FromArgb( 224, 48, 48, 48 ) );
+	private static readonly SolidColorBrush _oddLineBrush = Brushes.Transparent;
+	private static readonly SolidColorBrush _evenLineBrush = new( Color.FromArgb( 255, 34, 34, 34 ) );
+	private static readonly SolidColorBrush _foregroundBrush = new( Color.FromArgb( 255, 220, 220, 220 ) );
 
-	private const double _firstColumnWidth = 200;
-	private const double _lineHeight = 24;
-	private const double _fontSize = 15;
+	private const double _lineHeight = 30.0;
+	private const double _fontSize = 20.0;
+	private const double _yOffset = -2.0;
+
+	private const double _firstColumnWidth = 210.0;
 
 	private ScrollBar? _scrollBar = null;
 
 	static HeaderDataViewer()
 	{
 		DefaultStyleKeyProperty.OverrideMetadata( typeof( HeaderDataViewer ), new FrameworkPropertyMetadata( typeof( HeaderDataViewer ) ) );
+
+		_oddLineBrush.Freeze();
+		_evenLineBrush.Freeze();
+		_foregroundBrush.Freeze();
 	}
 
 	public void Initialize( ScrollBar scrollBar )
@@ -73,7 +80,7 @@ public class HeaderDataViewer : Control
 				{ "FramesDropped", irsdk.Data.FramesDropped }
 			};
 
-		var point = new Point( 10, 0 );
+		var origin = new Point( 20, _yOffset );
 		var lineIndex = 0;
 
 		foreach ( var keyValuePair in dictionary )
@@ -82,28 +89,27 @@ public class HeaderDataViewer : Control
 			{
 				var brush = ( lineIndex & 1 ) == 1 ? _oddLineBrush : _evenLineBrush;
 
-				drawingContext.DrawRectangle( brush, null, new Rect( 0, point.Y, ActualWidth, _lineHeight ) );
+				drawingContext.DrawRectangle( brush, null, new Rect( 0, origin.Y - _yOffset, ActualWidth, _lineHeight ) );
 
-				var formattedText = new FormattedText( keyValuePair.Key, _cultureInfo, FlowDirection.LeftToRight, _typeface, _fontSize, Brushes.White, 1.25 )
+				var formattedText = new FormattedText( keyValuePair.Key, _cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, _foregroundBrush, 1.25 )
 				{
 					LineHeight = _lineHeight
 				};
 
-				drawingContext.DrawText( formattedText, point );
+				drawingContext.DrawText( formattedText, origin );
 
-				point.X += _firstColumnWidth;
+				var valueOrigin = new Point( origin.X + _firstColumnWidth, origin.Y );
 
-				formattedText = new FormattedText( keyValuePair.Value.ToString(), _cultureInfo, FlowDirection.LeftToRight, _typeface, _fontSize, Brushes.White, 1.25 )
+				formattedText = new FormattedText( keyValuePair.Value.ToString( _cultureInfo ), _cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, _foregroundBrush, 1.25 )
 				{
 					LineHeight = _lineHeight
 				};
 
-				drawingContext.DrawText( formattedText, point );
+				drawingContext.DrawText( formattedText, valueOrigin );
 
-				point.X = 10;
-				point.Y += _lineHeight;
+				origin.Y += _lineHeight;
 
-				if ( point.Y >= ActualHeight )
+				if ( origin.Y >= ActualHeight )
 				{
 					break;
 				}

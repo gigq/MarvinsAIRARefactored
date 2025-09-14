@@ -401,7 +401,6 @@ public class Settings : INotifyPropertyChanged
 		RacingWheelMaxForceString = $"{_racingWheelMaxForce:F1}{DataContext.Instance.Localization[ "TorqueUnits" ]}";
 	}
 
-	public ContextSwitches RacingWheelMaxForceContextSwitches { get; set; } = new( true, true, true, false, false );
 	public ButtonMappings RacingWheelMaxForcePlusButtonMappings { get; set; } = new();
 	public ButtonMappings RacingWheelMaxForceMinusButtonMappings { get; set; } = new();
 
@@ -6713,7 +6712,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region App - UI scale
 
-	private float _appUIScale = 0.85f;
+	private float _appUIScale = 1f;
 
 	public float AppUIScale
 	{
@@ -6721,7 +6720,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0.25f, 4f );
+			value = Math.Clamp( value, 0.5f, 2f );
 
 			if ( value != _appUIScale )
 			{

@@ -14,32 +14,37 @@
         SizeToContent="Height"
         ResizeMode="NoResize"
         WindowStyle="SingleBorderWindow"
-        WindowStartupLocation="CenterOwner"
-        Background="#FF111111">
+        WindowStartupLocation="CenterOwner">
 
     <Window.DataContext>
-        <Binding Source="{x:Static datacontext:DataContext.Instance}"/>
+        <Binding Source="{x:Static datacontext:DataContext.Instance}" />
     </Window.DataContext>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="40">
 
-        <ScrollViewer.LayoutTransform>
-            <ScaleTransform x:Name="RootScaleTransform" ScaleX="{Binding Settings.AppUIScale}" ScaleY="{Binding Settings.AppUIScale}"/>
-        </ScrollViewer.LayoutTransform>
+        <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                   Text="{Binding Localization[RunInstallerQuestion]}"
+                   HorizontalAlignment="Center" />
 
-        <StackPanel Margin="20">
+        <Grid HorizontalAlignment="Center"
+              Margin="0,10,0,0">
 
-            <Label Content="{Binding Localization[RunInstallerQuestion]}" HorizontalAlignment="Center"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <controls:MairaButton Grid.Column="0"
+                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/set.png"
+                                  Click="Install_MairaButton_Click" />
 
-                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_cancel.png" Margin="10,10,10,0" Click="Cancel_MairaButton_Click"/>
-                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_thumbs_up.png" Margin="10,10,10,0" Click="ThumbsUp_MairaButton_Click"/>
+            <controls:MairaButton Grid.Column="2"
+                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/clear.png"
+                                  Click="Cancel_MairaButton_Click" />
 
-            </StackPanel>
+        </Grid>
 
-        </StackPanel>
-
-    </ScrollViewer>
+    </StackPanel>
 
 </Window>

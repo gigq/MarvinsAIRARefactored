@@ -10,38 +10,49 @@
         mc:Ignorable="d"
         Title="{Binding Localization[UpdateButtonMappings]}"
         Icon="/Artwork/AppIcon/maira-universal.ico"
-        MinWidth="600"
         Width="800"
-        MinHeight="150"
-        MaxHeight="400"
+        MaxHeight="600"
         SizeToContent="Height"
-        ResizeMode="CanResizeWithGrip"
+        ResizeMode="NoResize"
         WindowStyle="SingleBorderWindow"
         WindowStartupLocation="CenterOwner"
-        Closed="Window_Closed"
-        Background="#FF111111">
+        Closed="Window_Closed">
 
     <Window.DataContext>
-        <Binding Source="{x:Static datacontext:DataContext.Instance}"/>
+        <Binding Source="{x:Static datacontext:DataContext.Instance}" />
     </Window.DataContext>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="40,20,40,40">
 
-        <ScrollViewer.LayoutTransform>
-            <ScaleTransform x:Name="RootScaleTransform" ScaleX="{Binding Settings.AppUIScale}" ScaleY="{Binding Settings.AppUIScale}"/>
-        </ScrollViewer.LayoutTransform>
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Margin="0,0,0,40">
 
-        <StackPanel x:Name="StackPanel" Margin="20">
+            <StackPanel x:Name="StackPanel" />
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        </ScrollViewer>
 
-                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_plus.png" Margin="10" Click="Plus_MairaButton_Click"/>
-                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_thumbs_up.png" Margin="10" Click="ThumbsUp_MairaButton_Click"/>
+        <StackPanel>
 
-            </StackPanel>
+            <Grid HorizontalAlignment="Center">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <controls:MairaButton Grid.Column="0"
+                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/plus-large.png"
+                                      Click="Plus_MairaButton_Click" />
+
+                <controls:MairaButton Grid.Column="2"
+                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/set.png"
+                                      Click="ThumbsUp_MairaButton_Click" />
+
+            </Grid>
 
         </StackPanel>
 
-    </ScrollViewer>
+    </StackPanel>
 
 </Window>

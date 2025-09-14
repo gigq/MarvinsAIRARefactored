@@ -14,12 +14,15 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <ItemGroup>
+    <None Remove="Artwork\Buttons\copy.png" />
+    <None Remove="Artwork\Buttons\plus-large.png" />
+    <None Remove="Artwork\Buttons\record-orange.png" />
+    <None Remove="Artwork\Buttons\record-white.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
@@ -37,70 +40,80 @@
     <EmbeddedResource Include="AdminBoxx\code.py" />
     <Resource Include="Artwork\AppIcon\adminboxx.ico" />
     <Resource Include="Artwork\AppIcon\maira-universal.ico" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_copy.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_dot.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_exit.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_max_brake.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_max_throttle.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_min_brake.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_min_throttle.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_sad_face.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_steering_wheel_90_left.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_steering_wheel_center.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_steering_wheel_left.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_steering_wheel_right.png" />
-    <Resource Include="Artwork\Flags\denmark.png" />
-    <Resource Include="Artwork\Flags\poland.png" />
-    <Resource Include="Artwork\Knob\knob_default.png" />
-    <Resource Include="Artwork\Knob\knob_pressed.png" />
-    <Resource Include="Artwork\Misc\adminboxx_logo.png" />
+    <Resource Include="Artwork\Buttons\app-menu.png" />
+    <Resource Include="Artwork\Buttons\clear.png" />
+    <Resource Include="Artwork\Buttons\combo-box-checked.png" />
+    <Resource Include="Artwork\Buttons\combo-box-default.png" />
+    <Resource Include="Artwork\Buttons\combo-box-hover.png" />
+    <Resource Include="Artwork\Buttons\copy.png" />
+    <Resource Include="Artwork\Buttons\drag.png" />
+    <Resource Include="Artwork\Buttons\knob-middle-default.png" />
+    <Resource Include="Artwork\Buttons\knob-middle-pressed.png" />
+    <Resource Include="Artwork\Buttons\knob-minus-default.png" />
+    <Resource Include="Artwork\Buttons\knob-minus-mapped.png" />
+    <Resource Include="Artwork\Buttons\knob-minus-pressed.png" />
+    <Resource Include="Artwork\Buttons\knob-plus-default.png" />
+    <Resource Include="Artwork\Buttons\knob-plus-mapped.png" />
+    <Resource Include="Artwork\Buttons\knob-plus-pressed.png" />
+    <Resource Include="Artwork\Buttons\minus.png" />
+    <Resource Include="Artwork\Buttons\pedal-maximum.png" />
+    <Resource Include="Artwork\Buttons\pedal-minimum.png" />
+    <Resource Include="Artwork\Buttons\plus-large.png" />
+    <Resource Include="Artwork\Buttons\plus.png" />
+    <Resource Include="Artwork\Buttons\missing-icon.png" />
+    <Resource Include="Artwork\Buttons\power-green.png" />
+    <Resource Include="Artwork\Buttons\power-orange.png" />
+    <Resource Include="Artwork\Buttons\power-red.png" />
+    <Resource Include="Artwork\Buttons\power-white.png" />
+    <Resource Include="Artwork\Buttons\power-yellow.png" />
+    <Resource Include="Artwork\Buttons\record-orange.png" />
+    <Resource Include="Artwork\Buttons\record-white.png" />
+    <Resource Include="Artwork\Buttons\reset.png" />
+    <Resource Include="Artwork\Buttons\ring-large-default.png" />
+    <Resource Include="Artwork\Buttons\ring-large-mapped.png" />
+    <Resource Include="Artwork\Buttons\ring-large-pressed.png" />
+    <Resource Include="Artwork\Buttons\ring-small-default.png" />
+    <Resource Include="Artwork\Buttons\ring-small-mapped.png" />
+    <Resource Include="Artwork\Buttons\ring-small-pressed.png" />
+    <Resource Include="Artwork\Buttons\run-calibration.png" />
+    <Resource Include="Artwork\Buttons\set.png" />
+    <Resource Include="Artwork\Buttons\shift-down.png" />
+    <Resource Include="Artwork\Buttons\shift-up.png" />
+    <Resource Include="Artwork\Buttons\solo.png" />
+    <Resource Include="Artwork\Buttons\square-default.png" />
+    <Resource Include="Artwork\Buttons\square-pressed.png" />
+    <Resource Include="Artwork\Buttons\steering-wheel-90-left.png" />
+    <Resource Include="Artwork\Buttons\steering-wheel-center.png" />
+    <Resource Include="Artwork\Buttons\steering-wheel-left.png" />
+    <Resource Include="Artwork\Buttons\steering-wheel-right.png" />
+    <Resource Include="Artwork\Buttons\stop-calibration.png" />
+    <Resource Include="Artwork\Buttons\vibrate.png" />
+    <Resource Include="Artwork\Flags\armenia_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\brazil_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\canada_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\china_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\czech_republic_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\denmark_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\france_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\germany_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\italy_fluttering_flag_64 (1).png" />
+    <Resource Include="Artwork\Flags\italy_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\netherlands_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\poland_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\russia_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\spain_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Flags\turkey_fluttering_flag_64.png" />
+    <Resource Include="Artwork\Misc\adminboxx-logo.png" />
+    <Resource Include="Artwork\Misc\app-menu-logo.png" />
+    <Resource Include="Artwork\Misc\buy-me-a-coffee-logo.png" />
+    <Resource Include="Artwork\Misc\discord-logo.png" />
+    <Resource Include="Artwork\Misc\github-logo.png" />
     <Resource Include="Artwork\Misc\grip-o-meter-ball.png" />
     <Resource Include="Artwork\Misc\grip-o-meter.png" />
-    <Resource Include="Artwork\Misc\maira_logo_rotated.png" />
-    <Resource Include="Fonts\FiraCode-VariableFont_wght.ttf" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_binoculars.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_cancel.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_down.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_knob.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_left.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_magic.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_minus.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_plus.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_record_off.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_record_on.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_reset.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_right.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_target.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_thumbs_up.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_trash.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_up.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_vibrate.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_zero.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_power_led_black.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_power_led_green.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_power_led_red.png" />
-    <Resource Include="Artwork\ButtonIcons\button_icon_power_led_yellow.png" />
-    <Resource Include="Artwork\Button\button_border_default.png" />
-    <Resource Include="Artwork\Button\button_border_mapped.png" />
-    <Resource Include="Artwork\Button\button_face_default.png" />
-    <Resource Include="Artwork\Button\button_face_disabled.png" />
-    <Resource Include="Artwork\Button\button_face_hover.png" />
-    <Resource Include="Artwork\Button\button_face_pressed.png" />
-    <Resource Include="Artwork\Flags\brazil.png" />
-    <Resource Include="Artwork\Flags\canada.png" />
-    <Resource Include="Artwork\Flags\czech-republic.png" />
-    <Resource Include="Artwork\Flags\france.png" />
-    <Resource Include="Artwork\Flags\germany.png" />
-    <Resource Include="Artwork\Flags\italy.png" />
-    <Resource Include="Artwork\Flags\netherlands.png" />
-    <Resource Include="Artwork\Flags\russia.png" />
-    <Resource Include="Artwork\Flags\spain.png" />
-    <Resource Include="Artwork\Misc\centripetal_circuit.png" />
-    <Resource Include="Artwork\Misc\race_car.png" />
-    <Resource Include="Artwork\Misc\simagic_logo.png" />
-    <Resource Include="Artwork\Misc\target_position.png" />
-    <Resource Include="Artwork\Switch\switch_off.png" />
-    <Resource Include="Artwork\Switch\switch_on.png" />
+    <Resource Include="Fonts\Aptos-Narrow-Italic.ttf" />
+    <Resource Include="Fonts\Aptos-Narrow.ttf" />
+    <Resource Include="Artwork\Misc\simagic-logo.png" />
+    <Resource Include="InnoSetup\STT\app-menu-logo.png" />
     <Resource Include="InnoSetup\STT\favicon.ico" />
   </ItemGroup>
 

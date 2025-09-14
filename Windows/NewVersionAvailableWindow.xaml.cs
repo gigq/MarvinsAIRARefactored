@@ -17,20 +17,20 @@ public partial class NewVersionAvailableWindow : Window
 
 		var lines = changeLog.Split( [ "\r\n", "\n", "\r" ], StringSplitOptions.None );
 
-		CurrentVersion_Label.Content = currentVersion;
-		ChangeLog_TextBlock.Text = string.Join( Environment.NewLine, lines.Where( line => !string.IsNullOrWhiteSpace( line ) ).Select( line => $"• {line}" ) );
+		CurrentVersion_TextBlock.Text = currentVersion;
+		ChangeLog_TextBlock.Text = string.Join( Environment.NewLine, lines.Where( line => !string.IsNullOrWhiteSpace( line ) ).Select( line => $"{line}" ) );
+	}
+
+	private void Download_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		DownloadUpdate = true;
+
+		Close();
 	}
 
 	private void Cancel_MairaButton_Click( object sender, RoutedEventArgs e )
 	{
 		DownloadUpdate = false;
-
-		Close();
-	}
-
-	private void ThumbsUp_MairaButton_Click( object sender, RoutedEventArgs e )
-	{
-		DownloadUpdate = true;
 
 		Close();
 	}

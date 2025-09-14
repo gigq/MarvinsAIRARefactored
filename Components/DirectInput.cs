@@ -229,11 +229,16 @@ public class DirectInput
 		{
 			dictionary.Add( Guid.Empty, DataContext.DataContext.Instance.Localization[ "NoFFBDevicesFound" ] );
 		}
+		else
+		{
+			dictionary.Add( Guid.Empty, DataContext.DataContext.Instance.Localization[ "FFBDeviceNotSelected" ] );
+		}
 
 		_forceFeedbackDeviceList.ToList().ForEach( keyValuePair => dictionary[ keyValuePair.Key ] = keyValuePair.Value );
 
 		mairaComboBox.ItemsSource = dictionary.OrderBy( keyValuePair => keyValuePair.Value );
 		mairaComboBox.SelectedValue = DataContext.DataContext.Instance.Settings.RacingWheelSteeringDeviceGuid;
+		mairaComboBox.OffValue = Guid.Empty;
 
 		app.Logger.WriteLine( "[DirectInput] <<< SetMairaComboBoxItemsSource" );
 	}

@@ -1,10 +1,10 @@
 ﻿
 const statusElement = document.getElementById( 'status' );
-const warmupElement = document.getElementById( 'warmup' );
+const enableElement = document.getElementById( 'enable' );
 const micSelectElement = document.getElementById( 'micSelect' );
-const noConnectionElement = document.getElementById( 'noConnection' );
+const disconnectedElement = document.getElementById( 'disconnected' );
+const waitingElement = document.getElementById( 'waiting' );
 const listeningElement = document.getElementById( 'listening' );
-const speakingElement = document.getElementById( 'speaking' );
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -37,27 +37,27 @@ function applyStrings()
     headTitleElement.textContent = strings.title;
     bodyTitleElement.textContent = strings.title;
     hintElement.textContent = strings.hint;
-    warmupElement.textContent = strings.button;
+    enableElement.textContent = strings.button;
 }
 
 function setStatus( which )
 {
-    noConnectionElement.classList.add( 'hidden' );
+    disconnectedElement.classList.add( 'hidden' );
+    waitingElement.classList.add( 'hidden' );
     listeningElement.classList.add( 'hidden' );
-    speakingElement.classList.add( 'hidden' );
 
     switch ( which )
     {
         case 0:
-            noConnectionElement.classList.remove( 'hidden' );
+            disconnectedElement.classList.remove( 'hidden' );
             break;
 
         case 1:
-            listeningElement.classList.remove( 'hidden' );
+            waitingElement.classList.remove( 'hidden' );
             break;
 
         case 2:
-            speakingElement.classList.remove( 'hidden' );
+            listeningElement.classList.remove( 'hidden' );
             break;
     }
 }
@@ -171,7 +171,7 @@ async function switchMic( deviceId )
 
     stopMediaStream();
 
-    warmupElement.classList.remove( 'hidden' )
+    enableElement.classList.remove( 'hidden' )
 
     try
     {
@@ -267,7 +267,7 @@ function createRecognizer()
         }
     };
 
-    warmupElement.classList.add( 'hidden' )
+    enableElement.classList.add( 'hidden' )
 
     return speechRecognition;
 }
@@ -335,8 +335,6 @@ function applyLanguage( newLanguage )
     {
     }
 
-    speechRecognition = null;
-
     createRecognizer();
 
     if ( wasRunning )
@@ -351,16 +349,13 @@ function applyLanguage( newLanguage )
     }
 }
 
-warmupElement.addEventListener( 'click', async () =>
+enableElement.addEventListener( 'click', async () =>
 {
     try
     {
         await switchMic( micSelectElement.value );
 
-        if ( !speechRecognition )
-        {
-            createRecognizer();
-        }
+        createRecognizer();
 
         speechRecognition.start();
         speechRecognition.stop();

@@ -1,8 +1,8 @@
 ﻿
-using System.Runtime.CompilerServices;
-
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Controls;
+using MarvinsAIRARefactored.Windows;
+using System.Runtime.CompilerServices;
 
 namespace MarvinsAIRARefactored.Components;
 
@@ -24,7 +24,6 @@ public class Graph : GraphBase
 	}
 
 	private readonly Layer[] _layerArray = new Layer[ (int) LayerIndex.Count ];
-	private readonly Statistics[] _statisticsArray = new Statistics[ (int) LayerIndex.Count ];
 
 	private int _updateCounter = UpdateInterval + 2;
 
@@ -34,49 +33,14 @@ public class Graph : GraphBase
 
 		app.Logger.WriteLine( "[Graph] Initialize >>>" );
 
-		Initialize( app.MainWindow.Graph_Image );
+		Initialize( MainWindow._graphPage.Image );
 
 		for ( var layerIndex = 0; layerIndex < (int) LayerIndex.Count; layerIndex++ )
 		{
 			_layerArray[ layerIndex ] = new Layer();
-			_statisticsArray[ layerIndex ] = new Statistics( 500 );
 		}
 
 		app.Logger.WriteLine( "[Graph] Initialize >>>" );
-	}
-
-	public static void SetMairaComboBoxItemsSource( MairaComboBox mairaComboBox )
-	{
-		var app = App.Instance!;
-
-		app.Logger.WriteLine( "[Graph] SetMairaComboBoxItemsSource >>>" );
-
-		var selectedLayerIndex = mairaComboBox.SelectedValue as LayerIndex?;
-
-		var dictionary = new Dictionary<LayerIndex, string>
-		{
-			{ LayerIndex.InputTorque, DataContext.DataContext.Instance.Localization[ "InputTorque" ] },
-			{ LayerIndex.OutputTorque, DataContext.DataContext.Instance.Localization[ "OutputTorque" ] },
-			{ LayerIndex.InputTorque60Hz, DataContext.DataContext.Instance.Localization[ "InputTorque60Hz" ] },
-			{ LayerIndex.InputLFE, DataContext.DataContext.Instance.Localization[ "InputLFE" ] },
-			{ LayerIndex.ClutchPedalHaptics, DataContext.DataContext.Instance.Localization[ "ClutchPedalHaptics" ] },
-			{ LayerIndex.BrakePedalHaptics, DataContext.DataContext.Instance.Localization[ "BrakePedalHaptics" ] },
-			{ LayerIndex.ThrottlePedalHaptics, DataContext.DataContext.Instance.Localization[ "ThrottlePedalHaptics" ] },
-			{ LayerIndex.TimerJitter, DataContext.DataContext.Instance.Localization[ "TimerJitter" ] }
-		};
-
-		mairaComboBox.ItemsSource = dictionary;
-
-		if ( selectedLayerIndex != null )
-		{
-			mairaComboBox.SelectedValue = selectedLayerIndex;
-		}
-		else
-		{
-			mairaComboBox.SelectedValue = LayerIndex.OutputTorque;
-		}
-
-		app.Logger.WriteLine( "[Graph] <<< SetMairaComboBoxItemsSource" );
 	}
 
 	public void SetLayerColors( LayerIndex layerIndex, float minR, float minG, float minB, float maxR, float maxG, float maxB )
@@ -97,10 +61,8 @@ public class Graph : GraphBase
 	{
 		var app = App.Instance!;
 
-		if ( app.MainWindow.GraphTabItemIsVisible )
+		if ( MairaAppMenuPopup.CurrentAppPage == MainWindow.AppPage.Graph )
 		{
-			_statisticsArray[ (int) layerIndex ].Update( rawValue );
-
 			_layerArray[ (int) layerIndex ].value = normalizedValue;
 		}
 	}
@@ -109,7 +71,7 @@ public class Graph : GraphBase
 	{
 		var app = App.Instance!;
 
-		if ( app.MainWindow.GraphTabItemIsVisible )
+		if ( MairaAppMenuPopup.CurrentAppPage == MainWindow.AppPage.Graph )
 		{
 			var settings = DataContext.DataContext.Instance.Settings;
 
@@ -142,7 +104,7 @@ public class Graph : GraphBase
 
 	public void Tick( App app )
 	{
-		if ( app.MainWindow.GraphTabItemIsVisible )
+		if ( MairaAppMenuPopup.CurrentAppPage == MainWindow.AppPage.Graph )
 		{
 			WritePixels();
 
@@ -151,14 +113,6 @@ public class Graph : GraphBase
 			if ( _updateCounter == 0 )
 			{
 				_updateCounter = UpdateInterval;
-
-				var statistics = _statisticsArray[ (int) DataContext.DataContext.Instance.Settings.GraphStatisticsLayerIndex ];
-
-				app.MainWindow.Graph_Minimum_Label.Content = $"{statistics.MinimumValue:F2}";
-				app.MainWindow.Graph_Maximum_Label.Content = $"{statistics.MaximumValue:F2}";
-				app.MainWindow.Graph_Average_Label.Content = $"{statistics.AverageValue:F2}";
-				app.MainWindow.Graph_Variance_Label.Content = $"{statistics.Variance:F2}";
-				app.MainWindow.Graph_StandardDeviation_Label.Content = $"{statistics.StandardDeviation:F2}";
 			}
 		}
 	}

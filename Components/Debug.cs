@@ -1,6 +1,9 @@
 ﻿
 using System.Runtime.CompilerServices;
 
+using MarvinsAIRARefactored.Controls;
+using MarvinsAIRARefactored.Windows;
+
 namespace MarvinsAIRARefactored.Components;
 
 public class Debug
@@ -29,18 +32,18 @@ public class Debug
 		{
 			_updateCounter = UpdateInterval;
 
-			if ( app.MainWindow.DebugTabItemIsVisible )
+			if ( MairaAppMenuPopup.CurrentAppPage == MainWindow.AppPage.Debug )
 			{
-				app.MainWindow.Debug_Label_1.Content = Label_1;
-				app.MainWindow.Debug_Label_2.Content = Label_2;
-				app.MainWindow.Debug_Label_3.Content = Label_3;
-				app.MainWindow.Debug_Label_4.Content = Label_4;
-				app.MainWindow.Debug_Label_5.Content = Label_5;
-				app.MainWindow.Debug_Label_6.Content = Label_6;
-				app.MainWindow.Debug_Label_7.Content = Label_7;
-				app.MainWindow.Debug_Label_8.Content = Label_8;
-				app.MainWindow.Debug_Label_9.Content = Label_9;
-				app.MainWindow.Debug_Label_10.Content = Label_10;
+				MainWindow._debugPage.Debug_TextBlock_1.Text = Label_1;
+				MainWindow._debugPage.Debug_TextBlock_2.Text = Label_2;
+				MainWindow._debugPage.Debug_TextBlock_3.Text = Label_3;
+				MainWindow._debugPage.Debug_TextBlock_4.Text = Label_4;
+				MainWindow._debugPage.Debug_TextBlock_5.Text = Label_5;
+				MainWindow._debugPage.Debug_TextBlock_6.Text = Label_6;
+				MainWindow._debugPage.Debug_TextBlock_7.Text = Label_7;
+				MainWindow._debugPage.Debug_TextBlock_8.Text = Label_8;
+				MainWindow._debugPage.Debug_TextBlock_9.Text = Label_9;
+				MainWindow._debugPage.Debug_TextBlock_10.Text = Label_10;
 			}
 		}
 	}

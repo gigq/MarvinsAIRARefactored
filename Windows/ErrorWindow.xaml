@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="{Binding Localization[AppTitle]}"
         SizeToContent="Height"
-        Width="480"
+        Width="640"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
@@ -16,7 +16,7 @@
         Background="#FF221111">
 
     <Window.DataContext>
-        <Binding Source="{x:Static datacontext:DataContext.Instance}"/>
+        <Binding Source="{x:Static datacontext:DataContext.Instance}" />
     </Window.DataContext>
 
     <Border Padding="20">
@@ -24,53 +24,106 @@
         <Grid>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!-- Icon -->
-            <Image Grid.Row="0" Grid.Column="0" Width="24" Height="24" Source="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_sad_face.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+            <Image Grid.Row="0"
+                   Grid.Column="0"
+                   Width="48"
+                   Height="48"
+                   Source="/MarvinsAIRARefactored;component/Artwork/Buttons/clear.png"
+                   RenderOptions.BitmapScalingMode="HighQuality" />
 
-            <TextBlock Grid.Row="0" Grid.Column="2" x:Name="Title_TextBlock" FontSize="16" FontWeight="SemiBold" Text="{Binding Localization[ErrorTitle]}" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="#FFFFFF"/>
+            <TextBlock x:Name="Title_TextBlock"
+                       Grid.Row="0"
+                       Grid.Column="2"
+                       Style="{StaticResource MairaTextBlockStyle}"
+                       FontSize="30"
+                       Text="{Binding Localization[ErrorTitle]}"
+                       VerticalAlignment="Center" />
 
-            <TextBlock Grid.Row="2" Grid.Column="2" x:Name="Message_TextBlock" FontSize="14" TextWrapping="Wrap" Margin="0,2,0,0" Foreground="#FFFFFF" d:Text="This is an example message that can be displayed inside of this error window. This text can be wrapped as well."/>
+            <TextBlock x:Name="Message_TextBlock"
+                       Grid.Row="2"
+                       Grid.Column="2"
+                       Style="{StaticResource MairaTextBlockStyle}"
+                       TextWrapping="Wrap"
+                       d:Text="This is an example message that can be displayed inside of this error window. This text can be wrapped as well."
+                       VerticalAlignment="Center" />
 
-            <Expander x:Name="Details_Expander" Grid.Row="3" Grid.ColumnSpan="3" IsExpanded="False" Margin="0,20,0,0">
+            <Expander x:Name="Details_Expander"
+                      Grid.Row="3"
+                      Grid.ColumnSpan="3"
+                      IsExpanded="False"
+                      Margin="0,20,0,0">
 
                 <Expander.Header>
-                    <Label Content="{Binding Localization[Details]}" Padding="8,0,0,0"/>
+                    
+                    <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                               Text="{Binding Localization[Details]}"
+                               Margin="10,0,0,0" />
+                    
                 </Expander.Header>
 
                 <Expander.Style>
                     <Style TargetType="Expander">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=Details_TextBox}" Value="">
-                                <Setter Property="Visibility" Value="Collapsed"/>
+                            <DataTrigger Binding="{Binding Text, ElementName=Details_TextBox}"
+                                         Value="">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Expander.Style>
 
-                <Border Margin="0,10,0,10" Padding="10,10,10,10" BorderThickness="2" CornerRadius="10" Background="#B0000000" BorderBrush="White">
-                    <TextBox x:Name="Details_TextBox" Padding="0,0,0,10" IsReadOnly="True" TextWrapping="NoWrap" FontFamily="Consolas" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" BorderThickness="0" Background="#FF000000" Foreground="#FFFFFF" d:Text="Example details text"/>
+                <Border Margin="0,10,0,10"
+                        Padding="10,10,10,10"
+                        BorderThickness="2,0,0,0"
+                        BorderBrush="#ff5b2e"
+                        MaxHeight="400">
+
+                    <ScrollViewer>
+
+                        <TextBlock x:Name="Details_TextBlock"
+                                   Style="{StaticResource MairaTextBlockStyle}"
+                                   TextWrapping="NoWrap"
+                                   d:Text="Example details text" />
+
+                    </ScrollViewer>
+
                 </Border>
 
             </Expander>
 
-            <StackPanel Grid.Row="5" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right">
-                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_copy.png" Margin="5,0,5,0" Click="CopyDetails_MairaButton_Click"/>
-                <controls:MairaButton Title="" ButtonIcon="/MarvinsAIRARefactored;component/Artwork/ButtonIcons/button_icon_exit.png" Margin="5,0,5,0" Click="Exit_MairaButton_Click"/>
-            </StackPanel>
+            <Grid Grid.Row="5"
+                  Grid.Column="2"
+                  HorizontalAlignment="Right">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <controls:MairaButton Grid.Column="0"
+                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/copy.png"
+                                      Click="CopyDetails_MairaButton_Click" />
+
+                <controls:MairaButton Grid.Column="2"
+                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/power-red.png"
+                                      Click="Exit_MairaButton_Click" />
+            </Grid>
 
         </Grid>
 

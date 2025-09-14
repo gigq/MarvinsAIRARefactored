@@ -34,7 +34,7 @@ public partial class UpdateButtonMappingsWindow : Window
 			{
 				var buttonMapping = new MairaButtonMapping( mappedButton );
 
-				StackPanel.Children.Insert( StackPanel.Children.Count - 1, buttonMapping );
+				StackPanel.Children.Insert( StackPanel.Children.Count, buttonMapping );
 			}
 		}
 	}
@@ -45,7 +45,7 @@ public partial class UpdateButtonMappingsWindow : Window
 
 		var buttonMapping = new MairaButtonMapping( mappedButton );
 
-		StackPanel.Children.Insert( StackPanel.Children.Count - 1, buttonMapping );
+		StackPanel.Children.Insert( StackPanel.Children.Count, buttonMapping );
 	}
 
 	private void ThumbsUp_MairaButton_Click( object sender, RoutedEventArgs e )

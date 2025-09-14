@@ -100,7 +100,7 @@ public partial class ChatQueue
 
 			if ( _chatWindowCloseCounter == 0 )
 			{
-				app.Simulator.IRSDK.ChatComand( IRacingSdkEnum.ChatCommandMode.Cancel, 0 );
+//				app.Simulator.IRSDK.ChatComand( IRacingSdkEnum.ChatCommandMode.Cancel, 0 );
 
 				_chatWindowOpened = false;
 			}

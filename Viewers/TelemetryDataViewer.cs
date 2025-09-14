@@ -20,21 +20,34 @@ public class TelemetryDataViewer : Control
 	public int NumVisibleLines { get; private set; } = 0;
 	public int ScrollIndex { private get; set; } = 0;
 
-	private readonly CultureInfo cultureInfo = CultureInfo.GetCultureInfo( "en-us" );
-	private readonly Typeface typeface = new( "Courier New" );
+	private static readonly CultureInfo _cultureInfo = CultureInfo.GetCultureInfo( "en-us" );
+	private static readonly Typeface typeface = new( "Consolas" );
 
-	private readonly SolidColorBrush _oddLineBrush = new( Color.FromArgb( 224, 32, 32, 32 ) );
-	private readonly SolidColorBrush _evenLineBrush = new( Color.FromArgb( 224, 48, 48, 48 ) );
+	private static readonly SolidColorBrush _oddLineBrush = Brushes.Transparent;
+	private static readonly SolidColorBrush _evenLineBrush = new( Color.FromArgb( 255, 34, 34, 34 ) );
+	private static readonly SolidColorBrush _foregroundBrush = new( Color.FromArgb( 255, 220, 220, 220 ) );
+	private static readonly SolidColorBrush _indexBrush = new( Color.FromArgb( 255, 128, 128, 128 ) );
+	private static readonly SolidColorBrush _greenBrush = new( Color.FromArgb( 255, 46, 255, 145 ) );
+	private static readonly SolidColorBrush _orangeBrush = new( Color.FromArgb( 255, 255, 91, 46 ) );
 
-	private const double _firstColumnWidth = 320;
-	private const double _lineHeight = 24;
-	private const double _fontSize = 15;
+	private const double _lineHeight = 30.0;
+	private const double _fontSize = 20.0;
+	private const double _yOffset = -2.0;
+
+	private const double _firstColumnWidth = 330.0;
 
 	private ScrollBar? _scrollBar = null;
 
 	static TelemetryDataViewer()
 	{
 		DefaultStyleKeyProperty.OverrideMetadata( typeof( TelemetryDataViewer ), new FrameworkPropertyMetadata( typeof( TelemetryDataViewer ) ) );
+
+		_oddLineBrush.Freeze();
+		_evenLineBrush.Freeze();
+		_foregroundBrush.Freeze();
+		_indexBrush.Freeze();
+		_greenBrush.Freeze();
+		_orangeBrush.Freeze();
 	}
 
 	public void Initialize( ScrollBar scrollBar )
@@ -58,7 +71,7 @@ public class TelemetryDataViewer : Control
 			return;
 		}
 
-		var point = new Point( 10, 0 );
+		var origin = new Point( 20, _yOffset );
 		var lineIndex = 0;
 		var stopDrawing = false;
 
@@ -70,44 +83,44 @@ public class TelemetryDataViewer : Control
 				{
 					var brush = ( lineIndex & 1 ) == 1 ? _oddLineBrush : _evenLineBrush;
 
-					drawingContext.DrawRectangle( brush, null, new Rect( 0, point.Y, ActualWidth, _lineHeight ) );
+					drawingContext.DrawRectangle( brush, null, new Rect( 0, origin.Y - _yOffset, ActualWidth, _lineHeight ) );
 
 					var offset = keyValuePair.Value.Offset + valueIndex * IRacingSdkConst.VarTypeBytes[ (int) keyValuePair.Value.VarType ];
 
-					var formattedText = new FormattedText( offset.ToString(), cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, Brushes.White, 1.25 )
+					var formattedText = new FormattedText( offset.ToString(), _cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, _indexBrush, 1.25 )
 					{
 						LineHeight = _lineHeight
 					};
 
-					drawingContext.DrawText( formattedText, point );
+					drawingContext.DrawText( formattedText, origin );
 
-					point.X += 60;
+					origin.X += 60;
 
-					formattedText = new FormattedText( keyValuePair.Value.Name, cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, Brushes.White, 1.25 )
+					formattedText = new FormattedText( keyValuePair.Value.Name, _cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, _foregroundBrush, 1.25 )
 					{
 						LineHeight = _lineHeight
 					};
 
-					drawingContext.DrawText( formattedText, point );
+					drawingContext.DrawText( formattedText, origin );
 
-					point.X += _firstColumnWidth;
+					origin.X += _firstColumnWidth;
 
 					if ( keyValuePair.Value.Count > 1 )
 					{
-						formattedText = new FormattedText( valueIndex.ToString(), cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, Brushes.White, 1.25 )
+						formattedText = new FormattedText( valueIndex.ToString(), _cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, _indexBrush, 1.25 )
 						{
 							LineHeight = _lineHeight
 						};
 
-						drawingContext.DrawText( formattedText, point );
+						drawingContext.DrawText( formattedText, origin );
 					}
 
-					point.X += 60;
+					origin.X += 60;
 
 					var valueAsString = string.Empty;
 					var bitsAsString = string.Empty;
 					
-					brush = Brushes.White;
+					brush = _foregroundBrush;
 
 					switch ( keyValuePair.Value.Unit )
 					{
@@ -146,7 +159,7 @@ public class TelemetryDataViewer : Control
 								case IRacingSdkEnum.VarType.Bool:
 									var valueAsBool = irsdk.Data.GetBool( keyValuePair.Value, valueIndex );
 									valueAsString = valueAsBool ? "         T" : "         F";
-									brush = valueAsBool ? Brushes.LightGreen : Brushes.OrangeRed;
+									brush = valueAsBool ? _greenBrush : _orangeBrush;
 									break;
 
 								case IRacingSdkEnum.VarType.Int:
@@ -193,23 +206,23 @@ public class TelemetryDataViewer : Control
 							break;
 					}
 
-					formattedText = new FormattedText( valueAsString, cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, brush, 1.25 )
+					formattedText = new FormattedText( valueAsString, _cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, brush, 1.25 )
 					{
 						LineHeight = _lineHeight
 					};
 
-					drawingContext.DrawText( formattedText, point );
+					drawingContext.DrawText( formattedText, origin );
 
-					point.X += 200;
+					origin.X += 210;
 
-					formattedText = new FormattedText( keyValuePair.Value.Unit, cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, Brushes.White, 1.25 )
+					formattedText = new FormattedText( keyValuePair.Value.Unit, _cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, _foregroundBrush, 1.25 )
 					{
 						LineHeight = _lineHeight
 					};
 
-					drawingContext.DrawText( formattedText, point );
+					drawingContext.DrawText( formattedText, origin );
 
-					point.X += 200;
+					origin.X += 240;
 
 					var desc = keyValuePair.Value.Desc;
 					var originalDescLength = desc.Length;
@@ -219,22 +232,22 @@ public class TelemetryDataViewer : Control
 						desc += $" ({bitsAsString})";
 					}
 
-					formattedText = new FormattedText( desc, cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, Brushes.White, 1.25 )
+					formattedText = new FormattedText( desc, _cultureInfo, FlowDirection.LeftToRight, typeface, _fontSize, _foregroundBrush, 1.25 )
 					{
 						LineHeight = _lineHeight
 					};
 
 					if ( bitsAsString != string.Empty )
 					{
-						formattedText.SetForegroundBrush( Brushes.OrangeRed, originalDescLength, desc.Length - originalDescLength );
+						formattedText.SetForegroundBrush( _orangeBrush, originalDescLength, desc.Length - originalDescLength );
 					}
 
-					drawingContext.DrawText( formattedText, point );
+					drawingContext.DrawText( formattedText, origin );
 
-					point.X = 10;
-					point.Y += _lineHeight;
+					origin.X = 20;
+					origin.Y += _lineHeight;
 
-					if ( point.Y >= ActualHeight )
+					if ( origin.Y >= ActualHeight )
 					{
 						stopDrawing = true;
 					}

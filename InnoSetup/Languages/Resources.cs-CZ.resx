@@ -59,10 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root"
-    xmlns=""
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -124,7 +121,7 @@
     <value>Algoritmus FFB</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="App" xml:space="preserve">
+  <data name="AppSettings" xml:space="preserve">
     <value>Aplikace</value>
     <comment>Tab item</comment>
   </data>
@@ -135,10 +132,6 @@
   <data name="DetailBoostBias" xml:space="preserve">
     <value>Odchylka zvýšení detailů FFB</value>
     <comment>Racing wheel</comment>
-  </data>
-  <data name="Debug" xml:space="preserve">
-    <value>Debug</value>
-    <comment>Tab item</comment>
   </data>
   <data name="DetailBoost" xml:space="preserve">
     <value>Zvýšení detailů FFB</value>
@@ -156,11 +149,11 @@
     <value>Graf FFB</value>
     <comment>Tab item</comment>
   </data>
-  <data name="HeaderData" xml:space="preserve">
+  <data name="HeaderData_UC" xml:space="preserve">
     <value>Hlavní data</value>
     <comment>Simulator</comment>
   </data>
-  <data name="Language" xml:space="preserve">
+  <data name="Language_UC" xml:space="preserve">
     <value>Jazyk</value>
     <comment>App</comment>
   </data>
@@ -198,6 +191,9 @@
   </data>
   <data name="RacingWheel" xml:space="preserve">
     <value>Volant</value>
+  </data>
+  <data name="RacingWheel_UC" xml:space="preserve">
+    <value>Volant</value>
     <comment>Tab item</comment>
   </data>
   <data name="SteeringDevice" xml:space="preserve">
@@ -208,7 +204,7 @@
     <value>Obnovit</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="SessionInformation" xml:space="preserve">
+  <data name="SessionInformation_UC" xml:space="preserve">
     <value>Informace o aktuální jízdě</value>
     <comment>Simulator</comment>
   </data>
@@ -224,7 +220,7 @@
     <value>Síla dorazu řízení</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="TelemetryData" xml:space="preserve">
+  <data name="TelemetryData_UC" xml:space="preserve">
     <value>Telemetrické data</value>
     <comment>Simulator</comment>
   </data>
@@ -308,11 +304,11 @@
     <value>Velikost komprese</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Device" xml:space="preserve">
+  <data name="Device_UC" xml:space="preserve">
     <value>Zařízení</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="OverallStrength" xml:space="preserve">
+  <data name="OverallStrength_UC" xml:space="preserve">
     <value>Celková síla FFB</value>
     <comment>Racing wheel</comment>
   </data>
@@ -332,19 +328,19 @@
     <value>Vrchol síly FFB</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="AutoForce" xml:space="preserve">
+  <data name="AutoMaxForce" xml:space="preserve">
     <value>Automatické vypočítání síly FFB</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="OtherFeatures" xml:space="preserve">
+  <data name="OtherFeatures_UC" xml:space="preserve">
     <value>Jiné nastavení</value>
     <comment>Racing wheel, Pedals</comment>
   </data>
-  <data name="Switches" xml:space="preserve">
+  <data name="Switches_UC" xml:space="preserve">
     <value>Přepínače</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="CrashProtection" xml:space="preserve">
+  <data name="CrashProtection_UC" xml:space="preserve">
     <value>Ochrana při nárazu</value>
     <comment>Racing wheel</comment>
   </data>
@@ -372,7 +368,7 @@
     <value> m/s</value>
     <comment>Abbreviation for meters per second</comment>
   </data>
-  <data name="CurbProtection" xml:space="preserve">
+  <data name="CurbProtection_UC" xml:space="preserve">
     <value>Ochrana při přejetí obrubníku</value>
     <comment>Racing wheel</comment>
   </data>
@@ -380,7 +376,7 @@
     <value>Při zrychlení volantu</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Pedals" xml:space="preserve">
+  <data name="Pedals_UC" xml:space="preserve">
     <value>Pedály</value>
     <comment>Tab item</comment>
   </data>
@@ -396,15 +392,15 @@
     <value>[nebyly nalezeny kompatibilní pedály]</value>
     <comment>Pedals device</comment>
   </data>
-  <data name="Clutch" xml:space="preserve">
+  <data name="Clutch_UC" xml:space="preserve">
     <value>Spojka</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Brake" xml:space="preserve">
+  <data name="Brake_UC" xml:space="preserve">
     <value>Brzda</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Throttle" xml:space="preserve">
+  <data name="Throttle_UC" xml:space="preserve">
     <value>Plyn</value>
     <comment>Pedals</comment>
   </data>
@@ -420,11 +416,11 @@
     <value> Hz</value>
     <comment>Abbreviation for Hertz</comment>
   </data>
-  <data name="Frequency" xml:space="preserve">
+  <data name="Frequency_UC" xml:space="preserve">
     <value>Frekvence</value>
     <comment>Pedals</comment>
   </data>
-  <data name="Amplitude" xml:space="preserve">
+  <data name="Amplitude_UC" xml:space="preserve">
     <value>Amplitude</value>
     <comment>Pedals</comment>
   </data>
@@ -444,23 +440,26 @@
     <value>Přeřazení</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="ClutchSlip" xml:space="preserve">
+  <data name="ClutchSlip_UC" xml:space="preserve">
     <value>Prokluz spojky</value>
     <comment>Pedal effects list</comment>
+  </data>
+  <data name="SteeringEffects_UC" xml:space="preserve">
+    <value>Efekty FFB</value>
   </data>
   <data name="SteeringEffects" xml:space="preserve">
     <value>Efekty FFB</value>
     <comment>Tab item, Pedal effects list</comment>
   </data>
-  <data name="WheelLock" xml:space="preserve">
+  <data name="WheelLock_UC" xml:space="preserve">
     <value>Zablokování kola</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="WheelSpin" xml:space="preserve">
+  <data name="WheelSpin_UC" xml:space="preserve">
     <value>Prokluz kola</value>
     <comment>Pedal effects list</comment>
   </data>
-  <data name="RPM" xml:space="preserve">
+  <data name="RPM_UC" xml:space="preserve">
     <value>Otáčky motoru</value>
     <comment>Pedal effects list</comment>
   </data>
@@ -560,11 +559,11 @@
     <value>Delta Limiter - odchylka</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Output" xml:space="preserve">
+  <data name="Output_UC" xml:space="preserve">
     <value>Výstup</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="WheelLFE" xml:space="preserve">
+  <data name="WheelLFE_UC" xml:space="preserve">
     <value>Vibrace volantu (LFE)</value>
     <comment>Racing wheel</comment>
   </data>
@@ -604,7 +603,7 @@
     <value>Vstup LFE</value>
     <comment>Graph</comment>
   </data>
-  <data name="ABSEngaged" xml:space="preserve">
+  <data name="ABSEngaged_UC" xml:space="preserve">
     <value>ABS aktivováno</value>
     <comment>Pedal effects list, Sounds</comment>
   </data>
@@ -640,11 +639,11 @@
     <value>Bod konce</value>
     <comment>Pedals</comment>
   </data>
-  <data name="GearChangeShiftIntoGear" xml:space="preserve">
+  <data name="GearChangeShiftIntoGear_UC" xml:space="preserve">
     <value>Změna převodu - zařadit převod</value>
     <comment>Pedals</comment>
   </data>
-  <data name="GearChangeShiftIntoNeutral" xml:space="preserve">
+  <data name="GearChangeShiftIntoNeutral_UC" xml:space="preserve">
     <value>Změna převodu - zařazení Neutrálu</value>
     <comment>Pedals</comment>
   </data>
@@ -668,7 +667,7 @@
     <value>Tlumič hluku</value>
     <comment>Pedals</comment>
   </data>
-  <data name="AppWindow" xml:space="preserve">
+  <data name="AppWindow_UC" xml:space="preserve">
     <value>Okno aplikace</value>
     <comment>App</comment>
   </data>
@@ -676,7 +675,7 @@
     <value>Měřítko UI</value>
     <comment>App</comment>
   </data>
-  <data name="CloudService" xml:space="preserve">
+  <data name="CloudService_UC" xml:space="preserve">
     <value>Cloud Servis</value>
     <comment>App</comment>
   </data>
@@ -692,7 +691,7 @@
     <value>Probíhá stahování aktualizace...</value>
     <comment>Status</comment>
   </data>
-  <data name="Contribute" xml:space="preserve">
+  <data name="Contribute_UC" xml:space="preserve">
     <value>Podíleli se</value>
     <comment>Tab item</comment>
   </data>
@@ -704,15 +703,15 @@
     <value>Příspěvky jsou pouze dobrovolné a nikdy nebude MAIRA zpoplatněná. Vašich příspěvků si moc vážím a motivuje mě to pokračovat dále. Obrovské díky patří všem, kteří už poslali nějaký příspěvek! Zde je odkaz, kde je možné taky přispět:</value>
     <comment>Contribute</comment>
   </data>
-  <data name="Donations" xml:space="preserve">
+  <data name="Donate_UC" xml:space="preserve">
     <value>Příspěvky</value>
     <comment>Contribute</comment>
   </data>
-  <data name="Donors" xml:space="preserve">
+  <data name="Donors_UC" xml:space="preserve">
     <value>Přispěvatelé</value>
     <comment>Contribute</comment>
   </data>
-  <data name="SuperDonors" xml:space="preserve">
+  <data name="SuperDonors_UC" xml:space="preserve">
     <value>Super Přispěvatelé</value>
     <comment>Contribute</comment>
   </data>
@@ -720,11 +719,11 @@
     <value>Příspěvek</value>
     <comment>Tab item</comment>
   </data>
-  <data name="CodeContributions" xml:space="preserve">
+  <data name="CodeContributions_UC" xml:space="preserve">
     <value>Pomoc s tvorbou Kódu MAIRA!</value>
     <comment>Contribute</comment>
   </data>
-  <data name="TranslationContributions" xml:space="preserve">
+  <data name="TranslationContributions_UC" xml:space="preserve">
     <value>Pomoc s překladem MAIRA!</value>
     <comment>Contribute</comment>
   </data>
@@ -796,7 +795,7 @@
     <value>Vypočítat</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="Preview" xml:space="preserve">
+  <data name="Preview_UC" xml:space="preserve">
     <value>Náhled křivky FFB</value>
     <comment>Racing wheel</comment>
   </data>
@@ -820,7 +819,7 @@
     <value>ZeAlanLeTwist</value>
     <comment>Racing wheel algorithms list</comment>
   </data>
-  <data name="DiscordModerators" xml:space="preserve">
+  <data name="DiscordModerators_UC" xml:space="preserve">
     <value>Moderátoři na Discordu</value>
     <comment>Contribute</comment>
   </data>
@@ -840,7 +839,7 @@
     <value>Zapnout</value>
     <comment>Generic</comment>
   </data>
-  <data name="Sounds" xml:space="preserve">
+  <data name="Sounds_UC" xml:space="preserve">
     <value>Zvuky</value>
     <comment>Tab item</comment>
   </data>
@@ -868,7 +867,7 @@
     <value>°</value>
     <comment>Abbreviation for degrees</comment>
   </data>
-  <data name="Master" xml:space="preserve">
+  <data name="Master_UC" xml:space="preserve">
     <value></value>
     <comment>Sounds</comment>
   </data>
@@ -880,7 +879,7 @@
     <value>Ochrana při přejetí obrubníku aktivována!</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="PrivateMessages" xml:space="preserve">
+  <data name="PrivateMessages_UC" xml:space="preserve">
     <value>Soukromé zprávy</value>
     <comment>Racing wheel</comment>
   </data>
@@ -964,7 +963,7 @@
     <value>Nechat Grip-O-Meter posouvatelné</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="GripOMeter" xml:space="preserve">
+  <data name="GripOMeter_UC" xml:space="preserve">
     <value>Grip-O-Meter</value>
     <comment>Steering effects</comment>
   </data>
@@ -976,7 +975,7 @@
     <value>Obnovit pozici okna Grip-O-Meter</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="UndersteerWheelVibrationEffect" xml:space="preserve">
+  <data name="UndersteerWheelVibrationEffect_UC" xml:space="preserve">
     <value>Efekt vibrací volantu při nedotáčivosti</value>
     <comment>Steering effects</comment>
   </data>
@@ -988,7 +987,7 @@
     <value>[kalibrační soubor není vybraný]</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="ParkedEffects" xml:space="preserve">
+  <data name="ParkedEffects_UC" xml:space="preserve">
     <value>Efekty u stojícího vozidla</value>
     <comment>Racing wheel</comment>
   </data>
@@ -1020,11 +1019,7 @@
     <value>Aktuální setup vozu</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="CurrentTireCompound" xml:space="preserve">
-    <value>Aktuální směs pneumatik</value>
-    <comment>Steering effects</comment>
-  </data>
-  <data name="UndersteerPedalVibrationEffect" xml:space="preserve">
+  <data name="UndersteerPedalVibrationEffect_UC" xml:space="preserve">
     <value>Vibrace pedálu při nedotáčivosti</value>
     <comment>Steering effects</comment>
   </data>
@@ -1060,15 +1055,15 @@
     <value>°/s</value>
     <comment>Abbreviation for degrees per second</comment>
   </data>
-  <data name="CalibrationFile" xml:space="preserve">
+  <data name="CalibrationFile_UC" xml:space="preserve">
     <value>Kalibrační soubor</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="Understeer" xml:space="preserve">
+  <data name="Understeer_UC" xml:space="preserve">
     <value>Nedotáčivost</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="Oversteer" xml:space="preserve">
+  <data name="Oversteer_UC" xml:space="preserve">
     <value>Přetáčivost</value>
     <comment>Steering effects</comment>
   </data>
@@ -1088,7 +1083,7 @@
     <value>Maximální frekvence</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="Calibration" xml:space="preserve">
+  <data name="Calibration_UC" xml:space="preserve">
     <value>Kalibrace</value>
     <comment>Steering effects</comment>
   </data>
@@ -1124,7 +1119,7 @@
     <value>Zvýšit sílu</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="UndersteerWheelConstantForceEffect" xml:space="preserve">
+  <data name="UndersteerWheelConstantForceEffect_UC" xml:space="preserve">
     <value>Nedotáčivost - konstatní síla efektu </value>
     <comment>Steering effects</comment>
   </data>
@@ -1132,15 +1127,15 @@
     <value>Směr</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="OversteerWheelVibrationEffect" xml:space="preserve">
+  <data name="OversteerWheelVibrationEffect_UC" xml:space="preserve">
     <value>Efekty vibrací při přetáčivosti</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="OversteerWheelConstantForceEffect" xml:space="preserve">
+  <data name="OversteerWheelConstantForceEffect_UC" xml:space="preserve">
     <value>Přetáčivost - konstatní síla efektu </value>
     <comment>Steering effects</comment>
   </data>
-  <data name="OversteerPedalVibrationEffect" xml:space="preserve">
+  <data name="OversteerPedalVibrationEffect_UC" xml:space="preserve">
     <value>Efekt vibrací pedálu při přetáčivosti</value>
     <comment>Steering effects</comment>
   </data>
@@ -1151,5 +1146,53 @@
   <data name="OversteerEffect" xml:space="preserve">
     <value>Efekt při přetáčivosti</value>
     <comment>Pedals</comment>
+  </data>
+  <data name="Algorithm_UC" xml:space="preserve">
+    <value>Algoritmus FFB</value>
+  </data>
+  <data name="Contribute" xml:space="preserve">
+    <value>Podíleli se</value>
+  </data>
+  <data name="Moderators" xml:space="preserve">
+    <value>Moderátoři na Discordu</value>
+  </data>
+  <data name="AppSettings_UC" xml:space="preserve">
+    <value>Aplikace</value>
+  </data>
+  <data name="Simulator_UC" xml:space="preserve">
+    <value>Simulátor</value>
+  </data>
+  <data name="Graph_UC" xml:space="preserve">
+    <value>Graf FFB</value>
+  </data>
+  <data name="ABSEngaged" xml:space="preserve">
+    <value>ABS aktivováno</value>
+  </data>
+  <data name="Amplitude" xml:space="preserve">
+    <value>Amplitude</value>
+  </data>
+  <data name="ClutchSlip" xml:space="preserve">
+    <value>Prokluz spojky</value>
+  </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>Frekvence</value>
+  </data>
+  <data name="RPM" xml:space="preserve">
+    <value>Otáčky motoru</value>
+  </data>
+  <data name="Sounds" xml:space="preserve">
+    <value>Zvuky</value>
+  </data>
+  <data name="Pedals" xml:space="preserve">
+    <value>Pedály</value>
+  </data>
+  <data name="WheelSpin" xml:space="preserve">
+    <value>Prokluz kola</value>
+  </data>
+  <data name="WheelLock" xml:space="preserve">
+    <value>Zablokování kola</value>
+  </data>
+  <data name="GripOMeter" xml:space="preserve">
+    <value>Grip-O-Meter</value>
   </data>
 </root>

@@ -7,6 +7,7 @@ using IRSDKSharper;
 using PInvoke;
 
 using MarvinsAIRARefactored.Classes;
+using MarvinsAIRARefactored.Windows;
 
 namespace MarvinsAIRARefactored.Components;
 
@@ -777,7 +778,7 @@ public partial class Simulator
 		{
 			_updateCounter = UpdateInterval;
 
-			app.MainWindow.RacingWheel_CurrentForce_Label.Content = $"{MathF.Abs( SteeringWheelTorque_ST[ 5 ] ):F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
+			MainWindow._racingWheelPage.CurrentForce_TextBlock.Text = $"{MathF.Abs( SteeringWheelTorque_ST[ 5 ] ):F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
 		}
 	}
 

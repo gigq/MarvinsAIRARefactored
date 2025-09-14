@@ -40,9 +40,9 @@ public partial class GripOMeterWindow : Window
 
 		WindowStartupLocation = WindowStartupLocation.Manual;
 
-		UpdateVisibility();
-
 		_initialized = true;
+
+		UpdateVisibility();
 
 		app.Logger.WriteLine( "[GripOMeterWindow] <<< Initialize" );
 	}

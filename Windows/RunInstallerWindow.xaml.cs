@@ -16,16 +16,16 @@ public partial class RunInstallerWindow : Window
 		InitializeComponent();
 	}
 
-	private void Cancel_MairaButton_Click( object sender, RoutedEventArgs e )
+	private void Install_MairaButton_Click( object sender, RoutedEventArgs e )
 	{
-		InstallUpdate = false;
+		InstallUpdate = true;
 
 		Close();
 	}
 
-	private void ThumbsUp_MairaButton_Click( object sender, RoutedEventArgs e )
+	private void Cancel_MairaButton_Click( object sender, RoutedEventArgs e )
 	{
-		InstallUpdate = true;
+		InstallUpdate = false;
 
 		Close();
 	}

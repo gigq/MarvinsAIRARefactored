@@ -18,33 +18,55 @@
         Cursor="SizeAll">
 
     <Window.DataContext>
-        <Binding Source="{x:Static datacontext:DataContext.Instance}"/>
+        <Binding Source="{x:Static datacontext:DataContext.Instance}" />
     </Window.DataContext>
 
     <Grid>
 
         <Grid.LayoutTransform>
-            <ScaleTransform x:Name="RootScaleTransform" ScaleX="{Binding Settings.SteeringEffectsGripOMeterWindowScale}" ScaleY="{Binding Settings.SteeringEffectsGripOMeterWindowScale}"/>
+            <ScaleTransform x:Name="RootScaleTransform"
+                            ScaleX="{Binding Settings.SteeringEffectsGripOMeterWindowScale}"
+                            ScaleY="{Binding Settings.SteeringEffectsGripOMeterWindowScale}" />
         </Grid.LayoutTransform>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="384"/>
+            <ColumnDefinition Width="384" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition Height="8"/>
-            <RowDefinition Height="8"/>
-            <RowDefinition Height="80"/>
-            <RowDefinition Height="8"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="80" />
+            <RowDefinition Height="8" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="{Binding Localization[GripOMeter]}" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
-        <Image Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Source="/MarvinsAIRARefactored;component/Artwork/Misc/grip-o-meter.png" Width="384" Height="96" RenderOptions.BitmapScalingMode="HighQuality"/>
-        <Image Grid.Row="3" Grid.Column="0" Source="/MarvinsAIRARefactored;component/Artwork/Misc/grip-o-meter-ball.png" Width="80" Height="80" RenderOptions.BitmapScalingMode="HighQuality">
+        <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Text="{Binding Localization[GripOMeter]}"
+                   HorizontalAlignment="Center"
+                   FontSize="30" />
+
+        <Image Grid.Row="2"
+               Grid.RowSpan="3"
+               Grid.Column="0"
+               Source="/MarvinsAIRARefactored;component/Artwork/Misc/grip-o-meter.png"
+               Width="384"
+               Height="96"
+               RenderOptions.BitmapScalingMode="HighQuality" />
+
+        <Image Grid.Row="3"
+               Grid.Column="0"
+               Source="/MarvinsAIRARefactored;component/Artwork/Misc/grip-o-meter-ball.png"
+               Width="80"
+               Height="80"
+               RenderOptions.BitmapScalingMode="HighQuality">
+
             <Image.RenderTransform>
                 <TranslateTransform x:Name="GripOMeter_Ball_Transform" />
             </Image.RenderTransform>
+
         </Image>
 
     </Grid>

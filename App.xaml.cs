@@ -2,14 +2,18 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
+
+using Application = System.Windows.Application;
+using ComboBox = System.Windows.Controls.ComboBox;
+using Timer = System.Timers.Timer;
 
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Components;
 using MarvinsAIRARefactored.Windows;
-
-using Application = System.Windows.Application;
-using Timer = System.Timers.Timer;
 
 namespace MarvinsAIRARefactored;
 
@@ -75,6 +79,8 @@ public partial class App : Application
 	App()
 	{
 		Instance = this;
+
+		InitializeComponent();
 
 		Logger = new();
 		CloudService = new();
@@ -308,6 +314,27 @@ public partial class App : Application
 #endif
 
 		Logger.WriteLine( "[App] <<< App_Exit" );
+	}
+
+	private void ComboBox_PreviewMouseWheel( object sender, MouseWheelEventArgs e )
+	{
+		if ( sender is not ComboBox comboBox ) return;
+
+		if ( comboBox.IsDropDownOpen ) return;
+
+		e.Handled = true;
+
+		var scrollViewer = Misc.FindAncestor<ScrollViewer>( comboBox );
+
+		if ( scrollViewer is null ) return;
+
+		var forwardArgs = new MouseWheelEventArgs( e.MouseDevice, e.Timestamp, e.Delta )
+		{
+			RoutedEvent = UIElement.MouseWheelEvent,
+			Source = sender
+		};
+
+		scrollViewer.RaiseEvent( forwardArgs );
 	}
 
 	private void OnInput( string deviceProductName, Guid deviceInstanceGuid, int buttonNumber, bool isPressed )
@@ -1914,24 +1941,33 @@ public partial class App : Application
 			{
 				app.Dispatcher.InvokeAsync( () =>
 				{
-					app.RacingWheel.Tick( app );
-					app.SettingsFile.Tick( app );
-					app.Pedals.Tick( app );
-					app.AdminBoxx.Tick( app );
-					app.Debug.Tick( app );
-					app.ChatQueue.Tick( app );
-					app.MainWindow.Tick( app );
-					app.MultimediaTimer.Tick( app );
-					app.Simulator.Tick( app );
-					app.Sounds.Tick( app );
-					app.Graph.Tick( app );
-					app.SteeringEffects.Tick( app );
-					app.VirtualJoystick.Tick( app );
-					app.GripOMeterWindow.Tick( app );
-					app.Telemetry.Tick( app );
-					app.SpeechToTextWindow.Tick( app );
-
-					app._tickMutex = 0;
+					try
+					{
+						app.RacingWheel.Tick( app );
+						app.SettingsFile.Tick( app );
+						app.Pedals.Tick( app );
+						app.AdminBoxx.Tick( app );
+						app.Debug.Tick( app );
+						app.ChatQueue.Tick( app );
+						app.MainWindow.Tick( app );
+						app.MultimediaTimer.Tick( app );
+						app.Simulator.Tick( app );
+						app.Sounds.Tick( app );
+						app.Graph.Tick( app );
+						app.SteeringEffects.Tick( app );
+						app.VirtualJoystick.Tick( app );
+						app.GripOMeterWindow.Tick( app );
+						app.Telemetry.Tick( app );
+						app.SpeechToTextWindow.Tick( app );
+					}
+					catch ( Exception exception )
+					{
+						app.ShowFatalError( "An exception was thrown while performing Tick() calls on the app worker thread.", exception );
+					}
+					finally
+					{
+						app._tickMutex = 0;
+					}
 				} );
 			}
 		}

@@ -229,4 +229,14 @@ public class Misc
 
 		return null;
 	}
+
+	public static T? FindAncestor<T>( DependencyObject start ) where T : DependencyObject
+	{
+		for ( var parent = VisualTreeHelper.GetParent( start ); parent is not null; parent = VisualTreeHelper.GetParent( parent ) )
+		{
+			if ( parent is T typed ) return typed;
+		}
+
+		return null;
+	}
 }

@@ -14,29 +14,15 @@ public class MairaMappableButton : MairaButton
 	{
 		Loaded += MairaMappableButton_Loaded;
 
-		Label.PreviewMouseRightButtonDown += MappableMairaButton_Label_PreviewMouseRightButtonDown;
+		TextBlock.PreviewMouseRightButtonDown += MappableMairaButton_Label_PreviewMouseRightButtonDown;
 		Button.PreviewMouseRightButtonDown += MappableMairaButton_Button_PreviewMouseRightButtonDown;
 	}
+
+	#region User Control Events
 
 	private void MairaMappableButton_Loaded( object sender, RoutedEventArgs e )
 	{
 		IsMapped = HasAnyMappedButton();
-	}
-
-	public static readonly DependencyProperty ContextSwitchesProperty = DependencyProperty.Register( nameof( ContextSwitches ), typeof( ContextSwitches ), typeof( MairaMappableButton ), new PropertyMetadata( null ) );
-
-	public ContextSwitches ContextSwitches
-	{
-		get => (ContextSwitches) GetValue( ContextSwitchesProperty );
-		set => SetValue( ContextSwitchesProperty, value );
-	}
-
-	public static readonly DependencyProperty ButtonMappingsProperty = DependencyProperty.Register( nameof( ButtonMappings ), typeof( ButtonMappings ), typeof( MairaMappableButton ), new PropertyMetadata( null ) );
-
-	public ButtonMappings ButtonMappings
-	{
-		get => (ButtonMappings) GetValue( ButtonMappingsProperty );
-		set => SetValue( ButtonMappingsProperty, value );
 	}
 
 	private void MappableMairaButton_Label_PreviewMouseRightButtonDown( object sender, MouseButtonEventArgs e )
@@ -79,6 +65,30 @@ public class MairaMappableButton : MairaButton
 		}
 	}
 
+	#endregion
+
+	#region Dependency Properties
+
+	public static readonly DependencyProperty ContextSwitchesProperty = DependencyProperty.Register( nameof( ContextSwitches ), typeof( ContextSwitches ), typeof( MairaMappableButton ), new PropertyMetadata( null ) );
+
+	public ContextSwitches ContextSwitches
+	{
+		get => (ContextSwitches) GetValue( ContextSwitchesProperty );
+		set => SetValue( ContextSwitchesProperty, value );
+	}
+
+	public static readonly DependencyProperty ButtonMappingsProperty = DependencyProperty.Register( nameof( ButtonMappings ), typeof( ButtonMappings ), typeof( MairaMappableButton ), new PropertyMetadata( null ) );
+
+	public ButtonMappings ButtonMappings
+	{
+		get => (ButtonMappings) GetValue( ButtonMappingsProperty );
+		set => SetValue( ButtonMappingsProperty, value );
+	}
+
+	#endregion
+
+	#region Logic
+
 	private bool HasAnyMappedButton()
 	{
 		if ( ( ButtonMappings != null ) && ( ButtonMappings.MappedButtons.Count > 0 ) )
@@ -94,4 +104,6 @@ public class MairaMappableButton : MairaButton
 
 		return false;
 	}
+
+	#endregion
 }
