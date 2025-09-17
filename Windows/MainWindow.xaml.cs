@@ -2,13 +2,14 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-using Application = System.Windows.Application;
-
 using Simagic;
+
+using Application = System.Windows.Application;
 
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Components;
@@ -25,6 +26,7 @@ public partial class MainWindow : Window
 		RacingWheel,
 		SteeringEffects,
 		Pedals,
+		Wind,
 		Sounds,
 		SpeechToText,
 		Graph,
@@ -41,6 +43,7 @@ public partial class MainWindow : Window
 	public static readonly RacingWheelPage _racingWheelPage = new();
 	public static readonly SteeringEffectsPage _steeringEffectsPage = new();
 	public static readonly PedalsPage _pedalsPage = new();
+	public static readonly WindPage _windPage = new();
 	public static readonly SoundsPage _soundsPage = new();
 	public static readonly SpeechToTextPage _speechToTextPage = new();
 	public static readonly GraphPage _graphPage = new();
@@ -541,6 +544,11 @@ public partial class MainWindow : Window
 
 			Process.Start( processStartInfo );
 		}
+	}
+
+	private void PageName_TextBlock_PreviewMouseLeftButtonDown( object sender, MouseButtonEventArgs e )
+	{
+		AppMenuButton.IsMenuOpen = true;
 	}
 
 	public void Tick( App app )

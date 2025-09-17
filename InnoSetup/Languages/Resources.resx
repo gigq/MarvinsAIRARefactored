@@ -1277,4 +1277,16 @@
     <value>Grip-O-Meter</value>
     <comment>Steering effects</comment>
   </data>
+  <data name="MPHUnits" xml:space="preserve">
+    <value> MPH</value>
+    <comment>Abbreviation for miles per hour</comment>
+  </data>
+  <data name="Wind_UC" xml:space="preserve">
+    <value>WIND</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="Wind" xml:space="preserve">
+    <value>Wind</value>
+    <comment>App menu item</comment>
+  </data>
 </root>

@@ -67,6 +67,12 @@ namespace MarvinsAIRARefactored.Controls
 
 			AppMenuItems.Add( new AppMenuItem
 			{
+				AppPage = AppPage.Wind,
+				PageUserControl = _windPage
+			} );
+
+			AppMenuItems.Add( new AppMenuItem
+			{
 				AppPage = AppPage.Sounds,
 				PageUserControl = _soundsPage
 			} );
@@ -256,6 +262,10 @@ namespace MarvinsAIRARefactored.Controls
 						menuItem.DisplayName = localization[ "Pedals" ];
 						break;
 
+					case AppPage.Wind:
+						menuItem.DisplayName = localization[ "Wind" ];
+						break;
+
 					case AppPage.Sounds:
 						menuItem.DisplayName = localization[ "Sounds" ];
 						break;
@@ -313,6 +323,10 @@ namespace MarvinsAIRARefactored.Controls
 
 				case AppPage.Pedals:
 					SelectedAppPageText = localization[ "Pedals_UC" ];
+					break;
+
+				case AppPage.Wind:
+					SelectedAppPageText = localization[ "Wind_UC" ];
 					break;
 
 				case AppPage.Sounds:
