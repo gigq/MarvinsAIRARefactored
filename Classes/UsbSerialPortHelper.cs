@@ -16,7 +16,7 @@ public sealed class UsbSerialPortHelper( string vid, string pid ) : IDisposable
 	private SerialPort? _serialPort = null;
 	private CancellationTokenSource? _cancellationTokenSource = null;
 
-	private StringBuilder _dataBuffer = new();
+	private readonly StringBuilder _dataBuffer = new();
 
 	private readonly Lock _lock = new();
 
@@ -186,6 +186,7 @@ public sealed class UsbSerialPortHelper( string vid, string pid ) : IDisposable
 		{
 		}
 	}
+
 	private async Task MonitorPort( CancellationToken token )
 	{
 		while ( !token.IsCancellationRequested )
