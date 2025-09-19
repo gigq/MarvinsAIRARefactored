@@ -73,7 +73,7 @@ public partial class MainWindow : Window
 
 		app.Logger.WriteLine( $"[MainWindow] Version is {version}" );
 
-		Components.Localization.SetLanguageComboBoxItemsSource( _appSettingsPage.Language_MairaComboBox );
+		MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization.SetLanguageComboBoxItemsSource( _appSettingsPage.Language_MairaComboBox );
 
 #if ADMINBOXX
 
@@ -143,33 +143,18 @@ public partial class MainWindow : Window
 
 			Title = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "AppTitle" ] + " " + Misc.GetVersion();
 
-			app.DirectInput.SetMairaComboBoxItemsSource( _racingWheelPage.SteeringDevice_MairaComboBox );
+			_racingWheelPage.UpdateSteeringDeviceOptions();
+			_racingWheelPage.UpdateLFERecordingDeviceOptions();
+			_racingWheelPage.UpdatePreviewRecordingsOptions();
+			_racingWheelPage.UpdateAlgorithmOptions();
 
-			app.LFE.SetMairaComboBoxItemsSource( _racingWheelPage.LFERecordingDevice_MairaComboBox );
+			_steeringEffectsPage.UpdateCalibrationFileNameOptions();
+			_steeringEffectsPage.UpdateVibrationPatternOptions();
+			_steeringEffectsPage.UpdateConstantForceDirectionOptions();
 
-			app.RecordingManager.SetMairaComboBoxItemsSource( _racingWheelPage.PreviewRecordings_MairaComboBox );
+			_pedalsPage.UpdateEffectOptions();
 
-			RacingWheel.SetMairaComboBoxItemsSource( _racingWheelPage.Algorithm_MairaComboBox );
-
-			Pedals.SetMairaComboBoxItemsSource( _pedalsPage.ClutchEffect1_MairaComboBox );
-			Pedals.SetMairaComboBoxItemsSource( _pedalsPage.ClutchEffect2_MairaComboBox );
-			Pedals.SetMairaComboBoxItemsSource( _pedalsPage.ClutchEffect3_MairaComboBox );
-			Pedals.SetMairaComboBoxItemsSource( _pedalsPage.BrakeEffect1_MairaComboBox );
-			Pedals.SetMairaComboBoxItemsSource( _pedalsPage.BrakeEffect2_MairaComboBox );
-			Pedals.SetMairaComboBoxItemsSource( _pedalsPage.BrakeEffect3_MairaComboBox );
-			Pedals.SetMairaComboBoxItemsSource( _pedalsPage.ThrottleEffect1_MairaComboBox );
-			Pedals.SetMairaComboBoxItemsSource( _pedalsPage.ThrottleEffect2_MairaComboBox );
-			Pedals.SetMairaComboBoxItemsSource( _pedalsPage.ThrottleEffect3_MairaComboBox );
-
-			SteeringEffects.SetCalibrationFileNameMairaComboBoxItemsSource();
-
-			SteeringEffects.SetVibrationPatternMairaComboBoxItemsSource( _steeringEffectsPage.UndersteerWheelVibrationPattern_MairaComboBox );
-			SteeringEffects.SetVibrationPatternMairaComboBoxItemsSource( _steeringEffectsPage.OversteerWheelVibrationPattern_MairaComboBox );
-
-			SteeringEffects.SetConstantForceDirectionMairaComboBoxItemsSource( _steeringEffectsPage.UndersteerWheelConstantForceDirection_MairaComboBox );
-			SteeringEffects.SetConstantForceDirectionMairaComboBoxItemsSource( _steeringEffectsPage.OversteerWheelConstantForceDirection_MairaComboBox );
-
-			SpeechToText.SetMairaComboBoxItemsSource( _speechToTextPage.Language_MairaComboBox );
+			_speechToTextPage.UpdateLanguageOptions();
 
 			app.SpeechToText.UpdateStrings();
 
