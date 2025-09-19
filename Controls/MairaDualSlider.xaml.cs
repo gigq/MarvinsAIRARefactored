@@ -107,7 +107,7 @@ public partial class MairaDualSlider : UserControl
 
 			if ( delta != 0 )
 			{
-				LeftValue = Math.Clamp( LeftValue - delta * 0.001f, 0f, 1f );
+				LeftValue = MathZ.Saturate( LeftValue - delta * 0.001f );
 
 				User32.SetCursorPos( _draggingCenter.x, _draggingCenter.y );
 			}
@@ -124,7 +124,7 @@ public partial class MairaDualSlider : UserControl
 
 			if ( delta != 0 )
 			{
-				RightValue = Math.Clamp( RightValue - delta * 0.001f, 0f, 1f );
+				RightValue = MathZ.Saturate( RightValue - delta * 0.001f );
 
 				User32.SetCursorPos( _draggingCenter.x, _draggingCenter.y );
 			}

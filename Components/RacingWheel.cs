@@ -2,7 +2,6 @@
 using System.Runtime.CompilerServices;
 
 using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Controls;
 using MarvinsAIRARefactored.Windows;
 
 namespace MarvinsAIRARefactored.Components;
@@ -121,29 +120,6 @@ public class RacingWheel
 
 			app.ChatQueue.SendMessage( $"/{playerName} [MAIRA] {DataContext.DataContext.Instance.Localization[ key ]}", value );
 		}
-	}
-
-	public static void SetMairaComboBoxItemsSource( MairaComboBox mairaComboBox )
-	{
-		var app = App.Instance!;
-
-		app.Logger.WriteLine( "[RacingWheel] SetMairaComboBoxItemsSource >>>" );
-
-		var dictionary = new Dictionary<Algorithm, string>
-		{
-			{ Algorithm.Native60Hz, DataContext.DataContext.Instance.Localization[ "Native60Hz" ] },
-			{ Algorithm.Native360Hz, DataContext.DataContext.Instance.Localization[ "Native360Hz" ] },
-			{ Algorithm.DetailBooster, DataContext.DataContext.Instance.Localization[ "DetailBooster" ] },
-			{ Algorithm.DeltaLimiter, DataContext.DataContext.Instance.Localization[ "DeltaLimiter" ] },
-			{ Algorithm.DetailBoosterOn60Hz, DataContext.DataContext.Instance.Localization[ "DetailBoosterOn60Hz" ] },
-			{ Algorithm.DeltaLimiterOn60Hz, DataContext.DataContext.Instance.Localization[ "DeltaLimiterOn60Hz" ] },
-			{ Algorithm.ZeAlanLeTwist, DataContext.DataContext.Instance.Localization[ "ZeAlanLeTwist" ] }
-		};
-
-		mairaComboBox.ItemsSource = dictionary;
-		mairaComboBox.SelectedValue = DataContext.DataContext.Instance.Settings.RacingWheelAlgorithm;
-
-		app.Logger.WriteLine( "[RacingWheel] <<< SetMairaComboBoxItemsSource" );
 	}
 
 	[MethodImpl( MethodImplOptions.AggressiveInlining )]

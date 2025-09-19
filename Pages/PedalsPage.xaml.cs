@@ -1,6 +1,10 @@
 ﻿
 using System.Windows;
+
 using UserControl = System.Windows.Controls.UserControl;
+
+using MarvinsAIRARefactored.Components;
+using MarvinsAIRARefactored.Controls;
 
 namespace MarvinsAIRARefactored.Pages;
 
@@ -74,6 +78,49 @@ public partial class PedalsPage : UserControl
 		var app = App.Instance!;
 
 		app.Pedals.StartTest( 2, 2 );
+	}
+
+	#endregion
+
+	#region Logic
+
+	public void UpdateEffectOptions()
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[PedalsPage] UpdateEffectOptions >>>" );
+
+		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+
+		var dictionary = new Dictionary<Pedals.Effect, string>
+		{
+			{ Pedals.Effect.None, localization[ "None" ] },
+			{ Pedals.Effect.GearChange, localization[ "GearChange" ] },
+			{ Pedals.Effect.ABSEngaged, localization[ "ABSEngaged" ] },
+			{ Pedals.Effect.RPM, localization[ "RPM" ] },
+			{ Pedals.Effect.UndersteerEffect, localization[ "UndersteerEffect" ] },
+			{ Pedals.Effect.OversteerEffect, localization[ "OversteerEffect" ] },
+			{ Pedals.Effect.WheelLock, localization[ "WheelLock" ] },
+			{ Pedals.Effect.WheelSpin, localization[ "WheelSpin" ] },
+			{ Pedals.Effect.ClutchSlip, localization[ "ClutchSlip" ] },
+		};
+
+		app.Dispatcher.Invoke( () =>
+		{
+			ClutchEffect1_MairaComboBox.ItemsSource = dictionary;
+			ClutchEffect2_MairaComboBox.ItemsSource = dictionary;
+			ClutchEffect3_MairaComboBox.ItemsSource = dictionary;
+
+			BrakeEffect1_MairaComboBox.ItemsSource = dictionary;
+			BrakeEffect2_MairaComboBox.ItemsSource = dictionary;
+			BrakeEffect3_MairaComboBox.ItemsSource = dictionary;
+
+			ThrottleEffect1_MairaComboBox.ItemsSource = dictionary;
+			ThrottleEffect2_MairaComboBox.ItemsSource = dictionary;
+			ThrottleEffect3_MairaComboBox.ItemsSource = dictionary;
+		} );
+
+		app.Logger.WriteLine( "[PedalsPage] <<< UpdateEffectOptions" );
 	}
 
 	#endregion

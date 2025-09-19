@@ -5294,6 +5294,27 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region Wind - Connect on startup
+
+	private bool _windConnectOnStartup = false;
+
+	public bool WindConnectOnStartup
+	{
+		get => _windConnectOnStartup;
+
+		set
+		{
+			if ( value != _windConnectOnStartup )
+			{
+				_windConnectOnStartup = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	#endregion
+
 	#region Wind - Master wind power
 
 	private float _windMasterWindPower = 0f;
@@ -5482,6 +5503,8 @@ public class Settings : INotifyPropertyChanged
 				_windSpeed1 = value;
 
 				OnPropertyChanged();
+
+				WindSpeed2 = MathF.Max( WindSpeed2, _windSpeed1 );
 			}
 
 			var app = App.Instance!;
@@ -5577,6 +5600,9 @@ public class Settings : INotifyPropertyChanged
 				_windSpeed2 = value;
 
 				OnPropertyChanged();
+
+				WindSpeed1 = MathF.Min( WindSpeed1, _windSpeed2 );
+				WindSpeed3 = MathF.Max( WindSpeed3, _windSpeed2 );
 			}
 
 			var app = App.Instance!;
@@ -5672,6 +5698,9 @@ public class Settings : INotifyPropertyChanged
 				_windSpeed3 = value;
 
 				OnPropertyChanged();
+
+				WindSpeed2 = MathF.Min( WindSpeed2, _windSpeed3 );
+				WindSpeed4 = MathF.Max( WindSpeed4, _windSpeed3 );
 			}
 
 			var app = App.Instance!;
@@ -5767,6 +5796,9 @@ public class Settings : INotifyPropertyChanged
 				_windSpeed4 = value;
 
 				OnPropertyChanged();
+
+				WindSpeed3 = MathF.Min( WindSpeed3, _windSpeed4 );
+				WindSpeed5 = MathF.Max( WindSpeed5, _windSpeed4 );
 			}
 
 			var app = App.Instance!;
@@ -5862,6 +5894,9 @@ public class Settings : INotifyPropertyChanged
 				_windSpeed5 = value;
 
 				OnPropertyChanged();
+
+				WindSpeed4 = MathF.Min( WindSpeed4, _windSpeed5 );
+				WindSpeed6 = MathF.Max( WindSpeed6, _windSpeed5 );
 			}
 
 			var app = App.Instance!;
@@ -5957,6 +5992,9 @@ public class Settings : INotifyPropertyChanged
 				_windSpeed6 = value;
 
 				OnPropertyChanged();
+
+				WindSpeed5 = MathF.Min( WindSpeed5, _windSpeed6 );
+				WindSpeed7 = MathF.Max( WindSpeed7, _windSpeed6 );
 			}
 
 			var app = App.Instance!;
@@ -6052,6 +6090,9 @@ public class Settings : INotifyPropertyChanged
 				_windSpeed7 = value;
 
 				OnPropertyChanged();
+
+				WindSpeed6 = MathF.Min( WindSpeed6, _windSpeed7 );
+				WindSpeed8 = MathF.Max( WindSpeed8, _windSpeed7 );
 			}
 
 			var app = App.Instance!;
@@ -6147,6 +6188,9 @@ public class Settings : INotifyPropertyChanged
 				_windSpeed8 = value;
 
 				OnPropertyChanged();
+
+				WindSpeed7 = MathF.Min( WindSpeed7, _windSpeed8 );
+				WindSpeed9 = MathF.Max( WindSpeed9, _windSpeed8 );
 			}
 
 			var app = App.Instance!;
@@ -6242,6 +6286,9 @@ public class Settings : INotifyPropertyChanged
 				_windSpeed9 = value;
 
 				OnPropertyChanged();
+
+				WindSpeed8 = MathF.Min( WindSpeed8, _windSpeed9 );
+				WindSpeed10 = MathF.Max( WindSpeed10, _windSpeed9 );
 			}
 
 			var app = App.Instance!;
@@ -6337,6 +6384,8 @@ public class Settings : INotifyPropertyChanged
 				_windSpeed10 = value;
 
 				OnPropertyChanged();
+
+				WindSpeed9 = MathF.Min( WindSpeed9, _windSpeed10 );
 			}
 
 			var app = App.Instance!;

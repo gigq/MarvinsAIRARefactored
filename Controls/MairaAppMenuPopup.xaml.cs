@@ -65,11 +65,15 @@ namespace MarvinsAIRARefactored.Controls
 				PageUserControl = _pedalsPage
 			} );
 
+#if DEBUG
+
 			AppMenuItems.Add( new AppMenuItem
 			{
 				AppPage = AppPage.Wind,
 				PageUserControl = _windPage
 			} );
+
+#endif
 
 			AppMenuItems.Add( new AppMenuItem
 			{

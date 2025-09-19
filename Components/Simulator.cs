@@ -347,7 +347,7 @@ public partial class Simulator
 		{
 			UpdateTireProperties();
 
-			SteeringEffects.SetCalibrationFileNameMairaComboBoxItemsSource();
+			MainWindow._steeringEffectsPage.UpdateCalibrationFileNameOptions();
 
 			DataContext.DataContext.Instance.Settings.UpdateSettings( false );
 
