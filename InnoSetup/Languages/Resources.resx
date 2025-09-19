@@ -1305,4 +1305,40 @@
     <value>Right Fan</value>
     <comment>Wind</comment>
   </data>
+  <data name="Connection_UC" xml:space="preserve">
+    <value>CONNECTION</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="Settings_UC" xml:space="preserve">
+    <value>SETTINGS</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="MasterWindPower" xml:space="preserve">
+    <value>Master Wind Power</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="MinimumSpeed" xml:space="preserve">
+    <value>Minimum Speed</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="WindCurving" xml:space="preserve">
+    <value>Wind Curving</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="FanPower_UC" xml:space="preserve">
+    <value>FAN POWER</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="Speed" xml:space="preserve">
+    <value>Speed</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="FanPower" xml:space="preserve">
+    <value>Fan Power</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="DeviceNotFound" xml:space="preserve">
+    <value>Device Missing</value>
+    <comment>Racing wheel</comment>
+  </data>
 </root>
