@@ -968,7 +968,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = MathF.Round( Math.Clamp( value, 0f, 1f ), 2 );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelMultiTorqueCompression )
 			{
@@ -983,7 +983,7 @@ public class Settings : INotifyPropertyChanged
 
 			if ( _racingWheelMultiTorqueCompression != 0f )
 			{
-				RacingWheelMultiTorqueCompressionString = $"{_racingWheelMultiTorqueCompression * 100f:F0}";
+				RacingWheelMultiTorqueCompressionString = $"{_racingWheelMultiTorqueCompression * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
 			}
 			else
 			{
@@ -1026,7 +1026,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = MathF.Round( Math.Clamp( value, 0f, 1f ), 2 );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelMultiSlewRateReduction )
 			{
@@ -1041,7 +1041,7 @@ public class Settings : INotifyPropertyChanged
 
 			if ( _racingWheelMultiSlewRateReduction != 0f )
 			{
-				RacingWheelMultiSlewRateReductionString = $"{_racingWheelMultiSlewRateReduction * 100f:F0}";
+				RacingWheelMultiSlewRateReductionString = $"{_racingWheelMultiSlewRateReduction * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
 			}
 			else
 			{
@@ -1084,7 +1084,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = MathF.Round( Math.Clamp( value, -1f, 2f ), 2 );
+			value = Math.Clamp( value, -1f, 2f );
 
 			if ( value != _racingWheelMultiDetailGain )
 			{
@@ -1097,7 +1097,14 @@ public class Settings : INotifyPropertyChanged
 
 			app.RacingWheel.UpdateAlgorithmPreview = true;
 
-			RacingWheelMultiDetailGainString = $"{_racingWheelMultiDetailGain * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			if ( _racingWheelMultiDetailGain != 0f )
+			{
+				RacingWheelMultiDetailGainString = $"{_racingWheelMultiDetailGain * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+			else
+			{
+				RacingWheelMultiDetailGainString = DataContext.Instance.Localization[ "OFF" ];
+			}
 		}
 	}
 
@@ -1135,7 +1142,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = MathF.Round( Math.Clamp( value, 0f, 1f ), 2 );
+			value = MathZ.Saturate( value );
 
 			if ( value != _racingWheelMultiOutputSmoothing )
 			{
@@ -1150,7 +1157,7 @@ public class Settings : INotifyPropertyChanged
 
 			if ( _racingWheelMultiOutputSmoothing != 0f )
 			{
-				RacingWheelMultiOutputSmoothingString = $"{_racingWheelMultiOutputSmoothing * 100f:F0}";
+				RacingWheelMultiOutputSmoothingString = $"{_racingWheelMultiOutputSmoothing * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
 			}
 			else
 			{
