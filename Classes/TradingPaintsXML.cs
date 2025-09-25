@@ -21,9 +21,9 @@ public static class TradingPaintsXml
 	public sealed class Asset
 	{
 		public string FileId { get; init; } = string.Empty;
-		public string FileUrl { get; init; } = string.Empty;
-		public Uri? FileUri => Uri.TryCreate( FileUrl, UriKind.Absolute, out var uri ) ? uri : null;
-		public long UserId { get; init; }
+		public string FileURL { get; init; } = string.Empty;
+		public Uri? FileUri => Uri.TryCreate( FileURL, UriKind.Absolute, out var uri ) ? uri : null;
+		public long UserID { get; init; }
 		public string Directory { get; init; } = string.Empty;
 		public long FileSize { get; init; }
 		public Type Type { get; init; }
@@ -32,10 +32,9 @@ public static class TradingPaintsXml
 	}
 
 
-	public static IReadOnlyList<Asset> ParseUserAssets( Stream xmlStream, string directoryFilter )
+	public static IReadOnlyList<Asset> ParseAssets( Stream xmlStream )
 	{
 		ArgumentNullException.ThrowIfNull( xmlStream );
-		ArgumentNullException.ThrowIfNull( directoryFilter );
 
 		var doc = XDocument.Load( xmlStream );
 
@@ -51,29 +50,24 @@ public static class TradingPaintsXml
 		foreach ( var carElement in carsElement.Elements( "Car" ) )
 		{
 			var directory = (string?) carElement.Element( "directory" ) ?? string.Empty;
+			var fileUrl = (string?) carElement.Element( "file" ) ?? string.Empty;
+			var userId = ParseInt64( (string?) carElement.Element( "userid" ) );
+			var fileSize = ParseInt64( (string?) carElement.Element( "filesize" ) );
+			var teamId = ParseInt32( (string?) carElement.Element( "teamid" ) );
 
-			if ( directory == directoryFilter || directory == "suits" || directory == "helmets" )
+			var asset = new Asset
 			{
-				var fileUrl = (string?) carElement.Element( "file" ) ?? string.Empty;
+				FileId = (string?) carElement.Element( "carid" ) ?? string.Empty,
+				FileURL = fileUrl,
+				UserID = userId,
+				Directory = ( directory == "suits" || directory == "helmets" ) ? string.Empty : directory,
+				FileSize = fileSize,
+				Type = ParseType( (string?) carElement.Element( "type" ) ),
+				TeamId = teamId,
+				Ext = (string?) carElement.Element( "ext" )
+			};
 
-				var userId = ParseInt64( (string?) carElement.Element( "userid" ) );
-				var fileSize = ParseInt64( (string?) carElement.Element( "filesize" ) );
-				var teamId = ParseInt32( (string?) carElement.Element( "teamid" ) );
-
-				var asset = new Asset
-				{
-					FileId = (string?) carElement.Element( "carid" ) ?? string.Empty,
-					FileUrl = fileUrl,
-					UserId = userId,
-					Directory = ( directory == "suits" || directory == "helmets" ) ? string.Empty : directory,
-					FileSize = fileSize,
-					Type = ParseType( (string?) carElement.Element( "type" ) ),
-					TeamId = teamId,
-					Ext = (string?) carElement.Element( "ext" )
-				};
-
-				results.Add( asset );
-			}
+			results.Add( asset );
 		}
 
 		return results;

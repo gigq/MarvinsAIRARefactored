@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Channels;
 
 using ICSharpCode.SharpZipLib.BZip2;
 using Newtonsoft.Json;
@@ -21,13 +20,11 @@ public class TradingPaints
 	private static readonly HttpClient _http = CreateHttpClient();
 
 	private readonly HashSet<int> _seenUserIds = [];
-	private readonly HashSet<int> _enqueuedUserIds = [ new() ];
 	private readonly Lock _lock = new();
 
-	private Channel<DriverModel> _queue = Channel.CreateUnbounded<DriverModel>( new UnboundedChannelOptions { SingleReader = true, SingleWriter = false } );
-
-	private Task? _processQueueLoopTask;
-	private CancellationTokenSource _cts = new();
+	private readonly CancellationTokenSource _cancellationTokenSource = new();
+	private readonly AutoResetEvent _autoResetEvent = new( false );
+	private Task? _processDriversTask;
 
 	private string _cachePath = string.Empty;
 	private readonly ConcurrentDictionary<string, string> _fileUrlToCarId = new( StringComparer.OrdinalIgnoreCase );
@@ -46,6 +43,8 @@ public class TradingPaints
 
 		LoadCache();
 
+		_processDriversTask = Task.Run( () => UpdateAsync() );
+
 		app.Logger.WriteLine( "[TradingPaints] <<< Initialize" );
 	}
 
@@ -55,11 +54,13 @@ public class TradingPaints
 
 		app.Logger.WriteLine( "[TradingPaints] Shutdown >>>" );
 
-		_cts.Cancel();
+		_cancellationTokenSource.Cancel();
 
 		try
 		{
-			_processQueueLoopTask?.Wait( 1000 );
+			_autoResetEvent.Set();
+
+			_processDriversTask?.Wait( 1000 );
 		}
 		catch
 		{
@@ -74,157 +75,158 @@ public class TradingPaints
 
 		app.Logger.WriteLine( "[TradingPaints] Reset >>>" );
 
-		Channel<DriverModel> oldQueue;
-		CancellationTokenSource oldCts;
-
 		using ( _lock.EnterScope() )
 		{
 			_seenUserIds.Clear();
-			_enqueuedUserIds.Clear();
-
-			oldQueue = _queue;
-			oldCts = _cts;
-
-			_queue = Channel.CreateUnbounded<DriverModel>( new UnboundedChannelOptions { SingleReader = true, SingleWriter = false } );
-
-			_cts = new CancellationTokenSource();
-
-			_processQueueLoopTask = Task.Run( () => ProcessQueueLoopAsync( _queue, _cts.Token ) );
 		}
 
-		try
+		if ( app.Simulator.IsConnected )
 		{
-			oldCts.Cancel();
-		}
-		catch
-		{
-		}
-
-		try
-		{
-			oldQueue.Writer.TryComplete();
-		}
-		catch
-		{
+			_autoResetEvent.Set();
 		}
 
 		app.Logger.WriteLine( "[TradingPaints] <<< Reset" );
 	}
 
-	public void UpdateDrivers( List<DriverModel> drivers )
+	public void Update()
 	{
-		ArgumentNullException.ThrowIfNull( drivers );
-
-		var settings = DataContext.DataContext.Instance.Settings;
-
-		if ( settings.TradingPaintsEnabled )
-		{
-			using ( _lock.EnterScope() )
-			{
-				foreach ( var driver in drivers )
-				{
-					var userId = driver.UserID;
-
-					if ( ( userId != -1 ) && !_seenUserIds.Contains( userId ) )
-					{
-						_seenUserIds.Add( userId );
-
-						if ( _enqueuedUserIds.Add( userId ) )
-						{
-							_queue.Writer.TryWrite( driver );
-						}
-					}
-				}
-			}
-
-			_processQueueLoopTask ??= Task.Run( () => ProcessQueueLoopAsync( _queue, _cts.Token ) );
-		}
+		_autoResetEvent.Set();
 	}
 
-	private Task ProcessQueueLoopAsync( Channel<DriverModel> queue, CancellationToken token ) => ProcessQueueLoopCoreAsync( queue, token );
-
-	private async Task ProcessQueueLoopCoreAsync( Channel<DriverModel> queue, CancellationToken ct )
+	private async Task UpdateAsync()
 	{
 		var app = App.Instance!;
 
 		try
 		{
-			while ( await queue.Reader.WaitToReadAsync( ct ) )
+			while ( !_cancellationTokenSource.IsCancellationRequested )
 			{
-				while ( queue.Reader.TryRead( out var driver ) )
+				_autoResetEvent.WaitOne();
+
+				if ( !_cancellationTokenSource.IsCancellationRequested )
 				{
-					try
+					var settings = DataContext.DataContext.Instance.Settings;
+
+					if ( settings.TradingPaintsEnabled )
 					{
-						await ProcessDriverAsync( driver, ct );
-					}
-					catch ( Exception exception )
-					{
-						app.Logger.WriteLine( $"[TradingPaints] Exception caught: {exception.Message.Trim()}" );
-					}
-					finally
-					{
+						var sessionInfo = app.Simulator.IRSDK.Data.SessionInfo;
+
+						var newDriverList = new List<DriverModel>();
+
 						using ( _lock.EnterScope() )
 						{
-							_enqueuedUserIds.Remove( driver.UserID );
+							foreach ( var driver in sessionInfo.DriverInfo.Drivers )
+							{
+								var userId = driver.UserID;
+
+								if ( ( userId != -1 ) && !_seenUserIds.Contains( userId ) )
+								{
+									_seenUserIds.Add( userId );
+
+									newDriverList.Add( driver );
+								}
+							}
+						}
+
+						if ( newDriverList.Count > 0 )
+						{
+							app.Logger.WriteLine( $"[TradingPaints] We have some new drivers in the session" );
+
+							await ProcessDrivers( newDriverList );
 						}
 					}
 				}
 			}
 		}
-		catch ( OperationCanceledException )
+		catch
 		{
-			// expected on reset/shutdown
 		}
 	}
 
-	private async Task ProcessDriverAsync( DriverModel driver, CancellationToken ct )
+	private async Task ProcessDrivers( List<DriverModel> driverList )
 	{
 		var app = App.Instance!;
 
-		app.Logger.WriteLine( $"[TradingPaints] Processing UserID={driver.UserID}, CarPath='{driver.CarPath}'" );
-
 		var settings = DataContext.DataContext.Instance.Settings;
+
+		var sessionInfo = app.Simulator.IRSDK.Data.SessionInfo;
+
+		// build the fetch query
+
+		var playerTeamID = 0;
+		var stringBuilder = new StringBuilder();
+
+		stringBuilder.Append( "list=" );
+
+		foreach ( var driver in driverList )
+		{
+			stringBuilder.Append( $"{driver.UserID}={driver.CarPath}={driver.TeamID}={driver.CarNumber}=," );
+
+			if ( driver.UserID == sessionInfo.DriverInfo.DriverUserID )
+			{
+				playerTeamID = driver.TeamID;
+			}
+		}
+
+		var loadNumTexturesString = app.Simulator.LoadNumTextures ? "True" : "False";
+
+		stringBuilder.Append( $"&series={sessionInfo.WeekendInfo.SeriesID}" );
+		stringBuilder.Append( $"&league={sessionInfo.WeekendInfo.LeagueID}" );
+		stringBuilder.Append( $"&night={sessionInfo.WeekendInfo.WeekendOptions.TimeOfDay}" );
+		stringBuilder.Append( $"&team={playerTeamID}" );
+		stringBuilder.Append( $"&numbers={loadNumTexturesString}" );
+		stringBuilder.Append( $"&user={sessionInfo.DriverInfo.DriverUserID}" );
+
+		var query = stringBuilder.ToString();
 
 		// fetch the driver's XML from Trading Paints
 
-		var fetchUri = new Uri( $"https://fetch.tradingpaints.gg/fetch_user.php?user={driver.UserID}" );
+		var fetchUri = new Uri( $"https://fetch.tradingpaints.gg/fetch.php" );
 
-		using var req = new HttpRequestMessage( HttpMethod.Get, fetchUri );
-		using var resp = await _http.SendAsync( req, HttpCompletionOption.ResponseHeadersRead, ct );
+		using var req = new HttpRequestMessage( HttpMethod.Post, fetchUri )
+		{
+			Content = new StringContent( query, Encoding.UTF8, "application/x-www-form-urlencoded" )
+		};
+
+		using var resp = await _http.SendAsync( req, HttpCompletionOption.ResponseHeadersRead, _cancellationTokenSource.Token );
 
 		resp.EnsureSuccessStatusCode();
 
-		await using var xmlStream = await resp.Content.ReadAsStreamAsync( ct );
+		await using var xmlStream = await resp.Content.ReadAsStreamAsync( _cancellationTokenSource.Token );
 
-		// filter to the CarPath we're interested in (directoryFilter)
+		// get the assets we possibly need to download
 
-		var assets = TradingPaintsXml.ParseUserAssets( xmlStream, driver.CarPath );
+		var assets = TradingPaintsXml.ParseAssets( xmlStream );
 
 		if ( assets.Count == 0 )
 		{
 			return;
 		}
 
-		// prepare download folder for this car
-
-		var carFolderFullPath = Path.Combine( settings.TradingPaintsFolder, driver.CarPath );
-
-		Directory.CreateDirectory( carFolderFullPath );
-
 		// download assets sequentially (await one by one)
 
-		var somethingGotUpdated = false;
+		var reloadUserIDHashSet = new HashSet<long>();
 
 		foreach ( var asset in assets )
 		{
-			ct.ThrowIfCancellationRequested();
+			// skip files that have not changed
 
-			if ( !ShouldDownload( asset.FileUrl, asset.FileId ) )
+			if ( !ShouldDownload( asset.FileURL, asset.FileId ) )
 			{
-				app.Logger.WriteLine( $"[TradingPaints] Skipping already downloaded paint file ({asset.FileUrl}, {asset.FileId})" );
-
 				continue;
 			}
+
+			// add this guy to the reload list
+
+			reloadUserIDHashSet.Add( asset.UserID );
+
+			// prepare download folder for this car
+
+			var carFolderFullPath = Path.Combine( settings.TradingPaintsFolder, asset.Directory );
+
+			Directory.CreateDirectory( carFolderFullPath );
+
+			// figure out the start of the file name
 
 			var typeToken = asset.Type switch
 			{
@@ -239,7 +241,7 @@ public class TradingPaints
 
 			// figure out extension from the URL path (handles .mip, .tga, .tga.bz2)
 
-			var (isBz2, fileExtension) = GetFileExtension( asset.FileUrl );
+			var (isBz2, fileExtension) = GetFileExtension( asset.FileURL );
 
 			// figure out if we need to add some text before the file extension
 
@@ -250,34 +252,32 @@ public class TradingPaints
 
 			// build final filename: {Type}_{UserID}_{Ext}.{mip/tga}
 
-			var finalFileName = $"{typeToken}_{asset.UserId}{fileExtension}";
+			var finalFileName = $"{typeToken}_{asset.UserID}{fileExtension}";
 			var finalPath = Path.Combine( settings.TradingPaintsFolder, asset.Directory, finalFileName );
 
 			// download to a temp file first
 
-			var tmpPath = finalPath + ".part";
+			var temporaryPath = finalPath + ".part";
 
 			try
 			{
-				app.Logger.WriteLine( $"[TradingPaints] Downloading paint file ({asset.FileUrl}, {asset.FileId})" );
+				app.Logger.WriteLine( $"[TradingPaints] Downloading paint file ({asset.FileURL}, {asset.FileId})" );
 
-				await DownloadAsync( asset.FileUrl, tmpPath, ct );
+				await DownloadAsync( asset.FileURL, temporaryPath, _cancellationTokenSource.Token );
 
 				if ( isBz2 )
 				{
-					app.Logger.WriteLine( $"[TradingPaints] Decompressing paint file ({asset.FileUrl}, {asset.FileId})" );
+					app.Logger.WriteLine( $"[TradingPaints] Decompressing paint file ({asset.FileURL}, {asset.FileId})" );
 
-					var ok = TryDecompressBZip2ToTga( tmpPath, finalPath );
+					var ok = TryDecompressBZip2ToTga( temporaryPath, finalPath );
 
 					if ( ok )
 					{
-						File.Delete( tmpPath );
-
-						somethingGotUpdated = true;
+						File.Delete( temporaryPath );
 					}
 					else
 					{
-						File.Delete( tmpPath );
+						File.Delete( temporaryPath );
 						continue;
 					}
 				}
@@ -288,31 +288,38 @@ public class TradingPaints
 						File.Delete( finalPath );
 					}
 
-					File.Move( tmpPath, finalPath );
-
-					somethingGotUpdated = true;
+					File.Move( temporaryPath, finalPath );
 				}
 
-				_fileUrlToCarId[ asset.FileUrl ] = asset.FileId;
-
-				SaveCache();
+				_fileUrlToCarId[ asset.FileURL ] = asset.FileId;
 			}
 			catch
 			{
-				if ( File.Exists( tmpPath ) )
+				if ( File.Exists( temporaryPath ) )
 				{
-					File.Delete( tmpPath );
+					File.Delete( temporaryPath );
 				}
 			}
 		}
 
 		// tell iracing to reload textures for this driver if anything got updated
 
-		if ( somethingGotUpdated )
+		if ( reloadUserIDHashSet.Count > 0 )
 		{
-			app.Logger.WriteLine( $"[TradingPaints] Telling iRacing to reload paint for {driver.UserName}" );
+			SaveCache();
 
-			App.Instance!.Simulator.IRSDK.ReloadTextures( IRSDKSharper.IRacingSdkEnum.ReloadTexturesMode.CarIdx, driver.CarIdx );
+			foreach ( var userID in reloadUserIDHashSet )
+			{
+				foreach ( var driver in sessionInfo.DriverInfo.Drivers )
+				{
+					if ( driver.UserID == userID )
+					{
+						app.Logger.WriteLine( $"[TradingPaints] Telling iRacing to reload paint for {driver.UserName}" );
+
+						App.Instance!.Simulator.IRSDK.ReloadTextures( IRSDKSharper.IRacingSdkEnum.ReloadTexturesMode.CarIdx, driver.CarIdx );
+					}
+				}
+			}
 		}
 	}
 
@@ -356,7 +363,7 @@ public class TradingPaints
 		return (false, ext);
 	}
 
-	private static async Task DownloadAsync( string url, string destPath, CancellationToken ct )
+	private static async Task DownloadAsync( string url, string destPath, CancellationToken cancellationToken )
 	{
 		// simple retry with exponential backoff + 429 respect
 
@@ -364,10 +371,10 @@ public class TradingPaints
 
 		for ( var attempt = 1; attempt <= 5; attempt++ )
 		{
-			ct.ThrowIfCancellationRequested();
+			cancellationToken.ThrowIfCancellationRequested();
 
 			using var req = new HttpRequestMessage( HttpMethod.Get, url );
-			using var resp = await _http.SendAsync( req, HttpCompletionOption.ResponseHeadersRead, ct );
+			using var resp = await _http.SendAsync( req, HttpCompletionOption.ResponseHeadersRead, cancellationToken );
 
 			// handle 429 with Retry-After header (or exponential backoff if missing)
 
@@ -375,7 +382,7 @@ public class TradingPaints
 			{
 				var retryAfter = resp.Headers.RetryAfter?.Delta ?? TimeSpan.FromMilliseconds( delayMs );
 
-				await Task.Delay( retryAfter, ct );
+				await Task.Delay( retryAfter, cancellationToken );
 
 				delayMs = Math.Min( delayMs * 2, 8000 );
 
@@ -388,7 +395,7 @@ public class TradingPaints
 			{
 				if ( (int) resp.StatusCode >= 500 && attempt < 5 )
 				{
-					await Task.Delay( delayMs, ct );
+					await Task.Delay( delayMs, cancellationToken );
 
 					delayMs = Math.Min( delayMs * 2, 8000 );
 
@@ -400,9 +407,9 @@ public class TradingPaints
 
 			// success
 
-			await using var fs = new FileStream( destPath, FileMode.Create, FileAccess.Write, FileShare.None, 1 << 16, useAsync: true );
+			await using var fs = new FileStream( destPath, FileMode.Create, FileAccess.Write, FileShare.None, 1 << 20, useAsync: true );
 
-			await resp.Content.CopyToAsync( fs, ct );
+			await resp.Content.CopyToAsync( fs, cancellationToken );
 
 			return;
 		}

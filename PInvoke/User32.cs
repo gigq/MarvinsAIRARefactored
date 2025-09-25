@@ -33,19 +33,17 @@ public static partial class User32
 	}
 
 	[StructLayout( LayoutKind.Sequential, CharSet = CharSet.Unicode )]
-	public struct DEV_BROADCAST_DEVICEINTERFACE
+	public struct DEV_BROADCAST_DEVICEINTERFACE_W
 	{
 		public uint dbcc_size;
 		public DeviceType dbcc_devicetype;
 		public uint dbcc_reserved;
 		public Guid dbcc_classguid;
-
-		[MarshalAs( UnmanagedType.ByValTStr, SizeConst = 255 )]
-		public string dbcc_name;
+		public char dbcc_name;
 	}
 
 	[DllImport( "user32.dll", CharSet = CharSet.Unicode, SetLastError = true )]
-	public static extern IntPtr RegisterDeviceNotification( IntPtr hRecipient, ref DEV_BROADCAST_DEVICEINTERFACE notificationFilter, DeviceNotificationFlags flags );
+	public static extern IntPtr RegisterDeviceNotification( IntPtr hRecipient, ref DEV_BROADCAST_DEVICEINTERFACE_W notificationFilter, DeviceNotificationFlags flags );
 
 	[DllImport( "user32.dll", SetLastError = true )]
 	[return: MarshalAs( UnmanagedType.Bool )]

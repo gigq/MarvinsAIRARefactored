@@ -42,7 +42,9 @@ public partial class Simulator
 	public bool IsReplayPlaying { get; private set; } = false;
 	public float LapDistPct { get; private set; } = 0f;
 	public int LastRadioTransmitCarIdx { get; private set; } = -1;
+	public int LeagueID { get; private set; } = 0;
 	public float[] LFShockVel_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
+	public bool LoadNumTextures { get; private set; } = false;
 	public float[] LRShockVel_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
 	public int NumForwardGears { get; private set; } = 0;
 	public IRacingSdkEnum.PaceMode PaceMode { get; private set; } = IRacingSdkEnum.PaceMode.NotPacing;
@@ -56,6 +58,7 @@ public partial class Simulator
 	public float RPM { get; private set; } = 0f;
 	public float[] RPMSpeedRatios { get; private set; } = new float[ MaxNumGears ];
 	public float[] RRShockVel_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
+	public int SeriesID { get; private set; } = 0;
 	public IRacingSdkEnum.Flags SessionFlags { get; private set; } = 0;
 	public float ShiftLightsFirstRPM { get; private set; } = 0f;
 	public float ShiftLightsShiftRPM { get; private set; } = 0f;
@@ -67,6 +70,7 @@ public partial class Simulator
 	public float SteeringWheelAngleMax { get; private set; } = 0f;
 	public float[] SteeringWheelTorque_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
 	public float Throttle { get; private set; } = 0f;
+	public string TimeOfDay { get; private set; } = string.Empty;
 	public string TrackDisplayName { get; private set; } = string.Empty;
 	public string TrackConfigName { get; private set; } = string.Empty;
 	public string UserName { get; private set; } = string.Empty;
@@ -100,6 +104,7 @@ public partial class Simulator
 	private IRacingSdkDatum? _isReplayPlayingDatum = null;
 	private IRacingSdkDatum? _lapDistPctDatum = null;
 	private IRacingSdkDatum? _lfShockVel_STDatum = null;
+	private IRacingSdkDatum? _loadNumTexturesDatum = null;
 	private IRacingSdkDatum? _lrShockVel_STDatum = null;
 	private IRacingSdkDatum? _paceModeDatum = null;
 	private IRacingSdkDatum? _playerCarIdxDatum = null;
@@ -245,6 +250,7 @@ public partial class Simulator
 		IsReplayPlaying = false;
 		LapDistPct = 0f;
 		LastRadioTransmitCarIdx = -1;
+		LoadNumTextures = false;
 		NumForwardGears = 0;
 		PaceMode = IRacingSdkEnum.PaceMode.NotPacing;
 		PlayerCarIdx = 0;
@@ -301,8 +307,6 @@ public partial class Simulator
 
 		var sessionInfo = _irsdk.Data.SessionInfo;
 
-		app.TradingPaints.UpdateDrivers( sessionInfo.DriverInfo.Drivers );
-
 		CarSetupName = Path.GetFileNameWithoutExtension( sessionInfo.DriverInfo.DriverSetupName ).ToLower();
 
 		NumForwardGears = sessionInfo.DriverInfo.DriverCarGearNumForward;
@@ -343,6 +347,10 @@ public partial class Simulator
 			SteeringOffsetInDegrees = 0f;
 		}
 
+		SeriesID = _irsdk.Data.SessionInfo.WeekendInfo.SeriesID;
+		LeagueID = _irsdk.Data.SessionInfo.WeekendInfo.LeagueID;
+		TimeOfDay = _irsdk.Data.SessionInfo.WeekendInfo.WeekendOptions.TimeOfDay;
+
 		app.MainWindow.UpdateStatus();
 
 		if ( _waitingForFirstSessionInfo )
@@ -355,6 +363,8 @@ public partial class Simulator
 
 			_waitingForFirstSessionInfo = false;
 		}
+
+		app.TradingPaints.Update();
 
 #if DEBUG
 
@@ -384,6 +394,7 @@ public partial class Simulator
 			_isOnTrackDatum = _irsdk.Data.TelemetryDataProperties[ "IsOnTrack" ];
 			_isReplayPlayingDatum = _irsdk.Data.TelemetryDataProperties[ "IsReplayPlaying" ];
 			_lapDistPctDatum = _irsdk.Data.TelemetryDataProperties[ "LapDistPct" ];
+			_loadNumTexturesDatum = _irsdk.Data.TelemetryDataProperties[ "LoadNumTextures" ];
 			_paceModeDatum = _irsdk.Data.TelemetryDataProperties[ "PaceMode" ];
 			_playerCarIdxDatum = _irsdk.Data.TelemetryDataProperties[ "PlayerCarIdx" ];
 			_playerTrackSurfaceDatum = _irsdk.Data.TelemetryDataProperties[ "PlayerTrackSurface" ];
@@ -481,6 +492,10 @@ public partial class Simulator
 		// update lap dist pct
 
 		LapDistPct = _irsdk.Data.GetFloat( _lapDistPctDatum );
+
+		// load num textures
+
+		LoadNumTextures = _irsdk.Data.GetBool( _loadNumTexturesDatum );
 
 		// suspend racing wheel force feedback if iracing ffb is enabled
 
