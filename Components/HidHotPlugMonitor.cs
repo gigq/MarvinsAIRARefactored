@@ -25,13 +25,11 @@ public sealed class HidHotplugMonitor : IDisposable
 			var hwnd = new WindowInteropHelper( app.MainWindow ).Handle;
 
 			_hwndSource = HwndSource.FromHwnd( hwnd );
-
 			_hwndSource?.AddHook( WndProc );
 
 			RegisterForHidNotifications( hwnd );
 
 			_debounceTimer = new System.Timers.Timer( 2000 ) { AutoReset = false };
-
 			_debounceTimer.Elapsed += ( _, __ ) => DeviceListMightHaveChanged?.Invoke( this, EventArgs.Empty );
 		};
 
@@ -59,11 +57,11 @@ public sealed class HidHotplugMonitor : IDisposable
 
 	private void RegisterForHidNotifications( IntPtr hwnd )
 	{
-		var dbi = new User32.DEV_BROADCAST_DEVICEINTERFACE
+		var dbi = new User32.DEV_BROADCAST_DEVICEINTERFACE_W
 		{
-			dbcc_size = (uint) Marshal.SizeOf<User32.DEV_BROADCAST_DEVICEINTERFACE>(),
+			dbcc_size = (uint) Marshal.SizeOf<User32.DEV_BROADCAST_DEVICEINTERFACE_W>(),
 			dbcc_classguid = _hidInterfaceGuid,
-			dbcc_devicetype = User32.DeviceType.DBT_DEVTYP_DEVICEINTERFACE 
+			dbcc_devicetype = User32.DeviceType.DBT_DEVTYP_DEVICEINTERFACE
 		};
 
 		_deviceNotifyHandle = User32.RegisterDeviceNotification( hwnd, ref dbi, User32.DeviceNotificationFlags.DEVICE_NOTIFY_WINDOW_HANDLE );
@@ -74,16 +72,36 @@ public sealed class HidHotplugMonitor : IDisposable
 		const int WM_DEVICECHANGE = 0x0219;
 		const int DBT_DEVICEARRIVAL = 0x8000;
 		const int DBT_DEVICEREMOVECOMPLETE = 0x8004;
-		const int DBT_DEVNODES_CHANGED = 0x0007;
 
 		if ( msg == WM_DEVICECHANGE )
 		{
-			var evt = wParam.ToInt32();
+			var eventType = wParam.ToInt32();
 
-			if ( ( evt == DBT_DEVICEARRIVAL ) || ( evt == DBT_DEVICEREMOVECOMPLETE ) || ( evt == DBT_DEVNODES_CHANGED ) )
+			if ( eventType == DBT_DEVICEARRIVAL || eventType == DBT_DEVICEREMOVECOMPLETE )
 			{
 				_debounceTimer?.Stop();
 				_debounceTimer?.Start();
+
+				var hdr = Marshal.PtrToStructure<User32.DEV_BROADCAST_HDR>( lParam );
+
+				if ( hdr.dbch_devicetype == User32.DeviceType.DBT_DEVTYP_DEVICEINTERFACE )
+				{
+					var nameOffset = Marshal.OffsetOf<User32.DEV_BROADCAST_DEVICEINTERFACE_W>( nameof( User32.DEV_BROADCAST_DEVICEINTERFACE_W.dbcc_name ) ).ToInt32();
+					var namePtr = IntPtr.Add( lParam, nameOffset );
+
+					var devicePath = Marshal.PtrToStringUni( namePtr ) ?? string.Empty;
+
+					var app = App.Instance!;
+
+					if ( eventType == DBT_DEVICEREMOVECOMPLETE )
+					{
+						app.Logger.WriteLine( $"[HidHotPlugMonitor] Device {devicePath} was removed!" );
+					}
+					else
+					{
+						app.Logger.WriteLine( $"[HidHotPlugMonitor] Device {devicePath} was added!" );
+					}
+				}
 			}
 		}
 
