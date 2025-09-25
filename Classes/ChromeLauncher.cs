@@ -1,7 +1,7 @@
 ﻿
 using System.Diagnostics;
 using System.IO;
- 
+
 namespace MarvinsAIRARefactored.Classes;
 
 public static class ChromeLauncher
@@ -17,9 +17,9 @@ public static class ChromeLauncher
 		{
 			var processStartInfo = new ProcessStartInfo( exe )
 			{
-				Arguments = $"--app=\"{url}\" --disable-translate --disable-infobars --no-first-run --window-size={WindowWidth},{WindowHeight}",
+				Arguments = $"--new-window \"{url}\" --window-name=\"MAIRA-STT-BRIDGE\" --disable-translate --disable-infobars --no-first-run --window-size={WindowWidth},{WindowHeight}",
 				UseShellExecute = false,
-				CreateNoWindow = true
+				CreateNoWindow = false
 			};
 
 			return Process.Start( processStartInfo );
