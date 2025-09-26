@@ -48,4 +48,7 @@ public static partial class User32
 	[DllImport( "user32.dll", SetLastError = true )]
 	[return: MarshalAs( UnmanagedType.Bool )]
 	public static extern bool UnregisterDeviceNotification( IntPtr handle );
+
+	[DllImport( "user32.dll", CharSet = CharSet.Unicode )]
+	public static extern short VkKeyScanW( char ch );
 }
