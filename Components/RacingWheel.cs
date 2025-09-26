@@ -346,10 +346,13 @@ public class RacingWheel
 
 				if ( settings.RacingWheelEnableMultiSoftLimiter )
 				{
-					var limitedTorque = MathZ.SoftLimiter( normalizedRunningTorque, 1f );
+					if ( normalizedRunningTorque < -0.1f || normalizedRunningTorque > 0.1f )
+					{
+						var limitedTorque = MathZ.SoftLimiter( normalizedRunningTorque, 1f );
 
-					normalizedCompressedTorque = normalizedCompressedTorque * limitedTorque / normalizedRunningTorque;
-					normalizedRunningTorque = limitedTorque;
+						normalizedCompressedTorque = normalizedCompressedTorque * limitedTorque / normalizedRunningTorque;
+						normalizedRunningTorque = limitedTorque;
+					}
 				}
 
 				_algorithmPropertyA[ algorithmPropertyIndex ] = normalizedCompressedTorque * settings.RacingWheelMaxForce;
