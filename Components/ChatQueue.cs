@@ -3,6 +3,8 @@ using IRSDKSharper;
 
 using PInvoke;
 
+using static PInvoke.User32;
+
 namespace MarvinsAIRARefactored.Components;
 
 public partial class ChatQueue
@@ -20,7 +22,12 @@ public partial class ChatQueue
 	private readonly List<Message> _messageList = [];
 
 	private bool _chatWindowOpened = false;
-	private int _chatWindowCloseCounter = 0;
+
+	private bool _chatWindowOpening = false;
+	private bool _chatWindowClosing = false;
+
+	private int _chatWindowOpeningCounter = 0;
+	private int _chatWindowClosingCounter = 0;
 
 	private int _updateCounter = UpdateInterval + 0;
 
@@ -54,56 +61,101 @@ public partial class ChatQueue
 
 	private void Update( App app )
 	{
+		if ( app.Simulator.WindowHandle == null )
+		{
+			return;
+		}
+
 		using ( _lock.EnterScope() )
 		{
 			if ( _messageList.Count > 0 )
 			{
-				if ( _chatWindowOpened )
+				if ( !_chatWindowOpened )
 				{
-					if ( app.Simulator.WindowHandle != null )
+					if ( !_chatWindowOpening )
 					{
-						var message = _messageList[ 0 ];
+						app.Simulator.IRSDK.ChatComand( IRacingSdkEnum.ChatCommandMode.BeginChat, 0 );
 
-						var stringToSend = $"{message.MessageTemplate}";
-
-						if ( message.Value != null )
-						{
-							stringToSend += $" = {message.Value}";
-						}
-
-						app.Logger.WriteLine( $"[ChatQueue] Sending message: {stringToSend}" );
-
-						foreach ( var ch in stringToSend )
-						{
-							User32.PostMessage( (IntPtr) app.Simulator.WindowHandle, User32.WindowMessage.WM_CHAR, ch, 0 );
-						}
-
-						User32.PostMessage( (IntPtr) app.Simulator.WindowHandle, User32.WindowMessage.WM_CHAR, '\r', 0 );
+						_chatWindowClosing = false;
+						_chatWindowOpening = true;
+						_chatWindowOpeningCounter = 0;
 					}
-
-					_messageList.RemoveAt( 0 );
-
-					_chatWindowCloseCounter = 5;
 				}
 				else
 				{
-					app.Simulator.IRSDK.ChatComand( IRacingSdkEnum.ChatCommandMode.BeginChat, 0 );
+					var message = _messageList[ 0 ];
 
-					_chatWindowOpened = true;
+					var stringToSend = $"{message.MessageTemplate}";
+
+					if ( message.Value != null )
+					{
+						stringToSend += $" = {message.Value}";
+					}
+
+					app.Logger.WriteLine( $"[ChatQueue] Sending message: {stringToSend}" );
+
+					foreach ( var ch in stringToSend )
+					{
+						SendKey( app, ch );
+					}
+
+					SendKey( app, '\r' );
+
+					_messageList.RemoveAt( 0 );
+
+					if ( _messageList.Count == 0 )
+					{
+						_chatWindowClosing = true;
+						_chatWindowClosingCounter = 0;
+					}
 				}
 			}
 		}
 
-		if ( _chatWindowCloseCounter > 0 )
+		if ( _chatWindowOpening )
 		{
-			_chatWindowCloseCounter--;
+			_chatWindowOpeningCounter++;
 
-			if ( _chatWindowCloseCounter == 0 )
+			if ( _chatWindowOpeningCounter >= 1 )
 			{
-//				app.Simulator.IRSDK.ChatComand( IRacingSdkEnum.ChatCommandMode.Cancel, 0 );
+				_chatWindowOpening = false;
+				_chatWindowOpened = true;
+			}
+		}
 
+		if ( _chatWindowClosing )
+		{
+			_chatWindowClosingCounter++;
+
+			if ( _chatWindowClosingCounter >= 1 )
+			{
+				app.Simulator.IRSDK.ChatComand( IRacingSdkEnum.ChatCommandMode.Cancel, 0 );
+
+				_chatWindowClosing = false;
 				_chatWindowOpened = false;
 			}
+		}
+	}
+
+	private static void SendKey( App app, char key )
+	{
+		if ( key == '\r' )
+		{
+			var virtualKey = PInvoke.User32.VkKeyScanW( key );
+
+			var scanCode = User32.MapVirtualKey( virtualKey, MapVirtualKeyTranslation.MAPVK_VK_TO_VSC );
+
+			var lParamDown = (IntPtr) ( 1 | ( scanCode << 16 ) | ( 0 << 24 ) | ( 0 << 29 ) | ( 0 << 30 ) | ( 0 << 31 ) );
+
+			User32.PostMessage( (IntPtr) app.Simulator.WindowHandle!, User32.WindowMessage.WM_KEYDOWN, (IntPtr) User32.VirtualKey.VK_RETURN, lParamDown );
+
+			var lParamUp = (IntPtr) ( 1 | ( scanCode << 16 ) | ( 0 << 24 ) | ( 0 << 29 ) | ( 1 << 30 ) | ( 1 << 31 ) );
+
+			User32.PostMessage( (IntPtr) app.Simulator.WindowHandle!, User32.WindowMessage.WM_KEYUP, (IntPtr) User32.VirtualKey.VK_RETURN, lParamUp );
+		}
+		else
+		{
+			User32.PostMessage( (IntPtr) app.Simulator.WindowHandle!, User32.WindowMessage.WM_CHAR, key, IntPtr.Zero );
 		}
 	}
 
