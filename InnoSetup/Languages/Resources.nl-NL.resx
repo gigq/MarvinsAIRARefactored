@@ -739,9 +739,6 @@
   <data name="Sensitivity">
     <value>Gevoeligheid</value>
   </data>
-  <data name="ZeAlanLeTwist">
-    <value>Snelheidsverandering en totale compressie</value>
-  </data>
   <data name="DiscordModerators_UC">
     <value>DISCORD-MODERATORS</value>
   </data>
@@ -1050,5 +1047,8 @@
   </data>
   <data name="Amplitude">
     <value />
+  </data>
+  <data name="SlewAndTotalCompression" xml:space="preserve">
+    <value>Snelheidsverandering en totale compressie</value>
   </data>
 </root>

@@ -756,10 +756,6 @@
     <value>灵敏度</value>
     <comment>Pedals</comment>
   </data>
-  <data name="ZeAlanLeTwist" xml:space="preserve">
-    <value>转换速率与总体压缩</value>
-    <comment>Racing wheel algorithms list</comment>
-  </data>
   <data name="DiscordModerators_UC" xml:space="preserve">
     <value>DISCORD版主</value>
     <comment>Contribute</comment>
@@ -1157,5 +1153,8 @@
   </data>
   <data name="AppSettings_UC">
     <value>程序设置</value>
+  </data>
+  <data name="SlewAndTotalCompression" xml:space="preserve">
+    <value>转换速率与总体压缩</value>
   </data>
 </root>

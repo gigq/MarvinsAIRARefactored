@@ -813,10 +813,6 @@
     <value>Чувствительность</value>
     <comment>Pedals</comment>
   </data>
-  <data name="ZeAlanLeTwist" xml:space="preserve">
-    <value>Скорость нарастания момента(Slew) и сжатие</value>
-    <comment>Racing wheel algorithms list</comment>
-  </data>
   <data name="DiscordModerators_UC" xml:space="preserve">
     <value>Модераторы Дискорда</value>
     <comment>Contribute</comment>
@@ -1275,5 +1271,8 @@
   </data>
   <data name="ConnectToAdminBoxxOnStartup" xml:space="preserve">
     <value>Подключаться к AdminBoxx при запуске приложения</value>
+  </data>
+  <data name="SlewAndTotalCompression" xml:space="preserve">
+    <value>Скорость нарастания момента(Slew) и сжатие</value>
   </data>
 </root>

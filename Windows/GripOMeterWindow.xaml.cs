@@ -132,6 +132,10 @@ public partial class GripOMeterWindow : Window
 			var offsetX = app.SteeringEffects.SkidSlip * 144f;
 
 			GripOMeter_Ball_Transform.X = offsetX;
+
+			offsetX = app.SteeringEffects.SeatOfPantsEffect * 144f;
+
+			GripOMeter_SeatOfPants_Transform.X = offsetX;
 		}
 	}
 }

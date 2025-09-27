@@ -76,6 +76,7 @@ public class RacingWheel
 	private float _curbProtectionTimerMS = 0f;
 	private float _understeerEffectTimerMS = 0f;
 	private float _oversteerEffectTimerMS = 0f;
+	private float _seatOfPantsEffectTimerMS = 0f;
 
 	private readonly float[] _steeringWheelTorque360Hz = new float[ Simulator.SamplesPerFrame360Hz + 2 ];
 
@@ -233,7 +234,7 @@ public class RacingWheel
 
 				if ( normalizedDeltaAbs > deltaLimit )
 				{
-					normalizedRunningTorque += ( deltaLimit + ( ( normalizedDeltaAbs - deltaLimit ) * oneMinusSlewCompressionRate ) ) * MathF.Sign( normalizedDelta );
+					normalizedRunningTorque += MathF.CopySign( deltaLimit + ( ( normalizedDeltaAbs - deltaLimit ) * oneMinusSlewCompressionRate ), normalizedDelta );
 				}
 				else
 				{
@@ -561,6 +562,72 @@ public class RacingWheel
 				vibrationTorque += oversteerEffectTorque * settings.SteeringEffectsOversteerWheelVibrationStrength * MathF.Pow( app.SteeringEffects.OversteerEffect, MathZ.CurveToPower( settings.SteeringEffectsOversteerWheelVibrationCurve ) );
 			}
 
+			// seat-of-pants vibration effect
+
+			if ( app.SteeringEffects.SeatOfPantsEffect != 0f )
+			{
+				var absSeatOfPantsEffect = MathF.Abs( app.SteeringEffects.SeatOfPantsEffect );
+
+				var isAtMaxSeatOfPants = ( absSeatOfPantsEffect == 1f );
+
+				var frequency = isAtMaxSeatOfPants ? settings.SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequency : settings.SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequency;
+
+				frequency = MathF.Max( 0.01f, frequency );
+
+				var timeInSeconds = _seatOfPantsEffectTimerMS * 0.001f;
+
+				var seatOfPantsEffectTorque = 0f;
+
+				switch ( settings.SteeringEffectsSeatOfPantsWheelVibrationPattern )
+				{
+					case VibrationPattern.SineWave:
+					{
+						var sine = MathF.Sin( timeInSeconds * MathF.Tau * frequency );
+						seatOfPantsEffectTorque = sine;
+						break;
+					}
+
+					case VibrationPattern.SquareWave:
+					{
+						var sine = MathF.Sin( timeInSeconds * MathF.Tau * frequency );
+						seatOfPantsEffectTorque = ( sine >= 0f ) ? 1f : -1f;
+						break;
+					}
+
+					case VibrationPattern.TriangleWave:
+					{
+						var phase = ( timeInSeconds * frequency ) % 1f;
+						seatOfPantsEffectTorque = 4f * MathF.Abs( phase - 0.5f ) - 1f;
+						break;
+					}
+
+					case VibrationPattern.SawtoothWaveIn:
+					{
+						var phase = ( timeInSeconds * frequency ) % 1f;
+						seatOfPantsEffectTorque = ( phase - 1f ) * -MathF.Sign( app.Simulator.SteeringWheelAngle );
+						break;
+					}
+
+					case VibrationPattern.SawtoothWaveOut:
+					{
+						var phase = ( timeInSeconds * frequency ) % 1f;
+						seatOfPantsEffectTorque = ( 1f - phase ) * -MathF.Sign( app.Simulator.SteeringWheelAngle );
+						break;
+					}
+				}
+
+				_seatOfPantsEffectTimerMS += deltaMilliseconds;
+
+				var periodMS = 1000f / frequency;
+
+				if ( _seatOfPantsEffectTimerMS >= periodMS )
+				{
+					_seatOfPantsEffectTimerMS -= periodMS * MathF.Floor( _seatOfPantsEffectTimerMS / periodMS );
+				}
+
+				vibrationTorque += seatOfPantsEffectTorque * settings.SteeringEffectsSeatOfPantsWheelVibrationStrength * MathF.Pow( absSeatOfPantsEffect, MathZ.CurveToPower( settings.SteeringEffectsSeatOfPantsWheelVibrationCurve ) );
+			}
+
 			// check if we want to suspend or unsuspend force feedback
 
 			if ( SuspendForceFeedback != _isSuspended )
@@ -824,7 +891,7 @@ public class RacingWheel
 
 					case ConstantForceDirection.IncreaseForce:
 					{
-						outputTorque += app.SteeringEffects.UndersteerEffect * settings.SteeringEffectsUndersteerWheelConstantForceStrength * MathF.Sign( app.Simulator.VelocityY );
+						outputTorque += MathF.CopySign( app.SteeringEffects.UndersteerEffect * settings.SteeringEffectsUndersteerWheelConstantForceStrength, app.Simulator.VelocityY );
 						break;
 					}
 				}
@@ -844,7 +911,27 @@ public class RacingWheel
 
 					case ConstantForceDirection.IncreaseForce:
 					{
-						outputTorque += app.SteeringEffects.OversteerEffect * settings.SteeringEffectsOversteerWheelConstantForceStrength * MathF.Sign( app.Simulator.VelocityY );
+						outputTorque += MathF.CopySign( app.SteeringEffects.OversteerEffect * settings.SteeringEffectsOversteerWheelConstantForceStrength, app.Simulator.VelocityY );
+						break;
+					}
+				}
+			}
+
+			// seat-of-pants constant force effect
+
+			if ( app.SteeringEffects.SeatOfPantsEffect != 0f )
+			{
+				switch ( settings.SteeringEffectsSeatOfPantsWheelConstantForceDirection )
+				{
+					case ConstantForceDirection.DecreaseForce:
+					{
+						outputTorque = MathZ.Lerp( outputTorque, 0f, MathF.Abs( app.SteeringEffects.SeatOfPantsEffect ) * settings.SteeringEffectsSeatOfPantsWheelConstantForceStrength );
+						break;
+					}
+
+					case ConstantForceDirection.IncreaseForce:
+					{
+						outputTorque -= app.SteeringEffects.SeatOfPantsEffect * settings.SteeringEffectsSeatOfPantsWheelConstantForceStrength;
 						break;
 					}
 				}

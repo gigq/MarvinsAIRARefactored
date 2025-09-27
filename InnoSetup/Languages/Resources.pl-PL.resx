@@ -754,10 +754,6 @@
     <value>Czułość</value>
     <comment>Pedały</comment>
   </data>
-  <data name="ZeAlanLeTwist" xml:space="preserve">
-    <value>Rotacja i Całkowita Kompresja</value>
-    <comment>Lista Algorytmów Bazy Kierownicy</comment>
-  </data>
   <data name="DiscordModerators_UC" xml:space="preserve">
     <value>MODERATORZY DISCORD</value>
     <comment>Współpraca</comment>
@@ -1118,5 +1114,8 @@
   </data>
   <data name="GripOMeter">
     <value />
+  </data>
+  <data name="SlewAndTotalCompression" xml:space="preserve">
+    <value>Rotacja i Całkowita Kompresja</value>
   </data>
 </root>

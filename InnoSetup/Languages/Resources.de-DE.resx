@@ -669,10 +669,6 @@ Hier ist der Link zum Spenden:</value>
     <value>Empfindlichkeit</value>
     <comment>Pedals</comment>
   </data>
-  <data name="ZeAlanLeTwist" xml:space="preserve">
-    <value>Anstiegsrate und Gesamtkompression</value>
-    <comment>Racing wheel algorithms list</comment>
-  </data>
   <data name="DiscordModerators_UC" xml:space="preserve">
     <value>DISCORD MODERATOREN</value>
     <comment>Contribute</comment>
@@ -1163,5 +1159,8 @@ Hier ist der Link zum Spenden:</value>
   </data>
   <data name="GripOMeter">
     <value />
+  </data>
+  <data name="SlewAndTotalCompression" xml:space="preserve">
+    <value>Anstiegsrate und Gesamtkompression</value>
   </data>
 </root>

@@ -741,10 +741,6 @@
     <value>Sensibilidade</value>
     <comment>Pedals</comment>
   </data>
-  <data name="ZeAlanLeTwist" xml:space="preserve">
-    <value>Velocidade de Reação e Compressão Total</value>
-    <comment>Racing wheel algorithms list</comment>
-  </data>
   <data name="DiscordModerators_UC" xml:space="preserve">
     <value>MODERADORES DO DISCORD</value>
     <comment>Contribute</comment>
@@ -1191,5 +1187,8 @@
   </data>
   <data name="RPM">
     <value />
+  </data>
+  <data name="SlewAndTotalCompression" xml:space="preserve">
+    <value>Velocidade de Reação e Compressão Total</value>
   </data>
 </root>

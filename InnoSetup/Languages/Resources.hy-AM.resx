@@ -756,10 +756,6 @@
     <value>Զգայունություն</value>
     <comment>Pedals</comment>
   </data>
-  <data name="ZeAlanLeTwist" xml:space="preserve">
-    <value>Փոփոխության արագություն և ընդհանուր սեղմում</value>
-    <comment>Racing wheel algorithms list</comment>
-  </data>
   <data name="DiscordModerators_UC" xml:space="preserve">
     <value>DISCORD ՄՈԴԵՐԱՏՈՐՆԵՐ</value>
     <comment>Contribute</comment>
@@ -1182,5 +1178,8 @@
   </data>
   <data name="GripOMeter">
     <value />
+  </data>
+  <data name="SlewAndTotalCompression" xml:space="preserve">
+    <value>Փոփոխության արագություն և ընդհանուր սեղմում</value>
   </data>
 </root>

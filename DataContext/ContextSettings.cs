@@ -68,6 +68,18 @@ public class ContextSettings
 	public float SteeringEffectsOversteerPedalVibrationMinimumFrequency { get; set; }
 	public float SteeringEffectsOversteerPedalVibrationMaximumFrequency { get; set; }
 	public float SteeringEffectsOversteerPedalVibrationCurve { get; set; }
+	public float SteeringEffectsSeatOfPantsMinimumThreshold { get; set; }
+	public float SteeringEffectsSeatOfPantsMaximumThreshold { get; set; }
+	public RacingWheel.VibrationPattern SteeringEffectsSeatOfPantsWheelVibrationPattern { get; set; }
+	public float SteeringEffectsSeatOfPantsWheelVibrationStrength { get; set; }
+	public float SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequency { get; set; }
+	public float SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequency { get; set; }
+	public float SteeringEffectsSeatOfPantsWheelVibrationCurve { get; set; }
+	public RacingWheel.ConstantForceDirection SteeringEffectsSeatOfPantsWheelConstantForceDirection { get; set; }
+	public float SteeringEffectsSeatOfPantsWheelConstantForceStrength { get; set; }
+	public float SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequency { get; set; }
+	public float SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequency { get; set; }
+	public float SteeringEffectsSeatOfPantsPedalVibrationCurve { get; set; }
 	public float PedalsMinimumFrequency { get; set; }
 	public float PedalsMaximumFrequency { get; set; }
 	public float PedalsFrequencyCurve { get; set; }

@@ -323,6 +323,54 @@
 
         </Grid>
 
+        <controls:MairaGroupHeader Label="{Binding Localization[SeatOfPants_UC]}" />
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="64" />
+            </Grid.ColumnDefinitions>
+
+            <controls:MairaSwitch Grid.Column="0"
+                                  IsOn="{Binding Settings.SoundsSeatOfPantsEnabled, Mode=TwoWay}"
+                                  Label="{Binding Localization[Enabled]}"
+                                  LabelPosition="Top" />
+
+            <controls:MairaKnob Grid.Column="2"
+                                Label="{Binding Localization[Volume]}"
+                                Value="{Binding Settings.SoundsSeatOfPantsVolume, Mode=TwoWay}"
+                                ValueString="{Binding Settings.SoundsSeatOfPantsVolumeString}"
+                                StepSize="0.01"
+                                PlusButtonMappings="{Binding Settings.SoundsSeatOfPantsVolumePlusButtonMappings}"
+                                MinusButtonMappings="{Binding Settings.SoundsSeatOfPantsVolumeMinusButtonMappings}"
+                                DefaultValue="0.75" />
+
+            <controls:MairaKnob Grid.Column="4"
+                                Label="{Binding Localization[FrequencyRatio]}"
+                                Value="{Binding Settings.SoundsSeatOfPantsFrequencyRatio, Mode=TwoWay}"
+                                ValueString="{Binding Settings.SoundsSeatOfPantsFrequencyRatioString}"
+                                StepSize="0.01"
+                                PlusButtonMappings="{Binding Settings.SoundsSeatOfPantsFrequencyRatioPlusButtonMappings}"
+                                MinusButtonMappings="{Binding Settings.SoundsSeatOfPantsFrequencyRatioMinusButtonMappings}"
+                                DefaultValue="1" />
+
+            <controls:MairaButton Grid.Column="10"
+                                  Label="{Binding Localization[Test]}"
+                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate.png"
+                                  Click="SeatOfPants_Test_MairaButton_Click" />
+
+        </Grid>
+
     </StackPanel>
 
 </UserControl>

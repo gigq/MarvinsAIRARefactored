@@ -11,7 +11,8 @@ public class Sounds
 		WheelLock,
 		WheelSpin,
 		Understeer,
-		Oversteer
+		Oversteer,
+		SeatOfPants
 	}
 
 	public class SoundEffect( string SoundKey, Func<float> volumeProvider, Func<float> frequencyRatioProvider )
@@ -29,7 +30,8 @@ public class Sounds
 		{ SoundEffectType.WheelLock, new SoundEffect( "wheel_lock", () => DataContext.DataContext.Instance.Settings.SoundsWheelLockVolume, () => DataContext.DataContext.Instance.Settings.SoundsWheelLockFrequencyRatio ) },
 		{ SoundEffectType.WheelSpin, new SoundEffect( "wheel_spin", () => DataContext.DataContext.Instance.Settings.SoundsWheelSpinVolume, () => DataContext.DataContext.Instance.Settings.SoundsWheelSpinFrequencyRatio ) },
 		{ SoundEffectType.Understeer, new SoundEffect( "understeer", () => DataContext.DataContext.Instance.Settings.SoundsUndersteerVolume, () => DataContext.DataContext.Instance.Settings.SoundsUndersteerFrequencyRatio ) },
-		{ SoundEffectType.Oversteer, new SoundEffect( "oversteer", () => DataContext.DataContext.Instance.Settings.SoundsOversteerVolume, () => DataContext.DataContext.Instance.Settings.SoundsOversteerFrequencyRatio ) }
+		{ SoundEffectType.Oversteer, new SoundEffect( "oversteer", () => DataContext.DataContext.Instance.Settings.SoundsOversteerVolume, () => DataContext.DataContext.Instance.Settings.SoundsOversteerFrequencyRatio ) },
+		{ SoundEffectType.SeatOfPants, new SoundEffect( "seat_of_pants", () => DataContext.DataContext.Instance.Settings.SoundsSeatOfPantsVolume, () => DataContext.DataContext.Instance.Settings.SoundsSeatOfPantsFrequencyRatio ) }
 	};
 
 	private SoundEffectType? _testSoundEffectType = null;
@@ -141,6 +143,17 @@ public class Sounds
 				{
 					_soundEffects[ SoundEffectType.Oversteer ].ShouldBePlaying = true;
 					_soundEffects[ SoundEffectType.Oversteer ].Volume = settings.SoundsMasterVolume * app.SteeringEffects.OversteerEffect;
+				}
+			}
+
+			// seat-of-pants
+
+			if ( settings.SoundsSeatOfPantsEnabled )
+			{
+				if ( app.SteeringEffects.SeatOfPantsEffect != 0f )
+				{
+					_soundEffects[ SoundEffectType.SeatOfPants ].ShouldBePlaying = true;
+					_soundEffects[ SoundEffectType.SeatOfPants ].Volume = settings.SoundsMasterVolume * MathF.Abs( app.SteeringEffects.SeatOfPantsEffect );
 				}
 			}
 		}

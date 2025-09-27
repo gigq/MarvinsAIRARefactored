@@ -56,18 +56,33 @@
                Height="96"
                RenderOptions.BitmapScalingMode="HighQuality" />
 
-        <Image Grid.Row="3"
-               Grid.Column="0"
-               Source="/MarvinsAIRARefactored;component/Artwork/Misc/grip-o-meter-ball.png"
-               Width="80"
-               Height="80"
-               RenderOptions.BitmapScalingMode="HighQuality">
+        <Border Grid.Row="3"
+                Grid.Column="0"
+                Background="Black"
+                Width="80"
+                Height="80"
+                CornerRadius="40">
 
-            <Image.RenderTransform>
+            <Border.RenderTransform>
                 <TranslateTransform x:Name="GripOMeter_Ball_Transform" />
-            </Image.RenderTransform>
+            </Border.RenderTransform>
 
-        </Image>
+        </Border>
+
+        <Border Grid.Row="3"
+                Grid.Column="0"
+                Background="White"
+                BorderBrush="Black"
+                BorderThickness="5"
+                Width="40"
+                Height="40"
+                CornerRadius="20">
+
+            <Border.RenderTransform>
+                <TranslateTransform x:Name="GripOMeter_SeatOfPants_Transform" />
+            </Border.RenderTransform>
+
+        </Border>
 
     </Grid>
 

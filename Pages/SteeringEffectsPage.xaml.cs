@@ -5,7 +5,6 @@ using System.Windows;
 using UserControl = System.Windows.Controls.UserControl;
 
 using MarvinsAIRARefactored.Components;
-using MarvinsAIRARefactored.Windows;
 
 namespace MarvinsAIRARefactored.Pages;
 
@@ -173,6 +172,9 @@ public partial class SteeringEffectsPage : UserControl
 
 			OversteerWheelVibrationPattern_MairaComboBox.ItemsSource = dictionary;
 			OversteerWheelVibrationPattern_MairaComboBox.SelectedValue = settings.SteeringEffectsOversteerWheelVibrationPattern;
+
+			SeatOfPantsWheelVibrationPattern_MairaComboBox.ItemsSource = dictionary;
+			SeatOfPantsWheelVibrationPattern_MairaComboBox.SelectedValue = settings.SteeringEffectsSeatOfPantsWheelVibrationPattern;
 		} );
 
 		app.Logger.WriteLine( "[SteeringEffectsPage] <<< SetVibrationPatternMairaComboBoxItemsSource" );
@@ -201,6 +203,9 @@ public partial class SteeringEffectsPage : UserControl
 
 			OversteerWheelConstantForceDirection_MairaComboBox.ItemsSource = dictionary;
 			OversteerWheelConstantForceDirection_MairaComboBox.SelectedValue = settings.SteeringEffectsOversteerWheelConstantForceDirection;
+
+			SeatOfPantsWheelConstantForceDirection_MairaComboBox.ItemsSource = dictionary;
+			SeatOfPantsWheelConstantForceDirection_MairaComboBox.SelectedValue = settings.SteeringEffectsSeatOfPantsWheelConstantForceDirection;
 		} );
 
 		app.Logger.WriteLine( "[SteeringEffectsPage] <<< SetConstantForceDirectionMairaComboBoxItemsSource" );

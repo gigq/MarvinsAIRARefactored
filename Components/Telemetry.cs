@@ -41,6 +41,7 @@ public class Telemetry
 
 		public float steeringEffectsUndersteerEffect;
 		public float steeringEffectsOversteerEffect;
+		public float steeringEffectsSeatOfPantsEffect;
 		public float steeringEffectsSkidSlip;
 
 		public float pedalsClutchFrequency;
@@ -303,11 +304,12 @@ public class Telemetry
 
 		dataBuffer.steeringEffectsUndersteerEffect = app.SteeringEffects.UndersteerEffect;
 		dataBuffer.steeringEffectsOversteerEffect = app.SteeringEffects.OversteerEffect;
+		dataBuffer.steeringEffectsSeatOfPantsEffect = app.SteeringEffects.SeatOfPantsEffect;
 		dataBuffer.steeringEffectsSkidSlip = app.SteeringEffects.SkidSlip;
 
 		// let SimHub know this buffer is ready for reading
 
-		_data.version = 3;
+		_data.version = 4;
 		_data.bufferIndex = _currentBufferIndex;
 
 		_memoryMappedFileViewAccessor?.Write( 0, ref _data );

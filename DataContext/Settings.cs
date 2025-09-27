@@ -2448,7 +2448,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region Steering effects - Understeer maximum threshold
 
-	private float _steeringEffectsUndersteerMaximumThreshold = 0.13f;
+	private float _steeringEffectsUndersteerMaximumThreshold = 0.15f;
 
 	public float SteeringEffectsUndersteerMaximumThreshold
 	{
@@ -2949,7 +2949,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region Steering effects - Oversteer minimum threshold
 
-	private float _steeringEffectsOversteerMinimumThreshold = 0.01f;
+	private float _steeringEffectsOversteerMinimumThreshold = 0f;
 
 	public float SteeringEffectsOversteerMinimumThreshold
 	{
@@ -2957,7 +2957,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = MathZ.Saturate( value );
+			value = Math.Clamp( value, -1f, 2f );
 
 			if ( value != _steeringEffectsOversteerMinimumThreshold )
 			{
@@ -3008,7 +3008,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = MathZ.Saturate( value );
+			value = Math.Clamp( value, -1f, 2f );
 
 			if ( value != _steeringEffectsOversteerMaximumThreshold )
 			{
@@ -3496,6 +3496,558 @@ public class Settings : INotifyPropertyChanged
 	public ContextSwitches SteeringEffectsOversteerPedalVibrationCurveContextSwitches { get; set; } = new( true, true, false, false, false );
 	public ButtonMappings SteeringEffectsOversteerPedalVibrationCurvePlusButtonMappings { get; set; } = new();
 	public ButtonMappings SteeringEffectsOversteerPedalVibrationCurveMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants minimum threshold
+
+	private float _steeringEffectsSeatOfPantsMinimumThreshold = 0f;
+
+	public float SteeringEffectsSeatOfPantsMinimumThreshold
+	{
+		get => _steeringEffectsSeatOfPantsMinimumThreshold;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 10f );
+
+			if ( value != _steeringEffectsSeatOfPantsMinimumThreshold )
+			{
+				_steeringEffectsSeatOfPantsMinimumThreshold = value;
+
+				SteeringEffectsSeatOfPantsMaximumThreshold = MathF.Max( SteeringEffectsSeatOfPantsMaximumThreshold, _steeringEffectsSeatOfPantsMinimumThreshold );
+
+				OnPropertyChanged();
+
+				App.Instance!.SteeringEffects.RedrawCalibrationGraph = true;
+			}
+
+			SteeringEffectsSeatOfPantsMinimumThresholdString = $"{_steeringEffectsSeatOfPantsMinimumThreshold:F2}{DataContext.Instance.Localization[ "GForceUnits" ]}";
+		}
+	}
+
+	private string _steeringEffectsSeatOfPantsMinimumThresholdString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsSeatOfPantsMinimumThresholdString
+	{
+		get => _steeringEffectsSeatOfPantsMinimumThresholdString;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsMinimumThresholdString )
+			{
+				_steeringEffectsSeatOfPantsMinimumThresholdString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsMinimumThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsSeatOfPantsMinimumThresholdPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsSeatOfPantsMinimumThresholdMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants maximum threshold
+
+	private float _steeringEffectsSeatOfPantsMaximumThreshold = 3f;
+
+	public float SteeringEffectsSeatOfPantsMaximumThreshold
+	{
+		get => _steeringEffectsSeatOfPantsMaximumThreshold;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 10f );
+
+			if ( value != _steeringEffectsSeatOfPantsMaximumThreshold )
+			{
+				_steeringEffectsSeatOfPantsMaximumThreshold = value;
+
+				SteeringEffectsSeatOfPantsMinimumThreshold = MathF.Min( SteeringEffectsSeatOfPantsMinimumThreshold, _steeringEffectsSeatOfPantsMaximumThreshold );
+
+				OnPropertyChanged();
+
+				App.Instance!.SteeringEffects.RedrawCalibrationGraph = true;
+			}
+
+			SteeringEffectsSeatOfPantsMaximumThresholdString = $"{_steeringEffectsSeatOfPantsMaximumThreshold:F2}{DataContext.Instance.Localization[ "GForceUnits" ]}";
+		}
+	}
+
+	private string _steeringEffectsSeatOfPantsMaximumThresholdString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsSeatOfPantsMaximumThresholdString
+	{
+		get => _steeringEffectsSeatOfPantsMaximumThresholdString;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsMaximumThresholdString )
+			{
+				_steeringEffectsSeatOfPantsMaximumThresholdString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsMaximumThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsSeatOfPantsMaximumThresholdPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsSeatOfPantsMaximumThresholdMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants wheel vibration pattern
+
+	private RacingWheel.VibrationPattern _steeringEffectsSeatOfPantsWheelVibrationPattern = RacingWheel.VibrationPattern.None;
+
+	public RacingWheel.VibrationPattern SteeringEffectsSeatOfPantsWheelVibrationPattern
+	{
+		get => _steeringEffectsSeatOfPantsWheelVibrationPattern;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsWheelVibrationPattern )
+			{
+				_steeringEffectsSeatOfPantsWheelVibrationPattern = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsWheelVibrationPatternContextSwitches { get; set; } = new( false, false, false, false, false );
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants wheel vibration strength
+
+	private float _steeringEffectsSeatOfPantsWheelVibrationStrength = 0.1f;
+
+	public float SteeringEffectsSeatOfPantsWheelVibrationStrength
+	{
+		get => _steeringEffectsSeatOfPantsWheelVibrationStrength;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 0.3f );
+
+			if ( value != _steeringEffectsSeatOfPantsWheelVibrationStrength )
+			{
+				_steeringEffectsSeatOfPantsWheelVibrationStrength = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _steeringEffectsSeatOfPantsWheelVibrationStrength == 0f )
+			{
+				SteeringEffectsSeatOfPantsWheelVibrationStrengthString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				SteeringEffectsSeatOfPantsWheelVibrationStrengthString = $"{_steeringEffectsSeatOfPantsWheelVibrationStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _steeringEffectsSeatOfPantsWheelVibrationStrengthString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsSeatOfPantsWheelVibrationStrengthString
+	{
+		get => _steeringEffectsSeatOfPantsWheelVibrationStrengthString;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsWheelVibrationStrengthString )
+			{
+				_steeringEffectsSeatOfPantsWheelVibrationStrengthString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsWheelVibrationStrengthContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsSeatOfPantsWheelVibrationStrengthPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsSeatOfPantsWheelVibrationStrengthMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants wheel vibration minimum frequency
+
+	private float _steeringEffectsSeatOfPantsWheelVibrationMinimumFrequency = 15f;
+
+	public float SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequency
+	{
+		get => _steeringEffectsSeatOfPantsWheelVibrationMinimumFrequency;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 50f );
+
+			if ( value != _steeringEffectsSeatOfPantsWheelVibrationMinimumFrequency )
+			{
+				_steeringEffectsSeatOfPantsWheelVibrationMinimumFrequency = value;
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyString = $"{_steeringEffectsSeatOfPantsWheelVibrationMinimumFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
+		}
+	}
+
+	private string _steeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyString
+	{
+		get => _steeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyString;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyString )
+			{
+				_steeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants wheel vibration maximum frequency
+
+	private float _steeringEffectsSeatOfPantsWheelVibrationMaximumFrequency = 50f;
+
+	public float SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequency
+	{
+		get => _steeringEffectsSeatOfPantsWheelVibrationMaximumFrequency;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 50f );
+
+			if ( value != _steeringEffectsSeatOfPantsWheelVibrationMaximumFrequency )
+			{
+				_steeringEffectsSeatOfPantsWheelVibrationMaximumFrequency = value;
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyString = $"{_steeringEffectsSeatOfPantsWheelVibrationMaximumFrequency:F0}{DataContext.Instance.Localization[ "HertzUnits" ]}";
+		}
+	}
+
+	private string _steeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyString
+	{
+		get => _steeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyString;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyString )
+			{
+				_steeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants wheel vibration curve
+
+	private float _steeringEffectsSeatOfPantsWheelVibrationCurve = 0.25f;
+
+	public float SteeringEffectsSeatOfPantsWheelVibrationCurve
+	{
+		get => _steeringEffectsSeatOfPantsWheelVibrationCurve;
+
+		set
+		{
+			value = Math.Clamp( value, -1f, 1f );
+
+			if ( value != _steeringEffectsSeatOfPantsWheelVibrationCurve )
+			{
+				_steeringEffectsSeatOfPantsWheelVibrationCurve = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _steeringEffectsSeatOfPantsWheelVibrationCurve == 0f )
+			{
+				SteeringEffectsSeatOfPantsWheelVibrationCurveString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				SteeringEffectsSeatOfPantsWheelVibrationCurveString = $"{_steeringEffectsSeatOfPantsWheelVibrationCurve * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _steeringEffectsSeatOfPantsWheelVibrationCurveString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsSeatOfPantsWheelVibrationCurveString
+	{
+		get => _steeringEffectsSeatOfPantsWheelVibrationCurveString;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsWheelVibrationCurveString )
+			{
+				_steeringEffectsSeatOfPantsWheelVibrationCurveString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsWheelVibrationCurveContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsSeatOfPantsWheelVibrationCurvePlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsSeatOfPantsWheelVibrationCurveMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants wheel constant force direction
+
+	private RacingWheel.ConstantForceDirection _steeringEffectsSeatOfPantsWheelConstantForceDirection = RacingWheel.ConstantForceDirection.None;
+
+	public RacingWheel.ConstantForceDirection SteeringEffectsSeatOfPantsWheelConstantForceDirection
+	{
+		get => _steeringEffectsSeatOfPantsWheelConstantForceDirection;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsWheelConstantForceDirection )
+			{
+				_steeringEffectsSeatOfPantsWheelConstantForceDirection = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsWheelConstantForceDirectionContextSwitches { get; set; } = new( false, false, false, false, false );
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants wheel constant force strength
+
+	private float _steeringEffectsSeatOfPantsWheelConstantForceStrength = 0.5f;
+
+	public float SteeringEffectsSeatOfPantsWheelConstantForceStrength
+	{
+		get => _steeringEffectsSeatOfPantsWheelConstantForceStrength;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 1f );
+
+			if ( value != _steeringEffectsSeatOfPantsWheelConstantForceStrength )
+			{
+				_steeringEffectsSeatOfPantsWheelConstantForceStrength = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _steeringEffectsSeatOfPantsWheelConstantForceStrength == 0f )
+			{
+				SteeringEffectsSeatOfPantsWheelConstantForceStrengthString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				SteeringEffectsSeatOfPantsWheelConstantForceStrengthString = $"{_steeringEffectsSeatOfPantsWheelConstantForceStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _steeringEffectsSeatOfPantsWheelConstantForceStrengthString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsSeatOfPantsWheelConstantForceStrengthString
+	{
+		get => _steeringEffectsSeatOfPantsWheelConstantForceStrengthString;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsWheelConstantForceStrengthString )
+			{
+				_steeringEffectsSeatOfPantsWheelConstantForceStrengthString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsWheelConstantForceStrengthContextSwitches { get; set; } = new( true, false, false, false, false );
+	public ButtonMappings SteeringEffectsSeatOfPantsWheelConstantForceStrengthPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsSeatOfPantsWheelConstantForceStrengthMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants pedal vibration minimum frequency
+
+	private float _steeringEffectsSeatOfPantsPedalVibrationMinimumFrequency = 0f;
+
+	public float SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequency
+	{
+		get => _steeringEffectsSeatOfPantsPedalVibrationMinimumFrequency;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _steeringEffectsSeatOfPantsPedalVibrationMinimumFrequency )
+			{
+				_steeringEffectsSeatOfPantsPedalVibrationMinimumFrequency = value;
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyString = $"{_steeringEffectsSeatOfPantsPedalVibrationMinimumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+		}
+	}
+
+	private string _steeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyString
+	{
+		get => _steeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyString;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyString )
+			{
+				_steeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants pedal vibration maximum frequency
+
+	private float _steeringEffectsSeatOfPantsPedalVibrationMaximumFrequency = 1f;
+
+	public float SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequency
+	{
+		get => _steeringEffectsSeatOfPantsPedalVibrationMaximumFrequency;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _steeringEffectsSeatOfPantsPedalVibrationMaximumFrequency )
+			{
+				_steeringEffectsSeatOfPantsPedalVibrationMaximumFrequency = value;
+
+				OnPropertyChanged();
+			}
+
+			SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyString = $"{_steeringEffectsSeatOfPantsPedalVibrationMaximumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+		}
+	}
+
+	private string _steeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyString
+	{
+		get => _steeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyString;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyString )
+			{
+				_steeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants pedal vibration curve
+
+	private float _steeringEffectsSeatOfPantsPedalVibrationCurve = 0f;
+
+	public float SteeringEffectsSeatOfPantsPedalVibrationCurve
+	{
+		get => _steeringEffectsSeatOfPantsPedalVibrationCurve;
+
+		set
+		{
+			value = Math.Clamp( value, -1f, 1f );
+
+			if ( value != _steeringEffectsSeatOfPantsPedalVibrationCurve )
+			{
+				_steeringEffectsSeatOfPantsPedalVibrationCurve = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _steeringEffectsSeatOfPantsPedalVibrationCurve == 0f )
+			{
+				SteeringEffectsSeatOfPantsPedalVibrationCurveString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				SteeringEffectsSeatOfPantsPedalVibrationCurveString = $"{_steeringEffectsSeatOfPantsPedalVibrationCurve * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _steeringEffectsSeatOfPantsPedalVibrationCurveString = string.Empty;
+
+	[XmlIgnore]
+	public string SteeringEffectsSeatOfPantsPedalVibrationCurveString
+	{
+		get => _steeringEffectsSeatOfPantsPedalVibrationCurveString;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsPedalVibrationCurveString )
+			{
+				_steeringEffectsSeatOfPantsPedalVibrationCurveString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsPedalVibrationCurveContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings SteeringEffectsSeatOfPantsPedalVibrationCurvePlusButtonMappings { get; set; } = new();
+	public ButtonMappings SteeringEffectsSeatOfPantsPedalVibrationCurveMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
@@ -7508,6 +8060,119 @@ public class Settings : INotifyPropertyChanged
 
 	public ButtonMappings SoundsOversteerFrequencyRatioPlusButtonMappings { get; set; } = new();
 	public ButtonMappings SoundsOversteerFrequencyRatioMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Sounds - Seat-of-pants enabled
+
+	private bool _soundsSeatOfPantsEnabled = false;
+
+	public bool SoundsSeatOfPantsEnabled
+	{
+		get => _soundsSeatOfPantsEnabled;
+
+		set
+		{
+			if ( value != _soundsSeatOfPantsEnabled )
+			{
+				_soundsSeatOfPantsEnabled = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	#endregion
+
+	#region Sounds - Seat-of-pants volume
+
+	private float _soundsSeatOfPantsVolume = 0.75f;
+
+	public float SoundsSeatOfPantsVolume
+	{
+		get => _soundsSeatOfPantsVolume;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _soundsSeatOfPantsVolume )
+			{
+				_soundsSeatOfPantsVolume = value;
+
+				OnPropertyChanged();
+			}
+
+			SoundsSeatOfPantsVolumeString = $"{_soundsSeatOfPantsVolume * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+		}
+	}
+
+	private string _soundsSeatOfPantsVolumeString = string.Empty;
+
+	[XmlIgnore]
+	public string SoundsSeatOfPantsVolumeString
+	{
+		get => _soundsSeatOfPantsVolumeString;
+
+		set
+		{
+			if ( value != _soundsSeatOfPantsVolumeString )
+			{
+				_soundsSeatOfPantsVolumeString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ButtonMappings SoundsSeatOfPantsVolumePlusButtonMappings { get; set; } = new();
+	public ButtonMappings SoundsSeatOfPantsVolumeMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Sounds - Seat-of-pants frequency ratio
+
+	private float _soundsSeatOfPantsFrequencyRatio = 1f;
+
+	public float SoundsSeatOfPantsFrequencyRatio
+	{
+		get => _soundsSeatOfPantsFrequencyRatio;
+
+		set
+		{
+			value = Math.Clamp( value, 0.25f, 4f );
+
+			if ( value != _soundsSeatOfPantsFrequencyRatio )
+			{
+				_soundsSeatOfPantsFrequencyRatio = value;
+
+				OnPropertyChanged();
+			}
+
+			SoundsSeatOfPantsFrequencyRatioString = $"{_soundsSeatOfPantsFrequencyRatio * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+		}
+	}
+
+	private string _soundsSeatOfPantsFrequencyRatioString = string.Empty;
+
+	[XmlIgnore]
+	public string SoundsSeatOfPantsFrequencyRatioString
+	{
+		get => _soundsSeatOfPantsFrequencyRatioString;
+
+		set
+		{
+			if ( value != _soundsSeatOfPantsFrequencyRatioString )
+			{
+				_soundsSeatOfPantsFrequencyRatioString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ButtonMappings SoundsSeatOfPantsFrequencyRatioPlusButtonMappings { get; set; } = new();
+	public ButtonMappings SoundsSeatOfPantsFrequencyRatioMinusButtonMappings { get; set; } = new();
 
 	#endregion
 

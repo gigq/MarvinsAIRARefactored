@@ -771,9 +771,6 @@
   <data name="Sensitivity">
     <value>Sensibilité</value>
   </data>
-  <data name="ZeAlanLeTwist">
-    <value>Taux de variation et compression totale</value>
-  </data>
   <data name="DiscordModerators_UC">
     <value>MODÉRATEURS DISCORD</value>
   </data>
@@ -1085,5 +1082,8 @@
   </data>
   <data name="GripOMeter">
     <value />
+  </data>
+  <data name="SlewAndTotalCompression" xml:space="preserve">
+    <value>Taux de variation et compression totale</value>
   </data>
 </root>

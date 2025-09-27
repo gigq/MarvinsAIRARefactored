@@ -102,367 +102,672 @@
 
         </Grid>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Understeer_UC]}" />
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Margin="0,40,0,0">
+
+                <Border.LayoutTransform>
+                    <RotateTransform Angle="-90" />
+                </Border.LayoutTransform>
+
+                <Grid>
+
+                    <Border BorderBrush="#6aabff"
+                            BorderThickness="2"
+                            Height="4"
+                            CornerRadius="1"
+                            Opacity="0.75" />
+
+                    <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                               Text="{Binding Localization[Understeer_UC]}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Padding="10,0"
+                               Foreground="#6aabff"
+                               Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
+
+                </Grid>
+
+            </Border>
+
+            <StackPanel Grid.Column="2">
+
+                <controls:MairaGroupHeader Label="{Binding Localization[Understeer_UC]}" />
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:MairaKnob Grid.Column="0"
+                                        Label="{Binding Localization[MinimumThreshold]}"
+                                        Value="{Binding Settings.SteeringEffectsUndersteerMinimumThreshold, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdMinusButtonMappings}"
+                                        DefaultValue="0.05" />
+
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[MaximumThreshold]}"
+                                        Value="{Binding Settings.SteeringEffectsUndersteerMaximumThreshold, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdMinusButtonMappings}"
+                                        DefaultValue="0.15" />
+
+                </Grid>
+
+                <controls:MairaGroupHeader Label="{Binding Localization[UndersteerWheelVibrationEffect_UC]}" />
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:MairaComboBox x:Name="UndersteerWheelVibrationPattern_MairaComboBox"
+                                            Grid.Column="0"
+                                            Label="{Binding Localization[VibrationPattern]}"
+                                            SelectedValue="{Binding Settings.SteeringEffectsUndersteerWheelVibrationPattern, Mode=TwoWay}"
+                                            ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationPatternContextSwitches}" />
+
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[Strength]}"
+                                        Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrength, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrengthString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrengthContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrengthPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrengthMinusButtonMappings}"
+                                        DefaultValue="0.1" />
+
+                </Grid>
+
+                <Grid Margin="0,20,0,0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:MairaKnob Grid.Column="0"
+                                        Label="{Binding Localization[MinimumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyString}"
+                                        StepSize="1"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyMinusButtonMappings}"
+                                        DefaultValue="15" />
+
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[MaximumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyString}"
+                                        StepSize="1"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyMinusButtonMappings}"
+                                        DefaultValue="50" />
+
+                    <controls:MairaKnob Grid.Column="4"
+                                        Label="{Binding Localization[Curve]}"
+                                        Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurve, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurveString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurveContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurvePlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurveMinusButtonMappings}"
+                                        ShowCurve="True"
+                                        DefaultValue="0.25" />
+
+                </Grid>
+
+                <controls:MairaGroupHeader Label="{Binding Localization[UndersteerWheelConstantForceEffect_UC]}" />
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:MairaComboBox x:Name="UndersteerWheelConstantForceDirection_MairaComboBox"
+                                            Grid.Column="0"
+                                            Label="{Binding Localization[Direction]}"
+                                            SelectedValue="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceDirection, Mode=TwoWay}"
+                                            ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceDirectionContextSwitches}" />
+
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[Strength]}"
+                                        Value="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrength, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrengthString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrengthContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrengthPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrengthMinusButtonMappings}"
+                                        DefaultValue="0.1" />
+
+                </Grid>
+
+                <controls:MairaGroupHeader Label="{Binding Localization[UndersteerPedalVibrationEffect_UC]}" />
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:MairaKnob Grid.Column="0"
+                                        Label="{Binding Localization[MinimumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyMinusButtonMappings}"
+                                        DefaultValue="0" />
+
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[MaximumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyMinusButtonMappings}"
+                                        DefaultValue="1" />
+
+                    <controls:MairaKnob Grid.Column="4"
+                                        Label="{Binding Localization[Curve]}"
+                                        Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurve, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurvePlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveMinusButtonMappings}"
+                                        ShowCurve="True"
+                                        DefaultValue="0" />
+
+                </Grid>
+
+            </StackPanel>
+
+        </Grid>
 
         <Grid>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[MinimumThreshold]}"
-                                Value="{Binding Settings.SteeringEffectsUndersteerMinimumThreshold, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMinimumThresholdMinusButtonMappings}"
-                                DefaultValue="0.05" />
+            <Border Grid.Column="0"
+                    Margin="0,40,0,0">
 
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[MaximumThreshold]}"
-                                Value="{Binding Settings.SteeringEffectsUndersteerMaximumThreshold, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerMaximumThresholdMinusButtonMappings}"
-                                DefaultValue="0.13" />
+                <Border.LayoutTransform>
+                    <RotateTransform Angle="-90" />
+                </Border.LayoutTransform>
+
+                <Grid>
+
+                    <Border BorderBrush="#6ae1ff"
+                            BorderThickness="2"
+                            Height="4"
+                            CornerRadius="1"
+                            Opacity="0.75" />
+
+                    <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                               Text="{Binding Localization[Oversteer_UC]}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Padding="10,0"
+                               Foreground="#6ae1ff"
+                               Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
+
+                </Grid>
+
+            </Border>
+
+            <StackPanel Grid.Column="2">
+
+                <controls:MairaGroupHeader Label="{Binding Localization[Oversteer_UC]}" />
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:MairaKnob Grid.Column="0"
+                                        Label="{Binding Localization[MinimumThreshold]}"
+                                        Value="{Binding Settings.SteeringEffectsOversteerMinimumThreshold, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsOversteerMinimumThresholdString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsOversteerMinimumThresholdContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerMinimumThresholdPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerMinimumThresholdMinusButtonMappings}"
+                                        DefaultValue="0" />
+
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[MaximumThreshold]}"
+                                        Value="{Binding Settings.SteeringEffectsOversteerMaximumThreshold, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsOversteerMaximumThresholdString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsOversteerMaximumThresholdContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerMaximumThresholdPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerMaximumThresholdMinusButtonMappings}"
+                                        DefaultValue="0.5" />
+
+                </Grid>
+
+                <controls:MairaGroupHeader Label="{Binding Localization[OversteerWheelVibrationEffect_UC]}" />
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:MairaComboBox x:Name="OversteerWheelVibrationPattern_MairaComboBox"
+                                            Grid.Column="0"
+                                            Label="{Binding Localization[VibrationPattern]}"
+                                            SelectedValue="{Binding Settings.SteeringEffectsOversteerWheelVibrationPattern, Mode=TwoWay}"
+                                            ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationPatternContextSwitches}" />
+
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[Strength]}"
+                                        Value="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrength, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrengthString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrengthContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrengthPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrengthMinusButtonMappings}"
+                                        DefaultValue="0.1" />
+
+                </Grid>
+
+                <Grid Margin="0,20,0,0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:MairaKnob Grid.Column="0"
+                                        Label="{Binding Localization[MinimumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsOversteerWheelVibrationMinimumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsOversteerWheelVibrationMinimumFrequencyString}"
+                                        StepSize="1"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationMinimumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationMinimumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationMinimumFrequencyMinusButtonMappings}"
+                                        DefaultValue="15" />
+
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[MaximumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsOversteerWheelVibrationMaximumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsOversteerWheelVibrationMaximumFrequencyString}"
+                                        StepSize="1"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationMaximumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationMaximumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationMaximumFrequencyMinusButtonMappings}"
+                                        DefaultValue="50" />
+
+                    <controls:MairaKnob Grid.Column="4"
+                                        Label="{Binding Localization[Curve]}"
+                                        Value="{Binding Settings.SteeringEffectsOversteerWheelVibrationCurve, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsOversteerWheelVibrationCurveString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationCurveContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationCurvePlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationCurveMinusButtonMappings}"
+                                        ShowCurve="True"
+                                        DefaultValue="0.25" />
+
+                </Grid>
+
+                <controls:MairaGroupHeader Label="{Binding Localization[OversteerWheelConstantForceEffect_UC]}" />
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:MairaComboBox x:Name="OversteerWheelConstantForceDirection_MairaComboBox"
+                                            Grid.Column="0"
+                                            Label="{Binding Localization[Direction]}"
+                                            SelectedValue="{Binding Settings.SteeringEffectsOversteerWheelConstantForceDirection, Mode=TwoWay}"
+                                            ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelConstantForceDirectionContextSwitches}" />
+
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[Strength]}"
+                                        Value="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrength, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrengthString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrengthContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrengthPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrengthMinusButtonMappings}"
+                                        DefaultValue="0.5" />
+
+                </Grid>
+
+                <controls:MairaGroupHeader Label="{Binding Localization[OversteerPedalVibrationEffect_UC]}" />
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:MairaKnob Grid.Column="0"
+                                        Label="{Binding Localization[MinimumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsOversteerPedalVibrationMinimumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsOversteerPedalVibrationMinimumFrequencyString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsOversteerPedalVibrationMinimumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationMinimumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationMinimumFrequencyMinusButtonMappings}"
+                                        DefaultValue="0" />
+
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[MaximumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsOversteerPedalVibrationMaximumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsOversteerPedalVibrationMaximumFrequencyString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsOversteerPedalVibrationMaximumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationMaximumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationMaximumFrequencyMinusButtonMappings}"
+                                        DefaultValue="1" />
+
+                    <controls:MairaKnob Grid.Column="4"
+                                        Label="{Binding Localization[Curve]}"
+                                        Value="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurve, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurveString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurveContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurvePlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurveMinusButtonMappings}"
+                                        ShowCurve="True"
+                                        DefaultValue="0" />
+
+                </Grid>
+
+            </StackPanel>
 
         </Grid>
-
-        <controls:MairaGroupHeader Label="{Binding Localization[UndersteerWheelVibrationEffect_UC]}" />
 
         <Grid>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <controls:MairaComboBox x:Name="UndersteerWheelVibrationPattern_MairaComboBox"
-                                    Grid.Column="0"
-                                    Label="{Binding Localization[VibrationPattern]}"
-                                    SelectedValue="{Binding Settings.SteeringEffectsUndersteerWheelVibrationPattern, Mode=TwoWay}"
-                                    ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationPatternContextSwitches}" />
+            <Border Grid.Column="0"
+                    Margin="0,40,0,0">
 
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[Strength]}"
-                                Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrength, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrengthString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrengthContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrengthPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrengthMinusButtonMappings}"
-                                DefaultValue="0.1" />
+                <Border.LayoutTransform>
+                    <RotateTransform Angle="-90" />
+                </Border.LayoutTransform>
 
-        </Grid>
+                <Grid>
 
-        <Grid Margin="0,20,0,0">
+                    <Border BorderBrush="#6affee"
+                            BorderThickness="2"
+                            Height="4"
+                            CornerRadius="1"
+                            Opacity="0.75" />
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                               Text="{Binding Localization[SeatOfPants_UC]}"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Padding="10,0"
+                               Foreground="#6affee"
+                               Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
 
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[MinimumFrequency]}"
-                                Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequency, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyString}"
-                                StepSize="1"
-                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMinimumFrequencyMinusButtonMappings}"
-                                DefaultValue="15" />
+                </Grid>
 
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[MaximumFrequency]}"
-                                Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequency, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyString}"
-                                StepSize="1"
-                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationMaximumFrequencyMinusButtonMappings}"
-                                DefaultValue="50" />
+            </Border>
 
-            <controls:MairaKnob Grid.Column="4"
-                                Label="{Binding Localization[Curve]}"
-                                Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurve, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurveString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurveContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurvePlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelVibrationCurveMinusButtonMappings}"
-                                ShowCurve="True"
-                                DefaultValue="0.25" />
+            <StackPanel Grid.Column="2">
 
-        </Grid>
+                <controls:MairaGroupHeader Label="{Binding Localization[SeatOfPants_UC]}" />
 
-        <controls:MairaGroupHeader Label="{Binding Localization[UndersteerWheelConstantForceEffect_UC]}" />
+                <Grid>
 
-        <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                    <controls:MairaKnob Grid.Column="0"
+                                        Label="{Binding Localization[MinimumThreshold]}"
+                                        Value="{Binding Settings.SteeringEffectsSeatOfPantsMinimumThreshold, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsSeatOfPantsMinimumThresholdString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsMinimumThresholdContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsMinimumThresholdPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsMinimumThresholdMinusButtonMappings}"
+                                        DefaultValue="0" />
 
-            <controls:MairaComboBox x:Name="UndersteerWheelConstantForceDirection_MairaComboBox"
-                                    Grid.Column="0"
-                                    Label="{Binding Localization[Direction]}"
-                                    SelectedValue="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceDirection, Mode=TwoWay}"
-                                    ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceDirectionContextSwitches}" />
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[MaximumThreshold]}"
+                                        Value="{Binding Settings.SteeringEffectsSeatOfPantsMaximumThreshold, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsSeatOfPantsMaximumThresholdString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsMaximumThresholdContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsMaximumThresholdPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsMaximumThresholdMinusButtonMappings}"
+                                        DefaultValue="3" />
 
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[Strength]}"
-                                Value="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrength, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrengthString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrengthContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrengthPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrengthMinusButtonMappings}"
-                                DefaultValue="0.1" />
+                </Grid>
 
-        </Grid>
+                <controls:MairaGroupHeader Label="{Binding Localization[SeatOfPantsWheelVibrationEffect_UC]}" />
 
-        <controls:MairaGroupHeader Label="{Binding Localization[UndersteerPedalVibrationEffect_UC]}" />
+                <Grid>
 
-        <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                    <controls:MairaComboBox x:Name="SeatOfPantsWheelVibrationPattern_MairaComboBox"
+                                            Grid.Column="0"
+                                            Label="{Binding Localization[VibrationPattern]}"
+                                            SelectedValue="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationPattern, Mode=TwoWay}"
+                                            ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationPatternContextSwitches}" />
 
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[MinimumFrequency]}"
-                                Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequency, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMinimumFrequencyMinusButtonMappings}"
-                                DefaultValue="0" />
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[Strength]}"
+                                        Value="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationStrength, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationStrengthString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationStrengthContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationStrengthPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationStrengthMinusButtonMappings}"
+                                        DefaultValue="0.1" />
 
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[MaximumFrequency]}"
-                                Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequency, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationMaximumFrequencyMinusButtonMappings}"
-                                DefaultValue="1" />
+                </Grid>
 
-            <controls:MairaKnob Grid.Column="4"
-                                Label="{Binding Localization[Curve]}"
-                                Value="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurve, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurvePlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerPedalVibrationCurveMinusButtonMappings}"
-                                ShowCurve="True"
-                                DefaultValue="0" />
+                <Grid Margin="0,20,0,0">
 
-        </Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Oversteer_UC]}" />
+                    <controls:MairaKnob Grid.Column="0"
+                                        Label="{Binding Localization[MinimumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyString}"
+                                        StepSize="1"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyMinusButtonMappings}"
+                                        DefaultValue="15" />
 
-        <Grid>
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[MaximumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyString}"
+                                        StepSize="1"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyMinusButtonMappings}"
+                                        DefaultValue="50" />
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                    <controls:MairaKnob Grid.Column="4"
+                                        Label="{Binding Localization[Curve]}"
+                                        Value="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationCurve, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationCurveString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationCurveContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationCurvePlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationCurveMinusButtonMappings}"
+                                        ShowCurve="True"
+                                        DefaultValue="0.25" />
 
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[MinimumThreshold]}"
-                                Value="{Binding Settings.SteeringEffectsOversteerMinimumThreshold, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsOversteerMinimumThresholdString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerMinimumThresholdContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerMinimumThresholdPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerMinimumThresholdMinusButtonMappings}"
-                                DefaultValue="0.01" />
+                </Grid>
 
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[MaximumThreshold]}"
-                                Value="{Binding Settings.SteeringEffectsOversteerMaximumThreshold, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsOversteerMaximumThresholdString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerMaximumThresholdContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerMaximumThresholdPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerMaximumThresholdMinusButtonMappings}"
-                                DefaultValue="0.5" />
+                <controls:MairaGroupHeader Label="{Binding Localization[SeatOfPantsWheelConstantForceEffect_UC]}" />
 
-        </Grid>
+                <Grid>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[OversteerWheelVibrationEffect_UC]}" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-        <Grid>
+                    <controls:MairaComboBox x:Name="SeatOfPantsWheelConstantForceDirection_MairaComboBox"
+                                            Grid.Column="0"
+                                            Label="{Binding Localization[Direction]}"
+                                            SelectedValue="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceDirection, Mode=TwoWay}"
+                                            ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceDirectionContextSwitches}" />
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[Strength]}"
+                                        Value="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceStrength, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceStrengthString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceStrengthContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceStrengthPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceStrengthMinusButtonMappings}"
+                                        DefaultValue="0.5" />
 
-            <controls:MairaComboBox x:Name="OversteerWheelVibrationPattern_MairaComboBox"
-                                    Grid.Column="0"
-                                    Label="{Binding Localization[VibrationPattern]}"
-                                    SelectedValue="{Binding Settings.SteeringEffectsOversteerWheelVibrationPattern, Mode=TwoWay}"
-                                    ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationPatternContextSwitches}" />
+                </Grid>
 
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[Strength]}"
-                                Value="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrength, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrengthString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrengthContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrengthPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrengthMinusButtonMappings}"
-                                DefaultValue="0.1" />
+                <controls:MairaGroupHeader Label="{Binding Localization[SeatOfPantsPedalVibrationEffect_UC]}" />
 
-        </Grid>
+                <Grid>
 
-        <Grid Margin="0,20,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                    <controls:MairaKnob Grid.Column="0"
+                                        Label="{Binding Localization[MinimumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyMinusButtonMappings}"
+                                        DefaultValue="0" />
 
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[MinimumFrequency]}"
-                                Value="{Binding Settings.SteeringEffectsOversteerWheelVibrationMinimumFrequency, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsOversteerWheelVibrationMinimumFrequencyString}"
-                                StepSize="1"
-                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationMinimumFrequencyContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationMinimumFrequencyPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationMinimumFrequencyMinusButtonMappings}"
-                                DefaultValue="15" />
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[MaximumFrequency]}"
+                                        Value="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequency, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyMinusButtonMappings}"
+                                        DefaultValue="1" />
 
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[MaximumFrequency]}"
-                                Value="{Binding Settings.SteeringEffectsOversteerWheelVibrationMaximumFrequency, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsOversteerWheelVibrationMaximumFrequencyString}"
-                                StepSize="1"
-                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationMaximumFrequencyContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationMaximumFrequencyPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationMaximumFrequencyMinusButtonMappings}"
-                                DefaultValue="50" />
+                    <controls:MairaKnob Grid.Column="4"
+                                        Label="{Binding Localization[Curve]}"
+                                        Value="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationCurve, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationCurveString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationCurveContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationCurvePlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationCurveMinusButtonMappings}"
+                                        ShowCurve="True"
+                                        DefaultValue="0" />
 
-            <controls:MairaKnob Grid.Column="4"
-                                Label="{Binding Localization[Curve]}"
-                                Value="{Binding Settings.SteeringEffectsOversteerWheelVibrationCurve, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsOversteerWheelVibrationCurveString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationCurveContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationCurvePlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelVibrationCurveMinusButtonMappings}"
-                                ShowCurve="True"
-                                DefaultValue="0.25" />
+                </Grid>
 
-        </Grid>
-
-        <controls:MairaGroupHeader Label="{Binding Localization[OversteerWheelConstantForceEffect_UC]}" />
-
-        <Grid>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <controls:MairaComboBox x:Name="OversteerWheelConstantForceDirection_MairaComboBox"
-                                    Grid.Column="0"
-                                    Label="{Binding Localization[Direction]}"
-                                    SelectedValue="{Binding Settings.SteeringEffectsOversteerWheelConstantForceDirection, Mode=TwoWay}"
-                                    ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelConstantForceDirectionContextSwitches}" />
-
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[Strength]}"
-                                Value="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrength, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrengthString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrengthContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrengthPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrengthMinusButtonMappings}"
-                                DefaultValue="0.5" />
-
-        </Grid>
-
-        <controls:MairaGroupHeader Label="{Binding Localization[OversteerPedalVibrationEffect_UC]}" />
-
-        <Grid>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[MinimumFrequency]}"
-                                Value="{Binding Settings.SteeringEffectsOversteerPedalVibrationMinimumFrequency, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsOversteerPedalVibrationMinimumFrequencyString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerPedalVibrationMinimumFrequencyContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationMinimumFrequencyPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationMinimumFrequencyMinusButtonMappings}"
-                                DefaultValue="0" />
-
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[MaximumFrequency]}"
-                                Value="{Binding Settings.SteeringEffectsOversteerPedalVibrationMaximumFrequency, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsOversteerPedalVibrationMaximumFrequencyString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerPedalVibrationMaximumFrequencyContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationMaximumFrequencyPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationMaximumFrequencyMinusButtonMappings}"
-                                DefaultValue="1" />
-
-            <controls:MairaKnob Grid.Column="4"
-                                Label="{Binding Localization[Curve]}"
-                                Value="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurve, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurveString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurveContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurvePlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurveMinusButtonMappings}"
-                                ShowCurve="True"
-                                DefaultValue="0" />
+            </StackPanel>
 
         </Grid>
 

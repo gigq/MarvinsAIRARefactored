@@ -23,8 +23,10 @@
     <None Remove="Artwork\Buttons\record-orange.png" />
     <None Remove="Artwork\Buttons\record-white.png" />
     <None Remove="Artwork\Misc\left-drag-handle.png" />
+    <None Remove="Artwork\Misc\orange-stripes.png" />
     <None Remove="Artwork\Misc\right-drag-handle.png" />
     <None Remove="Artwork\Misc\trading-paints.png" />
+    <None Remove="Artwork\Misc\yellow-stripes.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -111,11 +113,12 @@
     <Resource Include="Artwork\Misc\buy-me-a-coffee-logo.png" />
     <Resource Include="Artwork\Misc\discord-logo.png" />
     <Resource Include="Artwork\Misc\github-logo.png" />
-    <Resource Include="Artwork\Misc\grip-o-meter-ball.png" />
     <Resource Include="Artwork\Misc\grip-o-meter.png" />
     <Resource Include="Artwork\Misc\left-drag-handle.png" />
+    <Resource Include="Artwork\Misc\orange-stripes.png" />
     <Resource Include="Artwork\Misc\right-drag-handle.png" />
     <Resource Include="Artwork\Misc\trading-paints.png" />
+    <Resource Include="Artwork\Misc\yellow-stripes.png" />
     <Resource Include="Fonts\Aptos-Narrow-Italic.ttf" />
     <Resource Include="Fonts\Aptos-Narrow.ttf" />
     <Resource Include="Artwork\Misc\simagic-logo.png" />

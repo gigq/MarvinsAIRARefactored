@@ -51,5 +51,12 @@ public partial class SoundsPage : UserControl
 		app.Sounds.Test( Sounds.SoundEffectType.Oversteer );
 	}
 
+	private void SeatOfPants_Test_MairaButton_Click( object sender, RoutedEventArgs e )
+	{
+		var app = App.Instance!;
+
+		app.Sounds.Test( Sounds.SoundEffectType.SeatOfPants );
+	}
+
 	#endregion
 }

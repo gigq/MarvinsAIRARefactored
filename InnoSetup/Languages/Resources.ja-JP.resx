@@ -758,10 +758,6 @@
     <value>感度</value>
     <comment>Pedals</comment>
   </data>
-  <data name="ZeAlanLeTwist" xml:space="preserve">
-    <value>スルーレートと総圧縮</value>
-    <comment>Racing wheel algorithms list</comment>
-  </data>
   <data name="DiscordModerators_UC" xml:space="preserve">
     <value>DISCORD モデレーター</value>
     <comment>Contribute</comment>
@@ -1217,5 +1213,8 @@
   <data name="GripOMeter" xml:space="preserve">
     <value />
     <comment>Steering effects</comment>
+  </data>
+  <data name="SlewAndTotalCompression" xml:space="preserve">
+    <value>スルーレートと総圧縮</value>
   </data>
 </root>

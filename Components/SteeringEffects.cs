@@ -23,6 +23,7 @@ public class SteeringEffects
 
 	public float UndersteerEffect { get; private set; } = 0f;
 	public float OversteerEffect { get; private set; } = 0f;
+	public float SeatOfPantsEffect { get; private set; } = 0f;
 	public float SkidSlip { get; private set; } = 0f;
 
 	public bool RedrawCalibrationGraph { private get; set; } = false;
@@ -117,12 +118,13 @@ public class SteeringEffects
 		{
 			if ( _calibrationIsValid )
 			{
-				UpdateEffects( app );
+				UpdateEffects( app, deltaSeconds );
 			}
 			else
 			{
 				UndersteerEffect = 0f;
 				OversteerEffect = 0f;
+				SeatOfPantsEffect = 0f;
 				SkidSlip = 0f;
 			}
 		}
@@ -130,6 +132,7 @@ public class SteeringEffects
 		{
 			UndersteerEffect = 0f;
 			OversteerEffect = 0f;
+			SeatOfPantsEffect = 0f;
 			SkidSlip = 0f;
 
 			switch ( _calibrationPhase )
@@ -149,7 +152,7 @@ public class SteeringEffects
 		}
 	}
 
-	private void UpdateEffects( App app )
+	private void UpdateEffects( App app, float deltaSeconds )
 	{
 		var settings = DataContext.DataContext.Instance.Settings;
 
@@ -244,6 +247,21 @@ public class SteeringEffects
 		}
 
 		SkidSlip = Math.Clamp( skidSlip, -1f, 1f );
+
+		// seat of pants effect is simple
+
+		var latAccelInG = app.Simulator.LatAccel * MathZ.OneOverG;
+
+		var absLatAccelInG = MathF.Abs( latAccelInG );
+
+		var seatOfPantsEffect = 0f;
+
+		if ( absLatAccelInG >= settings.SteeringEffectsSeatOfPantsMinimumThreshold )
+		{
+			seatOfPantsEffect = MathF.CopySign( MathZ.Saturate( MathZ.InverseLerp( settings.SteeringEffectsSeatOfPantsMinimumThreshold, settings.SteeringEffectsSeatOfPantsMaximumThreshold, absLatAccelInG ) ), latAccelInG );
+		}
+
+		SeatOfPantsEffect = speedFade * seatOfPantsEffect;
 	}
 
 	public void RunCalibration()
@@ -1002,11 +1020,33 @@ public class SteeringEffects
 
 							if ( nextIndex <= 0 )
 							{
-								_expectedYawRateInDegreesPerSecond[ angleIndex ] = _yawRateInDegreesPerSecond[ 0 ];
+								var x0 = _steeringWheelAnglesInDegrees[ 0 ];
+								var x1 = _steeringWheelAnglesInDegrees[ 10 ];
+
+								var y0 = _yawRateInDegreesPerSecond[ 0 ];
+								var y1 = _yawRateInDegreesPerSecond[ 10 ];
+
+								var dx = ( x1 - x0 );
+
+								var slope = ( MathF.Abs( dx ) < 1e-12f ) ? 0f : ( y1 - y0 ) / dx;
+
+								_expectedYawRateInDegreesPerSecond[ angleIndex ] = y0 + slope * ( steeringWheelAngleInDegrees - x0 );
 							}
 							else if ( nextIndex >= _numSteeringWheelAnglesRecorded )
 							{
-								_expectedYawRateInDegreesPerSecond[ angleIndex ] = _yawRateInDegreesPerSecond[ _numSteeringWheelAnglesRecorded - 1 ];
+								var last = _numSteeringWheelAnglesRecorded - 1;
+
+								var x0 = _steeringWheelAnglesInDegrees[ last - 10 ];
+								var x1 = _steeringWheelAnglesInDegrees[ last ];
+
+								var y0 = _yawRateInDegreesPerSecond[ last - 10 ];
+								var y1 = _yawRateInDegreesPerSecond[ last ];
+
+								var dx = ( x1 - x0 );
+
+								var slope = ( MathF.Abs( dx ) < 1e-12f ) ? 0f : ( y1 - y0 ) / dx;
+
+								_expectedYawRateInDegreesPerSecond[ angleIndex ] = y1 + slope * ( steeringWheelAngleInDegrees - x1 );
 							}
 							else
 							{

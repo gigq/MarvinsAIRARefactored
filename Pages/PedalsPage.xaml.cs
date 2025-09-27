@@ -4,7 +4,6 @@ using System.Windows;
 using UserControl = System.Windows.Controls.UserControl;
 
 using MarvinsAIRARefactored.Components;
-using MarvinsAIRARefactored.Controls;
 
 namespace MarvinsAIRARefactored.Pages;
 
@@ -101,6 +100,7 @@ public partial class PedalsPage : UserControl
 			{ Pedals.Effect.RPM, localization[ "RPM" ] },
 			{ Pedals.Effect.UndersteerEffect, localization[ "UndersteerEffect" ] },
 			{ Pedals.Effect.OversteerEffect, localization[ "OversteerEffect" ] },
+			{ Pedals.Effect.SeatOfPantsEffect, localization[ "SeatOfPantsEffect" ] },
 			{ Pedals.Effect.WheelLock, localization[ "WheelLock" ] },
 			{ Pedals.Effect.WheelSpin, localization[ "WheelSpin" ] },
 			{ Pedals.Effect.ClutchSlip, localization[ "ClutchSlip" ] },

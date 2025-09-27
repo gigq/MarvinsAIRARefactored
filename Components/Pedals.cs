@@ -16,6 +16,7 @@ public class Pedals
 		RPM,
 		UndersteerEffect,
 		OversteerEffect,
+		SeatOfPantsEffect,
 		WheelLock,
 		WheelSpin,
 		ClutchSlip
@@ -254,6 +255,7 @@ public class Pedals
 			Effect.RPM => DoRPMEffect( app, amplitude ),
 			Effect.UndersteerEffect => DoUndersteerEffect( app, amplitude ),
 			Effect.OversteerEffect => DoOversteerEffect( app, amplitude ),
+			Effect.SeatOfPantsEffect => DoSeatOfPantsEffect( app, amplitude ),
 			Effect.WheelLock => DoWheelLockEffect( app, amplitude ),
 			Effect.WheelSpin => DoWheelSpinEffect( app, amplitude ),
 			Effect.ClutchSlip => DoClutchSlipEffect( app, amplitude ),
@@ -376,6 +378,33 @@ public class Pedals
 			}
 
 			factor = MathF.Pow( factor, MathZ.CurveToPower( settings.SteeringEffectsOversteerPedalVibrationCurve ) );
+
+			var frequency = MathZ.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( factor, MathZ.CurveToPower( settings.PedalsFrequencyCurve ) ) );
+
+			amplitude = MathZ.Saturate( amplitude );
+			amplitude = MathZ.Lerp( settings.PedalsMinimumAmplitude, settings.PedalsMaximumAmplitude, MathF.Pow( amplitude, MathZ.CurveToPower( settings.PedalsAmplitudeCurve ) ) );
+			amplitude *= MathF.Pow( frequency / 50f, MathZ.CurveToPower( settings.PedalsNoiseDamper ) );
+
+			return (true, frequency, amplitude);
+		}
+
+		return (false, 0f, 0f);
+	}
+
+	private (bool, float, float) DoSeatOfPantsEffect( App app, float amplitude )
+	{
+		var settings = DataContext.DataContext.Instance.Settings;
+
+		var factor = MathF.Abs( app.SteeringEffects.SeatOfPantsEffect );
+
+		if ( _testing || ( factor > 0f ) )
+		{
+			if ( _testing )
+			{
+				factor = _testTimer / TestDuration;
+			}
+
+			factor = MathF.Pow( factor, MathZ.CurveToPower( settings.SteeringEffectsSeatOfPantsPedalVibrationCurve ) );
 
 			var frequency = MathZ.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( factor, MathZ.CurveToPower( settings.PedalsFrequencyCurve ) ) );
 

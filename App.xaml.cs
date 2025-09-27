@@ -1342,6 +1342,126 @@ public partial class App : Application
 				settings.SteeringEffectsOversteerPedalVibrationCurve -= 0.05f;
 			}
 
+			// steering effects seat-of-pants minimum threshold
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsMinimumThresholdPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsMinimumThreshold += 0.01f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsMinimumThresholdMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsMinimumThreshold -= 0.01f;
+			}
+
+			// steering effects seat-of-pants maximum threshold
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsMaximumThresholdPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsMaximumThreshold += 0.01f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsMaximumThresholdMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsMaximumThreshold -= 0.01f;
+			}
+
+			// steering effects seat-of-pants wheel vibration strength
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsWheelVibrationStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsWheelVibrationStrength += 0.01f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsWheelVibrationStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsWheelVibrationStrength -= 0.01f;
+			}
+
+			// steering effects seat-of-pants wheel vibration minimum frequency
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequency += 1f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequency -= 1f;
+			}
+
+			// steering effects seat-of-pants wheel vibration maximum frequency
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequency += 1f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsWheelVibrationMaximumFrequency -= 1f;
+			}
+
+			// steering effects seat-of-pants wheel vibration curve
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsWheelVibrationCurvePlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsWheelVibrationCurve += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsWheelVibrationCurveMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsWheelVibrationCurve -= 0.05f;
+			}
+
+			// steering effects seat-of-pants wheel constant force strength
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsWheelConstantForceStrengthPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsWheelConstantForceStrength += 0.01f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsWheelConstantForceStrengthMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsWheelConstantForceStrength -= 0.01f;
+			}
+
+			// steering effects seat-of-pants pedal vibration minimum frequency
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequency += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequency -= 0.05f;
+			}
+
+			// steering effects seat-of-pants pedal vibration maximum frequency
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequency += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequency -= 0.05f;
+			}
+
+			// steering effects seat-of-pants pedal vibration curve
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsPedalVibrationCurvePlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsPedalVibrationCurve += 0.05f;
+			}
+
+			if ( CheckMappedButtons( settings.SteeringEffectsSeatOfPantsPedalVibrationCurveMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SteeringEffectsSeatOfPantsPedalVibrationCurve -= 0.05f;
+			}
+
 			// pedals clutch strength 1 knob
 
 			if ( CheckMappedButtons( settings.PedalsClutchStrength1PlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
@@ -1943,6 +2063,30 @@ public partial class App : Application
 			if ( CheckMappedButtons( settings.SoundsOversteerFrequencyRatioMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
 			{
 				settings.SoundsOversteerFrequencyRatio -= 0.01f;
+			}
+
+			// sounds seat-of-pants volume
+
+			if ( CheckMappedButtons( settings.SoundsSeatOfPantsVolumePlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SoundsSeatOfPantsVolume += 0.01f;
+			}
+
+			if ( CheckMappedButtons( settings.SoundsSeatOfPantsVolumeMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SoundsSeatOfPantsVolume -= 0.01f;
+			}
+
+			// sounds seat-of-pants frequency ratio
+
+			if ( CheckMappedButtons( settings.SoundsSeatOfPantsFrequencyRatioPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SoundsSeatOfPantsFrequencyRatio += 0.01f;
+			}
+
+			if ( CheckMappedButtons( settings.SoundsSeatOfPantsFrequencyRatioMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.SoundsSeatOfPantsFrequencyRatio -= 0.01f;
 			}
 
 			// adminboxx brightness knob

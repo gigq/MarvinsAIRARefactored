@@ -1143,11 +1143,11 @@
   </data>
   <data name="UndersteerEffect" xml:space="preserve">
     <value>Understeer Effect</value>
-    <comment>Pedals</comment>
+    <comment>Pedal effects list</comment>
   </data>
   <data name="OversteerEffect" xml:space="preserve">
     <value>Oversteer Effect</value>
-    <comment>Pedals</comment>
+    <comment>Pedal effects list</comment>
   </data>
   <data name="ConfigurationFileIsInvalid" xml:space="preserve">
     <value>Configuration File Is Invalid!</value>
@@ -1380,5 +1380,25 @@
   <data name="OutputSmoothing" xml:space="preserve">
     <value>Output Smoothing</value>
     <comment>Racing wheel</comment>
+  </data>
+  <data name="SeatOfPants_UC" xml:space="preserve">
+    <value>SEAT-OF-PANTS</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SeatOfPantsWheelVibrationEffect_UC" xml:space="preserve">
+    <value>SEAT-OF-PANTS WHEEL VIBRATION EFFECT</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SeatOfPantsWheelConstantForceEffect_UC" xml:space="preserve">
+    <value>SEAT-OF-PANTS WHEEL CONSTANT FORCE EFFECT</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SeatOfPantsPedalVibrationEffect_UC" xml:space="preserve">
+    <value>SEAT-OF-PANTS PEDAL VIBRATION EFFECT</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SeatOfPantsEffect" xml:space="preserve">
+    <value>Seat-of-Pants Effect</value>
+    <comment>Pedal effects list</comment>
   </data>
 </root>

@@ -799,7 +799,7 @@
 
         </Grid>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[UndersteerPedalVibrationEffect_UC]}" />
+        <controls:MairaGroupHeader Label="{Binding Localization[Understeer_UC]}" />
 
         <StackPanel>
 
@@ -848,7 +848,7 @@
 
         </StackPanel>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[OversteerPedalVibrationEffect_UC]}" />
+        <controls:MairaGroupHeader Label="{Binding Localization[Oversteer_UC]}" />
 
         <StackPanel>
 
@@ -890,6 +890,55 @@
                                     ContextSwitches="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurveContextSwitches}"
                                     PlusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurvePlusButtonMappings}"
                                     MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerPedalVibrationCurveMinusButtonMappings}"
+                                    ShowCurve="True"
+                                    DefaultValue="0" />
+
+            </Grid>
+
+        </StackPanel>
+
+        <controls:MairaGroupHeader Label="{Binding Localization[SeatOfPants_UC]}" />
+
+        <StackPanel>
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <controls:MairaKnob Grid.Column="0"
+                                    Label="{Binding Localization[MinimumFrequency]}"
+                                    Value="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequency, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyString}"
+                                    StepSize="0.01"
+                                    ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyMinusButtonMappings}"
+                                    DefaultValue="0" />
+
+                <controls:MairaKnob Grid.Column="2"
+                                    Label="{Binding Localization[MaximumFrequency]}"
+                                    Value="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequency, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyString}"
+                                    StepSize="0.01"
+                                    ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyMinusButtonMappings}"
+                                    DefaultValue="1" />
+
+                <controls:MairaKnob Grid.Column="4"
+                                    Label="{Binding Localization[Curve]}"
+                                    Value="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationCurve, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationCurveString}"
+                                    StepSize="0.01"
+                                    ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationCurveContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationCurvePlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsPedalVibrationCurveMinusButtonMappings}"
                                     ShowCurve="True"
                                     DefaultValue="0" />
 
