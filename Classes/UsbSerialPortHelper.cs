@@ -52,55 +52,59 @@ public sealed class UsbSerialPortHelper( string handshake = "", string deviceIdM
 				if ( ( _deviceIdMustContain == string.Empty ) || !deviceId.Contains( _deviceIdMustContain, StringComparison.OrdinalIgnoreCase ) )
 				{
 					var start = name.IndexOf( "(COM" );
-					var end = name.IndexOf( ')', start );
 
-					if ( ( start >= 0 ) && ( end >= 0 ) )
+					if ( start >= 0 )
 					{
-						var portName = name.Substring( start + 1, end - start - 1 );
+						var end = name.IndexOf( ')', start );
 
-						// try handshake first
-
-						try
+						if ( end >= 0 )
 						{
-							using var testPort = new SerialPort( portName, _baudRate, _parity, _dataBits, _stopBits )
+							var portName = name.Substring( start + 1, end - start - 1 );
+
+							// try handshake first
+
+							try
 							{
-								Handshake = Handshake.None,
-								Encoding = Encoding.ASCII,
-								ReadTimeout = 500,
-								WriteTimeout = 500,
-								NewLine = "\n"
-							};
+								using var testPort = new SerialPort( portName, _baudRate, _parity, _dataBits, _stopBits )
+								{
+									Handshake = Handshake.None,
+									Encoding = Encoding.ASCII,
+									ReadTimeout = 500,
+									WriteTimeout = 500,
+									NewLine = "\n"
+								};
 
-							testPort.Open();
-							testPort.DiscardInBuffer();
-							testPort.DiscardOutBuffer();
-							testPort.WriteLine( "WHAT ARE YOU?" );
+								testPort.Open();
+								testPort.DiscardInBuffer();
+								testPort.DiscardOutBuffer();
+								testPort.WriteLine( "WHAT ARE YOU?" );
 
-							Thread.Sleep( 200 );
+								Thread.Sleep( 200 );
 
-							var response = testPort.ReadExisting()?.Trim();
+								var response = testPort.ReadExisting()?.Trim();
 
-							if ( !string.IsNullOrEmpty( response ) && response.Contains( _handshake, StringComparison.OrdinalIgnoreCase ) )
-							{
-								app.Logger.WriteLine( $"[UsbSerialPortHelper] Handshake successful on {portName}" );
+								if ( !string.IsNullOrEmpty( response ) && response.Contains( _handshake, StringComparison.OrdinalIgnoreCase ) )
+								{
+									app.Logger.WriteLine( $"[UsbSerialPortHelper] Handshake successful on {portName}" );
 
-								_portName = portName;
+									_portName = portName;
 
-								break;
+									break;
+								}
 							}
-						}
-						catch ( Exception exception )
-						{
-							app.Logger.WriteLine( $"[UsbSerialPortHelper] Handshake failed on {portName}: {exception.Message}" );
-						}
-
-						// try VID/PID second (and use as fallback)
-
-						if ( ( _fallbackVid != string.Empty ) && ( _fallbackPid != string.Empty ) )
-						{
-							if ( deviceId.Contains( $"VID_{_fallbackVid}", StringComparison.OrdinalIgnoreCase ) && deviceId.Contains( $"PID_{_fallbackPid}", StringComparison.OrdinalIgnoreCase ) )
+							catch ( Exception exception )
 							{
-								fallbackPortName = portName;
+								app.Logger.WriteLine( $"[UsbSerialPortHelper] Handshake failed on {portName}: {exception.Message}" );
+							}
+
+							// try VID/PID second (and use as fallback)
+
+							if ( ( _fallbackVid != string.Empty ) && ( _fallbackPid != string.Empty ) )
+							{
+								if ( deviceId.Contains( $"VID_{_fallbackVid}", StringComparison.OrdinalIgnoreCase ) && deviceId.Contains( $"PID_{_fallbackPid}", StringComparison.OrdinalIgnoreCase ) )
+								{
+									fallbackPortName = portName;
+								}
 							}
 						}
 					}
