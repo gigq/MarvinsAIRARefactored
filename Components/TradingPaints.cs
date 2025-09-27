@@ -179,6 +179,8 @@ public class TradingPaints
 
 		var query = stringBuilder.ToString();
 
+		app.Logger.WriteLine( $"[TradingPaints] Fetch query: {query}" );
+
 		// fetch the driver's XML from Trading Paints
 
 		var fetchUri = new Uri( $"https://fetch.tradingpaints.gg/fetch.php" );
