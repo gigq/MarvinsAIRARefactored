@@ -15,6 +15,7 @@ public class MathZ
 	public const float DegreesToRadians = MathF.PI / 180f;
 
 	public const float OneG = 9.80665f; // in meters per second squared
+	public const float OneOverG = 1f / OneG;
 
 	[MethodImpl( MethodImplOptions.AggressiveInlining )]
 	public static float Saturate( float value ) => Math.Clamp( value, 0f, 1f );
