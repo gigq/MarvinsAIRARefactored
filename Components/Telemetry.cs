@@ -197,8 +197,8 @@ public class Telemetry
 		dataBuffer.SetRacingWheelAlgorithmName( localization[ settings.RacingWheelAlgorithm.ToString() ] );
 
 		dataBuffer.racingWheelAlgorithmSoftLimiterIsEnabled = settings.RacingWheelEnableSoftLimiter;
-		dataBuffer.SetRacingWheelAlgorithmSettingName( 0, localization[ "SoftClipping" ] );
-		dataBuffer.SetRacingWheelAlgorithmSettingValue( 0, settings.RacingWheelEnableSoftLimiter ? localization[ "ON" ] : localization[ "OFF" ] );
+		dataBuffer.SetRacingWheelAlgorithmSoftLimiterName( localization[ "SoftClipping" ] );
+		dataBuffer.SetRacingWheelAlgorithmSoftLimiterValue( settings.RacingWheelEnableSoftLimiter ? localization[ "ON" ] : localization[ "OFF" ] );
 
 		unsafe
 		{
