@@ -71,45 +71,69 @@ public class MathZ
 	}
 
 	[MethodImpl( MethodImplOptions.AggressiveInlining )]
-	public static float Compression( float value, float rate, float threshold, float width, bool limiter )
+	public static float Compression( float value, float rate, float threshold, float width )
 	{
-		var valueAbs = MathF.Abs( value );
-		var halfWidth = width / 2f;
+		var absValue = MathF.Abs( value );
 
-		if ( ( valueAbs <= ( threshold - halfWidth ) ) && ( !limiter ) )
+		if ( width <= 0f )
 		{
-			return value;
-		}
-		else if ( ( valueAbs < ( threshold + halfWidth ) ) || limiter )
-		{
-			var compressedDelta = 0f;
+			// Region 0: hard-knee fallback
 
-			if ( !( limiter && ( valueAbs <= threshold ) ) )
-			{
-				compressedDelta = rate / 2f * ( valueAbs - threshold + halfWidth - ( width / MathF.PI * MathF.Sin( MathF.PI * ( valueAbs - threshold + halfWidth ) / width ) ) );
+			var mag = absValue <= threshold ? absValue : threshold + ( absValue - threshold ) * ( 1f - rate );
 
-				if ( limiter )
-				{
-					compressedDelta = compressedDelta - 1f + threshold;
-				}
-			}
-
-			return ( valueAbs - compressedDelta ) * MathF.Sign( value );
+			return MathF.CopySign( mag, value );
 		}
 		else
 		{
-			return ( threshold + ( valueAbs - threshold ) * ( 1f - rate ) ) * MathF.Sign( value );
+			var halfWidth = 0.5f * width;
+
+			if ( absValue <= threshold - halfWidth )
+			{
+				// Region 1: pass-through (below the knee start)
+
+				return value;
+			}
+			else if ( absValue < threshold + halfWidth )
+			{
+				// Region 2: soft knee (sine-eased)
+
+				var t = absValue - threshold + halfWidth;
+
+				var delta = 0.5f * rate * ( t - ( width / MathF.PI ) * MathF.Sin( MathF.PI * t / width ) );
+
+				var magnitude = absValue - delta;
+
+				return MathF.CopySign( magnitude, value );
+			}
+			else
+			{
+				// Region 3: above the knee (linear compression)
+
+				var mag3 = threshold + ( absValue - threshold ) * ( 1f - rate );
+
+				return MathF.CopySign( mag3, value );
+			}
 		}
 	}
 
-	[MethodImpl( MethodImplOptions.AggressiveInlining )]
-	public static float SoftLimiter( float value, float limit )
-	{
-		var limiterRate = 1f;
-		var limiterWidth = 1.13333f;
-		var limiterThreshold = 1f - 0.5f * ( limiterWidth / 2f - limiterWidth / MathF.PI );
-		var normalizedValue = value / limit;
+	private const float SoftLimiterWidth = 1.13333f;
 
-		return Compression( normalizedValue, limiterRate, limiterThreshold, limiterWidth, true ) * limit;
+	private static readonly float SoftLimiterHalfWidth = SoftLimiterWidth * 0.5f;
+	private static readonly float SoftLimiterThreshold = 1f - 0.5f * ( SoftLimiterHalfWidth - SoftLimiterWidth / MathF.PI );
+	private static readonly float SoftLimiterWidthOverPi = SoftLimiterWidth / MathF.PI;
+
+	[MethodImpl( MethodImplOptions.AggressiveInlining )]
+	public static float SoftLimiter( float value )
+	{
+		var absValue = MathF.Abs( value );
+
+		if ( absValue <= SoftLimiterThreshold )
+		{
+			return value;
+		}
+
+		var magnitude = 1f + 0.5f * ( absValue - SoftLimiterThreshold - SoftLimiterHalfWidth ) + 0.5f * SoftLimiterWidthOverPi * MathF.Sin( MathF.PI * ( absValue - SoftLimiterThreshold + SoftLimiterHalfWidth ) / SoftLimiterWidth );
+
+		return MathF.CopySign( magnitude, value );
 	}
 }
