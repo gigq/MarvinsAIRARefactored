@@ -13,6 +13,7 @@
                 MouseDown="Scrim_MouseDown" />
 
         <Border Background="#222"
+                Margin="20"
                 Padding="0,5"
                 BorderBrush="#444"
                 BorderThickness="2"
