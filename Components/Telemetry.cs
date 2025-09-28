@@ -10,6 +10,8 @@ public class Telemetry
 	private const string MemoryMappedFileName = "Local\\MAIRARefactoredTelemetry";
 	private const int MaxStringLengthInBytes = 256;
 
+	private const int Version = 4;
+
 	[StructLayout( LayoutKind.Sequential, Pack = 4 )]
 	public unsafe struct DataBufferStruct
 	{
@@ -309,7 +311,7 @@ public class Telemetry
 
 		// let SimHub know this buffer is ready for reading
 
-		_data.version = 4;
+		_data.version = Version;
 		_data.bufferIndex = _currentBufferIndex;
 
 		_memoryMappedFileViewAccessor?.Write( 0, ref _data );
