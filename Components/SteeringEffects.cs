@@ -21,6 +21,13 @@ public class SteeringEffects
 {
 	public static string CalibrationDirectory { get; private set; } = Path.Combine( App.DocumentsFolder, "Calibration" );
 
+	public enum SeatOfPantsAlgorithm
+	{
+		YAcceleration,
+		YVelocity,
+		YVelocityOverXVelocity
+	};
+
 	public float UndersteerEffect { get; private set; } = 0f;
 	public float OversteerEffect { get; private set; } = 0f;
 	public float SeatOfPantsEffect { get; private set; } = 0f;
@@ -250,15 +257,34 @@ public class SteeringEffects
 
 		// seat of pants effect is simple
 
-		var latAccelInG = app.Simulator.LatAccel * MathZ.OneOverG;
-
-		var absLatAccelInG = MathF.Abs( latAccelInG );
-
 		var seatOfPantsEffect = 0f;
 
-		if ( absLatAccelInG >= settings.SteeringEffectsSeatOfPantsMinimumThreshold )
+		switch ( settings.SteeringEffectsSeatOfPantsAlgorithm )
 		{
-			seatOfPantsEffect = MathF.CopySign( MathZ.Saturate( MathZ.InverseLerp( settings.SteeringEffectsSeatOfPantsMinimumThreshold, settings.SteeringEffectsSeatOfPantsMaximumThreshold, absLatAccelInG ) ), latAccelInG );
+			case SeatOfPantsAlgorithm.YAcceleration:
+
+				seatOfPantsEffect = app.Simulator.LatAccel * MathZ.OneOverG;
+
+				break;
+
+			case SeatOfPantsAlgorithm.YVelocity:
+
+				seatOfPantsEffect = -app.Simulator.VelocityY;
+
+				break;
+
+			case SeatOfPantsAlgorithm.YVelocityOverXVelocity:
+
+				seatOfPantsEffect = -app.Simulator.VelocityY / Math.Max( app.Simulator.VelocityX, 20f ) * 20f;
+
+				break;
+		}
+
+		var absSeatOfPantsEffect = MathF.Abs( seatOfPantsEffect );
+
+		if ( absSeatOfPantsEffect >= settings.SteeringEffectsSeatOfPantsMinimumThreshold )
+		{
+			seatOfPantsEffect = MathF.CopySign( MathZ.Saturate( MathZ.InverseLerp( settings.SteeringEffectsSeatOfPantsMinimumThreshold, settings.SteeringEffectsSeatOfPantsMaximumThreshold, absSeatOfPantsEffect ) ), seatOfPantsEffect );
 		}
 
 		SeatOfPantsEffect = speedFade * seatOfPantsEffect;

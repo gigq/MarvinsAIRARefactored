@@ -70,6 +70,7 @@ public class ContextSettings
 	public float SteeringEffectsOversteerPedalVibrationCurve { get; set; }
 	public float SteeringEffectsSeatOfPantsMinimumThreshold { get; set; }
 	public float SteeringEffectsSeatOfPantsMaximumThreshold { get; set; }
+	public SteeringEffects.SeatOfPantsAlgorithm SteeringEffectsSeatOfPantsAlgorithm { get; set; }
 	public RacingWheel.VibrationPattern SteeringEffectsSeatOfPantsWheelVibrationPattern { get; set; }
 	public float SteeringEffectsSeatOfPantsWheelVibrationStrength { get; set; }
 	public float SteeringEffectsSeatOfPantsWheelVibrationMinimumFrequency { get; set; }

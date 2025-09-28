@@ -1628,7 +1628,7 @@ public class Settings : INotifyPropertyChanged
 			}
 			else
 			{
-				RacingWheelCurbProtectionShockVelocityString = $"{_racingWheelCurbProtectionShockVelocity:F2}{DataContext.Instance.Localization[ "ShockVelocityUnits" ]}";
+				RacingWheelCurbProtectionShockVelocityString = $"{_racingWheelCurbProtectionShockVelocity:F2}{DataContext.Instance.Localization[ "MPSUnits" ]}";
 			}
 		}
 	}
@@ -3518,11 +3518,16 @@ public class Settings : INotifyPropertyChanged
 				SteeringEffectsSeatOfPantsMaximumThreshold = MathF.Max( SteeringEffectsSeatOfPantsMaximumThreshold, _steeringEffectsSeatOfPantsMinimumThreshold );
 
 				OnPropertyChanged();
-
-				App.Instance!.SteeringEffects.RedrawCalibrationGraph = true;
 			}
 
-			SteeringEffectsSeatOfPantsMinimumThresholdString = $"{_steeringEffectsSeatOfPantsMinimumThreshold:F2}{DataContext.Instance.Localization[ "GForceUnits" ]}";
+			var units = SteeringEffectsSeatOfPantsAlgorithm switch
+			{
+				SteeringEffects.SeatOfPantsAlgorithm.YAcceleration => DataContext.Instance.Localization[ "GForceUnits" ],
+				SteeringEffects.SeatOfPantsAlgorithm.YVelocity => DataContext.Instance.Localization[ "MPSUnits" ],
+				_ => ""
+			};
+
+			SteeringEffectsSeatOfPantsMinimumThresholdString = $"{_steeringEffectsSeatOfPantsMinimumThreshold:F2}{units}";
 		}
 	}
 
@@ -3569,11 +3574,16 @@ public class Settings : INotifyPropertyChanged
 				SteeringEffectsSeatOfPantsMinimumThreshold = MathF.Min( SteeringEffectsSeatOfPantsMinimumThreshold, _steeringEffectsSeatOfPantsMaximumThreshold );
 
 				OnPropertyChanged();
-
-				App.Instance!.SteeringEffects.RedrawCalibrationGraph = true;
 			}
 
-			SteeringEffectsSeatOfPantsMaximumThresholdString = $"{_steeringEffectsSeatOfPantsMaximumThreshold:F2}{DataContext.Instance.Localization[ "GForceUnits" ]}";
+			var units = SteeringEffectsSeatOfPantsAlgorithm switch
+			{
+				SteeringEffects.SeatOfPantsAlgorithm.YAcceleration => DataContext.Instance.Localization[ "GForceUnits" ],
+				SteeringEffects.SeatOfPantsAlgorithm.YVelocity => DataContext.Instance.Localization[ "MPSUnits" ],
+				_ => ""
+			};
+
+			SteeringEffectsSeatOfPantsMaximumThresholdString = $"{_steeringEffectsSeatOfPantsMaximumThreshold:F2}{units}";
 		}
 	}
 
@@ -3598,6 +3608,32 @@ public class Settings : INotifyPropertyChanged
 	public ContextSwitches SteeringEffectsSeatOfPantsMaximumThresholdContextSwitches { get; set; } = new( true, true, false, false, false );
 	public ButtonMappings SteeringEffectsSeatOfPantsMaximumThresholdPlusButtonMappings { get; set; } = new();
 	public ButtonMappings SteeringEffectsSeatOfPantsMaximumThresholdMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
+	#region Steering effects - Seat-of-pants algorithm
+
+	private SteeringEffects.SeatOfPantsAlgorithm _steeringEffectsSeatOfPantsAlgorithm = SteeringEffects.SeatOfPantsAlgorithm.YVelocityOverXVelocity;
+
+	public SteeringEffects.SeatOfPantsAlgorithm SteeringEffectsSeatOfPantsAlgorithm
+	{
+		get => _steeringEffectsSeatOfPantsAlgorithm;
+
+		set
+		{
+			if ( value != _steeringEffectsSeatOfPantsAlgorithm )
+			{
+				_steeringEffectsSeatOfPantsAlgorithm = value;
+
+				OnPropertyChanged();
+
+				SteeringEffectsSeatOfPantsMinimumThreshold = _steeringEffectsSeatOfPantsMinimumThreshold;
+				SteeringEffectsSeatOfPantsMaximumThreshold = _steeringEffectsSeatOfPantsMaximumThreshold;
+			}
+		}
+	}
+
+	public ContextSwitches SteeringEffectsSeatOfPantsAlgorithmContextSwitches { get; set; } = new( false, false, false, false, false );
 
 	#endregion
 

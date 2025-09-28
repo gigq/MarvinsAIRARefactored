@@ -153,6 +153,7 @@ public partial class MainWindow : Window
 			_steeringEffectsPage.UpdateCalibrationFileNameOptions();
 			_steeringEffectsPage.UpdateVibrationPatternOptions();
 			_steeringEffectsPage.UpdateConstantForceDirectionOptions();
+			_steeringEffectsPage.UpdateSeatOfPantsAlgorithmOptions();
 
 			_pedalsPage.UpdateEffectOptions();
 

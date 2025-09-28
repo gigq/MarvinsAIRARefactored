@@ -305,7 +305,7 @@
     <value> seg</value>
     <comment>Abbreviation for seconds (time)</comment>
   </data>
-  <data name="ShockVelocityUnits" xml:space="preserve">
+  <data name="MPSUnits" xml:space="preserve">
     <value />
     <comment>Abbreviation for meters per second</comment>
   </data>

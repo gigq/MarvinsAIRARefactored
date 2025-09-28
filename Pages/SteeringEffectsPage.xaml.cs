@@ -211,5 +211,30 @@ public partial class SteeringEffectsPage : UserControl
 		app.Logger.WriteLine( "[SteeringEffectsPage] <<< SetConstantForceDirectionMairaComboBoxItemsSource" );
 	}
 
+	public void UpdateSeatOfPantsAlgorithmOptions()
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[SteeringEffectsPage] UpdateSeatOfPantsAlgorithmOptions >>>" );
+
+		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+
+		var dictionary = new Dictionary<SteeringEffects.SeatOfPantsAlgorithm, string>
+		{
+			{ SteeringEffects.SeatOfPantsAlgorithm.YAcceleration, localization[ "LateralAcceleration" ] },
+			{ SteeringEffects.SeatOfPantsAlgorithm.YVelocity, localization[ "LateralVelocity" ] },
+			{ SteeringEffects.SeatOfPantsAlgorithm.YVelocityOverXVelocity, localization[ "RatioOfVelocities" ] }
+		};
+
+		app.Dispatcher.Invoke( () =>
+		{
+			SeatOfPantsAlgorithm_MairaComboBox.ItemsSource = dictionary;
+			SeatOfPantsAlgorithm_MairaComboBox.SelectedValue = settings.SteeringEffectsSeatOfPantsAlgorithm;
+		} );
+
+		app.Logger.WriteLine( "[SteeringEffectsPage] <<< UpdateSeatOfPantsAlgorithmOptions" );
+	}
+
 	#endregion
 }

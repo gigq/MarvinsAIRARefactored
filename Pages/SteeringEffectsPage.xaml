@@ -616,6 +616,12 @@
                                         PlusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsMaximumThresholdPlusButtonMappings}"
                                         MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsMaximumThresholdMinusButtonMappings}"
                                         DefaultValue="3" />
+                    
+                    <controls:MairaComboBox x:Name="SeatOfPantsAlgorithm_MairaComboBox"
+                                            Grid.Column="4"
+                                            Label="{Binding Localization[Algorithm]}"
+                                            SelectedValue="{Binding Settings.SteeringEffectsSeatOfPantsAlgorithm, Mode=TwoWay}"
+                                            ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsAlgorithmContextSwitches}" />
 
                 </Grid>
 

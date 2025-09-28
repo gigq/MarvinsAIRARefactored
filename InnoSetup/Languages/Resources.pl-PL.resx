@@ -301,7 +301,7 @@
     <value> sek</value>
     <comment>Skrót dla czasu ( sekunda)</comment>
   </data>
-  <data name="ShockVelocityUnits" xml:space="preserve">
+  <data name="MPSUnits" xml:space="preserve">
     <value />
     <comment>Skrót dla metra na sekundę</comment>
   </data>

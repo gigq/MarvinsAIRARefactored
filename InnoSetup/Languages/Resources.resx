@@ -365,7 +365,7 @@
     <value> sec</value>
     <comment>Abbreviation for seconds (time)</comment>
   </data>
-  <data name="ShockVelocityUnits" xml:space="preserve">
+  <data name="MPSUnits" xml:space="preserve">
     <value> m/s</value>
     <comment>Abbreviation for meters per second</comment>
   </data>
@@ -986,7 +986,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="CalibrationFileNotSelected" xml:space="preserve">
-    <value>[Calibration File Not Selected]</value>
+    <value>[Steering Effects Disabled]</value>
     <comment>Steering effects</comment>
   </data>
   <data name="ParkedEffects_UC" xml:space="preserve">
@@ -1400,5 +1400,17 @@
   <data name="SeatOfPantsEffect" xml:space="preserve">
     <value>Seat-of-Pants Effect</value>
     <comment>Pedal effects list</comment>
+  </data>
+  <data name="LateralAcceleration" xml:space="preserve">
+    <value>Lateral Acceleration (Ay)</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="LateralVelocity" xml:space="preserve">
+    <value>Lateral Velocity (Vy)</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="RatioOfVelocities" xml:space="preserve">
+    <value>Ratio of Velocities (Vy/Vx)</value>
+    <comment>Steering effects</comment>
   </data>
 </root>
