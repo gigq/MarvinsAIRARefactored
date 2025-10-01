@@ -1100,7 +1100,7 @@ public class RacingWheel
 
 			// update auto force label
 
-			MainWindow._racingWheelPage.AutoForce_TextBlock.Text = $"{_autoTorque:F1}{DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
+			MainWindow._racingWheelPage.AutoForce_TextBlock.Text = $"{_autoTorque:F1} {DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
 
 			// update logitech rpm lights
 

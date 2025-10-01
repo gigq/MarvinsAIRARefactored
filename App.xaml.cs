@@ -468,7 +468,7 @@ public partial class App : Application
 
 				if ( settings.RacingWheelInputMappedSettingUpdateEnabled )
 				{
-					var autoTorqueString = $"{RacingWheel.GetCurrentAutoTorque():F1}{localization[ "TorqueUnits" ]}";
+					var autoTorqueString = $"{RacingWheel.GetCurrentAutoTorque():F1} {localization[ "TorqueUnits" ]}";
 
 					RacingWheel.SendChatMessage( "Set", autoTorqueString );
 				}
