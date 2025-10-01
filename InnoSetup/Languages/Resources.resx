@@ -287,7 +287,7 @@
   </data>
   <data name="DeltaLimitUnits" xml:space="preserve">
     <value> Nm/s</value>
-    <comment>Abbreviation for Newton-meters per millisecond</comment>
+    <comment>Abbreviation for Newton-meters per second</comment>
   </data>
   <data name="DeltaLimiterOn60Hz" xml:space="preserve">
     <value>Delta Limiter On 60 Hz</value>
@@ -787,7 +787,7 @@
   </data>
   <data name="SlewUnits" xml:space="preserve">
     <value> Nm/ms</value>
-    <comment>Abbreviation for Newton-meters per second</comment>
+    <comment>Abbreviation for Newton-meters per millisecond</comment>
   </data>
   <data name="WheelForce" xml:space="preserve">
     <value>Wheel Force</value>
