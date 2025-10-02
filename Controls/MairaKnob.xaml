@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
              mc:Ignorable="d">
 
-    <Grid VerticalAlignment="Center">
+    <Grid VerticalAlignment="Top">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
