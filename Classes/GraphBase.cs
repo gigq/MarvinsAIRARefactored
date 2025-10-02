@@ -10,6 +10,8 @@ namespace MarvinsAIRARefactored.Classes;
 
 public class GraphBase
 {
+	private const int GutterSize = 10;
+
 	public int BitmapWidth { get; private set; }
 	public int BitmapHeight { get; private set; }
 
@@ -22,6 +24,24 @@ public class GraphBase
 
 	private uint[,]? _colorArray = null;
 	private float[,]? _colorMixArray = null;
+
+	private readonly uint[] _gridLineColorArray = [
+		0xFF884444,
+		0xFF444444,
+		0xFF666688,
+		0xFF444444,
+		0xFFFFFFFF,
+		0xFF444444,
+		0xFF666688,
+		0xFF444444,
+		0xFF884444
+	];
+
+	private uint _topGutterBackgroundColor = 0;
+	private uint _topGutterForegroundColor = 0;
+
+	private uint _bottomGutterBackgroundColor = 0;
+	private uint _bottomGutterForegroundColor = 0;
 
 	public void Initialize( Image image )
 	{
@@ -61,7 +81,7 @@ public class GraphBase
 			y = y * -0.5f + 0.5f;
 
 			var iy = _bitmapHeightMinusOne / 2;
-			var delta = (int) Math.Round( y * BitmapHeight ) - iy;
+			var delta = (int) Math.Round( y * ( BitmapHeight - GutterSize ) ) - iy;
 			var sign = Math.Sign( delta );
 			var range = Math.Abs( delta );
 
@@ -80,13 +100,30 @@ public class GraphBase
 	}
 
 	[MethodImpl( MethodImplOptions.AggressiveInlining )]
+	public void SetGutterColors( uint topForeground, uint topBackground, uint bottomForeground, uint bottomBackground )
+	{
+		_topGutterForegroundColor = topForeground;
+		_topGutterBackgroundColor = topBackground;
+
+		_bottomGutterForegroundColor = bottomForeground;
+		_bottomGutterBackgroundColor = bottomBackground;
+	}
+
+	[MethodImpl( MethodImplOptions.AggressiveInlining )]
 	public void FinishUpdates()
 	{
 		if ( ( _colorArray != null ) && ( _colorMixArray != null ) )
 		{
-			var gridSize = _bitmapHeightMinusOne / 8;
+			var oddEven = ( _x % 20 ) < 10;
 
-			for ( var y = 0; y < BitmapHeight; y++ )
+			var topGutterColor = oddEven ? _topGutterForegroundColor : _topGutterBackgroundColor;
+
+			for ( var y = 0; y  < GutterSize; y++ )
+			{
+				_colorArray[ y, _x ] = topGutterColor;
+			}
+
+			for ( var y = GutterSize; y < BitmapHeight - GutterSize; y++ )
 			{
 				var a = (uint) ( MathF.Min( 1f, _colorMixArray[ y, 0 ] ) * 255f );
 				var r = (uint) ( MathF.Min( 1f, _colorMixArray[ y, 1 ] ) * 255f );
@@ -96,17 +133,24 @@ public class GraphBase
 				_colorArray[ y, _x ] = ( a << 24 ) | ( r << 16 ) | ( g << 8 ) | b;
 			}
 
-			for ( var i = 0; i < 8; i++ )
-			{
-				var y = gridSize * i;
+			var bottomGutterColor = oddEven ? _bottomGutterBackgroundColor : _bottomGutterBackgroundColor;
 
-				if ( _colorArray[ y, _x ] == 0 )
-				{
-					_colorArray[ y, _x ] = 0xFF444444;
-				}
+			for ( var y = BitmapHeight - GutterSize; y < BitmapHeight; y++ )
+			{
+				_colorArray[ y, _x ] = bottomGutterColor;
 			}
 
-			_colorArray[ gridSize * 4, _x ] = 0xFFFFFFFF;
+			var gridSize = ( _bitmapHeightMinusOne - GutterSize * 2 ) / 8;
+
+			for ( var i = 0; i <= 8; i++ )
+			{
+				var y = gridSize * i + GutterSize;
+
+				if ( ( _colorArray[ y, _x ] == 0 ) || ( ( i & 3 ) == 0 )  )
+				{
+					_colorArray[ y, _x ] = _gridLineColorArray[ i ];
+				}
+			}
 
 			_x = ( _x + 1 ) % BitmapWidth;
 
