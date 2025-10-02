@@ -151,6 +151,10 @@ public class TradingPaints
 
 		var sessionInfo = app.Simulator.IRSDK.Data.SessionInfo;
 
+		// set super speedway flag
+
+		var ss = ( sessionInfo.WeekendInfo.TrackType == "super speedway" ) ? "ss" : string.Empty;
+
 		// build the fetch query
 
 		var playerTeamID = 0;
@@ -160,7 +164,7 @@ public class TradingPaints
 
 		foreach ( var driver in driverList )
 		{
-			stringBuilder.Append( $"{driver.UserID}={driver.CarPath}={driver.TeamID}={driver.CarNumber}=," );
+			stringBuilder.Append( $"{driver.UserID}={driver.CarPath}={driver.TeamID}={driver.CarNumber}={ss}," );
 
 			if ( driver.UserID == sessionInfo.DriverInfo.DriverUserID )
 			{
