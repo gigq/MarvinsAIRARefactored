@@ -11,6 +11,7 @@ header( 'Content-Type: application/json; charset=utf-8' );
 
 require_once __DIR__ . '/resx_utils.php';
 require_once __DIR__ . '/languages.php';
+require_once __DIR__ . '/secrets.php';
 
 const RESX_DIR = __DIR__ . '/resx';
 const RESX_BACKUP_DIR = __DIR__ . '/resx-backups';
@@ -88,7 +89,7 @@ function save_action(): void
 	$lang = sanitize_lang( $payload[ 'lang' ] ?? '' );
 	$key = trim( (string) ( $payload[ 'key' ] ?? '' ) );
 	$val = (string) ( $payload[ 'value' ] ?? '' );
-	$contributorName = trim( (string) ( $payload[ 'contributorName' ] ?? '' ) ); // NEW
+	$contributorName = trim( (string) ( $payload[ 'contributorName' ] ?? '' ) );
 	
 	if ( $lang === '' || $key === '' )
 	{
@@ -123,15 +124,24 @@ function save_action(): void
 	$old = (string) ( $loc[ $key ][ 'value' ] ?? '' );
 	$changed = ( $old !== $val );
 	
-	$loc[ $key ][ 'value' ] = $val;
-	
-	// Save .resx (with backup)
-	save_resx_safe( $locPath, $backupPath, $loc, $base );
-	
-	// If the translation actually changed and we got a contributor name, record it
-	if ( $changed && $contributorName !== '' )
+	// If the translation actually changed then update it and notify
+	if ( $changed )
 	{
-		record_contributor_name( $lang, $contributorName ); // NEW
+		// Save .resx (with backup)
+		$loc[ $key ][ 'value' ] = $val;
+		save_resx_safe( $locPath, $backupPath, $loc, $base );
+		
+		// notify
+		$ip = get_client_ip();
+		$english = (string) ( $base[ $key ][ 'value' ] ?? '' );
+		$comment = (string) ( $base[ $key ][ 'comment' ] ?? null );
+		send_discord_translation_update( $ip, $contributorName, $lang, $key, $english, $val, $comment );
+		
+		// record contributor name
+		if ( $contributorName !== '' )
+		{
+			record_contributor_name( $lang, $contributorName );
+		}
 	}
 	
 	echo json_encode( [ 'ok' => true, 'changed' => $changed ] );
@@ -248,4 +258,87 @@ function record_contributor_name( string $lang, string $name ): void
 	{
 		fclose( $fp );
 	}
+}
+
+/**
+ * Try to get a real client IP (behind proxies/CDN if present).
+ */
+function get_client_ip(): string
+{
+	$keys = [
+		'HTTP_CF_CONNECTING_IP',     // Cloudflare
+		'HTTP_X_REAL_IP',
+		'HTTP_X_FORWARDED_FOR',      // could be a list
+		'HTTP_CLIENT_IP',
+		'REMOTE_ADDR',
+	];
+	foreach ( $keys as $k )
+	{
+		if ( !empty( $_SERVER[ $k ] ) )
+		{
+			$ip = trim( explode( ',', (string) $_SERVER[ $k ] )[ 0 ] );
+			// very light sanity check
+			if ( $ip !== '' ) return $ip;
+		}
+	}
+	return 'unknown';
+}
+
+/** Discord embed field hard limit is 1024 chars; be safe. */
+function trunc( string $s, int $limit = 1000 ): string
+{
+	if ( mb_strlen( $s ) <= $limit ) return $s;
+	return mb_substr( $s, 0, $limit - 3 ) . '…';
+}
+
+/**
+ * Send a single-embed Discord webhook notification.
+ * Non-fatal: swallows transport errors; saving must not fail due to webhook.
+ */
+function send_discord_translation_update( string $ip, string $contributorName, string $lang, string $key, string $english, string $localized, ?string $comment = null ): void
+{
+	$url = DISCORD_WEBHOOK_URL;
+	if ( !$url ) return; // disabled
+	
+	$embed = [
+		'title' => 'Translation updated',
+		'timestamp' => gmdate( 'c' ),
+		'color' => 0x2e7eff, // MAIRA blue 💙
+		'fields' => [
+			[ 'name' => 'Language', 'value' => $lang, 'inline' => true ],
+			[ 'name' => 'Key', 'value' => trunc( $key, 256 ), 'inline' => true ],
+			[ 'name' => 'Contributor', 'value' => ( $contributorName !== '' ? $contributorName : '—' ), 'inline' => true ],
+			[ 'name' => 'IP', 'value' => $ip, 'inline' => true ],
+		],
+	];
+	
+	if ( $comment )
+	{
+		$embed[ 'fields' ][] = [ 'name' => 'Location in App', 'value' => trunc( $comment, 1024 ), 'inline' => false ];
+	}
+	
+	$embed[ 'fields' ][] = [ 'name' => 'English', 'value' => trunc( $english, 1024 ), 'inline' => false ];
+	$embed[ 'fields' ][] = [ 'name' => 'Translation', 'value' => trunc( $localized, 1024 ), 'inline' => false ];
+	
+	$payload = json_encode( [
+		// You can also set 'content' => 'optional plain text line'
+		'embeds' => [ $embed ],
+	], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
+	
+	// cURL POST
+	$ch = @curl_init( $url );
+	
+	if ( !$ch ) return;
+	
+	@curl_setopt_array( $ch, [
+		CURLOPT_POST => true,
+		CURLOPT_HTTPHEADER => [ 'Content-Type: application/json' ],
+		CURLOPT_POSTFIELDS => $payload,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_TIMEOUT => 3,    // be snappy, don’t block
+		CURLOPT_CONNECTTIMEOUT => 2,
+		CURLOPT_USERAGENT => 'MAIRA-Translator/1.0',
+	] );
+	@curl_exec( $ch );
+	@curl_close( $ch );
 }
