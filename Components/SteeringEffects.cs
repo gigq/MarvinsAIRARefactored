@@ -104,10 +104,16 @@ public class SteeringEffects
 
 	public SteeringEffects()
 	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[SteeringEffects] Constructor >>>" );
+
 		_calibrationGraphRawDataPen.Freeze();
 		_calibrationGraphSmoothedDataPen.Freeze();
 		_calibrationGraphMinimumThresholdPen.Freeze();
 		_calibrationGraphMaximumThresholdPen.Freeze();
+
+		app.Logger.WriteLine( "[SteeringEffects] <<< Constructor" );
 	}
 
 	public void SimulatorDisconnected()

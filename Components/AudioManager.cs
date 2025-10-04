@@ -24,8 +24,14 @@ public sealed class AudioManager : IDisposable
 
 	public AudioManager()
 	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[AudioManager] Constructor >>>" );
+
 		_xaudio2 = new XAudio2();
 		_masteringVoice = new MasteringVoice( _xaudio2 );
+
+		app.Logger.WriteLine( "[AudioManager] <<< Constructor" );
 	}
 
 	public void Initialize()

@@ -27,8 +27,14 @@ public partial class Wind
 
 	public Wind()
 	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[Wind] Constructor >>>" );
+
 		_usbSerialPortHelper.DataReceived += OnDataReceived;
 		_usbSerialPortHelper.PortClosed += OnPortClosed;
+
+		app.Logger.WriteLine( "[Wind] <<< Constructor" );
 	}
 
 	public void Initialize()
