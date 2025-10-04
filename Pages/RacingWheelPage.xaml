@@ -607,7 +607,7 @@
                                 ContextSwitches="{Binding Settings.RacingWheelParkedStrengthContextSwitches}"
                                 PlusButtonMappings="{Binding Settings.RacingWheelParkedStrengthPlusButtonMappings}"
                                 MinusButtonMappings="{Binding Settings.RacingWheelParkedStrengthMinusButtonMappings}"
-                                DefaultValue="0.15" />
+                                DefaultValue="0.1" />
             <controls:MairaKnob Grid.Column="2"
                                 Label="{Binding Localization[ParkedFriction]}"
                                 Value="{Binding Settings.RacingWheelParkedFriction, Mode=TwoWay}"
