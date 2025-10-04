@@ -13,6 +13,12 @@ public partial class ErrorWindow : Window
 	{
 		InitializeComponent();
 
+#if ADMINBOXX
+
+		Title = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "AdminBoxx" ];
+
+#endif
+
 		_exception = exception;
 
 		Message_TextBlock.Text = message;
