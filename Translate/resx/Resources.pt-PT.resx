@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"/>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -50,7 +50,7 @@
     <comment>Simulator</comment>
   </data>
   <data name="Language_UC" xml:space="preserve">
-    <value></value>
+    <value>IDIOMA</value>
     <comment>App settings</comment>
   </data>
   <data name="DetailBooster" xml:space="preserve">
@@ -154,27 +154,27 @@
     <comment>Window title</comment>
   </data>
   <data name="PressTheRecordButton" xml:space="preserve">
-    <value></value>
+    <value>[Pressione o botão de gravação]</value>
     <comment>Button mapping</comment>
   </data>
   <data name="Button" xml:space="preserve">
-    <value></value>
+    <value>Botão</value>
     <comment>Button mapping</comment>
   </data>
   <data name="Click" xml:space="preserve">
-    <value></value>
+    <value>Clicar</value>
     <comment>Button mapping</comment>
   </data>
   <data name="Hold" xml:space="preserve">
-    <value></value>
+    <value>Manter</value>
     <comment>Button mapping</comment>
   </data>
   <data name="Keyboard" xml:space="preserve">
-    <value></value>
+    <value>Teclado</value>
     <comment>Button mapping</comment>
   </data>
   <data name="WaitingForInput" xml:space="preserve">
-    <value></value>
+    <value>[Aguardando Por Ação]</value>
     <comment>Button mapping</comment>
   </data>
   <data name="DeltaLimit" xml:space="preserve">
@@ -406,7 +406,7 @@
     <comment>Window title</comment>
   </data>
   <data name="DownloadQuestion" xml:space="preserve">
-    <value></value>
+    <value>Gostaria de fazer o download agora?</value>
     <comment>Cloud service</comment>
   </data>
   <data name="RunInstaller" xml:space="preserve">
@@ -414,7 +414,7 @@
     <comment>Window title</comment>
   </data>
   <data name="RunInstallerQuestion" xml:space="preserve">
-    <value></value>
+    <value>Gostaria de executar o instalador agora?</value>
     <comment>Cloud service</comment>
   </data>
   <data name="CheckForUpdates" xml:space="preserve">
@@ -438,11 +438,11 @@
     <comment>AdminBoxx</comment>
   </data>
   <data name="NoAudioDevicesFound" xml:space="preserve">
-    <value></value>
+    <value>[Não foram encontrados dispositivos de áudio]</value>
     <comment>Audio devices list</comment>
   </data>
   <data name="Connection" xml:space="preserve">
-    <value></value>
+    <value>Conexão</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="Display" xml:space="preserve">
@@ -510,7 +510,7 @@
     <comment>LFE devices list</comment>
   </data>
   <data name="RememberWindowPositionAndSize" xml:space="preserve">
-    <value></value>
+    <value>Lembrar Posição e Tamanho da Janela</value>
     <comment>App settings</comment>
   </data>
   <data name="FadeWithBrake" xml:space="preserve">
@@ -590,7 +590,7 @@
     <comment>Status</comment>
   </data>
   <data name="Contribute_UC" xml:space="preserve">
-    <value></value>
+    <value>CONTRIBUIR</value>
     <comment>Contribute</comment>
   </data>
   <data name="BuyMeACoffee" xml:space="preserve">
@@ -598,11 +598,11 @@
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value></value>
+    <value>Os donativos são totalmente opcionais. Nunca cobrarei qualquer taxa pela utilização do MAIRA. Posto isto, os donativos deixam-me muito feliz e motivado, e são uma grande motivação para continuar a trabalhar no MAIRA. Um enorme obrigado a todos os que já doaram!</value>
     <comment>Donate</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
-    <value></value>
+    <value>DOAR</value>
     <comment>Donate</comment>
   </data>
   <data name="Donors_UC" xml:space="preserve">
@@ -618,19 +618,19 @@
     <comment>App menu item</comment>
   </data>
   <data name="CodeContributions_UC" xml:space="preserve">
-    <value></value>
+    <value>CONTRIBUIÇÕES DE CÓDIGO</value>
     <comment>Contribute</comment>
   </data>
   <data name="TranslationContributions_UC" xml:space="preserve">
-    <value></value>
+    <value>CONTRIBUIÇÕES DE TRADUÇÃO</value>
     <comment>Contribute</comment>
   </data>
   <data name="CodeContributionsText" xml:space="preserve">
-    <value></value>
+    <value>É um desenvolvedor C#? Este projeto está aberto a contribuições. Saiba mais visitando o repositório GitHub.</value>
     <comment>Contribute</comment>
   </data>
   <data name="TranslationContributionsText" xml:space="preserve">
-    <value></value>
+    <value>Consegue ler e escrever em vários idiomas? Precisamos de ajuda para as línguas em todo o mundo. Saiba mais visitando o nosso servidor Discord.</value>
     <comment>Contribute</comment>
   </data>
   <data name="TranslationsDiscordChannel" xml:space="preserve">
@@ -638,11 +638,12 @@
     <comment>Contribute</comment>
   </data>
   <data name="GitHubRepository" xml:space="preserve">
-    <value></value>
+    <value>Repositório Github
+</value>
     <comment>Contribute</comment>
   </data>
   <data name="Contributors" xml:space="preserve">
-    <value></value>
+    <value>Contribuidores</value>
     <comment>Contribute</comment>
   </data>
   <data name="ShowWindow" xml:space="preserve">
@@ -654,15 +655,15 @@
     <comment>System tray icon</comment>
   </data>
   <data name="MinimizeToSystemTray" xml:space="preserve">
-    <value></value>
+    <value>Minimizar para a bandeja do sistema</value>
     <comment>App settings</comment>
   </data>
   <data name="StartMinimized" xml:space="preserve">
-    <value></value>
+    <value>Iniciar Minimizado</value>
     <comment>App settings</comment>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value></value>
+    <value>Iniciar com o Windows</value>
     <comment>App settings</comment>
   </data>
   <data name="TotalCompressionRate" xml:space="preserve">
@@ -714,11 +715,11 @@
     <comment>Racing wheel algorithms list</comment>
   </data>
   <data name="DiscordModerators_UC" xml:space="preserve">
-    <value></value>
+    <value>MODERADORES DO DISCORD</value>
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value></value>
+    <value>Gostaria de agradecer a estes moderadores voluntários por ajudarem a responder às muitas perguntas colocadas pelos utilizadores do MAIRA, permitindo-me mais tempo para me concentrar no desenvolvimento do MAIRA!</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -934,11 +935,11 @@
     <comment>Abbreviation for kilometers per hour</comment>
   </data>
   <data name="CalibrationFileContributors" xml:space="preserve">
-    <value></value>
+    <value>Contribuidores de ficheiros de calibração</value>
     <comment>Contribute</comment>
   </data>
   <data name="CalibrationFilesText" xml:space="preserve">
-    <value></value>
+    <value>Estas são as pessoas que generosamente contribuíram com parte do seu tempo livre para executar calibrações de efeitos de condução em alguns dos seus carros favoritos e enviar estes ficheiros de calibração!</value>
     <comment>Contribute</comment>
   </data>
   <data name="DegreesPerSecond" xml:space="preserve">
@@ -1098,11 +1099,11 @@
     <comment>App menu item</comment>
   </data>
   <data name="CalibrationFileContributions_UC" xml:space="preserve">
-    <value></value>
+    <value>CONTRIBUIÇÕES DE FICHEIROS DE CALIBRAÇÃO</value>
     <comment>Contribute</comment>
   </data>
   <data name="Moderators" xml:space="preserve">
-    <value></value>
+    <value>Moderadores</value>
     <comment>Contribute</comment>
   </data>
   <data name="AppSettings_UC" xml:space="preserve">
