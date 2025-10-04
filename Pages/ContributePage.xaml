@@ -126,6 +126,8 @@
                         </Style>
                     </UniformGrid.Resources>
 
+                    <!-- Flag icons from https://www.freeflagicons.com/buy/fluttering_flag/ -->
+
                     <!--Jakub Trinkl-->
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -253,6 +255,20 @@
                                Height="20"
                                HorizontalAlignment="Right" />
                         <TextBlock Text="Português (Brazil)"
+                                   Grid.Column="1" />
+                    </Grid>
+
+                    <!--mitt42 (Mitt)-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Vitor Diogo" />
+                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/portugal_fluttering_flag_64.png"
+                               Height="20"
+                               HorizontalAlignment="Right" />
+                        <TextBlock Text="Português (Portugal)"
                                    Grid.Column="1" />
                     </Grid>
 
