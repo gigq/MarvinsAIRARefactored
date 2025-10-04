@@ -7,7 +7,6 @@ using System.Net.Http.Headers;
 using System.Text;
 
 using ICSharpCode.SharpZipLib.BZip2;
-using Newtonsoft.Json;
 
 using MarvinsAIRARefactored.Classes;
 
@@ -26,9 +25,6 @@ public class TradingPaints
 	private readonly AutoResetEvent _autoResetEvent = new( false );
 	private Task? _processDriversTask;
 
-	private string _cachePath = string.Empty;
-	private readonly ConcurrentDictionary<string, string> _fileUrlToCarId = new( StringComparer.OrdinalIgnoreCase );
-
 	public void Initialize()
 	{
 		var app = App.Instance!;
@@ -37,11 +33,7 @@ public class TradingPaints
 
 		var settings = DataContext.DataContext.Instance.Settings;
 
-		_cachePath = Path.Combine( settings.TradingPaintsFolder, "MarvinsAIRARefactored.cache" );
-
 		Directory.CreateDirectory( settings.TradingPaintsFolder );
-
-		LoadCache();
 
 		_processDriversTask = Task.Run( () => UpdateAsync() );
 
@@ -117,11 +109,9 @@ public class TradingPaints
 						{
 							foreach ( var driver in sessionInfo.DriverInfo.Drivers )
 							{
-								var userId = driver.UserID;
-
-								if ( ( userId != -1 ) && !_seenUserIds.Contains( userId ) )
+								if ( !_seenUserIds.Contains( driver.UserID ) )
 								{
-									_seenUserIds.Add( userId );
+									_seenUserIds.Add( driver.UserID );
 
 									newDriverList.Add( driver );
 								}
@@ -157,19 +147,13 @@ public class TradingPaints
 
 		// build the fetch query
 
-		var playerTeamID = 0;
 		var stringBuilder = new StringBuilder();
 
 		stringBuilder.Append( "list=" );
 
 		foreach ( var driver in driverList )
 		{
-			stringBuilder.Append( $"{driver.UserID}={driver.CarPath}={driver.TeamID}={driver.CarNumber}={ss}," );
-
-			if ( driver.UserID == sessionInfo.DriverInfo.DriverUserID )
-			{
-				playerTeamID = driver.TeamID;
-			}
+			stringBuilder.Append( $"{Math.Abs(driver.UserID)}={driver.CarPath}={driver.TeamID}={driver.CarNumber}={ss}," );
 		}
 
 		var loadNumTexturesString = app.Simulator.LoadNumTextures ? "True" : "False";
@@ -177,7 +161,7 @@ public class TradingPaints
 		stringBuilder.Append( $"&series={sessionInfo.WeekendInfo.SeriesID}" );
 		stringBuilder.Append( $"&league={sessionInfo.WeekendInfo.LeagueID}" );
 		stringBuilder.Append( $"&night={sessionInfo.WeekendInfo.WeekendOptions.TimeOfDay}" );
-		stringBuilder.Append( $"&team={playerTeamID}" );
+		stringBuilder.Append( $"&team={sessionInfo.WeekendInfo.TeamRacing}" );
 		stringBuilder.Append( $"&numbers={loadNumTexturesString}" );
 		stringBuilder.Append( $"&user={sessionInfo.DriverInfo.DriverUserID}" );
 
@@ -215,13 +199,6 @@ public class TradingPaints
 
 		foreach ( var asset in assets )
 		{
-			// skip files that have not changed
-
-			if ( !ShouldDownload( asset.FileURL, asset.FileId ) )
-			{
-				continue;
-			}
-
 			// add this guy to the reload list
 
 			reloadUserIDHashSet.Add( asset.UserID );
@@ -234,7 +211,7 @@ public class TradingPaints
 
 			// figure out the start of the file name
 
-			var typeToken = asset.Type switch
+			var paintType = asset.Type switch
 			{
 				TradingPaintsXml.Type.Car => "car",
 				TradingPaintsXml.Type.CarNum => "car_num",
@@ -244,6 +221,10 @@ public class TradingPaints
 				TradingPaintsXml.Type.Helmet => "helmet",
 				_ => "file"
 			};
+
+			// figure out the middle of the file name
+
+			var ownerType = ( asset.TeamId == 0 ) ? $"_{asset.UserID}" : $"_team_{asset.TeamId}";
 
 			// figure out extension from the URL path (handles .mip, .tga, .tga.bz2)
 
@@ -256,9 +237,9 @@ public class TradingPaints
 				fileExtension = $"_{asset.Ext}{fileExtension}";
 			}
 
-			// build final filename: {Type}_{UserID}_{Ext}.{mip/tga}
+			// build final filename: {car/car_num/car_spec_car_decal/suit_helmet}_{UserID/team_TeamID}[_{Ext}].{mip/tga}
 
-			var finalFileName = $"{typeToken}_{asset.UserID}{fileExtension}";
+			var finalFileName = $"{paintType}{ownerType}{fileExtension}";
 			var finalPath = Path.Combine( settings.TradingPaintsFolder, asset.Directory, finalFileName );
 
 			// download to a temp file first
@@ -296,8 +277,6 @@ public class TradingPaints
 
 					File.Move( temporaryPath, finalPath );
 				}
-
-				_fileUrlToCarId[ asset.FileURL ] = asset.FileId;
 			}
 			catch
 			{
@@ -312,8 +291,6 @@ public class TradingPaints
 
 		if ( reloadUserIDHashSet.Count > 0 )
 		{
-			SaveCache();
-
 			foreach ( var userID in reloadUserIDHashSet )
 			{
 				foreach ( var driver in sessionInfo.DriverInfo.Drivers )
@@ -444,60 +421,6 @@ public class TradingPaints
 		http.DefaultRequestHeaders.AcceptEncoding.Add( new StringWithQualityHeaderValue( "deflate" ) );
 
 		return http;
-	}
-
-	private bool ShouldDownload( string fileUrl, string carIdFromXml )
-	{
-		if ( !_fileUrlToCarId.TryGetValue( fileUrl, out var cachedCarId ) )
-		{
-			return true;
-		}
-
-		return !string.Equals( cachedCarId, carIdFromXml, StringComparison.Ordinal );
-	}
-
-	private void LoadCache()
-	{
-		try
-		{
-			if ( !File.Exists( _cachePath ) ) return;
-
-			var json = File.ReadAllText( _cachePath, Encoding.UTF8 );
-			var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>( json ) ?? new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
-
-			foreach ( var kvp in dict )
-			{
-				_fileUrlToCarId.TryAdd( kvp.Key, kvp.Value );
-			}
-		}
-		catch
-		{
-			// ignore cache load errors; start fresh
-		}
-	}
-
-	private void SaveCache()
-	{
-		try
-		{
-			var snapshot = _fileUrlToCarId.ToDictionary( p => p.Key, p => p.Value, StringComparer.OrdinalIgnoreCase );
-			var json = JsonConvert.SerializeObject( snapshot, Formatting.Indented );
-
-			var tmp = _cachePath + ".tmp";
-
-			File.WriteAllText( tmp, json, Encoding.UTF8 );
-
-			if ( File.Exists( _cachePath ) )
-			{
-				File.Delete( _cachePath );
-			}
-
-			File.Move( tmp, _cachePath );
-		}
-		catch
-		{
-			// ignore cache save errors (best effort)
-		}
 	}
 
 	private static bool TryDecompressBZip2ToTga( string bz2Path, string tgaOutPath )
