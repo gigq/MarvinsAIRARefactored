@@ -32,7 +32,7 @@ public partial class GraphPage : UserControl
 			app.MainWindow.ResizeMode = ResizeMode.NoResize;
 			app.MainWindow.SizeToContent = SizeToContent.Height;
 
-			app.MainWindow.Root_Grid.Margin = new Thickness( 0 );
+			app.MainWindow.Grid.Margin = new Thickness( 0 );
 			app.MainWindow.AppPage_ContentControl.Margin = new Thickness( 0 );
 
 			Border.Cursor = Cursors.SizeAll;
@@ -47,7 +47,7 @@ public partial class GraphPage : UserControl
 			app.MainWindow.ResizeMode = ResizeMode.CanResizeWithGrip;
 			app.MainWindow.SizeToContent = SizeToContent.Manual;
 
-			app.MainWindow.Root_Grid.Margin = new Thickness( 0, 0, 0, 20 );
+			app.MainWindow.Grid.Margin = new Thickness( 0, 0, 0, 20 );
 			app.MainWindow.AppPage_ContentControl.Margin = new Thickness( 20, 0, 20, 0 );
 
 			Border.Cursor = null;
