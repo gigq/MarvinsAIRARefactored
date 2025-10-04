@@ -52,8 +52,9 @@
             <controls:MairaButton x:Name="Test"
                                   Grid.Column="1"
                                   Label="{Binding Localization[Test]}"
-                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/missing-icon.png"
-                                  Click="Test_Click" />
+                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate.png"
+                                  Click="Test_Click"
+                                  IsEnabled="False" />
 
         </Grid>
 
