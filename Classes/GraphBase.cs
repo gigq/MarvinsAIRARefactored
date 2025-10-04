@@ -133,7 +133,7 @@ public class GraphBase
 				_colorArray[ y, _x ] = ( a << 24 ) | ( r << 16 ) | ( g << 8 ) | b;
 			}
 
-			var bottomGutterColor = oddEven ? _bottomGutterBackgroundColor : _bottomGutterBackgroundColor;
+			var bottomGutterColor = oddEven ? _bottomGutterForegroundColor : _bottomGutterBackgroundColor;
 
 			for ( var y = BitmapHeight - GutterSize; y < BitmapHeight; y++ )
 			{
