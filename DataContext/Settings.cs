@@ -1769,7 +1769,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region Racing wheel - Parked strength
 
-	private float _racingWheelParkedStrength = 0.15f;
+	private float _racingWheelParkedStrength = 0.1f;
 
 	public float RacingWheelParkedStrength
 	{
@@ -8840,7 +8840,15 @@ public class Settings : INotifyPropertyChanged
 
 	#region App - Default page
 
+#if !ADMINBOXX
+
 	private MainWindow.AppPage _appDefaultPage = MainWindow.AppPage.RacingWheel;
+
+#else
+
+	private MainWindow.AppPage _appDefaultPage = MainWindow.AppPage.AdminBoxx;
+
+#endif
 
 	public MainWindow.AppPage AppDefaultPage
 	{
