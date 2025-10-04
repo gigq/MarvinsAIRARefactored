@@ -364,7 +364,7 @@ public partial class MainWindow : Window
 		{
 			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 
-			Misc.ApplyToTaggedElements( Root_Grid, "Complex", element => element.Visibility = settings.RacingWheelSimpleModeEnabled ? Visibility.Collapsed : Visibility.Visible );
+			Misc.ApplyToTaggedElements( Root, "Complex", element => element.Visibility = settings.RacingWheelSimpleModeEnabled ? Visibility.Collapsed : Visibility.Visible );
 		} );
 	}
 
@@ -410,7 +410,15 @@ public partial class MainWindow : Window
 
 			if ( MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.AppMinimizeToSystemTray )
 			{
+#if !ADMINBOXX
+
 				var resourceStream = Application.GetResourceStream( new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/AppIcon/maira-universal.ico" ) ).Stream;
+
+#else
+
+				var resourceStream = Application.GetResourceStream( new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/AppIcon/adminboxx.ico" ) ).Stream;
+
+#endif
 
 				_notifyIcon = new()
 				{
@@ -419,6 +427,12 @@ public partial class MainWindow : Window
 					Text = localization[ "AppTitle" ],
 					ContextMenuStrip = new ContextMenuStrip()
 				};
+
+#if ADMINBOXX
+
+				_notifyIcon.Text = localization[ "AdminBoxx" ];
+
+#endif
 
 				_notifyIcon.ContextMenuStrip.Items.Add( localization[ "ShowWindow" ], null, ( s, e ) => MakeWindowVisible() );
 				_notifyIcon.ContextMenuStrip.Items.Add( localization[ "ExitApp" ], null, ( s, e ) => ExitApp() );

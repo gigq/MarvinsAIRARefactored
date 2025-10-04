@@ -28,7 +28,7 @@
         <Binding Source="{x:Static datacontext:DataContext.Instance}" />
     </Window.DataContext>
 
-    <Grid x:Name="Root_Grid"
+    <Grid x:Name="Grid"
           Margin="0,0,0,20">
 
         <Grid.LayoutTransform>
