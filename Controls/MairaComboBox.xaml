@@ -52,12 +52,6 @@
 
             </TextBlock>
 
-            <Button x:Name="HelpButton"
-                    Grid.Column="1"
-                    Style="{StaticResource HelpIconCommandMixin}"
-                    CommandParameter="{Binding HelpTopic, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                    Visibility="{Binding IsMouseOver, ElementName=Root, Converter={StaticResource BooleanToVisibilityConverter}}" />
-
         </Grid>
 
         <ComboBox x:Name="ComboBox"

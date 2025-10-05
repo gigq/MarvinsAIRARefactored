@@ -16,536 +16,557 @@
 
     <StackPanel>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Device_UC]}" />
+        <controls:MairaGroupBox Label="{Binding Localization[Device_UC]}"
+                                HelpTopic="racing-wheel-device">
 
-        <Grid>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <controls:MairaComboBox x:Name="SteeringDevice_MairaComboBox"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="3"
-                                    Label="{Binding Localization[SteeringDevice]}"
-                                    SelectedValue="{Binding Settings.RacingWheelSteeringDeviceGuid, Mode=TwoWay}"
-                                    HelpTopic="steering-device" />
-
-            <Grid Grid.Column="5"
-                  HorizontalAlignment="Center">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <controls:MairaMappableButton x:Name="Power_MairaMappableButton"
-                                              Grid.Column="0"
-                                              Label="{Binding Localization[Power]}"
-                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/power-white.png"
-                                              ContextSwitches="{Binding Settings.RacingWheelEnableForceFeedbackContextSwitches}"
-                                              ButtonMappings="{Binding Settings.RacingWheelEnableForceFeedbackButtonMappings}"
-                                              Click="Power_MairaMappableButton_Click" />
-
-                <controls:MairaMappableButton x:Name="Test_MairaMappableButton"
-                                              Grid.Column="2"
-                                              Label="{Binding Localization[Test]}"
-                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate-large.png"
-                                              ButtonMappings="{Binding Settings.RacingWheelTestButtonMappings}"
-                                              Click="Test_MairaMappableButton_Click" />
-
-                <controls:MairaMappableButton x:Name="Reset_MairaMappableButton"
-                                              Grid.Column="4"
-                                              Label="{Binding Localization[Reset]}"
-                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
-                                              ButtonMappings="{Binding Settings.RacingWheelResetButtonMappings}"
-                                              Click="Reset_MairaMappableButton_Click" />
-
-            </Grid>
-
-        </Grid>
-
-        <controls:MairaGroupHeader Label="{Binding Localization[OverallStrength_UC]}" />
-
-        <Grid>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[WheelForce]}"
-                                Value="{Binding Settings.RacingWheelWheelForce, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelWheelForceString}"
-                                StepSize="1"
-                                ContextSwitches="{Binding Settings.RacingWheelWheelForceContextSwitches}"
-                                DefaultValue="5" />
-
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[Strength]}"
-                                Value="{Binding Settings.RacingWheelStrength, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelStrengthString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelStrengthContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelStrengthPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelStrengthMinusButtonMappings}"
-                                DefaultValue="0.1" />
-
-            <controls:MairaKnob Grid.Column="4"
-                                Label="{Binding Localization[MaxForce]}"
-                                Value="{Binding Settings.RacingWheelMaxForce, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelMaxForceString}"
-                                StepSize="1"
-                                PlusButtonMappings="{Binding Settings.RacingWheelMaxForcePlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelMaxForceMinusButtonMappings}"
-                                DefaultValue="50" />
-
-        </Grid>
-
-        <Grid Margin="0,20,0,0">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[AutoMargin]}"
-                                Value="{Binding Settings.RacingWheelAutoMargin, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelAutoMarginString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelAutoMarginContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelAutoMarginPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelAutoMarginMinusButtonMappings}"
-                                DefaultValue="0" />
-
-            <Grid Grid.Column="2"
-                  HorizontalAlignment="Center">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <controls:MairaMappableButton x:Name="Set_MairaMappableButton"
-                                              Grid.Column="0"
-                                              Label="{Binding Localization[Set]}"
-                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/set.png"
-                                              ButtonMappings="{Binding Settings.RacingWheelSetButtonMappings}"
-                                              Click="Set_MairaMappableButton_Click" />
-
-                <controls:MairaMappableButton x:Name="Clear_MairaMappableButton"
-                                              Grid.Column="2"
-                                              Label="{Binding Localization[Clear]}"
-                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/clear.png"
-                                              ButtonMappings="{Binding Settings.RacingWheelClearButtonMappings}"
-                                              Click="Clear_MairaMappableButton_Click" />
-
-            </Grid>
-
-            <Grid Grid.Column="4"
-                  HorizontalAlignment="Center">
+            <Grid>
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="40" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0">
+                <controls:MairaComboBox x:Name="SteeringDevice_MairaComboBox"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        Label="{Binding Localization[SteeringDevice]}"
+                                        SelectedValue="{Binding Settings.RacingWheelSteeringDeviceGuid, Mode=TwoWay}" />
 
-                    <TextBlock Style="{StaticResource MairaTextBlockStyle}"
-                               Text="{Binding Localization[CurrentForce]}"
-                               Foreground="#979797"
-                               HorizontalAlignment="Center" />
+                <Grid Grid.Column="5"
+                      HorizontalAlignment="Center">
 
-                    <TextBlock x:Name="CurrentForce_TextBlock"
-                               Style="{StaticResource MairaTextBlockStyle}"
-                               Text="0.0 Nm"
-                               Foreground="#8f8f8f"
-                               HorizontalAlignment="Center"
-                               FontSize="30" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                </StackPanel>
+                    <controls:MairaMappableButton x:Name="Power_MairaMappableButton"
+                                                  Grid.Column="0"
+                                                  Label="{Binding Localization[Power]}"
+                                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/power-white.png"
+                                                  ContextSwitches="{Binding Settings.RacingWheelEnableForceFeedbackContextSwitches}"
+                                                  ButtonMappings="{Binding Settings.RacingWheelEnableForceFeedbackButtonMappings}"
+                                                  Click="Power_MairaMappableButton_Click" />
 
-                <StackPanel Grid.Column="2">
+                    <controls:MairaMappableButton x:Name="Test_MairaMappableButton"
+                                                  Grid.Column="2"
+                                                  Label="{Binding Localization[Test]}"
+                                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate-large.png"
+                                                  ButtonMappings="{Binding Settings.RacingWheelTestButtonMappings}"
+                                                  Click="Test_MairaMappableButton_Click" />
 
-                    <TextBlock Style="{StaticResource MairaTextBlockStyle}"
-                               Text="{Binding Localization[AutoMaxForce]}"
-                               Foreground="#979797"
-                               HorizontalAlignment="Center" />
+                    <controls:MairaMappableButton x:Name="Reset_MairaMappableButton"
+                                                  Grid.Column="4"
+                                                  Label="{Binding Localization[Reset]}"
+                                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
+                                                  ButtonMappings="{Binding Settings.RacingWheelResetButtonMappings}"
+                                                  Click="Reset_MairaMappableButton_Click" />
 
-                    <TextBlock x:Name="AutoForce_TextBlock"
-                               Style="{StaticResource MairaTextBlockStyle}"
-                               Text="0.0 Nm"
-                               Foreground="#8f8f8f"
-                               HorizontalAlignment="Center"
-                               FontSize="30" />
-
-                </StackPanel>
+                </Grid>
 
             </Grid>
 
-        </Grid>
+        </controls:MairaGroupBox>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Algorithm_UC]}" />
+        <controls:MairaGroupBox Label="{Binding Localization[OverallStrength_UC]}">
 
-        <Grid x:Name="AlgorithmRowOne_Grid">
+            <StackPanel>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <Grid>
 
-            <controls:MairaComboBox x:Name="Algorithm_MairaComboBox"
-                                    Grid.Column="0"
-                                    Label="{Binding Localization[Algorithm]}"
-                                    SelectedValue="{Binding Settings.RacingWheelAlgorithm, Mode=TwoWay}"
-                                    ContextSwitches="{Binding Settings.RacingWheelAlgorithmContextSwitches}" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <controls:MairaKnob x:Name="DetailBoost_MairaKnob"
-                                Grid.Column="2"
-                                Label="{Binding Localization[DetailBoost]}"
-                                Value="{Binding Settings.RacingWheelDetailBoost, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelDetailBoostString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelDetailBoostContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelDetailBoostPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelDetailBoostMinusButtonMappings}"
-                                DefaultValue="0"
-                                d:Visibility="Hidden" />
+                    <controls:MairaKnob Grid.Column="0"
+                                        Label="{Binding Localization[WheelForce]}"
+                                        Value="{Binding Settings.RacingWheelWheelForce, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelWheelForceString}"
+                                        StepSize="1"
+                                        ContextSwitches="{Binding Settings.RacingWheelWheelForceContextSwitches}"
+                                        DefaultValue="5" />
 
-            <controls:MairaKnob x:Name="DeltaLimit_MairaKnob"
-                                Grid.Column="2"
-                                Label="{Binding Localization[DeltaLimit]}"
-                                Value="{Binding Settings.RacingWheelDeltaLimit, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelDeltaLimitString}"
-                                StepSize="10"
-                                ContextSwitches="{Binding Settings.RacingWheelDeltaLimitContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelDeltaLimitPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelDeltaLimitMinusButtonMappings}"
-                                DefaultValue="500"
-                                d:Visibility="Hidden" />
+                    <controls:MairaKnob Grid.Column="2"
+                                        Label="{Binding Localization[Strength]}"
+                                        Value="{Binding Settings.RacingWheelStrength, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelStrengthString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.RacingWheelStrengthContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelStrengthPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelStrengthMinusButtonMappings}"
+                                        DefaultValue="0.1" />
 
-            <controls:MairaKnob x:Name="SlewCompressionThreshold_MairaKnob"
-                                Grid.Column="2"
-                                Label="{Binding Localization[SlewCompressionThreshold]}"
-                                Value="{Binding Settings.RacingWheelSlewCompressionThreshold, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelSlewCompressionThresholdString}"
-                                StepSize="1"
-                                ContextSwitches="{Binding Settings.RacingWheelSlewCompressionThresholdContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelSlewCompressionThresholdPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelSlewCompressionThresholdMinusButtonMappings}"
-                                DefaultValue="2"
-                                d:Visibility="Hidden" />
+                    <controls:MairaKnob Grid.Column="4"
+                                        Label="{Binding Localization[MaxForce]}"
+                                        Value="{Binding Settings.RacingWheelMaxForce, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelMaxForceString}"
+                                        StepSize="1"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelMaxForcePlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelMaxForceMinusButtonMappings}"
+                                        DefaultValue="50" />
 
-            <controls:MairaKnob x:Name="MultiTorqueCompression_MairaKnob"
-                                Grid.Column="2"
-                                Label="{Binding Localization[TorqueCompression]}"
-                                Value="{Binding Settings.RacingWheelMultiTorqueCompression, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelMultiTorqueCompressionString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelMultiTorqueCompressionContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelMultiTorqueCompressionPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelMultiTorqueCompressionMinusButtonMappings}"
-                                DefaultValue="0" />
+                </Grid>
 
-            <controls:MairaKnob x:Name="DetailBoostBias_MairaKnob"
-                                Grid.Column="4"
-                                Label="{Binding Localization[DetailBoostBias]}"
-                                Value="{Binding Settings.RacingWheelDetailBoostBias, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelDetailBoostBiasString}"
-                                StepSize="0.05"
-                                ContextSwitches="{Binding Settings.RacingWheelDetailBoostBiasContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelDetailBoostBiasPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelDetailBoostBiasMinusButtonMappings}"
-                                DefaultValue="0.1"
-                                d:Visibility="Hidden" />
+                <Grid Margin="0,20,0,0">
 
-            <controls:MairaKnob x:Name="DeltaLimiterBias_MairaKnob"
-                                Grid.Column="4"
-                                Label="{Binding Localization[DeltaLimiterBias]}"
-                                Value="{Binding Settings.RacingWheelDeltaLimiterBias, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelDeltaLimiterBiasString}"
-                                StepSize="0.05"
-                                ContextSwitches="{Binding Settings.RacingWheelDeltaLimiterBiasContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelDeltaLimiterBiasPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelDeltaLimiterBiasMinusButtonMappings}"
-                                DefaultValue="0.2"
-                                d:Visibility="Hidden" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <controls:MairaKnob x:Name="SlewCompressionRate_MairaKnob"
-                                Grid.Column="4"
-                                Label="{Binding Localization[SlewCompressionRate]}"
-                                Value="{Binding Settings.RacingWheelSlewCompressionRate, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelSlewCompressionRateString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelSlewCompressionRateContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelSlewCompressionRatePlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelSlewCompressionRateMinusButtonMappings}"
-                                DefaultValue="0.65"
-                                d:Visibility="Hidden" />
+                    <controls:MairaKnob Grid.Column="0"
+                                        Label="{Binding Localization[AutoMargin]}"
+                                        Value="{Binding Settings.RacingWheelAutoMargin, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelAutoMarginString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.RacingWheelAutoMarginContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelAutoMarginPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelAutoMarginMinusButtonMappings}"
+                                        DefaultValue="0" />
 
-            <controls:MairaKnob x:Name="MultiSlewRateReduction_MairaKnob"
-                                Grid.Column="4"
-                                Label="{Binding Localization[SlewRateReduction]}"
-                                Value="{Binding Settings.RacingWheelMultiSlewRateReduction, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelMultiSlewRateReductionString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelMultiSlewRateReductionContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelMultiSlewRateReductionPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelMultiSlewRateReductionMinusButtonMappings}"
-                                DefaultValue="0" />
+                    <Grid Grid.Column="2"
+                          HorizontalAlignment="Center">
 
-        </Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-        <Grid Margin="0,20,0,0">
+                        <controls:MairaMappableButton x:Name="Set_MairaMappableButton"
+                                                      Grid.Column="0"
+                                                      Label="{Binding Localization[Set]}"
+                                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/set.png"
+                                                      ButtonMappings="{Binding Settings.RacingWheelSetButtonMappings}"
+                                                      Click="Set_MairaMappableButton_Click" />
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                        <controls:MairaMappableButton x:Name="Clear_MairaMappableButton"
+                                                      Grid.Column="2"
+                                                      Label="{Binding Localization[Clear]}"
+                                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/clear.png"
+                                                      ButtonMappings="{Binding Settings.RacingWheelClearButtonMappings}"
+                                                      Click="Clear_MairaMappableButton_Click" />
 
-            <controls:MairaSwitch Grid.Column="0"
-                                  Label="{Binding Localization[SoftClipping]}"
-                                  IsOn="{Binding Settings.RacingWheelEnableSoftLimiter, Mode=TwoWay}"
-                                  ContextSwitches="{Binding Settings.RacingWheelEnableSoftLimiterContextSwitches}" />
+                    </Grid>
 
-            <controls:MairaKnob x:Name="TotalCompressionThreshold_MairaKnob"
-                                Grid.Column="2"
-                                Label="{Binding Localization[TotalCompressionThreshold]}"
-                                Value="{Binding Settings.RacingWheelTotalCompressionThreshold, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelTotalCompressionThresholdString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelTotalCompressionThresholdContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelTotalCompressionThresholdPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelTotalCompressionThresholdMinusButtonMappings}"
-                                DefaultValue="0.65"
-                                d:Visibility="Hidden" />
+                    <Grid Grid.Column="4"
+                          HorizontalAlignment="Center">
 
-            <controls:MairaKnob x:Name="MultiDetailGain_MairaKnob"
-                                Grid.Column="2"
-                                Label="{Binding Localization[DetailGain]}"
-                                Value="{Binding Settings.RacingWheelMultiDetailGain, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelMultiDetailGainString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelMultiDetailGainContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelMultiDetailGainPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelMultiDetailGainMinusButtonMappings}"
-                                DefaultValue="0" />
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-            <controls:MairaKnob x:Name="TotalCompressionRate_MairaKnob"
-                                Grid.Column="4"
-                                Label="{Binding Localization[TotalCompressionRate]}"
-                                Value="{Binding Settings.RacingWheelTotalCompressionRate, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelTotalCompressionRateString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelTotalCompressionRateContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelTotalCompressionRatePlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelTotalCompressionRateMinusButtonMappings}"
-                                DefaultValue="0.75"
-                                d:Visibility="Hidden" />
+                        <StackPanel Grid.Column="0">
 
-            <controls:MairaKnob x:Name="MultiOutputSmoothing_MairaKnob"
-                                Grid.Column="4"
-                                Label="{Binding Localization[OutputSmoothing]}"
-                                Value="{Binding Settings.RacingWheelMultiOutputSmoothing, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelMultiOutputSmoothingString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelMultiOutputSmoothingContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelMultiOutputSmoothingPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelMultiOutputSmoothingMinusButtonMappings}"
-                                DefaultValue="0" />
+                            <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                                       Text="{Binding Localization[CurrentForce]}"
+                                       Foreground="#979797"
+                                       HorizontalAlignment="Center" />
 
-        </Grid>
+                            <TextBlock x:Name="CurrentForce_TextBlock"
+                                       Style="{StaticResource MairaTextBlockStyle}"
+                                       Text="0.0 Nm"
+                                       Foreground="#8f8f8f"
+                                       HorizontalAlignment="Center"
+                                       FontSize="30" />
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Output_UC]}"
-                                   Tag="Complex" />
+                        </StackPanel>
 
-        <Grid Tag="Complex">
+                        <StackPanel Grid.Column="2">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                                       Text="{Binding Localization[AutoMaxForce]}"
+                                       Foreground="#979797"
+                                       HorizontalAlignment="Center" />
 
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[Minimum]}"
-                                Value="{Binding Settings.RacingWheelOutputMinimum, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelOutputMinimumString}"
-                                StepSize="0.001"
-                                ContextSwitches="{Binding Settings.RacingWheelOutputMinimumContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelOutputMinimumPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelOutputMinimumMinusButtonMappings}"
-                                DefaultValue="0" />
+                            <TextBlock x:Name="AutoForce_TextBlock"
+                                       Style="{StaticResource MairaTextBlockStyle}"
+                                       Text="0.0 Nm"
+                                       Foreground="#8f8f8f"
+                                       HorizontalAlignment="Center"
+                                       FontSize="30" />
 
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[Maximum]}"
-                                Value="{Binding Settings.RacingWheelOutputMaximum, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelOutputMaximumString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelOutputMaximumContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelOutputMaximumPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelOutputMaximumMinusButtonMappings}"
-                                DefaultValue="1" />
+                        </StackPanel>
 
-            <controls:MairaKnob Grid.Column="4"
-                                Label="{Binding Localization[Curve]}"
-                                Value="{Binding Settings.RacingWheelOutputCurve, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelOutputCurveString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelOutputCurveContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelOutputCurvePlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelOutputCurveMinusButtonMappings}"
-                                ShowCurve="True"
-                                DefaultValue="0" />
+                    </Grid>
 
-        </Grid>
+                </Grid>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Preview_UC]}"
-                                   Tag="Complex" />
+            </StackPanel>
 
-        <Grid Tag="Complex">
+        </controls:MairaGroupBox>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <controls:MairaGroupBox Label="{Binding Localization[Algorithm_UC]}">
 
-            <Border Grid.Row="0"
-                    BorderThickness="2"
-                    BorderBrush="#666"
-                    Background="#222"
-                    CornerRadius="5"
-                    Padding="0,0,0,6">
+            <StackPanel>
 
-                <ScrollViewer x:Name="Preview_ScrollViewer"
-                              HorizontalScrollBarVisibility="Auto"
-                              VerticalScrollBarVisibility="Disabled"
-                              MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}}"
-                              PreviewMouseWheel="Preview_ScrollViewer_PreviewMouseWheel"
-                              Loaded="Preview_ScrollViewer_Loaded">
+                <Grid x:Name="AlgorithmRowOne_Grid">
 
-                    <Image x:Name="AlgorithmPreview_Image"
-                           Height="301"
-                           Width="3840"
-                           RenderOptions.BitmapScalingMode="HighQuality" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                </ScrollViewer>
+                    <controls:MairaComboBox x:Name="Algorithm_MairaComboBox"
+                                            Grid.Column="0"
+                                            Label="{Binding Localization[Algorithm]}"
+                                            SelectedValue="{Binding Settings.RacingWheelAlgorithm, Mode=TwoWay}"
+                                            ContextSwitches="{Binding Settings.RacingWheelAlgorithmContextSwitches}" />
 
-            </Border>
+                    <controls:MairaKnob x:Name="DetailBoost_MairaKnob"
+                                        Grid.Column="2"
+                                        Label="{Binding Localization[DetailBoost]}"
+                                        Value="{Binding Settings.RacingWheelDetailBoost, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelDetailBoostString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.RacingWheelDetailBoostContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelDetailBoostPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelDetailBoostMinusButtonMappings}"
+                                        DefaultValue="0"
+                                        d:Visibility="Hidden" />
 
-            <controls:MairaComboBox x:Name="PreviewRecordings_MairaComboBox"
-                                    Grid.Row="2"
-                                    SelectedValue="{Binding Settings.RacingWheelSelectedRecording, Mode=TwoWay}" />
+                    <controls:MairaKnob x:Name="DeltaLimit_MairaKnob"
+                                        Grid.Column="2"
+                                        Label="{Binding Localization[DeltaLimit]}"
+                                        Value="{Binding Settings.RacingWheelDeltaLimit, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelDeltaLimitString}"
+                                        StepSize="10"
+                                        ContextSwitches="{Binding Settings.RacingWheelDeltaLimitContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelDeltaLimitPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelDeltaLimitMinusButtonMappings}"
+                                        DefaultValue="500"
+                                        d:Visibility="Hidden" />
 
-        </Grid>
+                    <controls:MairaKnob x:Name="SlewCompressionThreshold_MairaKnob"
+                                        Grid.Column="2"
+                                        Label="{Binding Localization[SlewCompressionThreshold]}"
+                                        Value="{Binding Settings.RacingWheelSlewCompressionThreshold, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelSlewCompressionThresholdString}"
+                                        StepSize="1"
+                                        ContextSwitches="{Binding Settings.RacingWheelSlewCompressionThresholdContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelSlewCompressionThresholdPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelSlewCompressionThresholdMinusButtonMappings}"
+                                        DefaultValue="2"
+                                        d:Visibility="Hidden" />
 
-        <controls:MairaGroupHeader Label="{Binding Localization[WheelLFE_UC]}"
-                                   Tag="Complex" />
+                    <controls:MairaKnob x:Name="MultiTorqueCompression_MairaKnob"
+                                        Grid.Column="2"
+                                        Label="{Binding Localization[TorqueCompression]}"
+                                        Value="{Binding Settings.RacingWheelMultiTorqueCompression, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelMultiTorqueCompressionString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.RacingWheelMultiTorqueCompressionContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelMultiTorqueCompressionPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelMultiTorqueCompressionMinusButtonMappings}"
+                                        DefaultValue="0" />
 
-        <Grid Tag="Complex">
+                    <controls:MairaKnob x:Name="DetailBoostBias_MairaKnob"
+                                        Grid.Column="4"
+                                        Label="{Binding Localization[DetailBoostBias]}"
+                                        Value="{Binding Settings.RacingWheelDetailBoostBias, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelDetailBoostBiasString}"
+                                        StepSize="0.05"
+                                        ContextSwitches="{Binding Settings.RacingWheelDetailBoostBiasContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelDetailBoostBiasPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelDetailBoostBiasMinusButtonMappings}"
+                                        DefaultValue="0.1"
+                                        d:Visibility="Hidden" />
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                    <controls:MairaKnob x:Name="DeltaLimiterBias_MairaKnob"
+                                        Grid.Column="4"
+                                        Label="{Binding Localization[DeltaLimiterBias]}"
+                                        Value="{Binding Settings.RacingWheelDeltaLimiterBias, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelDeltaLimiterBiasString}"
+                                        StepSize="0.05"
+                                        ContextSwitches="{Binding Settings.RacingWheelDeltaLimiterBiasContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelDeltaLimiterBiasPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelDeltaLimiterBiasMinusButtonMappings}"
+                                        DefaultValue="0.2"
+                                        d:Visibility="Hidden" />
 
-            <controls:MairaComboBox x:Name="LFERecordingDevice_MairaComboBox"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="3"
-                                    Label="{Binding Localization[LFERecordingDevice]}"
-                                    SelectedValue="{Binding Settings.RacingWheelLFERecordingDeviceGuid, Mode=TwoWay}" />
+                    <controls:MairaKnob x:Name="SlewCompressionRate_MairaKnob"
+                                        Grid.Column="4"
+                                        Label="{Binding Localization[SlewCompressionRate]}"
+                                        Value="{Binding Settings.RacingWheelSlewCompressionRate, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelSlewCompressionRateString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.RacingWheelSlewCompressionRateContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelSlewCompressionRatePlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelSlewCompressionRateMinusButtonMappings}"
+                                        DefaultValue="0.65"
+                                        d:Visibility="Hidden" />
 
-            <controls:MairaKnob Grid.Column="4"
-                                Label="{Binding Localization[Strength]}"
-                                Value="{Binding Settings.RacingWheelLFEStrength, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelLFEStrengthString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelLFEStrengthContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelLFEStrengthPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelLFEStrengthMinusButtonMappings}"
-                                DefaultValue="0.05" />
+                    <controls:MairaKnob x:Name="MultiSlewRateReduction_MairaKnob"
+                                        Grid.Column="4"
+                                        Label="{Binding Localization[SlewRateReduction]}"
+                                        Value="{Binding Settings.RacingWheelMultiSlewRateReduction, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelMultiSlewRateReductionString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.RacingWheelMultiSlewRateReductionContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelMultiSlewRateReductionPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelMultiSlewRateReductionMinusButtonMappings}"
+                                        DefaultValue="0" />
 
-        </Grid>
+                </Grid>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[CrashProtection_UC]}"
-                                   Tag="Complex" />
+                <Grid Margin="0,20,0,0">
 
-        <Grid Tag="Complex">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                    <controls:MairaSwitch Grid.Column="0"
+                                          Label="{Binding Localization[SoftClipping]}"
+                                          IsOn="{Binding Settings.RacingWheelEnableSoftLimiter, Mode=TwoWay}"
+                                          ContextSwitches="{Binding Settings.RacingWheelEnableSoftLimiterContextSwitches}" />
 
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[GForce]}"
-                                Value="{Binding Settings.RacingWheelCrashProtectionGForce, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelCrashProtectionGForceString}"
-                                StepSize="0.5"
-                                ContextSwitches="{Binding Settings.RacingWheelCrashProtectionGForceContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelCrashProtectionGForcePlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelCrashProtectionGForceMinusButtonMappings}"
-                                DefaultValue="8" />
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[Duration]}"
-                                Value="{Binding Settings.RacingWheelCrashProtectionDuration, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelCrashProtectionDurationString}"
-                                StepSize="0.5"
-                                ContextSwitches="{Binding Settings.RacingWheelCrashProtectionDurationContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelCrashProtectionDurationPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelCrashProtectionDurationMinusButtonMappings}"
-                                DefaultValue="5" />
-            <controls:MairaKnob Grid.Column="4"
-                                Label="{Binding Localization[ForceReduction]}"
-                                Value="{Binding Settings.RacingWheelCrashProtectionForceReduction, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelCrashProtectionForceReductionString}"
-                                StepSize="0.01"
-                                ContextSwitches="{Binding Settings.RacingWheelCrashProtectionForceReductionContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelCrashProtectionForceReductionPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelCrashProtectionForceReductionMinusButtonMappings}"
-                                DefaultValue="0.95" />
+                    <controls:MairaKnob x:Name="TotalCompressionThreshold_MairaKnob"
+                                        Grid.Column="2"
+                                        Label="{Binding Localization[TotalCompressionThreshold]}"
+                                        Value="{Binding Settings.RacingWheelTotalCompressionThreshold, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelTotalCompressionThresholdString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.RacingWheelTotalCompressionThresholdContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelTotalCompressionThresholdPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelTotalCompressionThresholdMinusButtonMappings}"
+                                        DefaultValue="0.65"
+                                        d:Visibility="Hidden" />
 
-        </Grid>
+                    <controls:MairaKnob x:Name="MultiDetailGain_MairaKnob"
+                                        Grid.Column="2"
+                                        Label="{Binding Localization[DetailGain]}"
+                                        Value="{Binding Settings.RacingWheelMultiDetailGain, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelMultiDetailGainString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.RacingWheelMultiDetailGainContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelMultiDetailGainPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelMultiDetailGainMinusButtonMappings}"
+                                        DefaultValue="0" />
 
-        <StackPanel x:Name="CurbProtection_StackPanel">
+                    <controls:MairaKnob x:Name="TotalCompressionRate_MairaKnob"
+                                        Grid.Column="4"
+                                        Label="{Binding Localization[TotalCompressionRate]}"
+                                        Value="{Binding Settings.RacingWheelTotalCompressionRate, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelTotalCompressionRateString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.RacingWheelTotalCompressionRateContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelTotalCompressionRatePlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelTotalCompressionRateMinusButtonMappings}"
+                                        DefaultValue="0.75"
+                                        d:Visibility="Hidden" />
 
-            <controls:MairaGroupHeader Label="{Binding Localization[CurbProtection_UC]}"
-                                       Tag="Complex" />
+                    <controls:MairaKnob x:Name="MultiOutputSmoothing_MairaKnob"
+                                        Grid.Column="4"
+                                        Label="{Binding Localization[OutputSmoothing]}"
+                                        Value="{Binding Settings.RacingWheelMultiOutputSmoothing, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.RacingWheelMultiOutputSmoothingString}"
+                                        StepSize="0.01"
+                                        ContextSwitches="{Binding Settings.RacingWheelMultiOutputSmoothingContextSwitches}"
+                                        PlusButtonMappings="{Binding Settings.RacingWheelMultiOutputSmoothingPlusButtonMappings}"
+                                        MinusButtonMappings="{Binding Settings.RacingWheelMultiOutputSmoothingMinusButtonMappings}"
+                                        DefaultValue="0" />
 
-            <Grid Tag="Complex">
+                </Grid>
+
+            </StackPanel>
+
+        </controls:MairaGroupBox>
+
+        <controls:MairaGroupBox Label="{Binding Localization[Output_UC]}"
+                                Tag="Complex">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <controls:MairaKnob Grid.Column="0"
+                                    Label="{Binding Localization[Minimum]}"
+                                    Value="{Binding Settings.RacingWheelOutputMinimum, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelOutputMinimumString}"
+                                    StepSize="0.001"
+                                    ContextSwitches="{Binding Settings.RacingWheelOutputMinimumContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelOutputMinimumPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelOutputMinimumMinusButtonMappings}"
+                                    DefaultValue="0" />
+
+                <controls:MairaKnob Grid.Column="2"
+                                    Label="{Binding Localization[Maximum]}"
+                                    Value="{Binding Settings.RacingWheelOutputMaximum, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelOutputMaximumString}"
+                                    StepSize="0.01"
+                                    ContextSwitches="{Binding Settings.RacingWheelOutputMaximumContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelOutputMaximumPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelOutputMaximumMinusButtonMappings}"
+                                    DefaultValue="1" />
+
+                <controls:MairaKnob Grid.Column="4"
+                                    Label="{Binding Localization[Curve]}"
+                                    Value="{Binding Settings.RacingWheelOutputCurve, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelOutputCurveString}"
+                                    StepSize="0.01"
+                                    ContextSwitches="{Binding Settings.RacingWheelOutputCurveContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelOutputCurvePlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelOutputCurveMinusButtonMappings}"
+                                    ShowCurve="True"
+                                    DefaultValue="0" />
+
+            </Grid>
+
+        </controls:MairaGroupBox>
+
+        <controls:MairaGroupBox Label="{Binding Localization[Preview_UC]}"
+                                Tag="Complex">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0"
+                        BorderThickness="2"
+                        BorderBrush="#666"
+                        Background="#222"
+                        CornerRadius="5"
+                        Padding="0,0,0,6">
+
+                    <ScrollViewer x:Name="Preview_ScrollViewer"
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Disabled"
+                                  MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}}"
+                                  PreviewMouseWheel="Preview_ScrollViewer_PreviewMouseWheel"
+                                  Loaded="Preview_ScrollViewer_Loaded">
+
+                        <Image x:Name="AlgorithmPreview_Image"
+                               Height="301"
+                               Width="3840"
+                               RenderOptions.BitmapScalingMode="HighQuality" />
+
+                    </ScrollViewer>
+
+                </Border>
+
+                <controls:MairaComboBox x:Name="PreviewRecordings_MairaComboBox"
+                                        Grid.Row="2"
+                                        SelectedValue="{Binding Settings.RacingWheelSelectedRecording, Mode=TwoWay}" />
+
+            </Grid>
+
+        </controls:MairaGroupBox>
+
+        <controls:MairaGroupBox Label="{Binding Localization[WheelLFE_UC]}"
+                                Tag="Complex">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <controls:MairaComboBox x:Name="LFERecordingDevice_MairaComboBox"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="3"
+                                        Label="{Binding Localization[LFERecordingDevice]}"
+                                        SelectedValue="{Binding Settings.RacingWheelLFERecordingDeviceGuid, Mode=TwoWay}" />
+
+                <controls:MairaKnob Grid.Column="4"
+                                    Label="{Binding Localization[Strength]}"
+                                    Value="{Binding Settings.RacingWheelLFEStrength, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelLFEStrengthString}"
+                                    StepSize="0.01"
+                                    ContextSwitches="{Binding Settings.RacingWheelLFEStrengthContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelLFEStrengthPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelLFEStrengthMinusButtonMappings}"
+                                    DefaultValue="0.05" />
+
+            </Grid>
+
+        </controls:MairaGroupBox>
+
+        <controls:MairaGroupBox Label="{Binding Localization[CrashProtection_UC]}"
+                                Tag="Complex">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <controls:MairaKnob Grid.Column="0"
+                                    Label="{Binding Localization[GForce]}"
+                                    Value="{Binding Settings.RacingWheelCrashProtectionGForce, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelCrashProtectionGForceString}"
+                                    StepSize="0.5"
+                                    ContextSwitches="{Binding Settings.RacingWheelCrashProtectionGForceContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelCrashProtectionGForcePlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelCrashProtectionGForceMinusButtonMappings}"
+                                    DefaultValue="8" />
+                <controls:MairaKnob Grid.Column="2"
+                                    Label="{Binding Localization[Duration]}"
+                                    Value="{Binding Settings.RacingWheelCrashProtectionDuration, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelCrashProtectionDurationString}"
+                                    StepSize="0.5"
+                                    ContextSwitches="{Binding Settings.RacingWheelCrashProtectionDurationContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelCrashProtectionDurationPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelCrashProtectionDurationMinusButtonMappings}"
+                                    DefaultValue="5" />
+                <controls:MairaKnob Grid.Column="4"
+                                    Label="{Binding Localization[ForceReduction]}"
+                                    Value="{Binding Settings.RacingWheelCrashProtectionForceReduction, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelCrashProtectionForceReductionString}"
+                                    StepSize="0.01"
+                                    ContextSwitches="{Binding Settings.RacingWheelCrashProtectionForceReductionContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelCrashProtectionForceReductionPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelCrashProtectionForceReductionMinusButtonMappings}"
+                                    DefaultValue="0.95" />
+
+            </Grid>
+
+        </controls:MairaGroupBox>
+
+        <controls:MairaGroupBox x:Name="CurbProtection_MairaGroupBox"
+                                Label="{Binding Localization[CurbProtection_UC]}"
+                                Tag="Complex">
+
+            <Grid>
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -585,176 +606,186 @@
 
             </Grid>
 
-        </StackPanel>
+        </controls:MairaGroupBox>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[ParkedEffects_UC]}"
-                                   Tag="Complex" />
+        <controls:MairaGroupBox Label="{Binding Localization[ParkedEffects_UC]}"
+                                Tag="Complex">
 
-        <Grid Tag="Complex">
+            <Grid>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[ForceFeedbackStrength]}"
-                                Value="{Binding Settings.RacingWheelParkedStrength, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelParkedStrengthString}"
-                                StepSize="0.05"
-                                ContextSwitches="{Binding Settings.RacingWheelParkedStrengthContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelParkedStrengthPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelParkedStrengthMinusButtonMappings}"
-                                DefaultValue="0.1" />
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[ParkedFriction]}"
-                                Value="{Binding Settings.RacingWheelParkedFriction, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelParkedFrictionString}"
-                                StepSize="0.05"
-                                ContextSwitches="{Binding Settings.RacingWheelParkedFrictionContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelParkedFrictionPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelParkedFrictionMinusButtonMappings}"
-                                DefaultValue="0" />
+                <controls:MairaKnob Grid.Column="0"
+                                    Label="{Binding Localization[ForceFeedbackStrength]}"
+                                    Value="{Binding Settings.RacingWheelParkedStrength, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelParkedStrengthString}"
+                                    StepSize="0.05"
+                                    ContextSwitches="{Binding Settings.RacingWheelParkedStrengthContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelParkedStrengthPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelParkedStrengthMinusButtonMappings}"
+                                    DefaultValue="0.1" />
+                <controls:MairaKnob Grid.Column="2"
+                                    Label="{Binding Localization[ParkedFriction]}"
+                                    Value="{Binding Settings.RacingWheelParkedFriction, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelParkedFrictionString}"
+                                    StepSize="0.05"
+                                    ContextSwitches="{Binding Settings.RacingWheelParkedFrictionContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelParkedFrictionPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelParkedFrictionMinusButtonMappings}"
+                                    DefaultValue="0" />
 
-        </Grid>
+            </Grid>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[OtherFeatures_UC]}"
-                                   Tag="Complex" />
+        </controls:MairaGroupBox>
 
-        <Grid Tag="Complex">
+        <controls:MairaGroupBox Label="{Binding Localization[OtherFeatures_UC]}"
+                                Tag="Complex">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <Grid>
 
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[SoftLockStrength]}"
-                                Value="{Binding Settings.RacingWheelSoftLockStrength, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelSoftLockStrengthString}"
-                                StepSize="0.05"
-                                ContextSwitches="{Binding Settings.RacingWheelSoftLockStrengthContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelSoftLockStrengthPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelSoftLockStrengthMinusButtonMappings}"
-                                DefaultValue="0.25" />
-            <controls:MairaKnob Grid.Column="2"
-                                Label="{Binding Localization[RacingFriction]}"
-                                Value="{Binding Settings.RacingWheelFriction, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelFrictionString}"
-                                StepSize="0.05"
-                                ContextSwitches="{Binding Settings.RacingWheelFrictionContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelFrictionPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelFrictionMinusButtonMappings}"
-                                DefaultValue="0" />
-            <controls:MairaKnob Grid.Column="4"
-                                Label="{Binding Localization[WheelCenteringStrength]}"
-                                Value="{Binding Settings.RacingWheelWheelCenteringStrength, Mode=TwoWay}"
-                                ValueString="{Binding Settings.RacingWheelWheelCenteringStrengthString}"
-                                StepSize="0.05"
-                                ContextSwitches="{Binding Settings.RacingWheelWheelCenteringStrengthContextSwitches}"
-                                PlusButtonMappings="{Binding Settings.RacingWheelWheelCenteringStrengthPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.RacingWheelWheelCenteringStrengthMinusButtonMappings}"
-                                DefaultValue="0.75" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-        </Grid>
+                <controls:MairaKnob Grid.Column="0"
+                                    Label="{Binding Localization[SoftLockStrength]}"
+                                    Value="{Binding Settings.RacingWheelSoftLockStrength, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelSoftLockStrengthString}"
+                                    StepSize="0.05"
+                                    ContextSwitches="{Binding Settings.RacingWheelSoftLockStrengthContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelSoftLockStrengthPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelSoftLockStrengthMinusButtonMappings}"
+                                    DefaultValue="0.25" />
+                <controls:MairaKnob Grid.Column="2"
+                                    Label="{Binding Localization[RacingFriction]}"
+                                    Value="{Binding Settings.RacingWheelFriction, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelFrictionString}"
+                                    StepSize="0.05"
+                                    ContextSwitches="{Binding Settings.RacingWheelFrictionContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelFrictionPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelFrictionMinusButtonMappings}"
+                                    DefaultValue="0" />
+                <controls:MairaKnob Grid.Column="4"
+                                    Label="{Binding Localization[WheelCenteringStrength]}"
+                                    Value="{Binding Settings.RacingWheelWheelCenteringStrength, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.RacingWheelWheelCenteringStrengthString}"
+                                    StepSize="0.05"
+                                    ContextSwitches="{Binding Settings.RacingWheelWheelCenteringStrengthContextSwitches}"
+                                    PlusButtonMappings="{Binding Settings.RacingWheelWheelCenteringStrengthPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.RacingWheelWheelCenteringStrengthMinusButtonMappings}"
+                                    DefaultValue="0.75" />
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Effects_UC]}"
-                                   Tag="Complex" />
+            </Grid>
 
-        <Grid Tag="Complex">
+        </controls:MairaGroupBox>
 
-            <StackPanel>
+        <controls:MairaGroupBox Label="{Binding Localization[Effects_UC]}"
+                                Tag="Complex">
 
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.RacingWheelVibrateOnGearChange, Mode=TwoWay}"
-                                      Label="{Binding Localization[VibrateOnGearChange]}"
-                                      ContextSwitches="{Binding Settings.RacingWheelVibrateOnGearChangeContextSwitches}"
-                                      Tag="Complex" />
+            <Grid>
 
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.RacingWheelVibrateOnABS, Mode=TwoWay}"
-                                      Label="{Binding Localization[VibrateOnABS]}"
-                                      ContextSwitches="{Binding Settings.RacingWheelVibrateOnABSContextSwitches}"
-                                      Tag="Complex" />
+                <StackPanel>
 
-            </StackPanel>
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.RacingWheelVibrateOnGearChange, Mode=TwoWay}"
+                                          Label="{Binding Localization[VibrateOnGearChange]}"
+                                          ContextSwitches="{Binding Settings.RacingWheelVibrateOnGearChangeContextSwitches}"
+                                          Tag="Complex" />
 
-        </Grid>
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.RacingWheelVibrateOnABS, Mode=TwoWay}"
+                                          Label="{Binding Localization[VibrateOnABS]}"
+                                          ContextSwitches="{Binding Settings.RacingWheelVibrateOnABSContextSwitches}"
+                                          Tag="Complex" />
 
-        <controls:MairaGroupHeader Label="{Binding Localization[PrivateMessages_UC]}"
-                                   Tag="Complex" />
+                </StackPanel>
 
-        <Grid Tag="Complex">
+            </Grid>
 
-            <StackPanel>
+        </controls:MairaGroupBox>
 
-                <controls:MairaSwitch Margin="0"
-                                      IsOn="{Binding Settings.RacingWheelSendChatMessages, Mode=TwoWay}"
-                                      Label="{Binding Localization[SendChatMessages]}" />
+        <controls:MairaGroupBox Label="{Binding Localization[PrivateMessages_UC]}"
+                                Tag="Complex">
 
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.RacingWheelInputMappedSettingUpdateEnabled, Mode=TwoWay}"
-                                      Label="{Binding Localization[InputMappedSettingUpdateEnabled]}" />
+            <Grid>
 
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.RacingWheelCrashProtectionMessagesEnabled, Mode=TwoWay}"
-                                      Label="{Binding Localization[CrashProtectionMessagesEnabled]}" />
+                <StackPanel>
 
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.RacingWheelCurbProtectionMessagesEnabled, Mode=TwoWay}"
-                                      Label="{Binding Localization[CurbProtectionMessagesEnabled]}" />
+                    <controls:MairaSwitch Margin="0"
+                                          IsOn="{Binding Settings.RacingWheelSendChatMessages, Mode=TwoWay}"
+                                          Label="{Binding Localization[SendChatMessages]}" />
 
-            </StackPanel>
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.RacingWheelInputMappedSettingUpdateEnabled, Mode=TwoWay}"
+                                          Label="{Binding Localization[InputMappedSettingUpdateEnabled]}" />
 
-        </Grid>
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.RacingWheelCrashProtectionMessagesEnabled, Mode=TwoWay}"
+                                          Label="{Binding Localization[CrashProtectionMessagesEnabled]}" />
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Switches_UC]}" />
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.RacingWheelCurbProtectionMessagesEnabled, Mode=TwoWay}"
+                                          Label="{Binding Localization[CurbProtectionMessagesEnabled]}" />
 
-        <Grid>
+                </StackPanel>
 
-            <StackPanel>
+            </Grid>
 
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.RacingWheelCenterWheelWhileRacing, Mode=TwoWay}"
-                                      Label="{Binding Localization[CenterWheelWhileRacing]}"
-                                      ContextSwitches="{Binding Settings.RacingWheelCenterWheelWhileRacingContextSwitches}"
-                                      Tag="Complex" />
+        </controls:MairaGroupBox>
 
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.RacingWheelCenterWheelWhileParked, Mode=TwoWay}"
-                                      Label="{Binding Localization[CenterWheelWhileParked]}"
-                                      ContextSwitches="{Binding Settings.RacingWheelCenterWheelWhileParkedContextSwitches}"
-                                      Tag="Complex" />
+        <controls:MairaGroupBox Label="{Binding Localization[Switches_UC]}">
 
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.RacingWheelFadeEnabled, Mode=TwoWay}"
-                                      Label="{Binding Localization[FadeForceFeedback]}"
-                                      ContextSwitches="{Binding Settings.RacingWheelFadeEnabledContextSwitches}"
-                                      Tag="Complex" />
+            <Grid>
 
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.RacingWheelEnableLogitechRPMLights, Mode=TwoWay}"
-                                      Label="{Binding Localization[EnableLogitechRPMLights]}"
-                                      Tag="Complex" />
+                <StackPanel>
 
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.RacingWheelAlwaysEnableFFB, Mode=TwoWay}"
-                                      Label="{Binding Localization[AlwaysEnableFFB]}"
-                                      Tag="Complex" />
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.RacingWheelCenterWheelWhileRacing, Mode=TwoWay}"
+                                          Label="{Binding Localization[CenterWheelWhileRacing]}"
+                                          ContextSwitches="{Binding Settings.RacingWheelCenterWheelWhileRacingContextSwitches}"
+                                          Tag="Complex" />
 
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.RacingWheelSimpleModeEnabled, Mode=TwoWay}"
-                                      Label="{Binding Localization[SimpleMode]}" />
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.RacingWheelCenterWheelWhileParked, Mode=TwoWay}"
+                                          Label="{Binding Localization[CenterWheelWhileParked]}"
+                                          ContextSwitches="{Binding Settings.RacingWheelCenterWheelWhileParkedContextSwitches}"
+                                          Tag="Complex" />
 
-            </StackPanel>
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.RacingWheelFadeEnabled, Mode=TwoWay}"
+                                          Label="{Binding Localization[FadeForceFeedback]}"
+                                          ContextSwitches="{Binding Settings.RacingWheelFadeEnabledContextSwitches}"
+                                          Tag="Complex" />
 
-        </Grid>
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.RacingWheelEnableLogitechRPMLights, Mode=TwoWay}"
+                                          Label="{Binding Localization[EnableLogitechRPMLights]}"
+                                          Tag="Complex" />
+
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.RacingWheelAlwaysEnableFFB, Mode=TwoWay}"
+                                          Label="{Binding Localization[AlwaysEnableFFB]}"
+                                          Tag="Complex" />
+
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.RacingWheelSimpleModeEnabled, Mode=TwoWay}"
+                                          Label="{Binding Localization[SimpleMode]}" />
+
+                </StackPanel>
+
+            </Grid>
+
+        </controls:MairaGroupBox>
 
     </StackPanel>
 

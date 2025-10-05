@@ -20,91 +20,97 @@
                Height="72"
                RenderOptions.BitmapScalingMode="HighQuality" />
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Connection_UC]}" />
+        <controls:MairaGroupBox Label="{Binding Localization[Connection_UC]}">
 
-        <Grid>
+            <Grid>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
+                <Grid Grid.Column="0">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                <controls:MairaSwitch x:Name="ConnectToAdminBoxx_MairaSwitch"
-                                      Grid.Row="0"
-                                      Label="{Binding Localization[ConnectToAdminBoxx]}"
-                                      Toggled="ConnectToAdminBoxx_MairaSwitch_Toggled" />
+                    <controls:MairaSwitch x:Name="ConnectToAdminBoxx_MairaSwitch"
+                                          Grid.Row="0"
+                                          Label="{Binding Localization[ConnectToAdminBoxx]}"
+                                          Toggled="ConnectToAdminBoxx_MairaSwitch_Toggled" />
 
-                <controls:MairaSwitch x:Name="ConnectOnStartup_MairaSwitch"
-                                      Grid.Row="1"
-                                      Margin="0,10,0,0"
-                                      Label="{Binding Localization[ConnectToAdminBoxxOnStartup]}"
-                                      IsOn="{Binding Settings.AdminBoxxConnectOnStartup, Mode=TwoWay}" />
+                    <controls:MairaSwitch x:Name="ConnectOnStartup_MairaSwitch"
+                                          Grid.Row="1"
+                                          Margin="0,10,0,0"
+                                          Label="{Binding Localization[ConnectToAdminBoxxOnStartup]}"
+                                          IsOn="{Binding Settings.AdminBoxxConnectOnStartup, Mode=TwoWay}" />
+
+                </Grid>
+
+                <controls:MairaButton x:Name="Test"
+                                      Grid.Column="1"
+                                      Label="{Binding Localization[Test]}"
+                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate.png"
+                                      Click="Test_Click"
+                                      IsEnabled="False" />
 
             </Grid>
 
-            <controls:MairaButton x:Name="Test"
-                                  Grid.Column="1"
-                                  Label="{Binding Localization[Test]}"
-                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate.png"
-                                  Click="Test_Click"
-                                  IsEnabled="False" />
+        </controls:MairaGroupBox>
 
-        </Grid>
+        <controls:MairaGroupBox Label="{Binding Localization[Display_UC]}">
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Display_UC]}" />
+            <Grid>
 
-        <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <controls:MairaKnob Grid.Column="0"
+                                    Label="{Binding Localization[Brightness]}"
+                                    Value="{Binding Settings.AdminBoxxBrightness, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.AdminBoxxBrightnessString}"
+                                    StepSize="0.05"
+                                    PlusButtonMappings="{Binding Settings.AdminBoxxBrightnessPlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.AdminBoxxBrightnessMinusButtonMappings}"
+                                    ValueChangedCallback="Brightness_ValueChanged"
+                                    DefaultValue="0.15" />
 
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[Brightness]}"
-                                Value="{Binding Settings.AdminBoxxBrightness, Mode=TwoWay}"
-                                ValueString="{Binding Settings.AdminBoxxBrightnessString}"
-                                StepSize="0.05"
-                                PlusButtonMappings="{Binding Settings.AdminBoxxBrightnessPlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.AdminBoxxBrightnessMinusButtonMappings}"
-                                ValueChangedCallback="Brightness_ValueChanged"
-                                DefaultValue="0.15" />
+            </Grid>
 
-        </Grid>
+        </controls:MairaGroupBox>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Audio_UC]}" />
+        <controls:MairaGroupBox Label="{Binding Localization[Audio_UC]}">
 
-        <Grid>
+            <Grid>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <controls:MairaKnob Grid.Column="0"
-                                Label="{Binding Localization[Volume]}"
-                                Value="{Binding Settings.AdminBoxxVolume, Mode=TwoWay}"
-                                ValueString="{Binding Settings.AdminBoxxVolumeString}"
-                                StepSize="0.05"
-                                PlusButtonMappings="{Binding Settings.AdminBoxxVolumePlusButtonMappings}"
-                                MinusButtonMappings="{Binding Settings.AdminBoxxVolumeMinusButtonMappings}"
-                                ValueChangedCallback="Volume_ValueChanged"
-                                DefaultValue="0.75" />
+                <controls:MairaKnob Grid.Column="0"
+                                    Label="{Binding Localization[Volume]}"
+                                    Value="{Binding Settings.AdminBoxxVolume, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.AdminBoxxVolumeString}"
+                                    StepSize="0.05"
+                                    PlusButtonMappings="{Binding Settings.AdminBoxxVolumePlusButtonMappings}"
+                                    MinusButtonMappings="{Binding Settings.AdminBoxxVolumeMinusButtonMappings}"
+                                    ValueChangedCallback="Volume_ValueChanged"
+                                    DefaultValue="0.75" />
 
-        </Grid>
+            </Grid>
+
+        </controls:MairaGroupBox>
 
     </StackPanel>
 

@@ -16,81 +16,87 @@
 
     <StackPanel>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[SpeechToText_UC]}" />
+        <controls:MairaGroupBox Label="{Binding Localization[SpeechToText_UC]}">
 
-        <StackPanel>
+            <StackPanel>
 
-            <controls:MairaSwitch Margin="0"
-                                  IsOn="{Binding Settings.SpeechToTextEnabled, Mode=TwoWay}"
-                                  Label="{Binding Localization[Enabled]}" />
+                <controls:MairaSwitch Margin="0"
+                                      IsOn="{Binding Settings.SpeechToTextEnabled, Mode=TwoWay}"
+                                      Label="{Binding Localization[Enabled]}" />
 
-        </StackPanel>
-
-        <controls:MairaGroupHeader Label="{Binding Localization[Language_UC]}" />
-
-        <Grid>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <controls:MairaComboBox x:Name="Language_MairaComboBox"
-                                    Grid.Column="0"
-                                    SelectedValue="{Binding Settings.SpeechToTextLanguageCode, Mode=TwoWay}" />
-
-        </Grid>
-
-        <controls:MairaGroupHeader Label="{Binding Localization[OverlayWindow_UC]}" />
-
-        <Grid>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="20" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <StackPanel Grid.Row="0"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="3">
-
-                <controls:MairaSwitch IsOn="{Binding Settings.SpeechToTextShowOverlayWindow, Mode=TwoWay}"
-                                      Label="{Binding Localization[ShowOverlayWindow]}" />
-
-                <controls:MairaSwitch Margin="0,10,0,0"
-                                      IsOn="{Binding Settings.SpeechToTextMakeOverlayWindowDraggable, Mode=TwoWay}"
-                                      Label="{Binding Localization[MakeOverlayWindowDraggable]}" />
             </StackPanel>
 
-            <controls:MairaKnob Grid.Row="0"
-                                Grid.Column="4"
-                                Label="{Binding Localization[OverlayWindowScale]}"
-                                Value="{Binding Settings.SpeechToTextOverlayWindowScale, Mode=TwoWay}"
-                                ValueString="{Binding Settings.SpeechToTextOverlayWindowScaleString}"
-                                StepSize="0.05"
-                                DefaultValue="1" />
+        </controls:MairaGroupBox>
 
-            <controls:MairaButton x:Name="ResetOverlayWindow_MairaButton"
-                                  Grid.Row="2"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="5"
-                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
-                                  Label="{Binding Localization[ResetOverlayWindow]}"
-                                  Click="ResetOverlayWindow_MairaButton_Click" />
+        <controls:MairaGroupBox Label="{Binding Localization[Language_UC]}">
 
-        </Grid>
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <controls:MairaComboBox x:Name="Language_MairaComboBox"
+                                        Grid.Column="0"
+                                        SelectedValue="{Binding Settings.SpeechToTextLanguageCode, Mode=TwoWay}" />
+
+            </Grid>
+
+        </controls:MairaGroupBox>
+
+        <controls:MairaGroupBox Label="{Binding Localization[OverlayWindow_UC]}">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3">
+
+                    <controls:MairaSwitch IsOn="{Binding Settings.SpeechToTextShowOverlayWindow, Mode=TwoWay}"
+                                          Label="{Binding Localization[ShowOverlayWindow]}" />
+
+                    <controls:MairaSwitch Margin="0,10,0,0"
+                                          IsOn="{Binding Settings.SpeechToTextMakeOverlayWindowDraggable, Mode=TwoWay}"
+                                          Label="{Binding Localization[MakeOverlayWindowDraggable]}" />
+                </StackPanel>
+
+                <controls:MairaKnob Grid.Row="0"
+                                    Grid.Column="4"
+                                    Label="{Binding Localization[OverlayWindowScale]}"
+                                    Value="{Binding Settings.SpeechToTextOverlayWindowScale, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.SpeechToTextOverlayWindowScaleString}"
+                                    StepSize="0.05"
+                                    DefaultValue="1" />
+
+                <controls:MairaButton x:Name="ResetOverlayWindow_MairaButton"
+                                      Grid.Row="2"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="5"
+                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
+                                      Label="{Binding Localization[ResetOverlayWindow]}"
+                                      Click="ResetOverlayWindow_MairaButton_Click" />
+
+            </Grid>
+
+        </controls:MairaGroupBox>
 
     </StackPanel>
 

@@ -92,14 +92,6 @@ public partial class MairaComboBox : UserControl
 		set => SetValue( ContextSwitchesProperty, value );
 	}
 
-	public static readonly DependencyProperty HelpTopicProperty = DependencyProperty.Register( nameof( HelpTopic ), typeof( string ), typeof( MairaComboBox ), new PropertyMetadata( null ) );
-
-	public string? HelpTopic
-	{
-		get => (string?) GetValue( HelpTopicProperty );
-		set => SetValue( HelpTopicProperty, value );
-	}
-
 	#endregion
 
 	#region Dependency Property Changed Events

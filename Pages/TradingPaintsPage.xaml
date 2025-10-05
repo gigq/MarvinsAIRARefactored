@@ -16,50 +16,56 @@
 
     <StackPanel>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Settings_UC]}" />
+        <controls:MairaGroupBox Label="{Binding Localization[Settings_UC]}">
 
-        <Grid>
+            <StackPanel>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="20" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+                <Grid>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-            <controls:MairaSwitch Grid.Row="0"
-                                  Grid.Column="0"
-                                  IsOn="{Binding Settings.TradingPaintsEnabled, Mode=TwoWay}"
-                                  Label="{Binding Localization[Enabled]}"
-                                  LabelPosition="Top" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-            <Image Grid.Row="0"
-                   Grid.Column="5"
-                   Height="50"
-                   RenderOptions.BitmapScalingMode="HighQuality"
-                   Source="/MarvinsAIRARefactored;component/Artwork/Misc/trading-paints.png" />
+                    <controls:MairaSwitch Grid.Row="0"
+                                          Grid.Column="0"
+                                          IsOn="{Binding Settings.TradingPaintsEnabled, Mode=TwoWay}"
+                                          Label="{Binding Localization[Enabled]}"
+                                          LabelPosition="Top" />
 
-            <controls:MairaTextBox Grid.Row="2"
-                                   Grid.Column="0"
-                                   Grid.ColumnSpan="5"
-                                   Label="{Binding Localization[IRacingPaintFolder]}"
-                                   Value="{Binding Settings.TradingPaintsFolder, Mode=TwoWay}" />
+                    <Image Grid.Row="0"
+                           Grid.Column="5"
+                           Height="50"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           Source="/MarvinsAIRARefactored;component/Artwork/Misc/trading-paints.png" />
 
-        </Grid>
+                    <controls:MairaTextBox Grid.Row="2"
+                                           Grid.Column="0"
+                                           Grid.ColumnSpan="5"
+                                           Label="{Binding Localization[IRacingPaintFolder]}"
+                                           Value="{Binding Settings.TradingPaintsFolder, Mode=TwoWay}" />
 
-        <TextBlock Style="{StaticResource MairaTextBlockStyle}"
-                   HorizontalAlignment="Center"
-                   Foreground="#888"
-                   TextWrapping="Wrap"
-                   Text="{Binding Localization[TradingPaintsDisclaimer]}"
-                   Margin="0,60,0,0" />
+                </Grid>
+
+                <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                           HorizontalAlignment="Center"
+                           Foreground="#888"
+                           TextWrapping="Wrap"
+                           Text="{Binding Localization[TradingPaintsDisclaimer]}"
+                           Margin="0,60,0,0" />
+
+            </StackPanel>
+
+        </controls:MairaGroupBox>
 
     </StackPanel>
 

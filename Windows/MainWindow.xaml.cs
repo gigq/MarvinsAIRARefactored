@@ -303,7 +303,7 @@ public partial class MainWindow : Window
 			var racingWheelMultiDetailGainVisibility = Visibility.Hidden;
 			var racingWheelMultiOutputSmoothingVisibility = Visibility.Hidden;
 
-			var racingWheelCurbProtectionStackPanelVisibility = Visibility.Collapsed;
+			var racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Collapsed;
 
 			switch ( MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelAlgorithm )
 			{
@@ -311,14 +311,14 @@ public partial class MainWindow : Window
 				case RacingWheel.Algorithm.DetailBoosterOn60Hz:
 					racingWheelDetailBoostKnobControlVisibility = Visibility.Visible;
 					racingWheelDetailBoostBiasKnobControlVisibility = Visibility.Visible;
-					racingWheelCurbProtectionStackPanelVisibility = Visibility.Visible;
+					racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Visible;
 					break;
 
 				case RacingWheel.Algorithm.DeltaLimiter:
 				case RacingWheel.Algorithm.DeltaLimiterOn60Hz:
 					racingWheelDeltaLimitKnobControlVisibility = Visibility.Visible;
 					racingWheelDeltaLimiterBiasKnobControlVisibility = Visibility.Visible;
-					racingWheelCurbProtectionStackPanelVisibility = Visibility.Visible;
+					racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Visible;
 					break;
 
 				case RacingWheel.Algorithm.SlewAndTotalCompression:
@@ -326,7 +326,7 @@ public partial class MainWindow : Window
 					racingWheelSlewCompressionRateVisibility = Visibility.Visible;
 					racingWheelTotalCompressionThresholdVisibility = Visibility.Visible;
 					racingWheelTotalCompressionRateVisibility = Visibility.Visible;
-					racingWheelCurbProtectionStackPanelVisibility = Visibility.Visible;
+					racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Visible;
 					break;
 
 				case RacingWheel.Algorithm.MultiAdjustmentToolkit:
@@ -334,7 +334,7 @@ public partial class MainWindow : Window
 					racingWheelMultiSlewRateReductionVisibility = Visibility.Visible;
 					racingWheelMultiDetailGainVisibility = Visibility.Visible;
 					racingWheelMultiOutputSmoothingVisibility = Visibility.Visible;
-					racingWheelCurbProtectionStackPanelVisibility = Visibility.Visible;
+					racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Visible;
 					break;
 			}
 
@@ -354,7 +354,7 @@ public partial class MainWindow : Window
 			_racingWheelPage.MultiDetailGain_MairaKnob.Visibility = racingWheelMultiDetailGainVisibility;
 			_racingWheelPage.MultiOutputSmoothing_MairaKnob.Visibility = racingWheelMultiOutputSmoothingVisibility;
 
-			_racingWheelPage.CurbProtection_StackPanel.Visibility = racingWheelCurbProtectionStackPanelVisibility;
+			_racingWheelPage.CurbProtection_MairaGroupBox.Visibility = racingWheelCurbProtectionMairaGroupBoxVisibility;
 		} );
 	}
 

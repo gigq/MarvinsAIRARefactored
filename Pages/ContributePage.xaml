@@ -16,59 +16,59 @@
 
     <StackPanel>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[CodeContributions_UC]}" />
+        <controls:MairaGroupBox Label="{Binding Localization[CodeContributions_UC]}">
 
-        <Grid>
+            <Grid>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <StackPanel>
+                <StackPanel>
 
-                <TextBlock Grid.Column="0"
-                           Style="{StaticResource MairaTextBlockStyle}"
-                           Foreground="#ff5b2e">
+                    <TextBlock Grid.Column="0"
+                               Style="{StaticResource MairaTextBlockStyle}"
+                               Foreground="#ff5b2e">
                                 
                     <Run Text="{Binding Localization[Contributors], Mode=OneWay}" />
                 
                     ❤️❤️❤️
 
-                </TextBlock>
+                    </TextBlock>
 
-                <UniformGrid Columns="1"
-                             Margin="0,10,0,0">
+                    <UniformGrid Columns="1"
+                                 Margin="0,10,0,0">
 
-                    <UniformGrid.Resources>
-                        <Style TargetType="TextBlock"
-                               BasedOn="{StaticResource MairaTextBlockStyle}">
-                        </Style>
-                    </UniformGrid.Resources>
+                        <UniformGrid.Resources>
+                            <Style TargetType="TextBlock"
+                                   BasedOn="{StaticResource MairaTextBlockStyle}">
+                            </Style>
+                        </UniformGrid.Resources>
 
-                    <TextBlock Text="Alan Le" />
-                    <TextBlock Text="Matthew Brittle" />
-                    <TextBlock Text="Scott @ BoxBoxDesign" />
+                        <TextBlock Text="Alan Le" />
+                        <TextBlock Text="Matthew Brittle" />
+                        <TextBlock Text="Scott @ BoxBoxDesign" />
 
-                </UniformGrid>
+                    </UniformGrid>
 
-            </StackPanel>
+                </StackPanel>
 
-            <StackPanel Grid.Column="2">
-
-                <TextBlock Style="{StaticResource MairaTextBlockStyle}"
-                           TextWrapping="Wrap"
-                           Text="{Binding Localization[CodeContributionsText], Mode=OneWay}"
-                           Margin="0,0,0,20" />
-
-                <Border BorderBrush="#666"
-                        BorderThickness="1"
-                        CornerRadius="5"
-                        HorizontalAlignment="Left">
+                <StackPanel Grid.Column="2">
 
                     <TextBlock Style="{StaticResource MairaTextBlockStyle}"
-                               Padding="15,5">
+                               TextWrapping="Wrap"
+                               Text="{Binding Localization[CodeContributionsText], Mode=OneWay}"
+                               Margin="0,0,0,20" />
+
+                    <Border BorderBrush="#666"
+                            BorderThickness="1"
+                            CornerRadius="5"
+                            HorizontalAlignment="Left">
+
+                        <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                                   Padding="15,5">
 
                         <Hyperlink NavigateUri="https://github.com/mherbold/MarvinsAIRARefactored"
                                    RequestNavigate="Hyperlink_RequestNavigate"
@@ -87,265 +87,267 @@
 
                         </Hyperlink>
 
-                    </TextBlock>
+                        </TextBlock>
 
-                </Border>
+                    </Border>
 
-            </StackPanel>
+                </StackPanel>
 
-        </Grid>
+            </Grid>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[TranslationContributions_UC]}" />
+        </controls:MairaGroupBox>
 
-        <Grid>
+        <controls:MairaGroupBox Label="{Binding Localization[TranslationContributions_UC]}">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <Grid>
 
-            <StackPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="0"
-                           Style="{StaticResource MairaTextBlockStyle}"
-                           Foreground="#ff5b2e">
+                <StackPanel>
+
+                    <TextBlock Grid.Column="0"
+                               Style="{StaticResource MairaTextBlockStyle}"
+                               Foreground="#ff5b2e">
                                 
                     <Run Text="{Binding Localization[Contributors], Mode=OneWay}" />
                 
                     ❤️❤️❤️
 
-                </TextBlock>
+                    </TextBlock>
 
-                <UniformGrid Columns="1"
-                             Margin="0,10,0,0">
+                    <UniformGrid Columns="1"
+                                 Margin="0,10,0,0">
 
-                    <UniformGrid.Resources>
-                        <Style TargetType="TextBlock"
-                               BasedOn="{StaticResource MairaTextBlockStyle}">
-                        </Style>
-                    </UniformGrid.Resources>
+                        <UniformGrid.Resources>
+                            <Style TargetType="TextBlock"
+                                   BasedOn="{StaticResource MairaTextBlockStyle}">
+                            </Style>
+                        </UniformGrid.Resources>
 
-                    <!-- Flag icons from https://www.freeflagicons.com/buy/fluttering_flag/ -->
+                        <!-- Flag icons from https://www.freeflagicons.com/buy/fluttering_flag/ -->
 
-                    <!--Jakub Trinkl-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Jakub Trinkl" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/czech_republic_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Čestina"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--Jakub Trinkl-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Jakub Trinkl" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/czech_republic_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Čestina"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--DKBjorn-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="DKBjorn" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/denmark_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Dansk"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--DKBjorn-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="DKBjorn" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/denmark_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Dansk"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--Rene-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Rene Stangl" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/germany_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Deutsch"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--Rene-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Rene Stangl" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/germany_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Deutsch"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--Rodas007-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Rodas007" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/spain_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Español"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--Rodas007-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Rodas007" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/spain_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Español"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--LAS-Zeppelin83-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Michael Marcotte" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/france_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right"
-                               Margin="0,0,25,0" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/canada_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Français (Canada)"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--LAS-Zeppelin83-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Michael Marcotte" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/france_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right"
+                                   Margin="0,0,25,0" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/canada_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Français (Canada)"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--Valerio.exe-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Valerio Pasqua" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/italy_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Italiano"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--Valerio.exe-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Valerio Pasqua" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/italy_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Italiano"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--Jordi Koller-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Jordi Koller" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/netherlands_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Nederlands"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--Jordi Koller-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Jordi Koller" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/netherlands_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Nederlands"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--Jarek_iRek-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Jarek_iRek" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/poland_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Polski"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--Jarek_iRek-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Jarek_iRek" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/poland_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Polski"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--XKRamires-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Raul Ramires" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/brazil_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Português (Brazil)"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--XKRamires-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Raul Ramires" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/brazil_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Português (Brazil)"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--mitt42 (Mitt)-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Vitor Diogo" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/portugal_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Português (Portugal)"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--mitt42 (Mitt)-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Vitor Diogo" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/portugal_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Português (Portugal)"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--0xBATUDEV-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="BATUDEV" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/turkey_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Türkçe"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--0xBATUDEV-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="BATUDEV" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/turkey_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Türkçe"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--Slavik-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Slavik Mikoyan" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/armenia_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="հայերեն"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--Slavik-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Slavik Mikoyan" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/armenia_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="հայերեն"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--Vpolne-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Stepan Kutyrev" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/russia_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="Русский"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--Vpolne-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Stepan Kutyrev" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/russia_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="Русский"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                    <!--Barry@simagic-->
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="220" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Barry Lee @ Simagic" />
-                        <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/china_fluttering_flag_64.png"
-                               Height="20"
-                               HorizontalAlignment="Right" />
-                        <TextBlock Text="简体中文"
-                                   Grid.Column="1" />
-                    </Grid>
+                        <!--Barry@simagic-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Barry Lee @ Simagic" />
+                            <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/china_fluttering_flag_64.png"
+                                   Height="20"
+                                   HorizontalAlignment="Right" />
+                            <TextBlock Text="简体中文"
+                                       Grid.Column="1" />
+                        </Grid>
 
-                </UniformGrid>
+                    </UniformGrid>
 
-            </StackPanel>
+                </StackPanel>
 
-            <StackPanel Grid.Column="2">
-
-                <TextBlock Style="{StaticResource MairaTextBlockStyle}"
-                           TextWrapping="Wrap"
-                           Text="{Binding Localization[TranslationContributionsText], Mode=OneWay}"
-                           Margin="0,0,0,20" />
-
-                <Border BorderBrush="#666"
-                        BorderThickness="1"
-                        CornerRadius="5"
-                        HorizontalAlignment="Left">
+                <StackPanel Grid.Column="2">
 
                     <TextBlock Style="{StaticResource MairaTextBlockStyle}"
-                               Padding="15,5">
+                               TextWrapping="Wrap"
+                               Text="{Binding Localization[TranslationContributionsText], Mode=OneWay}"
+                               Margin="0,0,0,20" />
+
+                    <Border BorderBrush="#666"
+                            BorderThickness="1"
+                            CornerRadius="5"
+                            HorizontalAlignment="Left">
+
+                        <TextBlock Style="{StaticResource MairaTextBlockStyle}"
+                                   Padding="15,5">
 
                         <Hyperlink NavigateUri="https://discord.com/channels/1353509415571165204/1385439382693216297"
                                    RequestNavigate="Hyperlink_RequestNavigate"
@@ -364,113 +366,119 @@
 
                         </Hyperlink>
 
+                        </TextBlock>
+
+                    </Border>
+
+                </StackPanel>
+
+            </Grid>
+
+        </controls:MairaGroupBox>
+
+        <controls:MairaGroupBox Label="{Binding Localization[CalibrationFileContributions_UC]}">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel>
+
+                    <TextBlock Grid.Column="0"
+                               Style="{StaticResource MairaTextBlockStyle}"
+                               Foreground="#ff5b2e">
+                                
+                    <Run Text="{Binding Localization[Contributors], Mode=OneWay}" />
+                
+                    ❤️❤️❤️
+
                     </TextBlock>
 
-                </Border>
+                    <UniformGrid Columns="1"
+                                 Margin="0,10,0,0">
 
-            </StackPanel>
+                        <UniformGrid.Resources>
+                            <Style TargetType="TextBlock"
+                                   BasedOn="{StaticResource MairaTextBlockStyle}">
+                            </Style>
+                        </UniformGrid.Resources>
 
-        </Grid>
+                        <TextBlock Text="James Pasquariello" />
+                        <TextBlock Text="Matthew Brittle" />
+                        <TextBlock Text="schnorkletime" />
+                        <TextBlock Text="SCOSim" />
+                        <TextBlock Text="TeeTohr" />
 
-        <controls:MairaGroupHeader Label="{Binding Localization[CalibrationFileContributions_UC]}" />
+                    </UniformGrid>
 
-        <Grid>
+                </StackPanel>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <StackPanel>
-
-                <TextBlock Grid.Column="0"
+                <TextBlock Grid.Column="2"
                            Style="{StaticResource MairaTextBlockStyle}"
-                           Foreground="#ff5b2e">
+                           TextWrapping="Wrap"
+                           Text="{Binding Localization[CalibrationFilesText], Mode=OneWay}"
+                           Margin="0,0,0,20" />
+
+            </Grid>
+
+        </controls:MairaGroupBox>
+
+        <controls:MairaGroupBox Label="{Binding Localization[DiscordModerators_UC]}">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel>
+
+                    <TextBlock Grid.Column="0"
+                               Style="{StaticResource MairaTextBlockStyle}"
+                               Foreground="#ff5b2e">
                                 
                     <Run Text="{Binding Localization[Contributors], Mode=OneWay}" />
                 
                     ❤️❤️❤️
 
-                </TextBlock>
+                    </TextBlock>
 
-                <UniformGrid Columns="1"
-                             Margin="0,10,0,0">
+                    <UniformGrid Columns="1"
+                                 Margin="0,10,0,0">
 
-                    <UniformGrid.Resources>
-                        <Style TargetType="TextBlock"
-                               BasedOn="{StaticResource MairaTextBlockStyle}">
-                        </Style>
-                    </UniformGrid.Resources>
+                        <UniformGrid.Resources>
+                            <Style TargetType="TextBlock"
+                                   BasedOn="{StaticResource MairaTextBlockStyle}">
+                            </Style>
+                        </UniformGrid.Resources>
 
-                    <TextBlock Text="James Pasquariello" />
-                    <TextBlock Text="Matthew Brittle" />
-                    <TextBlock Text="schnorkletime" />
-                    <TextBlock Text="SCOSim" />
-                    <TextBlock Text="TeeTohr" />
+                        <TextBlock Text="Alan Le" />
+                        <TextBlock Text="Ade Allen" />
+                        <TextBlock Text="Chad McNeese" />
+                        <TextBlock Text="Christian Scherf" />
+                        <TextBlock Text="Matthew Brittle" />
+                        <TextBlock Text="Robert A Moyer Jr" />
+                        <TextBlock Text="Stephan Bendt" />
 
-                </UniformGrid>
+                    </UniformGrid>
 
-            </StackPanel>
+                </StackPanel>
 
-            <TextBlock Grid.Column="2"
-                       Style="{StaticResource MairaTextBlockStyle}"
-                       TextWrapping="Wrap"
-                       Text="{Binding Localization[CalibrationFilesText], Mode=OneWay}"
-                       Margin="0,0,0,20" />
-
-        </Grid>
-
-        <controls:MairaGroupHeader Label="{Binding Localization[DiscordModerators_UC]}" />
-
-        <Grid>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <StackPanel>
-
-                <TextBlock Grid.Column="0"
+                <TextBlock Grid.Column="2"
                            Style="{StaticResource MairaTextBlockStyle}"
-                           Foreground="#ff5b2e">
-                                
-                    <Run Text="{Binding Localization[Contributors], Mode=OneWay}" />
-                
-                    ❤️❤️❤️
+                           TextWrapping="Wrap"
+                           Text="{Binding Localization[DiscordModeratorsText], Mode=OneWay}"
+                           Margin="0,0,0,20" />
 
-                </TextBlock>
+            </Grid>
 
-                <UniformGrid Columns="1"
-                             Margin="0,10,0,0">
-
-                    <UniformGrid.Resources>
-                        <Style TargetType="TextBlock"
-                               BasedOn="{StaticResource MairaTextBlockStyle}">
-                        </Style>
-                    </UniformGrid.Resources>
-
-                    <TextBlock Text="Alan Le" />
-                    <TextBlock Text="Ade Allen" />
-                    <TextBlock Text="Chad McNeese" />
-                    <TextBlock Text="Christian Scherf" />
-                    <TextBlock Text="Matthew Brittle" />
-                    <TextBlock Text="Robert A Moyer Jr" />
-                    <TextBlock Text="Stephan Bendt" />
-
-                </UniformGrid>
-
-            </StackPanel>
-
-            <TextBlock Grid.Column="2"
-                       Style="{StaticResource MairaTextBlockStyle}"
-                       TextWrapping="Wrap"
-                       Text="{Binding Localization[DiscordModeratorsText], Mode=OneWay}"
-                       Margin="0,0,0,20" />
-
-        </Grid>
+        </controls:MairaGroupBox>
 
     </StackPanel>
 

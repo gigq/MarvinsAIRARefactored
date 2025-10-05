@@ -20,9 +20,6 @@
   <ItemGroup>
     <None Remove="Artwork\Flags\portugal_fluttering_flag_64.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Page Remove="Themes\SharedHelpIcon.xaml" />
-  </ItemGroup>
 
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
@@ -120,7 +117,6 @@
     <Resource Include="Artwork\Misc\simagic-logo.png" />
     <Resource Include="InnoSetup\STT\app-menu-logo.png" />
     <Resource Include="InnoSetup\STT\favicon.ico" />
-    <Resource Include="Themes\SharedHelpIcon.xaml" />
   </ItemGroup>
 
   <ItemGroup>

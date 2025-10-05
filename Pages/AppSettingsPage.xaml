@@ -16,139 +16,147 @@
 
     <StackPanel>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[Language_UC]}"
-                                   Tag="HideIfAdminBoxx" />
+        <controls:MairaGroupBox Label="{Binding Localization[Language_UC]}"
+                                Tag="HideIfAdminBoxx">
 
-        <Grid Tag="HideIfAdminBoxx">
+            <Grid>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <controls:MairaComboBox x:Name="Language_MairaComboBox"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="1"
-                                    SelectedValue="{Binding Settings.AppCurrentLanguageCode, Mode=TwoWay}" />
+                <controls:MairaComboBox x:Name="Language_MairaComboBox"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="1"
+                                        SelectedValue="{Binding Settings.AppCurrentLanguageCode, Mode=TwoWay}" />
 
-        </Grid>
+            </Grid>
 
-        <controls:MairaGroupHeader Label="{Binding Localization[DefaultPage_UC]}"
-                                   Tag="HideIfAdminBoxx" />
+        </controls:MairaGroupBox>
 
-        <Grid Tag="HideIfAdminBoxx">
+        <controls:MairaGroupBox Label="{Binding Localization[DefaultPage_UC]}"
+                                Tag="HideIfAdminBoxx">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <Grid>
 
-            <controls:MairaComboBox x:Name="DefaultPage_MairaComboBox"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="1"
-                                    SelectedValue="{Binding Settings.AppDefaultPage, Mode=TwoWay}" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-        </Grid>
+                <controls:MairaComboBox x:Name="DefaultPage_MairaComboBox"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="1"
+                                        SelectedValue="{Binding Settings.AppDefaultPage, Mode=TwoWay}" />
 
-        <controls:MairaGroupHeader Label="{Binding Localization[AppWindow_UC]}" />
+            </Grid>
 
-        <Grid>
+        </controls:MairaGroupBox>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <controls:MairaGroupBox Label="{Binding Localization[AppWindow_UC]}">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+            <Grid>
 
-            <controls:MairaSwitch Grid.Row="0"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="3"
-                                  Margin="0"
-                                  IsOn="{Binding Settings.AppTopmostWindowEnabled, Mode=TwoWay}"
-                                  Label="{Binding Localization[TopmostWindow]}" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <controls:MairaSwitch Grid.Row="1"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="3"
-                                  Margin="0,10,0,0"
-                                  IsOn="{Binding Settings.AppRememberWindowPositionAndSize, Mode=TwoWay}"
-                                  Label="{Binding Localization[RememberWindowPositionAndSize]}" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-            <controls:MairaSwitch Grid.Row="2"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="3"
-                                  Margin="0,10,0,0"
-                                  IsOn="{Binding Settings.AppStartWithWindows, Mode=TwoWay}"
-                                  Label="{Binding Localization[StartWithWindows]}" />
+                <controls:MairaSwitch Grid.Row="0"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="3"
+                                      Margin="0"
+                                      IsOn="{Binding Settings.AppTopmostWindowEnabled, Mode=TwoWay}"
+                                      Label="{Binding Localization[TopmostWindow]}" />
 
-            <controls:MairaSwitch Grid.Row="3"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="3"
-                                  Margin="0,10,0,0"
-                                  IsOn="{Binding Settings.AppStartMinimized, Mode=TwoWay}"
-                                  Label="{Binding Localization[StartMinimized]}" />
+                <controls:MairaSwitch Grid.Row="1"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="3"
+                                      Margin="0,10,0,0"
+                                      IsOn="{Binding Settings.AppRememberWindowPositionAndSize, Mode=TwoWay}"
+                                      Label="{Binding Localization[RememberWindowPositionAndSize]}" />
 
-            <controls:MairaSwitch Grid.Row="4"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="3"
-                                  Margin="0,10,0,0"
-                                  IsOn="{Binding Settings.AppMinimizeToSystemTray, Mode=TwoWay}"
-                                  Label="{Binding Localization[MinimizeToSystemTray]}" />
+                <controls:MairaSwitch Grid.Row="2"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="3"
+                                      Margin="0,10,0,0"
+                                      IsOn="{Binding Settings.AppStartWithWindows, Mode=TwoWay}"
+                                      Label="{Binding Localization[StartWithWindows]}" />
 
-            <controls:MairaKnob Grid.Row="0"
-                                Grid.Column="4"
-                                Grid.RowSpan="5"
-                                Label="{Binding Localization[UIScale]}"
-                                Value="{Binding Settings.AppUIScale, Mode=TwoWay}"
-                                ValueString="{Binding Settings.AppUIScaleString}"
-                                StepSize="0.05"
-                                DefaultValue="1" />
+                <controls:MairaSwitch Grid.Row="3"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="3"
+                                      Margin="0,10,0,0"
+                                      IsOn="{Binding Settings.AppStartMinimized, Mode=TwoWay}"
+                                      Label="{Binding Localization[StartMinimized]}" />
 
-        </Grid>
+                <controls:MairaSwitch Grid.Row="4"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="3"
+                                      Margin="0,10,0,0"
+                                      IsOn="{Binding Settings.AppMinimizeToSystemTray, Mode=TwoWay}"
+                                      Label="{Binding Localization[MinimizeToSystemTray]}" />
 
-        <controls:MairaGroupHeader Label="{Binding Localization[CloudService_UC]}"
-                                   Tag="HideIfAdminBoxx" />
+                <controls:MairaKnob Grid.Row="0"
+                                    Grid.Column="4"
+                                    Grid.RowSpan="5"
+                                    Label="{Binding Localization[UIScale]}"
+                                    Value="{Binding Settings.AppUIScale, Mode=TwoWay}"
+                                    ValueString="{Binding Settings.AppUIScaleString}"
+                                    StepSize="0.05"
+                                    DefaultValue="1" />
 
-        <Grid Tag="HideIfAdminBoxx">
+            </Grid>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        </controls:MairaGroupBox>
 
-            <controls:MairaSwitch Grid.Column="0"
-                                  Grid.ColumnSpan="3"
-                                  IsOn="{Binding Settings.AppCheckForUpdates, Mode=TwoWay}"
-                                  Label="{Binding Localization[CheckForUpdates]}"
-                                  VerticalAlignment="Top" />
+        <controls:MairaGroupBox Label="{Binding Localization[CloudService_UC]}"
+                                Tag="HideIfAdminBoxx">
 
-            <controls:MairaButton x:Name="CheckNow_MairaButton"
-                                  Grid.Column="4"
-                                  Label="{Binding Localization[CheckNow]}"
-                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
-                                  Click="CheckNow_MairaButton_Click" />
+            <Grid>
 
-        </Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
+                <controls:MairaSwitch Grid.Column="0"
+                                      Grid.ColumnSpan="3"
+                                      IsOn="{Binding Settings.AppCheckForUpdates, Mode=TwoWay}"
+                                      Label="{Binding Localization[CheckForUpdates]}"
+                                      VerticalAlignment="Top" />
+
+                <controls:MairaButton x:Name="CheckNow_MairaButton"
+                                      Grid.Column="4"
+                                      Label="{Binding Localization[CheckNow]}"
+                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
+                                      Click="CheckNow_MairaButton_Click" />
+
+            </Grid>
+
+        </controls:MairaGroupBox>
+        
     </StackPanel>
 
 </UserControl>

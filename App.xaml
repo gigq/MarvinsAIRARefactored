@@ -13,12 +13,6 @@
 
         <ResourceDictionary>
 
-            <!-- Help Icon -->
-
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/SharedHelpIcon.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <!-- Converters -->
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />

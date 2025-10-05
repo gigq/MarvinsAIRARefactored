@@ -16,65 +16,73 @@
 
     <StackPanel>
 
-        <controls:MairaGroupHeader Label="Debug Variables" />
+        <controls:MairaGroupBox Label="Debug Variables">
 
-        <TextBlock x:Name="Debug_TextBlock_1"
-                   Style="{StaticResource MairaTextBlockStyle}"
-                   Text="Test 1" />
+            <StackPanel>
 
-        <TextBlock x:Name="Debug_TextBlock_2"
-                   Style="{StaticResource MairaTextBlockStyle}"
-                   Text="Test 2" />
+                <TextBlock x:Name="Debug_TextBlock_1"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 1" />
 
-        <TextBlock x:Name="Debug_TextBlock_3"
-                   Style="{StaticResource MairaTextBlockStyle}"
-                   Text="Test 3" />
+                <TextBlock x:Name="Debug_TextBlock_2"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 2" />
 
-        <TextBlock x:Name="Debug_TextBlock_4"
-                   Style="{StaticResource MairaTextBlockStyle}"
-                   Text="Test 4" />
+                <TextBlock x:Name="Debug_TextBlock_3"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 3" />
 
-        <TextBlock x:Name="Debug_TextBlock_5"
-                   Style="{StaticResource MairaTextBlockStyle}"
-                   Text="Test 5" />
+                <TextBlock x:Name="Debug_TextBlock_4"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 4" />
 
-        <TextBlock x:Name="Debug_TextBlock_6"
-                   Style="{StaticResource MairaTextBlockStyle}"
-                   Text="Test 6" />
+                <TextBlock x:Name="Debug_TextBlock_5"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 5" />
 
-        <TextBlock x:Name="Debug_TextBlock_7"
-                   Style="{StaticResource MairaTextBlockStyle}"
-                   Text="Test 7" />
+                <TextBlock x:Name="Debug_TextBlock_6"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 6" />
 
-        <TextBlock x:Name="Debug_TextBlock_8"
-                   Style="{StaticResource MairaTextBlockStyle}"
-                   Text="Test 8" />
+                <TextBlock x:Name="Debug_TextBlock_7"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 7" />
 
-        <TextBlock x:Name="Debug_TextBlock_9"
-                   Style="{StaticResource MairaTextBlockStyle}"
-                   Text="Test 9" />
+                <TextBlock x:Name="Debug_TextBlock_8"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 8" />
 
-        <TextBlock x:Name="Debug_TextBlock_10"
-                   Style="{StaticResource MairaTextBlockStyle}"
-                   Text="Test 10" />
+                <TextBlock x:Name="Debug_TextBlock_9"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 9" />
 
-        <controls:MairaGroupHeader Label="Test Controls" />
+                <TextBlock x:Name="Debug_TextBlock_10"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 10" />
 
-        <StackPanel Orientation="Horizontal">
+            </StackPanel>
 
-            <controls:MairaMappableButton Label="Reset"
-                                          ButtonMappings="{Binding Settings.DebugResetRecordingMappings}"
-                                          Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
-                                          Click="ResetRecording_Click" />
+        </controls:MairaGroupBox>
 
-            <controls:MairaMappableButton Label="Save"
-                                          ButtonMappings="{Binding Settings.DebugSaveRecordingMappings}"
-                                          Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/set.png"
-                                          Click="SaveRecording_Click"
-                                          Margin="10,0,0,0" />
+        <controls:MairaGroupBox Label="Test Controls">
 
-        </StackPanel>
+            <StackPanel Orientation="Horizontal">
 
+                <controls:MairaMappableButton Label="Reset"
+                                              ButtonMappings="{Binding Settings.DebugResetRecordingMappings}"
+                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
+                                              Click="ResetRecording_Click" />
+
+                <controls:MairaMappableButton Label="Save"
+                                              ButtonMappings="{Binding Settings.DebugSaveRecordingMappings}"
+                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/set.png"
+                                              Click="SaveRecording_Click"
+                                              Margin="10,0,0,0" />
+
+            </StackPanel>
+
+        </controls:MairaGroupBox>
+        
     </StackPanel>
 
 </UserControl>

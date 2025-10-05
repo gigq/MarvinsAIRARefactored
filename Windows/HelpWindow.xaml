@@ -20,10 +20,9 @@
 
             <TextBlock x:Name="UrlText"
                        Style="{StaticResource MairaTextBlockStyle}"
-                       VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        TextTrimming="CharacterEllipsis"
-                       DockPanel.Dock="Left">
+                       DockPanel.Dock="Top">
                 
                 <TextBlock.Resources>
                     
@@ -34,7 +33,10 @@
                         
                         <Setter Property="TextDecorations"
                                 Value="{x:Null}" />
-                        
+
+                        <Setter Property="FocusVisualStyle"
+                                Value="{x:Null}" />
+
                     </Style>
                     
                 </TextBlock.Resources>
