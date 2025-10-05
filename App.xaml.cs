@@ -298,9 +298,12 @@ public partial class App : Application
 
 		_running = false;
 
-		TriggerWorkerThread();
+		if ( _workerThread.IsAlive )
+		{
+			TriggerWorkerThread();
 
-		_workerThread.Join( 5000 );
+			_workerThread.Join( 5000 );
+		}
 
 		SpeechToTextWindow.Close();
 		GripOMeterWindow.Close();

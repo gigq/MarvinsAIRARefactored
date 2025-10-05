@@ -75,9 +75,12 @@ public class LFE
 
 		_running = false;
 
-		_autoResetEvent.Set();
+		if ( _workerThread.IsAlive )
+		{
+			_autoResetEvent.Set();
 
-		_workerThread.Join( 5000 );
+			_workerThread.Join( 5000 );
+		}
 
 		ReleaseCaptureDevice();
 
