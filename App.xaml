@@ -15,7 +15,7 @@
 
             <!-- Converters -->
 
-            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
 
             <!-- Colors -->
 

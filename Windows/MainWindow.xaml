@@ -102,7 +102,7 @@
               Grid.RowSpan="2"
               Grid.ColumnSpan="3"
               Panel.ZIndex="999"
-              Visibility="{Binding ElementName=AppMenuButton, Path=IsMenuOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
+              Visibility="{Binding ElementName=AppMenuButton, Path=IsMenuOpen, Converter={StaticResource BooleanToVisibility}}"
               IsHitTestVisible="{Binding ElementName=AppMenuButton, Path=IsMenuOpen}">
 
             <controls:MairaAppMenuPopup x:Name="AppMenuPopup"
