@@ -74,7 +74,8 @@
 
         </controls:MairaGroupBox>
 
-        <controls:MairaGroupBox Label="{Binding Localization[OverallStrength_UC]}">
+        <controls:MairaGroupBox Label="{Binding Localization[OverallStrength_UC]}"
+                                HelpTopic="racing-wheel-overall-strength">
 
             <StackPanel>
 
@@ -211,7 +212,8 @@
 
         </controls:MairaGroupBox>
 
-        <controls:MairaGroupBox Label="{Binding Localization[Algorithm_UC]}">
+        <controls:MairaGroupBox Label="{Binding Localization[Algorithm_UC]}"
+                                HelpTopic="racing-wheel-algorithm">
 
             <StackPanel>
 
@@ -395,6 +397,7 @@
         </controls:MairaGroupBox>
 
         <controls:MairaGroupBox Label="{Binding Localization[Output_UC]}"
+                                HelpTopic="racing-wheel-output"
                                 Tag="Complex">
 
             <Grid>
@@ -443,6 +446,7 @@
         </controls:MairaGroupBox>
 
         <controls:MairaGroupBox Label="{Binding Localization[Preview_UC]}"
+                                HelpTopic="racing-wheel-preview"
                                 Tag="Complex">
 
             <Grid>
@@ -485,6 +489,7 @@
         </controls:MairaGroupBox>
 
         <controls:MairaGroupBox Label="{Binding Localization[WheelLFE_UC]}"
+                                HelpTopic="racing-wheel-wheel-lfe"
                                 Tag="Complex">
 
             <Grid>
@@ -518,6 +523,7 @@
         </controls:MairaGroupBox>
 
         <controls:MairaGroupBox Label="{Binding Localization[CrashProtection_UC]}"
+                                HelpTopic="racing-wheel-protection"
                                 Tag="Complex">
 
             <Grid>
@@ -564,6 +570,7 @@
 
         <controls:MairaGroupBox x:Name="CurbProtection_MairaGroupBox"
                                 Label="{Binding Localization[CurbProtection_UC]}"
+                                HelpTopic="racing-wheel-protection"
                                 Tag="Complex">
 
             <Grid>
@@ -609,6 +616,7 @@
         </controls:MairaGroupBox>
 
         <controls:MairaGroupBox Label="{Binding Localization[ParkedEffects_UC]}"
+                                HelpTopic="racing-wheel-parked-effects"
                                 Tag="Complex">
 
             <Grid>
@@ -645,6 +653,7 @@
         </controls:MairaGroupBox>
 
         <controls:MairaGroupBox Label="{Binding Localization[OtherFeatures_UC]}"
+                                HelpTopic="racing-wheel-other-features"
                                 Tag="Complex">
 
             <Grid>
@@ -690,6 +699,7 @@
         </controls:MairaGroupBox>
 
         <controls:MairaGroupBox Label="{Binding Localization[Effects_UC]}"
+                                HelpTopic="racing-wheel-effects"
                                 Tag="Complex">
 
             <Grid>
@@ -715,6 +725,7 @@
         </controls:MairaGroupBox>
 
         <controls:MairaGroupBox Label="{Binding Localization[PrivateMessages_UC]}"
+                                HelpTopic="racing-wheel-private-messages"
                                 Tag="Complex">
 
             <Grid>
@@ -743,7 +754,8 @@
 
         </controls:MairaGroupBox>
 
-        <controls:MairaGroupBox Label="{Binding Localization[Switches_UC]}">
+        <controls:MairaGroupBox Label="{Binding Localization[Switches_UC]}"
+                                HelpTopic="racing-wheel-switches">
 
             <Grid>
 
