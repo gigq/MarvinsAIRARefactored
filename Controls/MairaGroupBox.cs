@@ -29,7 +29,7 @@ public class MairaGroupBox : HeaderedContentControl
 		set => SetValue( SubLabelProperty, value );
 	}
 
-	public static readonly DependencyProperty HelpTopicProperty = DependencyProperty.Register( nameof( HelpTopic ), typeof( string ), typeof( MairaGroupBox ), new PropertyMetadata( null ) );
+	public static readonly DependencyProperty HelpTopicProperty = DependencyProperty.Register( nameof( HelpTopic ), typeof( string ), typeof( MairaGroupBox ), new FrameworkPropertyMetadata( default( string ) ) );
 
 	public string? HelpTopic
 	{
