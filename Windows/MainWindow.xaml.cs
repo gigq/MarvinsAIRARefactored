@@ -245,16 +245,13 @@ public partial class MainWindow : Window
 			{
 				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-red.png" ) as ImageSource;
 			}
-			else if ( app.RacingWheel.SuspendForceFeedback || !app.DirectInput.ForceFeedbackInitialized )
+			else if ( !app.Simulator.IsConnected || !app.DirectInput.ForceFeedbackInitialized )
 			{
-				if ( app.Simulator.IsConnected )
-				{
-					imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-yellow.png" ) as ImageSource;
-				}
-				else
-				{
-					imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-orange.png" ) as ImageSource;
-				}
+				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-orange.png" ) as ImageSource;
+			}
+			else if ( app.RacingWheel.SuspendForceFeedback )
+			{
+				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-yellow.png" ) as ImageSource;
 			}
 			else
 			{
