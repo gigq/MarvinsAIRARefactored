@@ -83,17 +83,22 @@ public partial class GripOMeterWindow : Window
 	{
 		if ( _initialized )
 		{
-			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			Dispatcher.BeginInvoke( () =>
+			{
+				var app = App.Instance!;
 
-			if ( settings.SteeringEffectsShowGripOMeterWindow )
-			{
-				Show();
-				MakeDraggable();
-			}
-			else
-			{
-				Hide();
-			}
+				var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+
+				if ( settings.SteeringEffectsShowGripOMeterWindow && app.Simulator.IsOnTrack )
+				{
+					Show();
+					MakeDraggable();
+				}
+				else
+				{
+					Hide();
+				}
+			} );
 		}
 	}
 
