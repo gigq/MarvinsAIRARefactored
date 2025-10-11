@@ -653,7 +653,7 @@ public partial class Simulator
 
 		// calculate g force
 
-		GForce = MathF.Sqrt( LatAccel * LatAccel + LongAccel * LongAccel );
+		GForce = MathF.Sqrt( LatAccel * LatAccel + LongAccel * LongAccel ) * MathZ.OneOverG;
 
 		// crash protection processing
 
