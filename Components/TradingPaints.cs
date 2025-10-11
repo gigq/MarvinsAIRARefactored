@@ -65,19 +65,24 @@ public class TradingPaints
 	{
 		var app = App.Instance!;
 
-		app.Logger.WriteLine( "[TradingPaints] Reset >>>" );
+		var settings = DataContext.DataContext.Instance.Settings;
 
-		using ( _lock.EnterScope() )
+		if ( settings.TradingPaintsEnabled )
 		{
-			_seenUserIds.Clear();
-		}
+			app.Logger.WriteLine( "[TradingPaints] Reset >>>" );
 
-		if ( app.Simulator.IsConnected )
-		{
-			_autoResetEvent.Set();
-		}
+			using ( _lock.EnterScope() )
+			{
+				_seenUserIds.Clear();
+			}
 
-		app.Logger.WriteLine( "[TradingPaints] <<< Reset" );
+			if ( app.Simulator.IsConnected )
+			{
+				_autoResetEvent.Set();
+			}
+
+			app.Logger.WriteLine( "[TradingPaints] <<< Reset" );
+		}
 	}
 
 	public void Update()
