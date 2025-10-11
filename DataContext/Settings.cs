@@ -8363,7 +8363,17 @@ public class Settings : INotifyPropertyChanged
 
 				var app = App.Instance!;
 
-				app.SpeechToText.Toggle( _speechToTextEnabled );
+				if ( _speechToTextEnabled )
+				{
+					if ( app.Simulator.IsConnected )
+					{
+						_ = app.SpeechToText.EnableAsync();
+					}
+				}
+				else
+				{
+					_ = app.SpeechToText.DisableAsync();
+				}
 			}
 		}
 	}
@@ -9083,10 +9093,7 @@ public class Settings : INotifyPropertyChanged
 
 				OnPropertyChanged();
 
-				if ( _tradingPaintsEnabled )
-				{
-					App.Instance?.TradingPaints.Reset();
-				}
+				App.Instance?.TradingPaints.Reset();
 			}
 		}
 	}

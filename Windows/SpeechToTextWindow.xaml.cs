@@ -89,17 +89,22 @@ public partial class SpeechToTextWindow : Window
 	{
 		if ( _initialized )
 		{
-			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			Dispatcher.BeginInvoke( () =>
+			{
+				var app = App.Instance!;
 
-			if ( settings.SpeechToTextShowOverlayWindow )
-			{
-				Show();
-				MakeDraggable();
-			}
-			else
-			{
-				Hide();
-			}
+				var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+
+				if ( settings.SpeechToTextEnabled && settings.SpeechToTextShowOverlayWindow && app.Simulator.IsConnected )
+				{
+					Show();
+					MakeDraggable();
+				}
+				else
+				{
+					Hide();
+				}
+			} );
 		}
 	}
 

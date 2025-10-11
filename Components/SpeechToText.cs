@@ -28,12 +28,12 @@ public sealed class SpeechToText : IDisposable
 
 	public async Task EnableAsync( int port = 18888 )
 	{
-		if ( _isEnabled )
+		var app = App.Instance!;
+
+		if ( !app.Simulator.IsConnected || _isEnabled )
 		{
 			return;
 		}
-
-		var app = App.Instance!;
 
 		app.Logger.WriteLine( "[SpeechToText] >>> EnableAsync" );
 
@@ -112,6 +112,8 @@ public sealed class SpeechToText : IDisposable
 			}
 		}
 
+		app.SpeechToTextWindow.UpdateVisibility();
+
 		app.Logger.WriteLine( "[SpeechToText] << EnableAsync" );
 	}
 
@@ -157,19 +159,24 @@ public sealed class SpeechToText : IDisposable
 
 		_isEnabled = false;
 
+		app.SpeechToTextWindow.UpdateVisibility();
+
 		app.Logger.WriteLine( "[SpeechToText] << DisableAsync" );
 	}
 
-	public void Toggle( bool enable )
+	public void SimulatorConnected()
 	{
-		if ( enable )
+		var settings = DataContext.DataContext.Instance.Settings;
+
+		if ( settings.SpeechToTextEnabled )
 		{
 			_ = EnableAsync();
 		}
-		else
-		{
-			_ = DisableAsync();
-		}
+	}
+
+	public void SimulatorDisconnected()
+	{
+		_ = DisableAsync();
 	}
 
 	public void UpdateStrings()
