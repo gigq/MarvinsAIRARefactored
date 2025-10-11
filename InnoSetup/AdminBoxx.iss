@@ -56,7 +56,7 @@ Source: "C:\Users\marvi\OneDrive\Documents\GitHub\MarvinsAIRARefactored\bin\publ
 Source: "C:\Users\marvi\OneDrive\Documents\GitHub\MarvinsAIRARefactored\bin\publish\createdump.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\marvi\OneDrive\Documents\GitHub\MarvinsAIRARefactored\bin\publish\*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\marvi\OneDrive\Documents\GitHub\MarvinsAIRARefactored\bin\publish\*.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\marvi\OneDrive\Documents\GitHub\MarvinsAIRARefactored\InnoSetup\Languages\Resources.resx"; DestDir: "{userdocs}\AdminBoxx\Languages"; Flags: ignoreversion
+Source: "C:\Users\marvi\OneDrive\Documents\GitHub\MarvinsAIRARefactored\Translate\resx\Resources.resx"; DestDir: "{userdocs}\AdminBoxx\Languages"; Flags: ignoreversion
 Source: "C:\Users\marvi\OneDrive\Documents\GitHub\MarvinsAIRARefactored\InnoSetup\Sounds\AdminBoxx\*.wav"; DestDir: "{userdocs}\AdminBoxx\Sounds\AdminBoxx"; Flags: ignoreversion recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

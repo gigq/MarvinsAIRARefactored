@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"/>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -695,7 +695,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
-    <value>Die AdminBoxx Firmware wird aktualisiert.</value>
+    <value>Die AdminBoxx Firmware wird aktualisiert</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="AllowSuperStrength" xml:space="preserve">
@@ -1123,11 +1123,11 @@ Hier ist der Link zum Spenden:</value>
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToWindOnStartup" xml:space="preserve">
-    <value></value>
+    <value>Verbinde zu MAIRA-Wind bei App-Start</value>
     <comment>Wind</comment>
   </data>
   <data name="ConnectToWind" xml:space="preserve">
-    <value></value>
+    <value>Verbinde zu MAIRA Wind</value>
     <comment>Wind</comment>
   </data>
   <data name="LeftFan" xml:space="preserve">
@@ -1139,11 +1139,11 @@ Hier ist der Link zum Spenden:</value>
     <comment>Wind</comment>
   </data>
   <data name="Connection_UC" xml:space="preserve">
-    <value></value>
+    <value>VERBINDUNG</value>
     <comment>Wind</comment>
   </data>
   <data name="Settings_UC" xml:space="preserve">
-    <value>Einstellungen</value>
+    <value>EINSTELLUNGEN</value>
     <comment>Wind</comment>
   </data>
   <data name="MasterWindPower" xml:space="preserve">
@@ -1155,7 +1155,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Wind</comment>
   </data>
   <data name="WindCurving" xml:space="preserve">
-    <value></value>
+    <value>Wind Regler</value>
     <comment>Wind</comment>
   </data>
   <data name="FanPower_UC" xml:space="preserve">
@@ -1175,7 +1175,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="IRacingPaintFolder" xml:space="preserve">
-    <value></value>
+    <value>iRacing Paint Ordner</value>
     <comment>Trading paints</comment>
   </data>
   <data name="TradingPaints" xml:space="preserve">
@@ -1187,7 +1187,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>Marvin's Awesome iRacing App (MAIRA) steht in keiner Verbindung zu Trading Paints.</value>
+    <value>Marvin's Awesome iRacing App (MAIRA) steht in keiner Verbindung zu Trading Paints</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">
@@ -1199,7 +1199,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="SlewRateReduction" xml:space="preserve">
-    <value></value>
+    <value>Abfallgeschwindigkeit</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="SoftClipping" xml:space="preserve">

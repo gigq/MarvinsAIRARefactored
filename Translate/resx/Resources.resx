@@ -1405,4 +1405,32 @@
     <value>Ratio of Velocities (Vy/Vx)</value>
     <comment>Steering effects</comment>
   </data>
+  <data name="DefaultPage_UC" xml:space="preserve">
+    <value>DEFAULT PAGE</value>
+    <comment>App settings</comment>
+  </data>
+  <data name="Effects_UC" xml:space="preserve">
+    <value>EFFECTS</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnGearChange" xml:space="preserve">
+    <value>Vibrate on gear change</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnABS" xml:space="preserve">
+    <value>Vibrate on ABS activation</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="Audio_UC" xml:space="preserve">
+    <value>AUDIO</value>
+    <comment>AdminBoxx</comment>
+  </data>
+  <data name="Display_UC" xml:space="preserve">
+    <value>DISPLAY</value>
+    <comment>AdminBoxx</comment>
+  </data>
+  <data name="AdminBoxx_UC" xml:space="preserve">
+    <value>ADMINBOXX</value>
+    <comment>AdminBoxx</comment>
+  </data>
 </root>
