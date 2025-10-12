@@ -313,7 +313,6 @@ public partial class App : Application
 		Simulator.Shutdown();
 		AdminBoxx.Shutdown();
 		DirectInput.Shutdown();
-		Logger.Shutdown();
 
 #if !ADMINBOXX
 
@@ -326,6 +325,8 @@ public partial class App : Application
 #endif
 
 		Logger.WriteLine( "[App] <<< App_Exit" );
+
+		Logger.Shutdown(); // do this last
 	}
 
 	private void ComboBox_PreviewMouseWheel( object sender, MouseWheelEventArgs e )
