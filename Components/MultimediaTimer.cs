@@ -129,48 +129,61 @@ public class MultimediaTimer
 	{
 		var app = App.Instance!;
 
-		while ( app.MultimediaTimer._running )
+		app.Logger.WriteLine( "[MultimediaTimer] Worker thread started" );
+
+		try
 		{
-			app.MultimediaTimer._autoResetEvent.WaitOne();
-
-			var multimediaTimer = app.MultimediaTimer;
-
-			var totalMilliseconds = multimediaTimer._stopwatch.Elapsed.TotalMilliseconds;
-
-			if ( multimediaTimer._lastTotalMilliseconds == 0 )
+			while ( app.MultimediaTimer._running )
 			{
-				multimediaTimer._lastTotalMilliseconds = totalMilliseconds;
-			}
-			else
-			{
-				var deltaMilliseconds = (float) ( totalMilliseconds - multimediaTimer._lastTotalMilliseconds );
+				app.MultimediaTimer._autoResetEvent.WaitOne();
 
-				if ( deltaMilliseconds > 1f )
+				var multimediaTimer = app.MultimediaTimer;
+
+				var totalMilliseconds = multimediaTimer._stopwatch.Elapsed.TotalMilliseconds;
+
+				if ( multimediaTimer._lastTotalMilliseconds == 0 )
 				{
 					multimediaTimer._lastTotalMilliseconds = totalMilliseconds;
+				}
+				else
+				{
+					var deltaMilliseconds = (float) ( totalMilliseconds - multimediaTimer._lastTotalMilliseconds );
 
-					// update racing wheel force feedback
+					if ( deltaMilliseconds > 1f )
+					{
+						multimediaTimer._lastTotalMilliseconds = totalMilliseconds;
 
-					app.RacingWheel.Update( deltaMilliseconds );
+						// update racing wheel force feedback
 
-					// update pedals graph
+						app.RacingWheel.Update( deltaMilliseconds );
 
-					app.Pedals.UpdateGraph();
+						// update pedals graph
 
-					// update jitter statistics and graph
+						app.Pedals.UpdateGraph();
 
-					var jitterMilliseconds = deltaMilliseconds - 2f;
+						// update jitter statistics and graph
 
-					var y = Math.Clamp( jitterMilliseconds / 2f, -1f, 1f );
+						var jitterMilliseconds = deltaMilliseconds - 2f;
 
-					app.Graph.UpdateLayer( Graph.LayerIndex.TimerJitter, jitterMilliseconds, y );
+						var y = Math.Clamp( jitterMilliseconds / 2f, -1f, 1f );
 
-					// update the graph
+						app.Graph.UpdateLayer( Graph.LayerIndex.TimerJitter, jitterMilliseconds, y );
 
-					app.Graph.Update();
+						// update the graph
+
+						app.Graph.Update();
+					}
 				}
 			}
 		}
+		catch ( Exception exception )
+		{
+			app.Logger.WriteLine( $"[MultimediaTimer] Exception caught: {exception.Message}" );
+
+			app.ShowFatalError( "An exception was thrown inside the multimedia timer worker thread.", exception );
+		}
+
+		app.Logger.WriteLine( "[MultimediaTimer] Worker thread stopped" );
 	}
 
 	public void Tick( App app )
