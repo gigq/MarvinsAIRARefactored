@@ -54,14 +54,12 @@ public class Logger
 
 	public void Shutdown()
 	{
-		WriteLine( "[Logger] Shutdown >>>" );
+		WriteLine( "[Logger] Shutting down logger" );
 
 		_fileStream?.Close();
 		_fileStream?.Dispose();
 
 		_fileStream = null;
-
-		WriteLine( "[Logger] <<< Shutdown" );
 	}
 
 	public void WriteLine( string message )
