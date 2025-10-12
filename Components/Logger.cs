@@ -54,7 +54,7 @@ public class Logger
 
 	public void Shutdown()
 	{
-		WriteLine( "[Logger] Shutting down logger" );
+		WriteLine( "[Logger] Shutting down" );
 
 		_fileStream?.Close();
 		_fileStream?.Dispose();
