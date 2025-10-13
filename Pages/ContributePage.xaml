@@ -178,7 +178,7 @@
                                 <ColumnDefinition Width="220" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Rodas007" />
+                            <TextBlock Text="Rodas007 &amp; DrCrazy" />
                             <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/spain_fluttering_flag_64.png"
                                    Height="20"
                                    HorizontalAlignment="Right" />
@@ -189,19 +189,24 @@
                         <!--LAS-Zeppelin83-->
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="220" />
+                                <ColumnDefinition Width="36" />
+                                <ColumnDefinition Width="184" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Michael Marcotte" />
+                            <TextBlock Text="Michael Marcotte"
+                                       Grid.ColumnSpan="2" />
                             <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/france_fluttering_flag_64.png"
                                    Height="20"
-                                   HorizontalAlignment="Right"
-                                   Margin="0,0,25,0" />
+                                   HorizontalAlignment="Left"
+                                   Margin="132,2,0,2"
+                                   Grid.Column="1" />
                             <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/canada_fluttering_flag_64.png"
                                    Height="20"
-                                   HorizontalAlignment="Right" />
+                                   HorizontalAlignment="Left"
+                                   Grid.Column="1"
+                                   Margin="157,2,0,2" />
                             <TextBlock Text="Français (Canada)"
-                                       Grid.Column="1" />
+                                       Grid.Column="2" />
                         </Grid>
 
                         <!--Valerio.exe-->
