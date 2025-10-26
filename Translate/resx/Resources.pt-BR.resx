@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"/>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -126,7 +126,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="ThisLanguage" xml:space="preserve">
-    <value>Português (Brasil)</value>
+    <value>Português (Brasil) - Portuguese (Brazil)</value>
     <comment>App language list</comment>
   </data>
   <data name="TopmostWindow" xml:space="preserve">
@@ -278,11 +278,11 @@
     <comment>Pedals</comment>
   </data>
   <data name="PedalsP1000" xml:space="preserve">
-    <value>Simagic P1000</value>
+    <value>Pedais Simagic P1000</value>
     <comment>Pedals device</comment>
   </data>
   <data name="PedalsP2000" xml:space="preserve">
-    <value>Simagic P2000</value>
+    <value>Pedais Simagic P2000</value>
     <comment>Pedals device</comment>
   </data>
   <data name="PedalsNone" xml:space="preserve">
@@ -1301,13 +1301,41 @@
     <value>Razão de Velocidades (Vy/Vx)</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="Click_UC" xml:space="preserve">
-    <value>Clique</value>
+  <data name="DefaultPage_UC" xml:space="preserve">
+    <value>PÁGINA INICIAL</value>
+    <comment>App settings</comment>
+  </data>
+  <data name="Effects_UC" xml:space="preserve">
+    <value>EFEITOS</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnGearChange" xml:space="preserve">
+    <value>Vibrar na mudança de marcha</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnABS" xml:space="preserve">
+    <value>Vibrar na ativação do ABS</value>
+    <comment>Racing wheel</comment>
   </data>
   <data name="Audio_UC" xml:space="preserve">
     <value>Áudio</value>
   </data>
   <data name="Display_UC" xml:space="preserve">
     <value>Exibição</value>
+  </data>
+  <data name="AdminBoxx_UC" xml:space="preserve">
+    <value></value>
+    <comment>AdminBoxx</comment>
+  </data>
+  <data name="Click_UC" xml:space="preserve">
+    <value>Clique</value>
+  </data>
+  <data name="PedalsP500" xml:space="preserve">
+    <value>Pedais Simagic P500</value>
+    <comment>Pedals device</comment>
+  </data>
+  <data name="PedalsPrototype" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
   </data>
 </root>

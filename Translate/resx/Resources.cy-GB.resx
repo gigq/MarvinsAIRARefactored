@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"/>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -18,7 +18,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="AppSettings" xml:space="preserve">
-    <value>Innstillinger </value>
+    <value></value>
     <comment>App menu item</comment>
   </data>
   <data name="AppTitle" xml:space="preserve">
@@ -126,7 +126,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="ThisLanguage" xml:space="preserve">
-    <value>Norsk bokmål (Norge) - Norwegian Bokmål (Norway)</value>
+    <value>Cymraeg (Cymru) - Welsh (UK)</value>
     <comment>App language list</comment>
   </data>
   <data name="TopmostWindow" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>App settings</comment>
   </data>
   <data name="TorqueUnits" xml:space="preserve">
-    <value></value>
+    <value>Nm</value>
     <comment>Abbreviation for Newton-meters</comment>
   </data>
   <data name="DetailBoosterOn60Hz" xml:space="preserve">
@@ -146,7 +146,7 @@
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToAdminBoxx" xml:space="preserve">
-    <value>Kobling til AdminBoxx</value>
+    <value></value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="UpdateButtonMappings" xml:space="preserve">
@@ -183,7 +183,7 @@
   </data>
   <data name="DeltaLimitUnits" xml:space="preserve">
     <value></value>
-    <comment>Abbreviation for Newton-meters per millisecond</comment>
+    <comment>Abbreviation for Newton-meters per second</comment>
   </data>
   <data name="DeltaLimiterOn60Hz" xml:space="preserve">
     <value></value>
@@ -242,7 +242,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="GForceUnits" xml:space="preserve">
-    <value></value>
+    <value>g</value>
     <comment>Abbreviation for g-force</comment>
   </data>
   <data name="GForce" xml:space="preserve">
@@ -258,7 +258,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="SecondsUnits" xml:space="preserve">
-    <value></value>
+    <value>eil</value>
     <comment>Abbreviation for seconds (time)</comment>
   </data>
   <data name="MPSUnits" xml:space="preserve">
@@ -274,7 +274,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Pedals_UC" xml:space="preserve">
-    <value>Pedaler</value>
+    <value></value>
     <comment>Pedals</comment>
   </data>
   <data name="PedalsP1000" xml:space="preserve">
@@ -310,7 +310,7 @@
     <comment>Racing wheel, Pedals</comment>
   </data>
   <data name="HertzUnits" xml:space="preserve">
-    <value></value>
+    <value>Hz</value>
     <comment>Abbreviation for Hertz</comment>
   </data>
   <data name="Frequency_UC" xml:space="preserve">
@@ -434,7 +434,7 @@
     <comment>AdminBoxx</comment>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value>Volum</value>
+    <value></value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="NoAudioDevicesFound" xml:space="preserve">
@@ -442,15 +442,15 @@
     <comment>Audio devices list</comment>
   </data>
   <data name="Connection" xml:space="preserve">
-    <value>Kobling</value>
+    <value></value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Skjerm</value>
+    <value></value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="Audio" xml:space="preserve">
-    <value></value>
+    <value>Sain</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="DeltaLimiterBias" xml:space="preserve">
@@ -683,7 +683,7 @@
   </data>
   <data name="SlewUnits" xml:space="preserve">
     <value></value>
-    <comment>Abbreviation for Newton-meters per second</comment>
+    <comment>Abbreviation for Newton-meters per millisecond</comment>
   </data>
   <data name="WheelForce" xml:space="preserve">
     <value></value>
@@ -722,7 +722,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
-    <value></value>
+    <value>Mae cadarnwedd AdminBoxx yn cael ei ddiweddaru</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="AllowSuperStrength" xml:space="preserve">
@@ -758,7 +758,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Degrees" xml:space="preserve">
-    <value></value>
+    <value>°</value>
     <comment>Abbreviation for degrees</comment>
   </data>
   <data name="Master_UC" xml:space="preserve">
@@ -930,7 +930,7 @@
     <comment>Error messages</comment>
   </data>
   <data name="KPHUnits" xml:space="preserve">
-    <value></value>
+    <value>KPH</value>
     <comment>Abbreviation for kilometers per hour</comment>
   </data>
   <data name="CalibrationFileContributors" xml:space="preserve">
@@ -942,7 +942,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DegreesPerSecond" xml:space="preserve">
-    <value></value>
+    <value>°/s</value>
     <comment>Abbreviation for degrees per second</comment>
   </data>
   <data name="CalibrationFile_UC" xml:space="preserve">
@@ -1150,7 +1150,7 @@
     <comment>App menu item</comment>
   </data>
   <data name="Pedals" xml:space="preserve">
-    <value>Pedaler</value>
+    <value></value>
     <comment>App menu item</comment>
   </data>
   <data name="WheelLock" xml:space="preserve">
@@ -1166,7 +1166,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="MPHUnits" xml:space="preserve">
-    <value></value>
+    <value>MYA</value>
     <comment>Abbreviation for miles per hour</comment>
   </data>
   <data name="Wind_UC" xml:space="preserve">
@@ -1194,7 +1194,7 @@
     <comment>Wind</comment>
   </data>
   <data name="Connection_UC" xml:space="preserve">
-    <value>Kobling</value>
+    <value></value>
     <comment>Wind</comment>
   </data>
   <data name="Settings_UC" xml:space="preserve">
@@ -1301,7 +1301,44 @@
     <value></value>
     <comment>Steering effects</comment>
   </data>
+  <data name="DefaultPage_UC" xml:space="preserve">
+    <value></value>
+    <comment>App settings</comment>
+  </data>
+  <data name="Effects_UC" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnGearChange" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnABS" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="Audio_UC" xml:space="preserve">
+    <value></value>
+    <comment>AdminBoxx</comment>
+  </data>
   <data name="Display_UC" xml:space="preserve">
-    <value>Skjerm</value>
+    <value></value>
+    <comment>AdminBoxx</comment>
+  </data>
+  <data name="AdminBoxx_UC" xml:space="preserve">
+    <value>ADMINBOXX</value>
+    <comment>AdminBoxx</comment>
+  </data>
+  <data name="Click_UC" xml:space="preserve">
+    <value></value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="PedalsP500" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
+  </data>
+  <data name="PedalsPrototype" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
   </data>
 </root>

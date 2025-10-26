@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"/>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -18,7 +18,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="AppSettings" xml:space="preserve">
-    <value>Innstillinger </value>
+    <value>Configuración del App</value>
     <comment>App menu item</comment>
   </data>
   <data name="AppTitle" xml:space="preserve">
@@ -42,7 +42,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Graph" xml:space="preserve">
-    <value></value>
+    <value>Gráfico </value>
     <comment>App menu item</comment>
   </data>
   <data name="HeaderData_UC" xml:space="preserve">
@@ -50,7 +50,7 @@
     <comment>Simulator</comment>
   </data>
   <data name="Language_UC" xml:space="preserve">
-    <value></value>
+    <value>LENGUAJE </value>
     <comment>App settings</comment>
   </data>
   <data name="DetailBooster" xml:space="preserve">
@@ -86,7 +86,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="RacingWheel" xml:space="preserve">
-    <value></value>
+    <value>Timón </value>
     <comment>App menu item</comment>
   </data>
   <data name="RacingWheel_UC" xml:space="preserve">
@@ -106,7 +106,7 @@
     <comment>Simulator</comment>
   </data>
   <data name="Simulator" xml:space="preserve">
-    <value></value>
+    <value>Simulador</value>
     <comment>App menu item</comment>
   </data>
   <data name="SimulatorNotRunning" xml:space="preserve">
@@ -126,7 +126,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="ThisLanguage" xml:space="preserve">
-    <value>Norsk bokmål (Norge) - Norwegian Bokmål (Norway)</value>
+    <value>Español (México) - Spanish (Mexico)</value>
     <comment>App language list</comment>
   </data>
   <data name="TopmostWindow" xml:space="preserve">
@@ -146,7 +146,7 @@
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToAdminBoxx" xml:space="preserve">
-    <value>Kobling til AdminBoxx</value>
+    <value>Conectar a AdminBoxx </value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="UpdateButtonMappings" xml:space="preserve">
@@ -183,7 +183,7 @@
   </data>
   <data name="DeltaLimitUnits" xml:space="preserve">
     <value></value>
-    <comment>Abbreviation for Newton-meters per millisecond</comment>
+    <comment>Abbreviation for Newton-meters per second</comment>
   </data>
   <data name="DeltaLimiterOn60Hz" xml:space="preserve">
     <value></value>
@@ -274,7 +274,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Pedals_UC" xml:space="preserve">
-    <value>Pedaler</value>
+    <value></value>
     <comment>Pedals</comment>
   </data>
   <data name="PedalsP1000" xml:space="preserve">
@@ -346,7 +346,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="SteeringEffects" xml:space="preserve">
-    <value></value>
+    <value>Effectos de dirección</value>
     <comment>App menu item</comment>
   </data>
   <data name="WheelLock_UC" xml:space="preserve">
@@ -418,11 +418,11 @@
     <comment>Cloud service</comment>
   </data>
   <data name="CheckForUpdates" xml:space="preserve">
-    <value></value>
+    <value>Buscar actualizaciones al arranque</value>
     <comment>App settings</comment>
   </data>
   <data name="AutomaticallyDownloadUpdates" xml:space="preserve">
-    <value></value>
+    <value>Descargar actualizaciones automáticamente</value>
     <comment>App settings</comment>
   </data>
   <data name="ConnectToAdminBoxxOnStartup" xml:space="preserve">
@@ -430,11 +430,12 @@
     <comment>AdminBoxx</comment>
   </data>
   <data name="Brightness" xml:space="preserve">
-    <value></value>
+    <value>Brillo
+</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value>Volum</value>
+    <value>Volumen</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="NoAudioDevicesFound" xml:space="preserve">
@@ -442,11 +443,12 @@
     <comment>Audio devices list</comment>
   </data>
   <data name="Connection" xml:space="preserve">
-    <value>Kobling</value>
+    <value>Conexión 
+</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Skjerm</value>
+    <value>Pantalla</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="Audio" xml:space="preserve">
@@ -510,7 +512,7 @@
     <comment>LFE devices list</comment>
   </data>
   <data name="RememberWindowPositionAndSize" xml:space="preserve">
-    <value></value>
+    <value>Recordar Posición y Tamaño de la Ventana</value>
     <comment>App settings</comment>
   </data>
   <data name="FadeWithBrake" xml:space="preserve">
@@ -570,15 +572,15 @@
     <comment>App settings</comment>
   </data>
   <data name="UIScale" xml:space="preserve">
-    <value></value>
+    <value>Tamaño de la Interfaz Grafica</value>
     <comment>App settings</comment>
   </data>
   <data name="CloudService_UC" xml:space="preserve">
-    <value></value>
+    <value>SERVICIO NUBE</value>
     <comment>App settings</comment>
   </data>
   <data name="CheckNow" xml:space="preserve">
-    <value></value>
+    <value>Buscar ahora</value>
     <comment>App settings</comment>
   </data>
   <data name="CheckingForUpdate" xml:space="preserve">
@@ -614,7 +616,7 @@
     <comment>Donate</comment>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value></value>
+    <value>Donar</value>
     <comment>App menu item</comment>
   </data>
   <data name="CodeContributions_UC" xml:space="preserve">
@@ -654,15 +656,15 @@
     <comment>System tray icon</comment>
   </data>
   <data name="MinimizeToSystemTray" xml:space="preserve">
-    <value></value>
+    <value>Minimizar a la barra de tareas</value>
     <comment>App settings</comment>
   </data>
   <data name="StartMinimized" xml:space="preserve">
-    <value></value>
+    <value>Empezar Minimizado</value>
     <comment>App settings</comment>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value></value>
+    <value>Empezar con Eindows</value>
     <comment>App settings</comment>
   </data>
   <data name="TotalCompressionRate" xml:space="preserve">
@@ -683,7 +685,7 @@
   </data>
   <data name="SlewUnits" xml:space="preserve">
     <value></value>
-    <comment>Abbreviation for Newton-meters per second</comment>
+    <comment>Abbreviation for Newton-meters per millisecond</comment>
   </data>
   <data name="WheelForce" xml:space="preserve">
     <value></value>
@@ -722,7 +724,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
-    <value></value>
+    <value>El firmware AdminBoxx se está actualizando.</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="AllowSuperStrength" xml:space="preserve">
@@ -1042,7 +1044,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="SpeechToText" xml:space="preserve">
-    <value></value>
+    <value>Transcripción Voz a Texto</value>
     <comment>App menu item</comment>
   </data>
   <data name="Overlay" xml:space="preserve">
@@ -1094,7 +1096,7 @@
     <comment>Donate</comment>
   </data>
   <data name="Contribute" xml:space="preserve">
-    <value></value>
+    <value>Contribuir</value>
     <comment>App menu item</comment>
   </data>
   <data name="CalibrationFileContributions_UC" xml:space="preserve">
@@ -1146,11 +1148,11 @@
     <comment>Pedal effects list</comment>
   </data>
   <data name="Sounds" xml:space="preserve">
-    <value></value>
+    <value>Sonidos</value>
     <comment>App menu item</comment>
   </data>
   <data name="Pedals" xml:space="preserve">
-    <value>Pedaler</value>
+    <value>Pedales</value>
     <comment>App menu item</comment>
   </data>
   <data name="WheelLock" xml:space="preserve">
@@ -1174,7 +1176,7 @@
     <comment>Wind</comment>
   </data>
   <data name="Wind" xml:space="preserve">
-    <value></value>
+    <value>Viento</value>
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToWindOnStartup" xml:space="preserve">
@@ -1194,7 +1196,7 @@
     <comment>Wind</comment>
   </data>
   <data name="Connection_UC" xml:space="preserve">
-    <value>Kobling</value>
+    <value></value>
     <comment>Wind</comment>
   </data>
   <data name="Settings_UC" xml:space="preserve">
@@ -1301,7 +1303,44 @@
     <value></value>
     <comment>Steering effects</comment>
   </data>
+  <data name="DefaultPage_UC" xml:space="preserve">
+    <value></value>
+    <comment>App settings</comment>
+  </data>
+  <data name="Effects_UC" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnGearChange" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnABS" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="Audio_UC" xml:space="preserve">
+    <value></value>
+    <comment>AdminBoxx</comment>
+  </data>
   <data name="Display_UC" xml:space="preserve">
-    <value>Skjerm</value>
+    <value></value>
+    <comment>AdminBoxx</comment>
+  </data>
+  <data name="AdminBoxx_UC" xml:space="preserve">
+    <value></value>
+    <comment>AdminBoxx</comment>
+  </data>
+  <data name="Click_UC" xml:space="preserve">
+    <value></value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="PedalsP500" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
+  </data>
+  <data name="PedalsPrototype" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
   </data>
 </root>

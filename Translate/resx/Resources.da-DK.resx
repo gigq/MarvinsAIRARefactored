@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"/>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -86,10 +86,10 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="RacingWheel" xml:space="preserve">
-    <value>Rat</value>
+    <value>Base</value>
   </data>
   <data name="RacingWheel_UC" xml:space="preserve">
-    <value>RAT</value>
+    <value>BASE</value>
     <comment>Tab item</comment>
   </data>
   <data name="SteeringDevice" xml:space="preserve">
@@ -125,7 +125,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="ThisLanguage" xml:space="preserve">
-    <value>Dansk</value>
+    <value>Dansk (Danmark) - Danish (Denmark)</value>
     <comment>App language list</comment>
   </data>
   <data name="TopmostWindow" xml:space="preserve">
@@ -460,7 +460,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="WheelLFE_UC" xml:space="preserve">
-    <value>RAT LFE</value>
+    <value>BASE LFE</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="LFERecordingDevice" xml:space="preserve">
@@ -684,7 +684,7 @@
     <comment>Abbreviation for Newton-meters per second</comment>
   </data>
   <data name="WheelForce" xml:space="preserve">
-    <value>Rat Kraft</value>
+    <value>Base Styrke</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="Set" xml:space="preserve">
@@ -791,7 +791,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="RunCalibration" xml:space="preserve">
-    <value>Kør Kalibrering</value>
+    <value>Start Kalibrering</value>
     <comment>Steering effects</comment>
   </data>
   <data name="StopCalibration" xml:space="preserve">
@@ -803,7 +803,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="SteeringWheelCenter" xml:space="preserve">
-    <value>Centrer Rat</value>
+    <value>Centrer Base</value>
     <comment>Steering effects</comment>
   </data>
   <data name="SteeringWheelRight" xml:space="preserve">
@@ -811,7 +811,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="SteeringWheel90Left" xml:space="preserve">
-    <value>Rat 90° Venstre</value>
+    <value>Base 90° Venstre</value>
     <comment>Steering effects</comment>
   </data>
   <data name="MinThrottle" xml:space="preserve">
@@ -887,7 +887,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="WheelCenteringStrength" xml:space="preserve">
-    <value>Rat Centrerings Styrke</value>
+    <value>Base Centrerings Styrke</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="CenterWheelWhileRacing" xml:space="preserve">
@@ -1268,13 +1268,41 @@
     <value>Hastigheds forhold (Vy/Vx)</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="Click_UC" xml:space="preserve">
-    <value>Tryk</value>
+  <data name="DefaultPage_UC" xml:space="preserve">
+    <value>STANDARD SIDE</value>
+    <comment>App settings</comment>
+  </data>
+  <data name="Effects_UC" xml:space="preserve">
+    <value>EFFEKTER</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnGearChange" xml:space="preserve">
+    <value>Vibrerer ved gearskift</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnABS" xml:space="preserve">
+    <value>Vibrerer ved ABS-aktivering</value>
+    <comment>Racing wheel</comment>
   </data>
   <data name="Audio_UC" xml:space="preserve">
     <value>Lyd</value>
   </data>
   <data name="Display_UC" xml:space="preserve">
-    <value>Skærm</value>
+    <value>SKÆRM</value>
+  </data>
+  <data name="AdminBoxx_UC" xml:space="preserve">
+    <value></value>
+    <comment>AdminBoxx</comment>
+  </data>
+  <data name="Click_UC" xml:space="preserve">
+    <value>Tryk</value>
+  </data>
+  <data name="PedalsP500" xml:space="preserve">
+    <value>Simagic P500 Pedaler</value>
+    <comment>Pedals device</comment>
+  </data>
+  <data name="PedalsPrototype" xml:space="preserve">
+    <value>Prototype Pedaler</value>
+    <comment>Pedals device</comment>
   </data>
 </root>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"/>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -14,23 +14,23 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Algorithm" xml:space="preserve">
-    <value></value>
+    <value>Algoritmus</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="AppSettings" xml:space="preserve">
-    <value>Innstillinger </value>
+    <value>Alkalmazás beállítások</value>
     <comment>App menu item</comment>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value></value>
+    <value>Marvin's Awesome iRacing alkalmazás</value>
     <comment>Window title</comment>
   </data>
   <data name="DetailBoostBias" xml:space="preserve">
-    <value></value>
+    <value>Részlet kiemelés torzítás</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="DetailBoost" xml:space="preserve">
-    <value></value>
+    <value>Részlet kiemelés</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="FadeForceFeedback" xml:space="preserve">
@@ -42,7 +42,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Graph" xml:space="preserve">
-    <value></value>
+    <value>Grafikon</value>
     <comment>App menu item</comment>
   </data>
   <data name="HeaderData_UC" xml:space="preserve">
@@ -50,7 +50,7 @@
     <comment>Simulator</comment>
   </data>
   <data name="Language_UC" xml:space="preserve">
-    <value></value>
+    <value>NYELV</value>
     <comment>App settings</comment>
   </data>
   <data name="DetailBooster" xml:space="preserve">
@@ -62,15 +62,15 @@
     <comment>Racing wheel algorithms list</comment>
   </data>
   <data name="MaxForce" xml:space="preserve">
-    <value></value>
+    <value>Maximális erő</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="Native60Hz" xml:space="preserve">
-    <value></value>
+    <value>Natív 60Hz</value>
     <comment>Racing wheel algorithms list</comment>
   </data>
   <data name="Native360Hz" xml:space="preserve">
-    <value></value>
+    <value>Natív 360Hz</value>
     <comment>Racing wheel algorithms list</comment>
   </data>
   <data name="NoFFBDevicesFound" xml:space="preserve">
@@ -78,19 +78,19 @@
     <comment>Steering devices list</comment>
   </data>
   <data name="OFF" xml:space="preserve">
-    <value></value>
+    <value>Ki</value>
     <comment>Generic</comment>
   </data>
   <data name="Power" xml:space="preserve">
-    <value></value>
+    <value>Főkapcsoló</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="RacingWheel" xml:space="preserve">
-    <value></value>
+    <value>Kormány</value>
     <comment>App menu item</comment>
   </data>
   <data name="RacingWheel_UC" xml:space="preserve">
-    <value></value>
+    <value>Kormány</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="SteeringDevice" xml:space="preserve">
@@ -106,11 +106,11 @@
     <comment>Simulator</comment>
   </data>
   <data name="Simulator" xml:space="preserve">
-    <value></value>
+    <value>Szimulátor</value>
     <comment>App menu item</comment>
   </data>
   <data name="SimulatorNotRunning" xml:space="preserve">
-    <value></value>
+    <value>iRacing nem fut</value>
     <comment>Generic</comment>
   </data>
   <data name="SoftLockStrength" xml:space="preserve">
@@ -122,15 +122,15 @@
     <comment>Simulator</comment>
   </data>
   <data name="Test" xml:space="preserve">
-    <value></value>
+    <value>Teszt</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="ThisLanguage" xml:space="preserve">
-    <value>Norsk bokmål (Norge) - Norwegian Bokmål (Norway)</value>
+    <value>Magyar (Magyarország) - Hungarian (Hungary)</value>
     <comment>App language list</comment>
   </data>
   <data name="TopmostWindow" xml:space="preserve">
-    <value></value>
+    <value>Mindig felül</value>
     <comment>App settings</comment>
   </data>
   <data name="TorqueUnits" xml:space="preserve">
@@ -146,7 +146,7 @@
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToAdminBoxx" xml:space="preserve">
-    <value>Kobling til AdminBoxx</value>
+    <value>Kapcsolódás az AdminBoxx-hoz</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="UpdateButtonMappings" xml:space="preserve">
@@ -154,27 +154,27 @@
     <comment>Window title</comment>
   </data>
   <data name="PressTheRecordButton" xml:space="preserve">
-    <value></value>
+    <value>[Nyomd meg a felvétel gombot]</value>
     <comment>Button mapping</comment>
   </data>
   <data name="Button" xml:space="preserve">
-    <value></value>
+    <value>Gomb</value>
     <comment>Button mapping</comment>
   </data>
   <data name="Click" xml:space="preserve">
-    <value></value>
+    <value>Klikkelj</value>
     <comment>Button mapping</comment>
   </data>
   <data name="Hold" xml:space="preserve">
-    <value></value>
+    <value>Tartsd</value>
     <comment>Button mapping</comment>
   </data>
   <data name="Keyboard" xml:space="preserve">
-    <value></value>
+    <value>Billentyűzet</value>
     <comment>Button mapping</comment>
   </data>
   <data name="WaitingForInput" xml:space="preserve">
-    <value></value>
+    <value>[Nyomj egy gombot]</value>
     <comment>Button mapping</comment>
   </data>
   <data name="DeltaLimit" xml:space="preserve">
@@ -183,7 +183,7 @@
   </data>
   <data name="DeltaLimitUnits" xml:space="preserve">
     <value></value>
-    <comment>Abbreviation for Newton-meters per millisecond</comment>
+    <comment>Abbreviation for Newton-meters per second</comment>
   </data>
   <data name="DeltaLimiterOn60Hz" xml:space="preserve">
     <value></value>
@@ -202,23 +202,23 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Device_UC" xml:space="preserve">
-    <value></value>
+    <value>ESZKÖZ</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="OverallStrength_UC" xml:space="preserve">
-    <value></value>
+    <value>ÁLLTALÁNOS ERŐ</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="AutoMargin" xml:space="preserve">
-    <value></value>
+    <value>Automata határ</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="Clear" xml:space="preserve">
-    <value></value>
+    <value>Töröl</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="CurrentForce" xml:space="preserve">
-    <value></value>
+    <value>Jelenlegi erő</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="PeakForce" xml:space="preserve">
@@ -226,11 +226,11 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="AutoMaxForce" xml:space="preserve">
-    <value></value>
+    <value>Auto max erő</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="OtherFeatures_UC" xml:space="preserve">
-    <value></value>
+    <value>EGYÉB FUNKCIÓK</value>
     <comment>Racing wheel, Pedals</comment>
   </data>
   <data name="Switches_UC" xml:space="preserve">
@@ -238,7 +238,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="CrashProtection_UC" xml:space="preserve">
-    <value></value>
+    <value>BALESET VÉDELEM</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="GForceUnits" xml:space="preserve">
@@ -250,11 +250,11 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Duration" xml:space="preserve">
-    <value></value>
+    <value>Időtartam</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="ForceReduction" xml:space="preserve">
-    <value></value>
+    <value>Erőcsökkentés</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="SecondsUnits" xml:space="preserve">
@@ -266,7 +266,7 @@
     <comment>Abbreviation for meters per second</comment>
   </data>
   <data name="CurbProtection_UC" xml:space="preserve">
-    <value></value>
+    <value>RÁZÓKŐ VÉDELEM</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="ShockVelocity" xml:space="preserve">
@@ -274,7 +274,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Pedals_UC" xml:space="preserve">
-    <value>Pedaler</value>
+    <value></value>
     <comment>Pedals</comment>
   </data>
   <data name="PedalsP1000" xml:space="preserve">
@@ -306,7 +306,7 @@
     <comment>Pedals</comment>
   </data>
   <data name="Strength" xml:space="preserve">
-    <value></value>
+    <value>Erő</value>
     <comment>Racing wheel, Pedals</comment>
   </data>
   <data name="HertzUnits" xml:space="preserve">
@@ -330,7 +330,7 @@
     <comment>Racing wheel, Pedals, Graph</comment>
   </data>
   <data name="Curve" xml:space="preserve">
-    <value></value>
+    <value>Görbe</value>
     <comment>Racing wheel, Pedals</comment>
   </data>
   <data name="GearChange" xml:space="preserve">
@@ -346,7 +346,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="SteeringEffects" xml:space="preserve">
-    <value></value>
+    <value>Kormányzási effektek</value>
     <comment>App menu item</comment>
   </data>
   <data name="WheelLock_UC" xml:space="preserve">
@@ -398,59 +398,59 @@
     <comment>Status</comment>
   </data>
   <data name="SaveThisSetting" xml:space="preserve">
-    <value></value>
+    <value>Beállítások mentése</value>
     <comment>Window title</comment>
   </data>
   <data name="NewVersionAvailable" xml:space="preserve">
-    <value></value>
+    <value>Új verzió érhető el!</value>
     <comment>Window title</comment>
   </data>
   <data name="DownloadQuestion" xml:space="preserve">
-    <value></value>
+    <value>Szeretnéd most letölteni?</value>
     <comment>Cloud service</comment>
   </data>
   <data name="RunInstaller" xml:space="preserve">
-    <value></value>
+    <value>Futtatod a telepítőt?</value>
     <comment>Window title</comment>
   </data>
   <data name="RunInstallerQuestion" xml:space="preserve">
-    <value></value>
+    <value>Szeretnéd most futtatni a telepítőt?</value>
     <comment>Cloud service</comment>
   </data>
   <data name="CheckForUpdates" xml:space="preserve">
-    <value></value>
+    <value>Frissítések keresése indításkor</value>
     <comment>App settings</comment>
   </data>
   <data name="AutomaticallyDownloadUpdates" xml:space="preserve">
-    <value></value>
+    <value>Frissítések automatikus letöltése</value>
     <comment>App settings</comment>
   </data>
   <data name="ConnectToAdminBoxxOnStartup" xml:space="preserve">
-    <value></value>
+    <value>Kapocsolódás az AdminBoxx-hoz az alkalmazás indításakor</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="Brightness" xml:space="preserve">
-    <value></value>
+    <value>Fényerő</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value>Volum</value>
+    <value>Hangerő</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="NoAudioDevicesFound" xml:space="preserve">
-    <value></value>
+    <value>Nem található hangeszköz</value>
     <comment>Audio devices list</comment>
   </data>
   <data name="Connection" xml:space="preserve">
-    <value>Kobling</value>
+    <value>Kapcsolat</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Skjerm</value>
+    <value>Kijelző</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="Audio" xml:space="preserve">
-    <value></value>
+    <value>Hang</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="DeltaLimiterBias" xml:space="preserve">
@@ -458,7 +458,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Output_UC" xml:space="preserve">
-    <value></value>
+    <value>KIMENET</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="WheelLFE_UC" xml:space="preserve">
@@ -510,7 +510,7 @@
     <comment>LFE devices list</comment>
   </data>
   <data name="RememberWindowPositionAndSize" xml:space="preserve">
-    <value></value>
+    <value>Jegyezze meg az ablak pozícióját és méretét</value>
     <comment>App settings</comment>
   </data>
   <data name="FadeWithBrake" xml:space="preserve">
@@ -546,7 +546,7 @@
     <comment>Pedals</comment>
   </data>
   <data name="AlwaysEnableFFB" xml:space="preserve">
-    <value></value>
+    <value>FFB engedályezés ha az iRacing FFB egedélyezve van</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="ClutchPedalHaptics" xml:space="preserve">
@@ -566,19 +566,19 @@
     <comment>Pedals</comment>
   </data>
   <data name="AppWindow_UC" xml:space="preserve">
-    <value></value>
+    <value>ALKALMAZÁS ABLAK</value>
     <comment>App settings</comment>
   </data>
   <data name="UIScale" xml:space="preserve">
-    <value></value>
+    <value>FELHASZNÁLÓI FELÜLET MÉRETARÁNY</value>
     <comment>App settings</comment>
   </data>
   <data name="CloudService_UC" xml:space="preserve">
-    <value></value>
+    <value>FELHŐSZOLGÁLTATÁS</value>
     <comment>App settings</comment>
   </data>
   <data name="CheckNow" xml:space="preserve">
-    <value></value>
+    <value>Ellenőrzés most</value>
     <comment>App settings</comment>
   </data>
   <data name="CheckingForUpdate" xml:space="preserve">
@@ -590,11 +590,11 @@
     <comment>Status</comment>
   </data>
   <data name="Contribute_UC" xml:space="preserve">
-    <value></value>
+    <value>HOZZÁJÁRULÁSOK</value>
     <comment>Contribute</comment>
   </data>
   <data name="BuyMeACoffee" xml:space="preserve">
-    <value></value>
+    <value>Vegyél egy kávét</value>
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
@@ -602,35 +602,35 @@
     <comment>Donate</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
-    <value></value>
+    <value>Támogatás</value>
     <comment>Donate</comment>
   </data>
   <data name="Donors_UC" xml:space="preserve">
-    <value></value>
+    <value>TÁMOGATÓK</value>
     <comment>Contribute</comment>
   </data>
   <data name="SuperDonors_UC" xml:space="preserve">
-    <value></value>
+    <value>SZUPER TÁMOGATÓK</value>
     <comment>Donate</comment>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value></value>
+    <value>Támogatás</value>
     <comment>App menu item</comment>
   </data>
   <data name="CodeContributions_UC" xml:space="preserve">
-    <value></value>
+    <value>KÓD HOZZÁJÁRULÁSOK</value>
     <comment>Contribute</comment>
   </data>
   <data name="TranslationContributions_UC" xml:space="preserve">
-    <value></value>
+    <value>FORDÍTÁS HOZZÁJÁROLÁSOK</value>
     <comment>Contribute</comment>
   </data>
   <data name="CodeContributionsText" xml:space="preserve">
-    <value></value>
+    <value>Te C# fejlesztő vagy? Ez a projekt nyitott a hozzájárulásokra. További információért látogasd meg a GitHub oldalt.</value>
     <comment>Contribute</comment>
   </data>
   <data name="TranslationContributionsText" xml:space="preserve">
-    <value></value>
+    <value>Írsz-olvasok több nyelven? Segítségre van szükségünk a világ különböző nyelveihez. Többet megtudhatsz ha ellátogatsz a Discord szerverünkre.</value>
     <comment>Contribute</comment>
   </data>
   <data name="TranslationsDiscordChannel" xml:space="preserve">
@@ -642,7 +642,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="Contributors" xml:space="preserve">
-    <value></value>
+    <value>Hozzájárulók</value>
     <comment>Contribute</comment>
   </data>
   <data name="ShowWindow" xml:space="preserve">
@@ -654,15 +654,15 @@
     <comment>System tray icon</comment>
   </data>
   <data name="MinimizeToSystemTray" xml:space="preserve">
-    <value></value>
+    <value>Minimalizálás a tálcára</value>
     <comment>App settings</comment>
   </data>
   <data name="StartMinimized" xml:space="preserve">
-    <value></value>
+    <value>Indítás minimalizálva</value>
     <comment>App settings</comment>
   </data>
   <data name="StartWithWindows" xml:space="preserve">
-    <value></value>
+    <value>Indítás a Windows-al</value>
     <comment>App settings</comment>
   </data>
   <data name="TotalCompressionRate" xml:space="preserve">
@@ -683,22 +683,22 @@
   </data>
   <data name="SlewUnits" xml:space="preserve">
     <value></value>
-    <comment>Abbreviation for Newton-meters per second</comment>
+    <comment>Abbreviation for Newton-meters per millisecond</comment>
   </data>
   <data name="WheelForce" xml:space="preserve">
     <value></value>
     <comment>Racing wheel</comment>
   </data>
   <data name="Set" xml:space="preserve">
-    <value></value>
+    <value>Beállít</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="Preview_UC" xml:space="preserve">
-    <value></value>
+    <value>ELŐNÉZET</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="NoRecordingsFound" xml:space="preserve">
-    <value></value>
+    <value>[Felvétel nem található]</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="SimpleMode" xml:space="preserve">
@@ -714,7 +714,7 @@
     <comment>Racing wheel algorithms list</comment>
   </data>
   <data name="DiscordModerators_UC" xml:space="preserve">
-    <value></value>
+    <value>DISCORD MODERÁTOROK</value>
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
@@ -726,11 +726,11 @@
     <comment>AdminBoxx</comment>
   </data>
   <data name="AllowSuperStrength" xml:space="preserve">
-    <value></value>
+    <value>200%-os erő engedályezése (potenciálisan veszélyes)</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="ON" xml:space="preserve">
-    <value></value>
+    <value>Be</value>
     <comment>Generic</comment>
   </data>
   <data name="Sounds_UC" xml:space="preserve">
@@ -754,7 +754,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="EnableLogitechRPMLights" xml:space="preserve">
-    <value></value>
+    <value>Logitech RPM ledek engedélyezése</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="Degrees" xml:space="preserve">
@@ -766,11 +766,11 @@
     <comment>Sounds</comment>
   </data>
   <data name="CrashProtectionActivated" xml:space="preserve">
-    <value></value>
+    <value>Baleset védelem aktiválva!</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="CurbProtectionActivated" xml:space="preserve">
-    <value></value>
+    <value>Rázókő védelem aktiválva!</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="PrivateMessages_UC" xml:space="preserve">
@@ -778,11 +778,11 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="CurbProtectionMessagesEnabled" xml:space="preserve">
-    <value></value>
+    <value>Rázőkő védelem üzenetek engedélyezése</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="CrashProtectionMessagesEnabled" xml:space="preserve">
-    <value></value>
+    <value>Baleset védfelem üzenetek engedélyezése</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="InputMappedSettingUpdateEnabled" xml:space="preserve">
@@ -794,7 +794,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="RunCalibration" xml:space="preserve">
-    <value></value>
+    <value>Kalibráció futtatása</value>
     <comment>Steering effects</comment>
   </data>
   <data name="StopCalibration" xml:space="preserve">
@@ -882,7 +882,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="ParkedEffects_UC" xml:space="preserve">
-    <value></value>
+    <value>Parkolt hatások</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="ForceFeedbackStrength" xml:space="preserve">
@@ -894,15 +894,15 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="CenterWheelWhileRacing" xml:space="preserve">
-    <value></value>
+    <value>Kerék középre fordítása verseny közben</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="CenterWheelWhileParked" xml:space="preserve">
-    <value></value>
+    <value>Kerék középre fordítása parkolás közben</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="ParkedFriction" xml:space="preserve">
-    <value></value>
+    <value>Parkoló surlódás</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="CurrentCarSetup" xml:space="preserve">
@@ -934,7 +934,7 @@
     <comment>Abbreviation for kilometers per hour</comment>
   </data>
   <data name="CalibrationFileContributors" xml:space="preserve">
-    <value></value>
+    <value>Kalibráció hozzájárulások</value>
     <comment>Contribute</comment>
   </data>
   <data name="CalibrationFilesText" xml:space="preserve">
@@ -1042,7 +1042,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="SpeechToText" xml:space="preserve">
-    <value></value>
+    <value>Beszéd szöveggé alakítása</value>
     <comment>App menu item</comment>
   </data>
   <data name="Overlay" xml:space="preserve">
@@ -1086,27 +1086,27 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="Algorithm_UC" xml:space="preserve">
-    <value></value>
+    <value>ALGORITMUS</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="ReadyToDonate" xml:space="preserve">
-    <value></value>
+    <value>Kész vagy támoghatni?</value>
     <comment>Donate</comment>
   </data>
   <data name="Contribute" xml:space="preserve">
-    <value></value>
+    <value>Közreműködések</value>
     <comment>App menu item</comment>
   </data>
   <data name="CalibrationFileContributions_UC" xml:space="preserve">
-    <value></value>
+    <value>KALIBRÁCIÓ HOZZÁJÁRULÁSOK</value>
     <comment>Contribute</comment>
   </data>
   <data name="Moderators" xml:space="preserve">
-    <value></value>
+    <value>Moderátorok</value>
     <comment>Contribute</comment>
   </data>
   <data name="AppSettings_UC" xml:space="preserve">
-    <value></value>
+    <value>ALKALMAZÁS BEÁLLÍTÁSOK</value>
     <comment>App settings</comment>
   </data>
   <data name="Simulator_UC" xml:space="preserve">
@@ -1122,7 +1122,7 @@
     <comment>Speech to text</comment>
   </data>
   <data name="Changelog" xml:space="preserve">
-    <value></value>
+    <value>Változások</value>
     <comment>Cloud service</comment>
   </data>
   <data name="ABSEngaged" xml:space="preserve">
@@ -1146,11 +1146,11 @@
     <comment>Pedal effects list</comment>
   </data>
   <data name="Sounds" xml:space="preserve">
-    <value></value>
+    <value>Hangok</value>
     <comment>App menu item</comment>
   </data>
   <data name="Pedals" xml:space="preserve">
-    <value>Pedaler</value>
+    <value>Pedál</value>
     <comment>App menu item</comment>
   </data>
   <data name="WheelLock" xml:space="preserve">
@@ -1174,7 +1174,7 @@
     <comment>Wind</comment>
   </data>
   <data name="Wind" xml:space="preserve">
-    <value></value>
+    <value>Szél</value>
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToWindOnStartup" xml:space="preserve">
@@ -1194,7 +1194,7 @@
     <comment>Wind</comment>
   </data>
   <data name="Connection_UC" xml:space="preserve">
-    <value>Kobling</value>
+    <value></value>
     <comment>Wind</comment>
   </data>
   <data name="Settings_UC" xml:space="preserve">
@@ -1226,11 +1226,11 @@
     <comment>Wind</comment>
   </data>
   <data name="DeviceNotFound" xml:space="preserve">
-    <value></value>
+    <value>Eszköz hiányzik</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="IRacingPaintFolder" xml:space="preserve">
-    <value></value>
+    <value>iRacing festések könyvtár</value>
     <comment>Trading paints</comment>
   </data>
   <data name="TradingPaints" xml:space="preserve">
@@ -1242,7 +1242,7 @@
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value></value>
+    <value>Marvin's Awesome iRacing App (MAIRA) nem kapcsolódik a Trading Paints-hez</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">
@@ -1266,7 +1266,7 @@
     <comment>Racing wheel</comment>
   </data>
   <data name="OutputSmoothing" xml:space="preserve">
-    <value></value>
+    <value>Kimenet simítás</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="SeatOfPants_UC" xml:space="preserve">
@@ -1301,7 +1301,44 @@
     <value></value>
     <comment>Steering effects</comment>
   </data>
+  <data name="DefaultPage_UC" xml:space="preserve">
+    <value>ALAPÉRTELMEZETT OLDAL</value>
+    <comment>App settings</comment>
+  </data>
+  <data name="Effects_UC" xml:space="preserve">
+    <value>EFFEKTEK</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnGearChange" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnABS" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="Audio_UC" xml:space="preserve">
+    <value>HANG</value>
+    <comment>AdminBoxx</comment>
+  </data>
   <data name="Display_UC" xml:space="preserve">
-    <value>Skjerm</value>
+    <value>KIJELZŐ</value>
+    <comment>AdminBoxx</comment>
+  </data>
+  <data name="AdminBoxx_UC" xml:space="preserve">
+    <value></value>
+    <comment>AdminBoxx</comment>
+  </data>
+  <data name="Click_UC" xml:space="preserve">
+    <value></value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="PedalsP500" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
+  </data>
+  <data name="PedalsPrototype" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
   </data>
 </root>
