@@ -737,6 +737,8 @@ public class RacingWheel
 
 					app.Logger.WriteLine( "[RacingWheel] Requesting reset of force feedback device" );
 				}
+
+				app.MainWindow.UpdateRacingWheelPowerButton();
 			}
 
 			// if power button is off, or suspend is requested, or unsuspend counter is still counting down, then suspend the racing wheel force feedback
@@ -782,6 +784,8 @@ public class RacingWheel
 
 					app.DirectInput.InitializeForceFeedback( (Guid) _currentRacingWheelGuid );
 				}
+
+				app.MainWindow.UpdateRacingWheelPowerButton();
 			}
 
 			// check if we want to auto set max force
@@ -1108,13 +1112,13 @@ public class RacingWheel
 
 			if ( CrashProtectionIsActive )
 			{
-				protectionForegroundColor = 0xFFFF0000;
-				protectionBackgroundColor = 0xFF444444;
+				protectionForegroundColor = 0xFFFF5B2E;
+				protectionBackgroundColor = 0xFF000000;
 			}
 			else if ( CurbProtectionIsActive )
 			{
 				protectionForegroundColor = 0xFFFFFF00;
-				protectionBackgroundColor = 0xFF444444;
+				protectionBackgroundColor = 0xFF000000;
 			}
 
 			if ( outputTorque < -1f )
@@ -1228,6 +1232,11 @@ public class RacingWheel
 
 				_algorithmPreviewGraphBase.WritePixels();
 			}
+
+			// update record button
+
+			MainWindow._racingWheelPage.Record_MairaMappableButton.IsEnabled = app.Simulator.IsOnTrack;
+			MainWindow._racingWheelPage.Record_MairaMappableButton.Blink = app.RecordingManager.IsRecording;
 		}
 	}
 }
