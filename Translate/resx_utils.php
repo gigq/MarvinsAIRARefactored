@@ -6,6 +6,8 @@
 
 declare( strict_types = 1 );
 
+const RESX_DIR = __DIR__ . '/resx';
+
 function load_resx_safe( string $path ): array
 {
 	if ( !file_exists( $path ) ) return [];
