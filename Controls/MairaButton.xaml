@@ -404,8 +404,6 @@
 
                 <Image x:Name="Blink_Image"
                        Source="{Binding BlinkIcon, ElementName=Root}"
-                       Width="{Binding IconWidth, ElementName=Root}"
-                       Height="{Binding IconHeight, ElementName=Root}"
                        RenderOptions.BitmapScalingMode="HighQuality">
 
                     <Image.Style>
@@ -413,7 +411,7 @@
                         <Style TargetType="Image">
 
                             <Setter Property="Visibility"
-                                    Value="Visible" />
+                                    Value="Hidden" />
                             <Setter Property="Width"
                                     Value="{Binding IconWidth, ElementName=Root}" />
                             <Setter Property="Height"

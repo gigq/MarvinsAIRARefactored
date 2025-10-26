@@ -31,11 +31,14 @@ public sealed class RecordingManager : IDisposable
 		}
 	}
 
+	public bool IsRecording { get; private set; } = false;
+
 	private FileSystemWatcher? _fileSystemWatcher = null;
 
 	private readonly RecordingData[] _recordingData = new RecordingData[ 3840 ];
 
-	private int _recordingDataIndex;
+	private int _recordingDataIndex = 0;
+	private int _trackPosition = 0;
 
 	public void Initialize()
 	{
@@ -65,9 +68,9 @@ public sealed class RecordingManager : IDisposable
 
 		foreach ( var file in files )
 		{
-			var path = Path.Combine( _recordingsDirectory, file );
+			var filePath = Path.Combine( _recordingsDirectory, file );
 
-			LoadRecording( path );
+			LoadRecording( filePath );
 		}
 
 		if ( ( settings.RacingWheelSelectedRecording == string.Empty ) || !Recordings.ContainsKey( settings.RacingWheelSelectedRecording ) )
@@ -103,15 +106,15 @@ public sealed class RecordingManager : IDisposable
 		} );
 	}
 
-	private void LoadRecording( string path )
+	private void LoadRecording( string filePath )
 	{
-		if ( File.Exists( path ) )
+		if ( File.Exists( filePath ) )
 		{
-			var key = Path.GetFileNameWithoutExtension( path )?.ToLower();
+			var key = Path.GetFileNameWithoutExtension( filePath )?.ToLower();
 
 			if ( key != null )
 			{
-				var recording = new Recording( path );
+				var recording = new Recording( filePath );
 
 				if ( recording.IsValid )
 				{
@@ -131,22 +134,52 @@ public sealed class RecordingManager : IDisposable
 	[MethodImpl( MethodImplOptions.AggressiveInlining )]
 	public void AddRecordingData( float inputTorque60Hz, float inputTorque500Hz )
 	{
-		if ( _recordingDataIndex < _recordingData.Length )
+		if ( IsRecording )
 		{
-			_recordingData[ _recordingDataIndex++ ] = new RecordingData()
-			{
-				InputTorque60Hz = inputTorque60Hz,
-				InputTorque500Hz = inputTorque500Hz,
-			};
-
 			var app = App.Instance!;
+
+			if ( app.Simulator.IsOnTrack == false )
+			{
+				IsRecording = false;
+			}
+			else
+			{
+				_recordingData[ _recordingDataIndex++ ] = new RecordingData()
+				{
+					InputTorque60Hz = inputTorque60Hz,
+					InputTorque500Hz = inputTorque500Hz,
+				};
+
+				if ( _recordingDataIndex == _recordingData.Length / 2 )
+				{
+					_trackPosition = (int) MathF.Round( app.Simulator.LapDistPct * 100f );
+				}
+
+				if ( _recordingDataIndex == _recordingData.Length )
+				{
+					IsRecording = false;
+
+					SaveRecording();
+				}
+			}
 		}
 	}
 
-	[MethodImpl( MethodImplOptions.AggressiveInlining )]
-	public void ResetRecording()
+	public void StartRecording()
 	{
-		_recordingDataIndex = 0;
+		var app = App.Instance!;
+
+		if ( app.Simulator.IsOnTrack )
+		{
+			app.Logger.WriteLine( "[RecordingManager] StartRecording >>>" );
+
+			IsRecording = true;
+
+			_trackPosition = 0;
+			_recordingDataIndex = 0;
+
+			app.Logger.WriteLine( "[RecordingManager] <<< StartRecording" );
+		}
 	}
 
 	public void SaveRecording()
@@ -155,15 +188,27 @@ public sealed class RecordingManager : IDisposable
 
 		app.Logger.WriteLine( "[RecordingManager] SaveRecording >>>" );
 
-		var filePath = Path.Combine( _recordingsDirectory, "NewRecording.csv" );
+		var fileName = $"{app.Simulator.CarScreenName} @ {app.Simulator.TrackDisplayName} - {_trackPosition}";
+
+		var filePath = Path.Combine( _recordingsDirectory, $"{fileName}.csv" );
 
 		using var writer = new StreamWriter( filePath );
 
-		writer.WriteLine( "New recording" );
+		writer.WriteLine( fileName );
 
 		using var csv = new CsvWriter( writer, CultureInfo.InvariantCulture );
 
 		csv.WriteRecords( _recordingData );
+
+		writer.Close();
+
+		LoadRecording( filePath );
+
+		MainWindow._racingWheelPage.UpdatePreviewRecordingsOptions();
+
+		var settings = DataContext.DataContext.Instance.Settings;
+
+		settings.RacingWheelSelectedRecording = filePath;
 
 		app.Logger.WriteLine( "[RecordingManager] <<< SaveRecording" );
 	}

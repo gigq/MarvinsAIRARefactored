@@ -63,25 +63,6 @@
             </StackPanel>
 
         </controls:MairaGroupBox>
-
-        <controls:MairaGroupBox Label="Test Controls">
-
-            <StackPanel Orientation="Horizontal">
-
-                <controls:MairaMappableButton Label="Reset"
-                                              ButtonMappings="{Binding Settings.DebugResetRecordingMappings}"
-                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
-                                              Click="ResetRecording_Click" />
-
-                <controls:MairaMappableButton Label="Save"
-                                              ButtonMappings="{Binding Settings.DebugSaveRecordingMappings}"
-                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/set.png"
-                                              Click="SaveRecording_Click"
-                                              Margin="10,0,0,0" />
-
-            </StackPanel>
-
-        </controls:MairaGroupBox>
         
     </StackPanel>
 
