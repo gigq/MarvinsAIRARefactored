@@ -47,6 +47,8 @@ public class Settings : INotifyPropertyChanged
 		app.SettingsFile.QueueForSerialization = true;
 
 		PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+
+		app.Telemetry.UpdateSettings();
 	}
 
 	#endregion
@@ -1361,6 +1363,12 @@ public class Settings : INotifyPropertyChanged
 			app.RacingWheel.UpdateAlgorithmPreview = true;
 		}
 	}
+
+	#endregion
+
+	#region Racing wheel - Save recording
+
+	public ButtonMappings RacingWheelStartRecordingMappings { get; set; } = new();
 
 	#endregion
 
@@ -9231,13 +9239,6 @@ public class Settings : INotifyPropertyChanged
 			}
 		}
 	}
-
-	#endregion
-
-	#region Debug (temporary)
-
-	public ButtonMappings DebugResetRecordingMappings { get; set; } = new();
-	public ButtonMappings DebugSaveRecordingMappings { get; set; } = new();
 
 	#endregion
 }
