@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -15,7 +14,6 @@ using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Components;
 using MarvinsAIRARefactored.Controls;
 using MarvinsAIRARefactored.Pages;
-using MarvinsAIRARefactored.PInvoke;
 
 namespace MarvinsAIRARefactored.Windows;
 
@@ -56,8 +54,6 @@ public partial class MainWindow : Window
 	public static readonly DonatePage _donatePage = new();
 	public static readonly DebugPage _debugPage = new();
 
-	public nint WindowHandle { get; private set; } = 0;
-
 	private string? _installerFilePath = null;
 	private bool _initialized = false;
 	private NotifyIcon? _notifyIcon = null;
@@ -97,10 +93,6 @@ public partial class MainWindow : Window
 		var app = App.Instance!;
 
 		app.Logger.WriteLine( "[MainWindow] Initialize >>>" );
-
-		var value = UXTheme.ShouldSystemUseDarkMode() ? 1 : 0;
-
-		DWMAPI.DwmSetWindowAttribute( WindowHandle, (uint) DWMAPI.cbAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref value, (uint) System.Runtime.InteropServices.Marshal.SizeOf( value ) );
 
 		UpdateRacingWheelPowerButton();
 		UpdateRacingWheelForceFeedbackButtons();
@@ -495,12 +487,7 @@ public partial class MainWindow : Window
 
 	private void Window_ContentRendered( object sender, EventArgs e )
 	{
-		if ( WindowHandle == 0 )
-		{
-			WindowHandle = new WindowInteropHelper( this ).Handle;
-
-			UpdateRacingWheelSimpleMode();
-		}
+		UpdateRacingWheelSimpleMode();
 	}
 
 	private void Window_LocationChanged( object sender, EventArgs e )
