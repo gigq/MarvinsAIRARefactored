@@ -118,7 +118,7 @@ public class GraphBase
 
 			var topGutterColor = oddEven ? _topGutterForegroundColor : _topGutterBackgroundColor;
 
-			for ( var y = 0; y  < GutterSize; y++ )
+			for ( var y = 1; y  < GutterSize - 1; y++ )
 			{
 				_colorArray[ y, _x ] = topGutterColor;
 			}
@@ -135,7 +135,7 @@ public class GraphBase
 
 			var bottomGutterColor = oddEven ? _bottomGutterForegroundColor : _bottomGutterBackgroundColor;
 
-			for ( var y = BitmapHeight - GutterSize; y < BitmapHeight; y++ )
+			for ( var y = BitmapHeight - GutterSize + 1; y < BitmapHeight - 1; y++ )
 			{
 				_colorArray[ y, _x ] = bottomGutterColor;
 			}
