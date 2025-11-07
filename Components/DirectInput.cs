@@ -51,6 +51,8 @@ public class DirectInput
 
 	private bool _joystickInfoListNeedsToBeUpdated = false;
 
+	private readonly bool[] _streamDeckButtons = new bool[ 128 ];
+
 	private int _pollMutex = 0;
 
 	public void Initialize()
@@ -334,6 +336,16 @@ public class DirectInput
 				return true;
 			}
 		}
+		else if ( deviceInstanceGuid == StreamDeck.DeviceGuid )
+		{
+			if ( (uint) buttonNumber < (uint) _streamDeckButtons.Length )
+			{
+				if ( _streamDeckButtons[ buttonNumber ] )
+				{
+					return true;
+				}
+			}
+		}
 		else if ( _joystickInfoDictionary.TryGetValue( deviceInstanceGuid, out var joystickInfo ) )
 		{
 			if ( joystickInfo._joystickState.Buttons[ buttonNumber ] )
@@ -356,9 +368,21 @@ public class DirectInput
 		}
 	}
 
+	[MethodImpl( MethodImplOptions.AggressiveInlining )]
 	private void OnDeviceListMightHaveChanged( object? sender, EventArgs e )
 	{
 		_joystickInfoListNeedsToBeUpdated = true;
+	}
+
+	[MethodImpl( MethodImplOptions.AggressiveInlining )]
+	public void InjectStreamDeckInput( string deviceProductName, int buttonNumber, bool isPressed )
+	{
+		if ( (uint) buttonNumber < (uint) _streamDeckButtons.Length )
+		{
+			_streamDeckButtons[ buttonNumber ] = isPressed;
+
+			OnInput?.Invoke( deviceProductName, StreamDeck.DeviceGuid, buttonNumber, isPressed );
+		}
 	}
 
 	private void EnumerateDevices()

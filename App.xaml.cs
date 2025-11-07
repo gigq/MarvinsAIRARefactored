@@ -46,6 +46,7 @@ public partial class App : Application
 	public AudioManager AudioManager { get; private set; }
 	public Sounds Sounds { get; private set; }
 	public DirectInput DirectInput { get; private set; }
+	public StreamDeck StreamDeck { get; private set; }
 	public LFE LFE { get; private set; }
 	public MultimediaTimer MultimediaTimer { get; private set; }
 	public Simulator Simulator { get; private set; }
@@ -99,6 +100,7 @@ public partial class App : Application
 		AudioManager = new();
 		Sounds = new();
 		DirectInput = new();
+		StreamDeck = new();
 		LFE = new();
 		MultimediaTimer = new();
 		Simulator = new();
@@ -217,6 +219,7 @@ public partial class App : Application
 				AudioManager.Initialize();
 				Simulator.Initialize();
 				DirectInput.Initialize();
+				StreamDeck.Initialize();
 
 #if !ADMINBOXX
 

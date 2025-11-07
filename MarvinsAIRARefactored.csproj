@@ -120,27 +120,25 @@
 
   <ItemGroup>
     <PackageReference Include="Accord" Version="3.8.0" />
-    <PackageReference Include="Accord.Math" Version="3.8.0" />
     <PackageReference Include="Accord.Neuro" Version="3.8.0" />
     <PackageReference Include="Accord.Statistics" Version="3.8.0" />
     <PackageReference Include="CsvHelper" Version="33.1.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3485.44" />
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.205">
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3537.50" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.236">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="PInvoke.Kernel32" Version="0.7.124" />
+    <PackageReference Include="OpenMacroBoard.SDK" Version="6.1.0" />
     <PackageReference Include="PInvoke.SetupApi" Version="0.7.124" />
     <PackageReference Include="PInvoke.User32" Version="0.7.124" />
     <PackageReference Include="SharpDX.DirectInput" Version="4.2.0" />
     <PackageReference Include="SharpDX.DirectSound" Version="4.2.0" />
     <PackageReference Include="SharpDX.XAudio2" Version="4.2.0" />
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
-    <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
-    <PackageReference Include="System.IO.Ports" Version="9.0.9" />
-    <PackageReference Include="System.Management" Version="9.0.9" />
-    <PackageReference Include="System.Windows.Extensions" Version="9.0.9" />
+    <PackageReference Include="StreamDeckSharp" Version="6.1.0" />
+    <PackageReference Include="System.IO.Ports" Version="9.0.10" />
+    <PackageReference Include="System.Management" Version="9.0.10" />
   </ItemGroup>
 
   <ItemGroup>
