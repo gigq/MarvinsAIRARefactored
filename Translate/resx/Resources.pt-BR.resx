@@ -1335,7 +1335,7 @@
     <comment>Pedals device</comment>
   </data>
   <data name="PedalsPrototype" xml:space="preserve">
-    <value></value>
+    <value>Pedais Protótipo</value>
     <comment>Pedals device</comment>
   </data>
 </root>

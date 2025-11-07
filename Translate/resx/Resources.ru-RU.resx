@@ -1,110 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
-    Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
-    associated with the data types.
-
-    Example:
-
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-
-    There are any number of "resheader" rows that contain simple
-    name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
-    mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
-    extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
-    read any of the formats listed below.
-
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
+  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"/>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -529,6 +425,9 @@
     <value>Автоматически загружать обновления</value>
     <comment>App settings</comment>
   </data>
+  <data name="ConnectToAdminBoxxOnStartup" xml:space="preserve">
+    <value>Подключаться к AdminBoxx при запуске приложения</value>
+  </data>
   <data name="Brightness" xml:space="preserve">
     <value>Яркость</value>
     <comment>AdminBoxx</comment>
@@ -808,6 +707,9 @@
   <data name="Sensitivity" xml:space="preserve">
     <value>Чувствительность</value>
     <comment>Pedals</comment>
+  </data>
+  <data name="SlewAndTotalCompression" xml:space="preserve">
+    <value>Скорость нарастания момента(Slew) и сжатие</value>
   </data>
   <data name="DiscordModerators_UC" xml:space="preserve">
     <value>Модераторы Дискорда</value>
@@ -1090,11 +992,11 @@
     <comment>Steering effects</comment>
   </data>
   <data name="SawtoothWaveIn" xml:space="preserve">
-    <value></value>
+    <value>Пилообразная волна (вход)</value>
     <comment>Steering effects</comment>
   </data>
   <data name="SawtoothWaveOut" xml:space="preserve">
-    <value></value>
+    <value>Пилообразная волна (выход)</value>
     <comment>Steering effects</comment>
   </data>
   <data name="DecreaseForce" xml:space="preserve">
@@ -1170,7 +1072,7 @@
     <comment>Speech-to-text bridge</comment>
   </data>
   <data name="STT_Hint" xml:space="preserve">
-    <value></value>
+    <value>Нажмите кнопку для активации. Проверьте, что в браузере выбрано правильное устройство, нажав на иконку микрофона в адресной строке!</value>
     <comment>Speech-to-text bridge</comment>
   </data>
   <data name="STT_Button" xml:space="preserve">
@@ -1261,22 +1163,176 @@
     <value>Grip-O-Meter</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="ConnectToAdminBoxxOnStartup" xml:space="preserve">
-    <value>Подключаться к AdminBoxx при запуске приложения</value>
+  <data name="MPHUnits" xml:space="preserve">
+    <value>Миля/ч</value>
+    <comment>Abbreviation for miles per hour</comment>
   </data>
-  <data name="SlewAndTotalCompression" xml:space="preserve">
-    <value>Скорость нарастания момента(Slew) и сжатие</value>
+  <data name="Wind_UC" xml:space="preserve">
+    <value>ВЕТЕР</value>
+    <comment>Wind</comment>
   </data>
-  <data name="Click_UC" xml:space="preserve">
-    <value>Клик</value>
+  <data name="Wind" xml:space="preserve">
+    <value>Ветер</value>
+    <comment>App menu item</comment>
   </data>
-  <data name="Audio_UC" xml:space="preserve">
-    <value>Звук</value>
+  <data name="ConnectToWindOnStartup" xml:space="preserve">
+    <value>Присоединяться к MAIRA Ветер при запуске приложения</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="ConnectToWind" xml:space="preserve">
+    <value>Присоединиться к MAIRA Ветер</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="LeftFan" xml:space="preserve">
+    <value>Левый вентилятор</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="RightFan" xml:space="preserve">
+    <value>Правый вентилятор</value>
+    <comment>Wind</comment>
   </data>
   <data name="Connection_UC" xml:space="preserve">
     <value>Соединение</value>
   </data>
+  <data name="Settings_UC" xml:space="preserve">
+    <value>НАСТРОЙКИ</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="MasterWindPower" xml:space="preserve">
+    <value>Общая сила ветра</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="MinimumSpeed" xml:space="preserve">
+    <value>Минимальная Скорость</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="WindCurving" xml:space="preserve">
+    <value>Кривая ветра</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="FanPower_UC" xml:space="preserve">
+    <value>СИЛА ВЕНТИЛЯТОРА</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="Speed" xml:space="preserve">
+    <value>Скорость</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="FanPower" xml:space="preserve">
+    <value>Сила вентилятора</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="DeviceNotFound" xml:space="preserve">
+    <value>Устройство не найдено</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="IRacingPaintFolder" xml:space="preserve">
+    <value>Папка с ливреями iRacing</value>
+    <comment>Trading paints</comment>
+  </data>
+  <data name="TradingPaints" xml:space="preserve">
+    <value>Trading Paints</value>
+    <comment>App menu item</comment>
+  </data>
+  <data name="TradingPaints_UC" xml:space="preserve">
+    <value>TRADING PAINTS</value>
+    <comment>Trading Paints</comment>
+  </data>
+  <data name="TradingPaintsDisclaimer" xml:space="preserve">
+    <value>Приложение Marvin's Awesome iRacing (MAIRA) не связано с Trading Paints.</value>
+    <comment>Trading Paints</comment>
+  </data>
+  <data name="MultiAdjustmentToolkit" xml:space="preserve">
+    <value>Многофункциональная настройка</value>
+    <comment>Racing wheel algorithms list</comment>
+  </data>
+  <data name="TorqueCompression" xml:space="preserve">
+    <value>Комрессия сигнала</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="SlewRateReduction" xml:space="preserve">
+    <value>Уменьшение Slew Rate</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="SoftClipping" xml:space="preserve">
+    <value>Мягкий клиппинг</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="DetailGain" xml:space="preserve">
+    <value>Прирост Деталей</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="OutputSmoothing" xml:space="preserve">
+    <value>Сглаживание выходного сигнала</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="SeatOfPants_UC" xml:space="preserve">
+    <value>SEAT-OF-PANTS</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SeatOfPantsWheelVibrationEffect_UC" xml:space="preserve">
+    <value>ЭФФЕКТ ВИБРАЦИИ ОТ SEAT-OF_PANTS НА РУЛЕ</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SeatOfPantsWheelConstantForceEffect_UC" xml:space="preserve">
+    <value>ЭФФЕКТ ПОСТОЯННОГО УСИЛИЯ ОТ SEAT-OF-PANTS НА РУЛЕ</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SeatOfPantsPedalVibrationEffect_UC" xml:space="preserve">
+    <value>ЭФФЕКТ ВИБРАЦИИ ОТ SEAT-OF-PANTS НА ПЕДАЛЯХ</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="SeatOfPantsEffect" xml:space="preserve">
+    <value>Эффект Seat-of-Pants</value>
+    <comment>Pedal effects list</comment>
+  </data>
+  <data name="LateralAcceleration" xml:space="preserve">
+    <value>Боковое ускорение (Ay)</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="LateralVelocity" xml:space="preserve">
+    <value>Боковая скорость (Vy)</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="RatioOfVelocities" xml:space="preserve">
+    <value>Отношение скоростей (Vy/Vx)</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="DefaultPage_UC" xml:space="preserve">
+    <value>СТРАНИЦА ПО-УМОЛЧАНИЮ</value>
+    <comment>App settings</comment>
+  </data>
+  <data name="Effects_UC" xml:space="preserve">
+    <value>ЭФФЕКТЫ</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnGearChange" xml:space="preserve">
+    <value>Вибрировать при смене передачи</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="VibrateOnABS" xml:space="preserve">
+    <value>Вибрировать при активации АБС</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="Audio_UC" xml:space="preserve">
+    <value>Звук</value>
+  </data>
   <data name="Display_UC" xml:space="preserve">
     <value>Дисплей</value>
+  </data>
+  <data name="AdminBoxx_UC" xml:space="preserve">
+    <value>ADMINBOXX</value>
+    <comment>AdminBoxx</comment>
+  </data>
+  <data name="Click_UC" xml:space="preserve">
+    <value>Клик</value>
+  </data>
+  <data name="PedalsP500" xml:space="preserve">
+    <value>Педали Simagic P500</value>
+    <comment>Pedals device</comment>
+  </data>
+  <data name="PedalsPrototype" xml:space="preserve">
+    <value>Прототип педалей</value>
+    <comment>Pedals device</comment>
   </data>
 </root>

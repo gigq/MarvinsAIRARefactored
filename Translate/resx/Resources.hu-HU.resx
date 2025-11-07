@@ -294,7 +294,7 @@
     <comment>Pedals</comment>
   </data>
   <data name="Brake_UC" xml:space="preserve">
-    <value></value>
+    <value>FÉK</value>
     <comment>Pedals</comment>
   </data>
   <data name="Throttle_UC" xml:space="preserve">
@@ -506,7 +506,7 @@
     <comment>Sounds</comment>
   </data>
   <data name="Disabled" xml:space="preserve">
-    <value></value>
+    <value>[Letiltva]</value>
     <comment>LFE devices list</comment>
   </data>
   <data name="RememberWindowPositionAndSize" xml:space="preserve">
@@ -634,7 +634,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="TranslationsDiscordChannel" xml:space="preserve">
-    <value></value>
+    <value>Fordítások Discord csatorna</value>
     <comment>Contribute</comment>
   </data>
   <data name="GitHubRepository" xml:space="preserve">
@@ -914,7 +914,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
-    <value></value>
+    <value>Valami baj történt</value>
     <comment>Error window</comment>
   </data>
   <data name="Details" xml:space="preserve">
@@ -922,11 +922,11 @@
     <comment>Error window</comment>
   </data>
   <data name="ClassicMAIRAIsRunning" xml:space="preserve">
-    <value></value>
+    <value>Callsic MAIRA jelenleg fut - LÉgy szíves zárt be a classic MAIRA-t mielőtt futtatod ez a verzójú MAIRA-t</value>
     <comment>Error messages</comment>
   </data>
   <data name="ExceptionThrown" xml:space="preserve">
-    <value></value>
+    <value>Kivátel történt</value>
     <comment>Error messages</comment>
   </data>
   <data name="KPHUnits" xml:space="preserve">

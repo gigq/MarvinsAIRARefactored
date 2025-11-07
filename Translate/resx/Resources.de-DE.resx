@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"/>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -121,7 +121,7 @@
     <comment>Simulator</comment>
   </data>
   <data name="Test" xml:space="preserve">
-    <value></value>
+    <value>Test</value>
     <comment>Racing wheel</comment>
   </data>
   <data name="ThisLanguage" xml:space="preserve">
@@ -885,7 +885,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Error window</comment>
   </data>
   <data name="Details" xml:space="preserve">
-    <value></value>
+    <value>Detaillierung</value>
     <comment>Error window</comment>
   </data>
   <data name="ClassicMAIRAIsRunning" xml:space="preserve">
@@ -1063,7 +1063,7 @@ Hier ist der Link zum Spenden:</value>
     <value>EINSTELLUNGEN</value>
   </data>
   <data name="Simulator_UC" xml:space="preserve">
-    <value></value>
+    <value>Simulator</value>
   </data>
   <data name="Graph_UC" xml:space="preserve">
     <value>DIAGRAMM</value>
@@ -1079,7 +1079,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Pedal effects list, Sounds</comment>
   </data>
   <data name="Amplitude" xml:space="preserve">
-    <value></value>
+    <value>Amplitude</value>
     <comment>Pedals</comment>
   </data>
   <data name="ClutchSlip" xml:space="preserve">
@@ -1115,7 +1115,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Abbreviation for miles per hour</comment>
   </data>
   <data name="Wind_UC" xml:space="preserve">
-    <value></value>
+    <value>Wind</value>
     <comment>Wind</comment>
   </data>
   <data name="Wind" xml:space="preserve">
@@ -1271,10 +1271,18 @@ Hier ist der Link zum Spenden:</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="AdminBoxx_UC" xml:space="preserve">
-    <value></value>
+    <value>Administrations Auswahl</value>
     <comment>AdminBoxx</comment>
   </data>
   <data name="Click_UC" xml:space="preserve">
     <value>Klick</value>
+  </data>
+  <data name="PedalsP500" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
+  </data>
+  <data name="PedalsPrototype" xml:space="preserve">
+    <value>Pedal Prototyp</value>
+    <comment>Pedals device</comment>
   </data>
 </root>

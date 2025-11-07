@@ -884,7 +884,7 @@
     <value>Se ha producido una excepción</value>
   </data>
   <data name="KPHUnits" xml:space="preserve">
-    <value></value>
+    <value>km/h</value>
   </data>
   <data name="CalibrationFileContributors" xml:space="preserve">
     <value>Colaboradores del archivo de calibración</value>
@@ -1062,7 +1062,7 @@
     <value>Medidor de Grip</value>
   </data>
   <data name="MPHUnits" xml:space="preserve">
-    <value></value>
+    <value>mi/h</value>
     <comment>Abbreviation for miles per hour</comment>
   </data>
   <data name="Wind_UC" xml:space="preserve">
@@ -1227,5 +1227,13 @@
   </data>
   <data name="Click_UC" xml:space="preserve">
     <value>Clic</value>
+  </data>
+  <data name="PedalsP500" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
+  </data>
+  <data name="PedalsPrototype" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
   </data>
 </root>

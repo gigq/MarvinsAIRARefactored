@@ -18,7 +18,7 @@
     <comment>Baza Kierownicy</comment>
   </data>
   <data name="AppSettings" xml:space="preserve">
-    <value>Aplikacja</value>
+    <value>Ustawienia aplikacji</value>
     <comment>Zakładka</comment>
   </data>
   <data name="AppTitle" xml:space="preserve">
@@ -172,7 +172,7 @@
     <comment>Mapowanie Przycisków</comment>
   </data>
   <data name="WaitingForInput" xml:space="preserve">
-    <value>[Czekam Na Dane Wejściowe ]</value>
+    <value>[Czekam Na wciśnięcie guzika]</value>
     <comment>Mapowanie Przycisków</comment>
   </data>
   <data name="DeltaLimit" xml:space="preserve">
@@ -611,7 +611,7 @@
     <comment>Współpraca</comment>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value>Podaruj</value>
+    <value>Wspomóż</value>
     <comment>Zakładka</comment>
   </data>
   <data name="CodeContributions_UC" xml:space="preserve">
@@ -1147,7 +1147,7 @@
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value></value>
+    <value>Marvin's Awesome iRacing App (MAIRA) nie jest powiązany z Trading Paints</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">
@@ -1233,5 +1233,17 @@
   <data name="AdminBoxx_UC" xml:space="preserve">
     <value>ADMINBOXX</value>
     <comment>AdminBoxx</comment>
+  </data>
+  <data name="Click_UC" xml:space="preserve">
+    <value></value>
+    <comment>Sounds</comment>
+  </data>
+  <data name="PedalsP500" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
+  </data>
+  <data name="PedalsPrototype" xml:space="preserve">
+    <value></value>
+    <comment>Pedals device</comment>
   </data>
 </root>
