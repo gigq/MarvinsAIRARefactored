@@ -395,7 +395,6 @@ $language_options = build_language_options( $selected );
 					<div id="editEn" class="mono" style="white-space:pre-wrap"></div>
 					<label class="muted">Translation (<?= h( $selected ) ?>)</label>
 					<textarea id="editValue" spellcheck="false"></textarea>
-					<em class="muted" style="margin:0 0 1rem 0">If the translation is the same as the English, you can leave the translation blank.</em>
 					<div style="display:flex; gap:8px; justify-content:flex-end; margin-top:6px">
 						<button value="cancel" class="secondary">Cancel</button>
 						<button id="saveBtn" value="default">Save</button>
