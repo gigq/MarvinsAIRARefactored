@@ -1,7 +1,9 @@
 ﻿
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 
+using ComboBox = System.Windows.Controls.ComboBox;
 using UserControl = System.Windows.Controls.UserControl;
 
 using MarvinsAIRARefactored.Components;
@@ -234,6 +236,96 @@ public partial class SteeringEffectsPage : UserControl
 		} );
 
 		app.Logger.WriteLine( "[SteeringEffectsPage] <<< UpdateSeatOfPantsAlgorithmOptions" );
+	}
+
+	private void UndersteerWheelVibrationPattern_MairaComboBox_SelectionChanged( object sender, SelectionChangedEventArgs e )
+	{
+		var comboBox = sender as ComboBox;
+
+		if ( comboBox is not null )
+		{
+			var selectedValue = (RacingWheel.VibrationPattern) comboBox.SelectedValue;
+
+			var visibility = selectedValue == RacingWheel.VibrationPattern.None ? Visibility.Collapsed : Visibility.Visible;
+
+			UndersteerWheelVibrationStrength_MairaKnob.Visibility = visibility;
+			UndersteerWheelVibrationRow2_Grid.Visibility = visibility;
+		}
+	}
+
+	private void UndersteerWheelConstantForceEffect_MairaComboBox_SelectionChanged( object sender, SelectionChangedEventArgs e )
+	{
+		var comboBox = sender as ComboBox;
+
+		if ( comboBox is not null )
+		{
+			var selectedValue = (RacingWheel.VibrationPattern) comboBox.SelectedValue;
+
+			var visibility = selectedValue == RacingWheel.VibrationPattern.None ? Visibility.Collapsed : Visibility.Visible;
+
+			UndersteerWheelConstantForceStrength_MairaKnob.Visibility = visibility;
+			UndersteerWheelConstantForceCurve_MairaKnob.Visibility = visibility;
+		}
+	}
+
+	private void OversteerWheelVibrationPattern_MairaComboBox_SelectionChanged( object sender, SelectionChangedEventArgs e )
+	{
+		var comboBox = sender as ComboBox;
+
+		if ( comboBox is not null )
+		{
+			var selectedValue = (RacingWheel.VibrationPattern) comboBox.SelectedValue;
+
+			var visibility = selectedValue == RacingWheel.VibrationPattern.None ? Visibility.Collapsed : Visibility.Visible;
+
+			OversteerWheelVibrationStrength_MairaKnob.Visibility = visibility;
+			OversteerWheelVibrationRow2_Grid.Visibility = visibility;
+		}
+	}
+
+	private void OversteerWheelConstantForceEffect_MairaComboBox_SelectionChanged( object sender, SelectionChangedEventArgs e )
+	{
+		var comboBox = sender as ComboBox;
+
+		if ( comboBox is not null )
+		{
+			var selectedValue = (RacingWheel.VibrationPattern) comboBox.SelectedValue;
+
+			var visibility = selectedValue == RacingWheel.VibrationPattern.None ? Visibility.Collapsed : Visibility.Visible;
+
+			OversteerWheelConstantForceStrength_MairaKnob.Visibility = visibility;
+			OversteerWheelConstantForceCurve_MairaKnob.Visibility = visibility;
+		}
+	}
+
+	private void SeatOfPantsWheelVibrationPattern_MairaComboBox_SelectionChanged( object sender, SelectionChangedEventArgs e )
+	{
+		var comboBox = sender as ComboBox;
+
+		if ( comboBox is not null )
+		{
+			var selectedValue = (RacingWheel.VibrationPattern) comboBox.SelectedValue;
+
+			var visibility = selectedValue == RacingWheel.VibrationPattern.None ? Visibility.Collapsed : Visibility.Visible;
+
+			SeatOfPantsWheelVibrationStrength_MairaKnob.Visibility = visibility;
+			SeatOfPantsWheelVibrationRow2_Grid.Visibility = visibility;
+		}
+	}
+
+	private void SeatOfPantsWheelConstantForceEffect_MairaComboBox_SelectionChanged( object sender, SelectionChangedEventArgs e )
+	{
+		var comboBox = sender as ComboBox;
+
+		if ( comboBox is not null )
+		{
+			var selectedValue = (RacingWheel.VibrationPattern) comboBox.SelectedValue;
+
+			var visibility = selectedValue == RacingWheel.VibrationPattern.None ? Visibility.Collapsed : Visibility.Visible;
+
+			SeatOfPantsWheelConstantForceStrength_MairaKnob.Visibility = visibility;
+			SeatOfPantsWheelConstantForceCurve_MairaKnob.Visibility = visibility;
+		}
 	}
 
 	#endregion

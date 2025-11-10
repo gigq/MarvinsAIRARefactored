@@ -221,9 +221,11 @@
                                                     Grid.Column="0"
                                                     Label="{Binding Localization[VibrationPattern]}"
                                                     SelectedValue="{Binding Settings.SteeringEffectsUndersteerWheelVibrationPattern, Mode=TwoWay}"
-                                                    ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationPatternContextSwitches}" />
+                                                    ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelVibrationPatternContextSwitches}"
+                                                    SelectionChanged="UndersteerWheelVibrationPattern_MairaComboBox_SelectionChanged" />
 
-                            <controls:MairaKnob Grid.Column="2"
+                            <controls:MairaKnob x:Name="UndersteerWheelVibrationStrength_MairaKnob"
+                                                Grid.Column="2"
                                                 Label="{Binding Localization[Strength]}"
                                                 Value="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrength, Mode=TwoWay}"
                                                 ValueString="{Binding Settings.SteeringEffectsUndersteerWheelVibrationStrengthString}"
@@ -235,7 +237,8 @@
 
                         </Grid>
 
-                        <Grid Margin="0,20,0,0">
+                        <Grid x:Name="UndersteerWheelVibrationRow2_Grid"
+                              Margin="0,20,0,0">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -299,9 +302,11 @@
                                                 Grid.Column="0"
                                                 Label="{Binding Localization[Direction]}"
                                                 SelectedValue="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceDirection, Mode=TwoWay}"
-                                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceDirectionContextSwitches}" />
+                                                ContextSwitches="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceDirectionContextSwitches}"
+                                                SelectionChanged="UndersteerWheelConstantForceEffect_MairaComboBox_SelectionChanged" />
 
-                        <controls:MairaKnob Grid.Column="2"
+                        <controls:MairaKnob x:Name="UndersteerWheelConstantForceStrength_MairaKnob"
+                                            Grid.Column="2"
                                             Label="{Binding Localization[Strength]}"
                                             Value="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrength, Mode=TwoWay}"
                                             ValueString="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrengthString}"
@@ -311,7 +316,8 @@
                                             MinusButtonMappings="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceStrengthMinusButtonMappings}"
                                             DefaultValue="0.1" />
 
-                        <controls:MairaKnob Grid.Column="4"
+                        <controls:MairaKnob x:Name="UndersteerWheelConstantForceCurve_MairaKnob"
+                                            Grid.Column="4"
                                             Label="{Binding Localization[Curve]}"
                                             Value="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceCurve, Mode=TwoWay}"
                                             ValueString="{Binding Settings.SteeringEffectsUndersteerWheelConstantForceCurveString}"
@@ -471,9 +477,11 @@
                                                     Grid.Column="0"
                                                     Label="{Binding Localization[VibrationPattern]}"
                                                     SelectedValue="{Binding Settings.SteeringEffectsOversteerWheelVibrationPattern, Mode=TwoWay}"
-                                                    ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationPatternContextSwitches}" />
+                                                    ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelVibrationPatternContextSwitches}"
+                                                    SelectionChanged="OversteerWheelVibrationPattern_MairaComboBox_SelectionChanged" />
 
-                            <controls:MairaKnob Grid.Column="2"
+                            <controls:MairaKnob x:Name="OversteerWheelVibrationStrength_MairaKnob"
+                                                Grid.Column="2"
                                                 Label="{Binding Localization[Strength]}"
                                                 Value="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrength, Mode=TwoWay}"
                                                 ValueString="{Binding Settings.SteeringEffectsOversteerWheelVibrationStrengthString}"
@@ -485,7 +493,8 @@
 
                         </Grid>
 
-                        <Grid Margin="0,20,0,0">
+                        <Grid x:Name="OversteerWheelVibrationRow2_Grid"
+                              Margin="0,20,0,0">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -549,9 +558,11 @@
                                                 Grid.Column="0"
                                                 Label="{Binding Localization[Direction]}"
                                                 SelectedValue="{Binding Settings.SteeringEffectsOversteerWheelConstantForceDirection, Mode=TwoWay}"
-                                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelConstantForceDirectionContextSwitches}" />
+                                                ContextSwitches="{Binding Settings.SteeringEffectsOversteerWheelConstantForceDirectionContextSwitches}"
+                                                SelectionChanged="OversteerWheelConstantForceEffect_MairaComboBox_SelectionChanged" />
 
-                        <controls:MairaKnob Grid.Column="2"
+                        <controls:MairaKnob x:Name="OversteerWheelConstantForceStrength_MairaKnob"
+                                            Grid.Column="2"
                                             Label="{Binding Localization[Strength]}"
                                             Value="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrength, Mode=TwoWay}"
                                             ValueString="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrengthString}"
@@ -561,7 +572,8 @@
                                             MinusButtonMappings="{Binding Settings.SteeringEffectsOversteerWheelConstantForceStrengthMinusButtonMappings}"
                                             DefaultValue="0.5" />
 
-                        <controls:MairaKnob Grid.Column="4"
+                        <controls:MairaKnob x:Name="OversteerWheelConstantForceCurve_MairaKnob"
+                                            Grid.Column="4"
                                             Label="{Binding Localization[Curve]}"
                                             Value="{Binding Settings.SteeringEffectsOversteerWheelConstantForceCurve, Mode=TwoWay}"
                                             ValueString="{Binding Settings.SteeringEffectsOversteerWheelConstantForceCurveString}"
@@ -727,9 +739,11 @@
                                                     Grid.Column="0"
                                                     Label="{Binding Localization[VibrationPattern]}"
                                                     SelectedValue="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationPattern, Mode=TwoWay}"
-                                                    ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationPatternContextSwitches}" />
+                                                    ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationPatternContextSwitches}"
+                                                    SelectionChanged="SeatOfPantsWheelVibrationPattern_MairaComboBox_SelectionChanged" />
 
-                            <controls:MairaKnob Grid.Column="2"
+                            <controls:MairaKnob x:Name="SeatOfPantsWheelVibrationStrength_MairaKnob"
+                                                Grid.Column="2"
                                                 Label="{Binding Localization[Strength]}"
                                                 Value="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationStrength, Mode=TwoWay}"
                                                 ValueString="{Binding Settings.SteeringEffectsSeatOfPantsWheelVibrationStrengthString}"
@@ -741,7 +755,8 @@
 
                         </Grid>
 
-                        <Grid Margin="0,20,0,0">
+                        <Grid x:Name="SeatOfPantsWheelVibrationRow2_Grid"
+                              Margin="0,20,0,0">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -805,9 +820,11 @@
                                                 Grid.Column="0"
                                                 Label="{Binding Localization[Direction]}"
                                                 SelectedValue="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceDirection, Mode=TwoWay}"
-                                                ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceDirectionContextSwitches}" />
+                                                ContextSwitches="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceDirectionContextSwitches}"
+                                                SelectionChanged="SeatOfPantsWheelConstantForceEffect_MairaComboBox_SelectionChanged" />
 
-                        <controls:MairaKnob Grid.Column="2"
+                        <controls:MairaKnob x:Name="SeatOfPantsWheelConstantForceStrength_MairaKnob"
+                                            Grid.Column="2"
                                             Label="{Binding Localization[Strength]}"
                                             Value="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceStrength, Mode=TwoWay}"
                                             ValueString="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceStrengthString}"
@@ -817,7 +834,8 @@
                                             MinusButtonMappings="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceStrengthMinusButtonMappings}"
                                             DefaultValue="0.5" />
 
-                        <controls:MairaKnob Grid.Column="4"
+                        <controls:MairaKnob x:Name="SeatOfPantsWheelConstantForceCurve_MairaKnob"
+                                            Grid.Column="4"
                                             Label="{Binding Localization[Curve]}"
                                             Value="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceCurve, Mode=TwoWay}"
                                             ValueString="{Binding Settings.SteeringEffectsSeatOfPantsWheelConstantForceCurveString}"
