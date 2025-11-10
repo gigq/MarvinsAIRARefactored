@@ -234,6 +234,7 @@ public partial class MainWindow : Window
 		Dispatcher.Invoke( () =>
 		{
 			ImageSource? imageSource;
+			var blink = false;
 
 			if ( !MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelEnableForceFeedback )
 			{
@@ -242,10 +243,14 @@ public partial class MainWindow : Window
 			else if ( !app.Simulator.IsConnected || !app.DirectInput.ForceFeedbackInitialized )
 			{
 				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-orange.png" ) as ImageSource;
+
+				blink = true;
 			}
 			else if ( app.RacingWheel.SuspendForceFeedback )
 			{
 				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-yellow.png" ) as ImageSource;
+
+				blink = true;
 			}
 			else
 			{
@@ -255,6 +260,7 @@ public partial class MainWindow : Window
 			if ( imageSource != null )
 			{
 				_racingWheelPage.Power_MairaMappableButton.Icon = imageSource;
+				_racingWheelPage.Power_MairaMappableButton.Blink = blink;
 			}
 		} );
 	}

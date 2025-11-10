@@ -18,6 +18,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   <ItemGroup>
+    <None Remove="Artwork\Buttons\power-default.png" />
     <None Remove="Artwork\Flags\portugal_fluttering_flag_64.png" />
     <None Remove="Artwork\Misc\iracing-logo.png" />
     <None Remove="Artwork\Misc\world-wide-web.png" />
@@ -59,6 +60,7 @@
     <Resource Include="Artwork\Buttons\pedal-minimum.png" />
     <Resource Include="Artwork\Buttons\plus-large.png" />
     <Resource Include="Artwork\Buttons\plus.png" />
+    <Resource Include="Artwork\Buttons\power-default.png" />
     <Resource Include="Artwork\Buttons\power-green.png" />
     <Resource Include="Artwork\Buttons\power-orange.png" />
     <Resource Include="Artwork\Buttons\power-red.png" />

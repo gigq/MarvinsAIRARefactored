@@ -50,6 +50,7 @@
                                                   Grid.Column="0"
                                                   Label="{Binding Localization[Power]}"
                                                   Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/power-white.png"
+                                                  BlinkIcon="/MarvinsAIRARefactored;component/Artwork/Buttons/power-default.png"
                                                   ContextSwitches="{Binding Settings.RacingWheelEnableForceFeedbackContextSwitches}"
                                                   ButtonMappings="{Binding Settings.RacingWheelEnableForceFeedbackButtonMappings}"
                                                   Click="Power_MairaMappableButton_Click" />
