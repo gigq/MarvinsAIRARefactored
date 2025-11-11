@@ -17,12 +17,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-  <ItemGroup>
-    <None Remove="Artwork\Buttons\power-default.png" />
-    <None Remove="Artwork\Flags\portugal_fluttering_flag_64.png" />
-    <None Remove="Artwork\Misc\iracing-logo.png" />
-    <None Remove="Artwork\Misc\world-wide-web.png" />
-  </ItemGroup>
 
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
