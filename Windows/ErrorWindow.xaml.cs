@@ -7,7 +7,7 @@ namespace MarvinsAIRARefactored.Windows;
 
 public partial class ErrorWindow : Window
 {
-	private readonly Exception? _exception;
+	private readonly string _exceptionString;
 
 	public ErrorWindow( string message, Exception? exception = null )
 	{
@@ -19,11 +19,13 @@ public partial class ErrorWindow : Window
 
 #endif
 
-		_exception = exception;
-
 		Message_TextBlock.Text = message;
 
-		Details_TextBlock.Text = exception?.ToString() ?? string.Empty;
+		_exceptionString = exception?.ToString() ?? string.Empty;
+
+		_exceptionString = _exceptionString.Replace( App.DevRootPath, string.Empty, StringComparison.OrdinalIgnoreCase );
+
+		Details_TextBlock.Text = _exceptionString;
 	}
 
 	public static void ShowModal( string message, Exception? exception = null )
@@ -37,7 +39,7 @@ public partial class ErrorWindow : Window
 	{
 		try
 		{
-			var textToCopy = $"{Message_TextBlock.Text}\r\n\r\n{_exception}\r\n";
+			var textToCopy = $"{Message_TextBlock.Text}\r\n\r\n{_exceptionString}\r\n";
 
 			Clipboard.SetText( textToCopy );
 		}

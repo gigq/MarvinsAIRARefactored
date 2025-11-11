@@ -29,6 +29,13 @@ public partial class App : Application
 #endif
 
 	public static string DocumentsFolder { get; } = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.MyDocuments ), AppName );
+	
+	public static readonly string DevRootPath = GetDevRootPath();
+
+	private static string GetDevRootPath( [CallerFilePath] string callerFile = "" )
+	{
+		return Path.GetDirectoryName( callerFile ) ?? string.Empty;
+	}
 
 	public static App? Instance { get; private set; }
 
