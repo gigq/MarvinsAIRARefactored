@@ -1,7 +1,7 @@
 <?php
 
 const PERCENTAGES = [
-	'pt-BR' => 96,
+	'pt-BR' => 100,
 	'ru-RU' => 96,
 	'pl-PL' => 94,
 	'pt-PT' => 94,

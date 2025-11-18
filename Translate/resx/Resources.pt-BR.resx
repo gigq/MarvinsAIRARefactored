@@ -1338,4 +1338,52 @@
     <value>Pedais Protótipo</value>
     <comment>Pedals device</comment>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Ajuda</value>
+    <comment>App menu item</comment>
+  </data>
+  <data name="Help_UC" xml:space="preserve">
+    <value>AJUDA</value>
+    <comment>Page title</comment>
+  </data>
+  <data name="Documentation_UC" xml:space="preserve">
+    <value>DOCUMENTAÇÃO</value>
+    <comment>Help</comment>
+  </data>
+  <data name="Discord_UC" xml:space="preserve">
+    <value>DISCORD</value>
+    <comment>Help</comment>
+  </data>
+  <data name="Forums_UC" xml:space="preserve">
+    <value>FÓRUMS</value>
+    <comment>Help</comment>
+  </data>
+  <data name="DocumentationWebsite" xml:space="preserve">
+    <value>Documentação</value>
+    <comment>Help</comment>
+  </data>
+  <data name="DiscordServer" xml:space="preserve">
+    <value>Servidor do Discord</value>
+    <comment>Help</comment>
+  </data>
+  <data name="iRacingForums" xml:space="preserve">
+    <value>Fórums do iRacing</value>
+    <comment>Help</comment>
+  </data>
+  <data name="DocumentationText" xml:space="preserve">
+    <value>Essa documentação é um trabalho em constante evolução, pois novos recursos estão sendo adicionados ao aplicativo a todo momento. Eu atualizo a documentação o mais rápido possível, mas se a informação que você busca não está aqui, você pode tentar procurar no servidor do Discord, ou nos fórums do iRacing.</value>
+    <comment>Help</comment>
+  </data>
+  <data name="DiscordText" xml:space="preserve">
+    <value>O Servidor do Discord MAIRA é o jeito mais rápido de conseguir respostas, se você não conseguir encontrá-las na documentação. Há voluntários para te ajudar, e eu também tentarei te ajudar.</value>
+    <comment>Help</comment>
+  </data>
+  <data name="ForumsText" xml:space="preserve">
+    <value>Aqui é onde tudo começou. Você pode procurar por respostas aqui, mas eu não estou ativamente aqui. Visitar o servidor do Discord é o melhor meio de obter respostas.</value>
+    <comment>Help</comment>
+  </data>
+  <data name="PedalsP700" xml:space="preserve">
+    <value>Pedais Simagic P700</value>
+    <comment>Pedals device</comment>
+  </data>
 </root>
