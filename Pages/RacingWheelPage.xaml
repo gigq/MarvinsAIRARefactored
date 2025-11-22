@@ -475,11 +475,50 @@
                         <Image x:Name="AlgorithmPreview_Image"
                                Height="301"
                                Width="3840"
-                               RenderOptions.BitmapScalingMode="HighQuality" />
+                               RenderOptions.BitmapScalingMode="HighQuality"
+                               MouseEnter="AlgorithmPreview_Image_MouseEnter"
+                               MouseLeave="AlgorithmPreview_Image_MouseLeave"
+                               MouseMove="AlgorithmPreview_Image_MouseMove" />
 
                     </ScrollViewer>
 
                 </Border>
+
+                <Popup x:Name="PreviewZoom_Popup"
+                       Grid.Row="0"
+                       Placement="Relative"
+                       PlacementTarget="{Binding ElementName=AlgorithmPreview_Image}"
+                       AllowsTransparency="True"
+                       PopupAnimation="Fade"
+                       StaysOpen="True">
+
+                    <Border Width="256"
+                            Height="256"
+                            CornerRadius="16"
+                            Background="#222"
+                            BorderBrush="#FFF"
+                            BorderThickness="1"
+                            SnapsToDevicePixels="True"
+                            ClipToBounds="True">
+
+                        <Border CornerRadius="16"
+                                RenderOptions.BitmapScalingMode="NearestNeighbor">
+
+                            <Border.Background>
+
+                                <ImageBrush x:Name="PreviewZoom_Brush"
+                                            ImageSource="{Binding ElementName=AlgorithmPreview_Image, Path=Source}"
+                                            ViewboxUnits="RelativeToBoundingBox"
+                                            Viewbox="0,0,1,1"
+                                            Stretch="Fill" />
+
+                            </Border.Background>
+
+                        </Border>
+
+                    </Border>
+
+                </Popup>
 
                 <Grid Grid.Row="2">
 

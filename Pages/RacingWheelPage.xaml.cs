@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
+using Point = System.Windows.Point;
 using UserControl = System.Windows.Controls.UserControl;
 
 using MarvinsAIRARefactored.Components;
@@ -11,6 +13,10 @@ namespace MarvinsAIRARefactored.Pages;
 
 public partial class RacingWheelPage : UserControl
 {
+	private const double PreviewZoomSize = 256.0;
+	private const double PreviewZoomFactor = 6.0;
+	private const double PreviewZoomPopupOffset = 32.0;
+
 	public RacingWheelPage()
 	{
 		InitializeComponent();
@@ -72,6 +78,92 @@ public partial class RacingWheelPage : UserControl
 		var half = scrollViewer.ScrollableWidth / 2;
 
 		scrollViewer.ScrollToHorizontalOffset( half );
+	}
+
+	private void AlgorithmPreview_Image_MouseEnter( object sender, MouseEventArgs e )
+	{
+		if ( AlgorithmPreview_Image.Source == null )
+		{
+			return;
+		}
+
+		var cursorPosition = e.GetPosition( AlgorithmPreview_Image );
+
+		UpdatePreviewZoom( cursorPosition );
+		UpdatePreviewPopupPosition( cursorPosition );
+
+		PreviewZoom_Popup.IsOpen = true;
+	}
+
+	private void AlgorithmPreview_Image_MouseLeave( object sender, MouseEventArgs e )
+	{
+		PreviewZoom_Popup.IsOpen = false;
+	}
+
+	private void AlgorithmPreview_Image_MouseMove( object sender, MouseEventArgs e )
+	{
+		if ( !PreviewZoom_Popup.IsOpen )
+		{
+			return;
+		}
+
+		var cursorPosition = e.GetPosition( AlgorithmPreview_Image );
+
+		UpdatePreviewZoom( cursorPosition );
+		UpdatePreviewPopupPosition( cursorPosition );
+	}
+
+	private void UpdatePreviewZoom( Point position )
+	{
+		var imageWidth = AlgorithmPreview_Image.ActualWidth;
+		var imageHeight = AlgorithmPreview_Image.ActualHeight;
+
+		if ( imageWidth <= 0d || imageHeight <= 0d )
+		{
+			return;
+		}
+
+		var regionWidth = PreviewZoomSize / PreviewZoomFactor;
+		var regionHeight = PreviewZoomSize / PreviewZoomFactor;
+
+		var halfRegionWidth = regionWidth / 2d;
+		var halfRegionHeight = regionHeight / 2d;
+
+		var left = position.X - halfRegionWidth;
+		var top = position.Y - halfRegionHeight;
+
+		if ( left < 0d )
+		{
+			left = 0d;
+		}
+
+		if ( top < 0d )
+		{
+			top = 0d;
+		}
+
+		if ( left + regionWidth > imageWidth )
+		{
+			left = imageWidth - regionWidth;
+		}
+
+		if ( top + regionHeight > imageHeight )
+		{
+			top = imageHeight - regionHeight;
+		}
+
+		var xNorm = left / imageWidth;
+		var yNorm = top / imageHeight;
+		var wNorm = regionWidth / imageWidth;
+		var hNorm = regionHeight / imageHeight;
+
+		PreviewZoom_Brush.Viewbox = new Rect( xNorm, yNorm, wNorm, hNorm );
+	}
+
+	private void UpdatePreviewPopupPosition( Point cursorPosition )
+	{
+		PreviewZoom_Popup.HorizontalOffset = cursorPosition.X + PreviewZoomPopupOffset;
+		PreviewZoom_Popup.VerticalOffset = cursorPosition.Y + PreviewZoomPopupOffset;
 	}
 
 	private void StartRecording_MairaMappableButton_Click( object sender, RoutedEventArgs e )
