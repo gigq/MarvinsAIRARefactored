@@ -38,15 +38,11 @@ const uint32_t      DEGLITCH_US      = 100UL;       // ignore pulses closer than
 // -------- Left tach state --------
 volatile uint8_t    tachLCount       = 0;
 volatile uint32_t   tachLStartUs     = 0;
-volatile uint32_t   tachLEndUs       = 0;
-volatile bool       tachLWindowReady = false;
 volatile uint32_t   lastLPulseUs     = 0;           // last valid pulse time for deglitch + stall
 
 // -------- Right tach state --------
 volatile uint8_t    tachRCount       = 0;
 volatile uint32_t   tachRStartUs     = 0;
-volatile uint32_t   tachREndUs       = 0;
-volatile bool       tachRWindowReady = false;
 volatile uint32_t   lastRPulseUs     = 0;
 
 // -------- Last computed RPM values (used if no fresh window yet) --------
@@ -191,18 +187,18 @@ static uint32_t rpmFromWindow( uint32_t startUs, uint32_t endUs )
 // NOTE: With a PC fan tach (open-collector to GND) plus your inline 10k resistor, using INPUT_PULLUP and FALLING edge is correct.
 void tachLISR()
 {
-  uint32_t now = micros();
+  uint32_t nowUs = micros();
 
-  if ( now - lastLPulseUs <= DEGLITCH_US )
+  if ( nowUs - lastLPulseUs <= DEGLITCH_US )
   {
     return; // ignore glitches
   }
 
-  lastLPulseUs = now;
+  lastLPulseUs = nowUs;
 
   if ( tachLCount == 0 )
   {
-    tachLStartUs = now;
+    tachLStartUs = nowUs;
     tachLCount = 1;
   }
   else
@@ -211,27 +207,27 @@ void tachLISR()
 
     if (tachLCount >= MEAS_PULSES)
     {
-      tachLEndUs = now;
-      tachLWindowReady = true;
-      tachLCount = 0; // start a new window next pulse
+      tachLCount = 0;
+
+      rpmLeftLast = rpmFromWindow( tachLStartUs, nowUs );
     }
   }
 }
 
 void tachRISR()
 {
-  uint32_t now = micros();
+  uint32_t nowUs = micros();
 
-  if ( now - lastRPulseUs <= DEGLITCH_US )
+  if ( nowUs - lastRPulseUs <= DEGLITCH_US )
   {
     return; // ignore glitches
   }
 
-  lastRPulseUs = now;
+  lastRPulseUs = nowUs;
 
   if ( tachRCount == 0 )
   {
-    tachRStartUs = now;
+    tachRStartUs = nowUs;
     tachRCount = 1;
   }
   else
@@ -240,77 +236,9 @@ void tachRISR()
 
     if ( tachRCount >= MEAS_PULSES )
     {
-      tachREndUs = now;
-      tachRWindowReady = true;
       tachRCount = 0;
-    }
-  }
-}
 
-// Consume any ready RPM windows and refresh rpmLeftLast/rpmRightLast.
-// Called from loop(), not from ISRs.
-static void updateRpmFromTach()
-{
-  uint32_t nowUs = micros();
-
-  // Left side
-  bool lReady;
-  uint32_t lStartUs, lEndUs, lLastPulseUsLocal;
-
-  noInterrupts();
-
-  lReady = tachLWindowReady;
-  lStartUs = tachLStartUs;
-  lEndUs = tachLEndUs;
-  lLastPulseUsLocal = lastLPulseUs;
-
-  if ( lReady )
-  {
-    tachLWindowReady = false; // consume it
-  }
-
-  interrupts();
-
-  if ( lReady )
-  {
-    rpmLeftLast = rpmFromWindow( lStartUs, lEndUs );
-  }
-  else
-  {
-    // If no pulses for a while, treat as stopped
-    if ( nowUs - lLastPulseUsLocal > STALL_TIMEOUT_US )
-    {
-      rpmLeftLast = 0;
-    }
-  }
-
-  // Right side
-  bool rReady;
-  uint32_t rStartUs, rEndUs, rLastPulseUsLocal;
-
-  noInterrupts();
-
-  rReady = tachRWindowReady;
-  rStartUs = tachRStartUs;
-  rEndUs = tachREndUs;
-  rLastPulseUsLocal = lastRPulseUs;
-
-  if ( rReady )
-  {
-    tachRWindowReady = false;
-  }
-
-  interrupts();
-
-  if ( rReady )
-  {
-    rpmRightLast = rpmFromWindow( rStartUs, rEndUs );
-  }
-  else
-  {
-    if ( nowUs - rLastPulseUsLocal > STALL_TIMEOUT_US )
-    {
-      rpmRightLast = 0;
+      rpmRightLast = rpmFromWindow( tachRStartUs, nowUs );
     }
   }
 }
@@ -371,9 +299,6 @@ void loop()
           lastLRCommandMs = nowMs;
           idleZeroApplied = false;
 
-          // Update RPM using any completed windows
-          updateRpmFromTach();
-
           // Respond as "LaRb" (no spaces)
           Serial.print( 'L' );
           Serial.print( rpmLeftLast );
@@ -401,21 +326,7 @@ void loop()
   {
     OCR1A = 0;
     OCR1B = 0;
+
     idleZeroApplied = true;
-
-    // Reset tach state so the next measurement starts fresh
-    noInterrupts();
-
-    tachLCount = 0;
-    tachRCount = 0;
-    tachLWindowReady = false;
-    tachRWindowReady = false;
-    lastLPulseUs = 0;
-    lastRPulseUs = 0;
-
-    interrupts();
-
-    rpmLeftLast = 0;
-    rpmRightLast = 0;
   }
 }
