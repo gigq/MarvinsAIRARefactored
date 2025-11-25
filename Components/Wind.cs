@@ -9,7 +9,7 @@ namespace MarvinsAIRARefactored.Components;
 
 public partial class Wind
 {
-	private const int UpdateInterval = 30;
+	private const int UpdateInterval = 15;
 
 	public bool IsConnected { get; private set; } = false;
 
@@ -95,6 +95,10 @@ public partial class Wind
 
 	private void OnDataReceived( object? sender, string data )
 	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( $"[Wind] Data received: {data}" );
+
 		if ( string.IsNullOrWhiteSpace( data ) )
 		{
 			return;
@@ -202,6 +206,8 @@ public partial class Wind
 		var rightFanPower = fanPower * ( 1f + MathF.Min( 0, curveFactor ) ) * settings.WindMasterWindPower * 320f;
 
 		_usbSerialPortHelper.WriteLine( $"L{leftFanPower:F0}R{rightFanPower:F0}" );
+
+		app.Logger.WriteLine( $"[Wind] Data sent: L{leftFanPower:F0}R{rightFanPower:F0}" );
 	}
 
 	public void Tick( App app )
