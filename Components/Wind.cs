@@ -9,7 +9,7 @@ namespace MarvinsAIRARefactored.Components;
 
 public partial class Wind
 {
-	private const int UpdateInterval = 15;
+	private const int UpdateInterval = 12;
 
 	public bool IsConnected { get; private set; } = false;
 
@@ -95,10 +95,6 @@ public partial class Wind
 
 	private void OnDataReceived( object? sender, string data )
 	{
-		var app = App.Instance!;
-
-		app.Logger.WriteLine( $"[Wind] Data received: {data}" );
-
 		if ( string.IsNullOrWhiteSpace( data ) )
 		{
 			return;
@@ -167,7 +163,7 @@ public partial class Wind
 			settings.WindFanPower10,
 		};
 
-		var speed = MathF.Max( app.Simulator.VelocityX, settings.WindMinimumSpeed );
+		var speed = MathF.Max( app.Simulator.VelocityX, settings.WindMinimumSpeed ) / 100f;
 
 		var fanPower = 0f;
 
@@ -200,14 +196,12 @@ public partial class Wind
 			}
 		}
 
-		var curveFactor = Math.Clamp( app.Simulator.VelocityY * settings.WindCurving - app.Simulator.YawRate * settings.WindCurving, -1f, 1f );
+		var curveFactor = Math.Clamp( app.Simulator.VelocityY * 0.2f * settings.WindCurving + app.Simulator.YawRate * 2f * settings.WindCurving, -1f, 1f );
 
-		var leftFanPower = fanPower * ( 1f - MathF.Max( 0, curveFactor ) ) * settings.WindMasterWindPower * 320f;
 		var rightFanPower = fanPower * ( 1f + MathF.Min( 0, curveFactor ) ) * settings.WindMasterWindPower * 320f;
+		var leftFanPower = fanPower * ( 1f - MathF.Max( 0, curveFactor ) ) * settings.WindMasterWindPower * 320f;
 
 		_usbSerialPortHelper.WriteLine( $"L{leftFanPower:F0}R{rightFanPower:F0}" );
-
-		app.Logger.WriteLine( $"[Wind] Data sent: L{leftFanPower:F0}R{rightFanPower:F0}" );
 	}
 
 	public void Tick( App app )

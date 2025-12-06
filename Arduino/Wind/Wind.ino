@@ -12,8 +12,8 @@
 #include <Arduino.h>
 
 // -------- PWM (Timer1 @ 25 kHz) --------
-const uint8_t       PIN_LEFT         = 9;           // OC1A
-const uint8_t       PIN_RIGHT        = 10;          // OC1B
+const uint8_t       PIN_LEFT         = 10;          // OC1A
+const uint8_t       PIN_RIGHT        = 9;           // OC1B
 const uint16_t      PWM_TOP          = 320;         // 16e6 / (2 * 1 * 320) = 25 kHz
 
 // -------- LED ACK (non-blocking) --------
