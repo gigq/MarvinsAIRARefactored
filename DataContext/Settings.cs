@@ -1507,7 +1507,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region Racing wheel - Crash protection duration
 
-	private float _racingWheelCrashProtectionDuration = 5f;
+	private float _racingWheelCrashProtectionDuration = 1f;
 
 	public float RacingWheelCrashProtectionDuration
 	{
@@ -6368,7 +6368,7 @@ public class Settings : INotifyPropertyChanged
 
 		set
 		{
-			value = Math.Clamp( value, 0f, 100f );
+			value = Math.Clamp( value, 0f, 1f );
 
 			if ( value != _windMinimumSpeed )
 			{
@@ -6387,11 +6387,11 @@ public class Settings : INotifyPropertyChanged
 
 				if ( app.Simulator.DisplayUnits == 0 )
 				{
-					WindMinimumSpeedString = $"{_windMinimumSpeed * MathZ.MPSToMPH:F0} {DataContext.Instance.Localization[ "MPHUnits" ]}";
+					WindMinimumSpeedString = $"{_windMinimumSpeed * 100f * MathZ.MPSToMPH:F0} {DataContext.Instance.Localization[ "MPHUnits" ]}";
 				}
 				else
 				{
-					WindMinimumSpeedString = $"{_windMinimumSpeed * MathZ.MPSToKPH:F0} {DataContext.Instance.Localization[ "KPHUnits" ]}";
+					WindMinimumSpeedString = $"{_windMinimumSpeed * 100f * MathZ.MPSToKPH:F0} {DataContext.Instance.Localization[ "KPHUnits" ]}";
 				}
 			}
 		}
