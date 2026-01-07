@@ -1288,4 +1288,8 @@
     <value>ESTADO DEL VENTILADOR</value>
     <comment>Wind</comment>
   </data>
+  <data name="LateralGForce" xml:space="preserve">
+    <value>Fuerza-G Lateral</value>
+    <comment>Racing wheel</comment>
+  </data>
 </root>

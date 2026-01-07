@@ -1404,4 +1404,12 @@
     <value>Pédales Simagic P700</value>
     <comment>Pedals device</comment>
   </data>
+  <data name="FanStatus_UC" xml:space="preserve">
+    <value>ÉTAT DU VENTILATEUR</value>
+    <comment>Wind</comment>
+  </data>
+  <data name="LateralGForce" xml:space="preserve">
+    <value>Accélération latérale</value>
+    <comment>Racing wheel</comment>
+  </data>
 </root>

@@ -1390,4 +1390,8 @@
     <value>Status de ventilação</value>
     <comment>Wind</comment>
   </data>
+  <data name="LateralGForce" xml:space="preserve">
+    <value>Força-G lateral</value>
+    <comment>Racing wheel</comment>
+  </data>
 </root>
