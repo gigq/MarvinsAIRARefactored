@@ -982,7 +982,7 @@
     <comment>Steering effects</comment>
   </data>
   <data name="CalibrationFileNotSelected" xml:space="preserve">
-    <value>[Steering Effects Disabled]</value>
+    <value>[Calibration File Not Selected]</value>
     <comment>Steering effects</comment>
   </data>
   <data name="ParkedEffects_UC" xml:space="preserve">
@@ -1504,5 +1504,9 @@
   <data name="POV" xml:space="preserve">
     <value>POV</value>
     <comment>Button</comment>
+  </data>
+  <data name="SteeringEffectsCalibrationFileNotSelected" xml:space="preserve">
+    <value>You must select a calibration file for this effect to work.</value>
+    <comment>Steering effects</comment>
   </data>
 </root>
