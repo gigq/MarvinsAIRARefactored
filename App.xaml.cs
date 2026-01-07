@@ -277,6 +277,11 @@ public partial class App : Application
 					AdminBoxx.Connect();
 				}
 
+				if ( DataContext.DataContext.Instance.Settings.WindConnectOnStartup )
+				{
+					Wind.Connect();
+				}
+
 #if !ADMINBOXX
 
 				if ( DataContext.DataContext.Instance.Settings.AppCheckForUpdates )
