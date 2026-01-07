@@ -3,6 +3,9 @@ using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
+
 using IRSDKSharper;
 using PInvoke;
 
@@ -53,6 +56,7 @@ public partial class Simulator
 	public IRacingSdkEnum.PaceMode PaceMode { get; private set; } = IRacingSdkEnum.PaceMode.NotPacing;
 	public int PlayerCarIdx { get; private set; } = 0;
 	public IRacingSdkEnum.TrkLoc PlayerTrackSurface { get; private set; } = IRacingSdkEnum.TrkLoc.NotInWorld;
+	public IRacingSdkEnum.TrkSurf PlayerTrackSurfaceMaterial { get; private set; } = IRacingSdkEnum.TrkSurf.SurfaceNotInWorld;
 	public int RadioTransmitCarIdx { get; private set; } = -1;
 	public int ReplayFrameNumEnd { get; private set; } = 1;
 	public bool ReplayPlaySlowMotion { get; private set; } = false;
@@ -114,6 +118,7 @@ public partial class Simulator
 	private IRacingSdkDatum? _paceModeDatum = null;
 	private IRacingSdkDatum? _playerCarIdxDatum = null;
 	private IRacingSdkDatum? _playerTrackSurfaceDatum = null;
+	private IRacingSdkDatum? _playerTrackSurfaceMaterialDatum = null;
 	private IRacingSdkDatum? _radioTransmitCarIdxDatum = null;
 	private IRacingSdkDatum? _replayFrameNumEndDatum = null;
 	private IRacingSdkDatum? _replayPlaySlowMotionDatum = null;
@@ -265,6 +270,7 @@ public partial class Simulator
 		PaceMode = IRacingSdkEnum.PaceMode.NotPacing;
 		PlayerCarIdx = 0;
 		PlayerTrackSurface = IRacingSdkEnum.TrkLoc.NotInWorld;
+		PlayerTrackSurfaceMaterial = IRacingSdkEnum.TrkSurf.SurfaceNotInWorld;
 		RadioTransmitCarIdx = -1;
 		ReplayFrameNumEnd = 1;
 		ReplayPlaySlowMotion = false;
@@ -402,11 +408,23 @@ public partial class Simulator
 
 #if DEBUG
 
+		// Write out SessionInfo.yaml file
+
 		var sessionInfoYaml = _irsdk.Data.SessionInfoYaml;
 
 		var filePath = Path.Combine( App.DocumentsFolder, "SessionInfo.yaml" );
 
 		File.WriteAllText( filePath, sessionInfoYaml );
+
+		// Write out TelemetryData.yaml file
+
+		filePath = Path.Combine( App.DocumentsFolder, "TelemetryData.yaml" );
+
+		var serializer = new SerializerBuilder().WithNamingConvention( CamelCaseNamingConvention.Instance ).Build();
+
+		var yaml = serializer.Serialize( _irsdk.Data.TelemetryDataProperties );
+
+		File.WriteAllText( filePath, yaml );
 
 #endif
 	}
@@ -434,6 +452,7 @@ public partial class Simulator
 			_paceModeDatum = _irsdk.Data.TelemetryDataProperties[ "PaceMode" ];
 			_playerCarIdxDatum = _irsdk.Data.TelemetryDataProperties[ "PlayerCarIdx" ];
 			_playerTrackSurfaceDatum = _irsdk.Data.TelemetryDataProperties[ "PlayerTrackSurface" ];
+			_playerTrackSurfaceMaterialDatum = _irsdk.Data.TelemetryDataProperties[ "PlayerTrackSurfaceMaterial" ];
 			_radioTransmitCarIdxDatum = _irsdk.Data.TelemetryDataProperties[ "RadioTransmitCarIdx" ];
 			_replayFrameNumEndDatum = _irsdk.Data.TelemetryDataProperties[ "ReplayFrameNumEnd" ];
 			_replayPlaySlowMotionDatum = _irsdk.Data.TelemetryDataProperties[ "ReplayPlaySlowMotion" ];
@@ -561,6 +580,10 @@ public partial class Simulator
 		// get the player track surface
 
 		PlayerTrackSurface = (IRacingSdkEnum.TrkLoc) _irsdk.Data.GetInt( _playerTrackSurfaceDatum );
+
+		// get the player track surface material
+
+		PlayerTrackSurfaceMaterial = (IRacingSdkEnum.TrkSurf) _irsdk.Data.GetInt( _playerTrackSurfaceMaterialDatum );
 
 		// get the car index using the radio
 
