@@ -35,7 +35,10 @@ public class Settings : INotifyPropertyChanged
 
 				var valueType = value?.GetType().Name ?? "null";
 
-				app.Logger.WriteLine( $"[Settings] Updating base setting {propertyName} to ({valueType}) {value}" );
+				if ( propertyName != "AppWindowPositionAndSize" )
+				{
+					app.Logger.WriteLine( $"[Settings] Updating base setting {propertyName} to ({valueType}) {value}" );
+				}
 
 				if ( !SuppressUpdatingOfContextSettings )
 				{
@@ -1451,7 +1454,7 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
-	#region Racing wheel - Crash protection longitudal g-force
+	#region Racing wheel - Crash protection longitudinal g-force
 
 	private float _racingWheelCrashProtectionLongitudalGForce = 8f;
 
