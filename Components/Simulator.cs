@@ -39,7 +39,7 @@ public partial class Simulator
 	public string CurrentTireCompoundType { get; private set; } = string.Empty;
 	public int DisplayUnits { get; private set; } = 0;
 	public int Gear { get; private set; } = 0;
-	public float LongitudalGForce { get; private set; } = 0f;
+	public float LongitudinalGForce { get; private set; } = 0f;
 	public float LateralGForce { get; private set; } = 0f;
 	public bool IsConnected { get => _irsdk.IsConnected; }
 	public bool IsOnTrack { get; private set; } = false;
@@ -257,7 +257,7 @@ public partial class Simulator
 		CurrentTireCompoundType = string.Empty;
 		DisplayUnits = 0;
 		Gear = 0;
-		LongitudalGForce = 0f;
+		LongitudinalGForce = 0f;
 		LateralGForce = 0f;
 		IsOnTrack = false;
 		IsReplayPlaying = false;
@@ -678,8 +678,8 @@ public partial class Simulator
 
 		// calculate g forces
 
-		LongitudalGForce = MathF.Sqrt( LongAccel * LongAccel ) * MathZ.OneOverG;
-		LateralGForce = MathF.Sqrt( LatAccel * LatAccel ) * MathZ.OneOverG;
+		LongitudinalGForce = MathF.Abs( LongAccel ) * MathZ.OneOverG;
+		LateralGForce = MathF.Abs( LatAccel ) * MathZ.OneOverG;
 
 		// crash protection processing
 
@@ -689,7 +689,7 @@ public partial class Simulator
 			{
 				if ( settings.RacingWheelCrashProtectionLongitudalGForce < 20f )
 				{
-					if ( MathF.Abs( LongitudalGForce ) >= settings.RacingWheelCrashProtectionLongitudalGForce )
+					if ( LongitudinalGForce >= settings.RacingWheelCrashProtectionLongitudalGForce )
 					{
 						app.RacingWheel.ActivateCrashProtection = true;
 					}
@@ -697,7 +697,7 @@ public partial class Simulator
 
 				if ( settings.RacingWheelCrashProtectionLateralGForce < 20f )
 				{
-					if ( MathF.Abs( LateralGForce ) >= settings.RacingWheelCrashProtectionLateralGForce )
+					if ( LateralGForce >= settings.RacingWheelCrashProtectionLateralGForce )
 					{
 						app.RacingWheel.ActivateCrashProtection = true;
 					}
