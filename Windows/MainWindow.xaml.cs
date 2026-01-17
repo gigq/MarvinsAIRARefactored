@@ -271,12 +271,12 @@ public partial class MainWindow : Window
 
 		Dispatcher.Invoke( () =>
 		{
-			var isEnabled = app.DirectInput.ForceFeedbackInitialized;
+			var disabled = !app.DirectInput.ForceFeedbackInitialized;
 
-			_racingWheelPage.Test_MairaMappableButton.IsEnabled = isEnabled;
-			_racingWheelPage.Reset_MairaMappableButton.IsEnabled = isEnabled;
-			_racingWheelPage.Set_MairaMappableButton.IsEnabled = isEnabled;
-			_racingWheelPage.Clear_MairaMappableButton.IsEnabled = isEnabled;
+			_racingWheelPage.Test_MairaMappableButton.Disabled = disabled;
+			_racingWheelPage.Reset_MairaMappableButton.Disabled = disabled;
+			_racingWheelPage.Set_MairaMappableButton.Disabled = disabled;
+			_racingWheelPage.Clear_MairaMappableButton.Disabled = disabled;
 		} );
 	}
 

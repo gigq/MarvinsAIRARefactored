@@ -1235,7 +1235,7 @@ public class RacingWheel
 
 			// update record button
 
-			MainWindow._racingWheelPage.Record_MairaMappableButton.IsEnabled = app.Simulator.IsOnTrack;
+			MainWindow._racingWheelPage.Record_MairaMappableButton.Disabled = !app.Simulator.IsOnTrack;
 			MainWindow._racingWheelPage.Record_MairaMappableButton.Blink = app.RecordingManager.IsRecording;
 		}
 	}
