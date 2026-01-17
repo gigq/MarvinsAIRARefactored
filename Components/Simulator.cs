@@ -343,6 +343,11 @@ public partial class Simulator
 		ShiftLightsFirstRPM = sessionInfo.DriverInfo.DriverCarSLFirstRPM;
 		ShiftLightsShiftRPM = sessionInfo.DriverInfo.DriverCarSLShiftRPM;
 
+		if ( ShiftLightsShiftRPM <= ShiftLightsFirstRPM )
+		{
+			ShiftLightsShiftRPM = sessionInfo.DriverInfo.DriverCarSLBlinkRPM;
+		}
+
 		SimMode = sessionInfo.WeekendInfo.SimMode;
 
 		foreach ( var driver in sessionInfo.DriverInfo.Drivers )

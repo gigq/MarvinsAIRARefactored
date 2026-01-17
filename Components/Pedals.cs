@@ -305,15 +305,13 @@ public class Pedals
 		{
 			var rpm = app.Simulator.RPM;
 
-			var shiftLightsShiftRPM = app.Simulator.ShiftLightsShiftRPM > 0f ? app.Simulator.ShiftLightsShiftRPM : 8000f;
-
 			if ( _testing )
 			{
-				rpm = _testTimer / TestDuration * shiftLightsShiftRPM;
+				rpm = _testTimer / TestDuration * app.Simulator.ShiftLightsShiftRPM;
 			}
 
-			var startingRPM = shiftLightsShiftRPM * settings.PedalsStartingRPM;
-			var rpmRange = shiftLightsShiftRPM - startingRPM;
+			var startingRPM = app.Simulator.ShiftLightsShiftRPM * settings.PedalsStartingRPM;
+			var rpmRange = app.Simulator.ShiftLightsShiftRPM - startingRPM;
 
 			if ( rpm >= startingRPM )
 			{
