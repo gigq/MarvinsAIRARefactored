@@ -509,6 +509,28 @@ public partial class App : Application
 				}
 			}
 
+			// racing wheel prediction blend knob
+
+			if ( CheckMappedButtons( settings.RacingWheelPredictionBlendPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.RacingWheelPredictionBlend += 0.05f;
+
+				if ( settings.RacingWheelInputMappedSettingUpdateEnabled )
+				{
+					RacingWheel.SendChatMessage( "PredictionBlend", settings.RacingWheelPredictionBlendString );
+				}
+			}
+
+			if ( CheckMappedButtons( settings.RacingWheelPredictionBlendMinusButtonMappings, deviceInstanceGuid, buttonNumber ) )
+			{
+				settings.RacingWheelPredictionBlend -= 0.05f;
+
+				if ( settings.RacingWheelInputMappedSettingUpdateEnabled )
+				{
+					RacingWheel.SendChatMessage( "PredictionBlend", settings.RacingWheelPredictionBlendString );
+				}
+			}
+
 			// racing wheel detail boost knob
 
 			if ( CheckMappedButtons( settings.RacingWheelDetailBoostPlusButtonMappings, deviceInstanceGuid, buttonNumber ) )

@@ -214,31 +214,59 @@ public partial class RacingWheelPage : UserControl
 		app.Logger.WriteLine( "[RacingWheelPage] <<< UpdateSteeringDeviceOptions" );
 	}
 
-	public void UpdateLFERecordingDeviceOptions()
+	public void UpdateAlgorithmOptions()
 	{
 		var app = App.Instance!;
 
-		app.Logger.WriteLine( "[RacingWheelPage] UpdateLFERecordingDeviceOptions >>>" );
+		app.Logger.WriteLine( "[RacingWheelPage] UpdateAlgorithmOptions >>>" );
 
 		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
 		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 
-		var dictionary = new Dictionary<Guid, string>();
-
-		app.LFE.CaptureDeviceList.ToList().ForEach( keyValuePair => dictionary[ keyValuePair.Key ] = keyValuePair.Value );
-
-		if ( !dictionary.ContainsKey( settings.RacingWheelLFERecordingDeviceGuid ) )
+		var dictionary = new Dictionary<RacingWheel.Algorithm, string>
 		{
-			dictionary.Add( settings.RacingWheelLFERecordingDeviceGuid, $"{localization[ "DeviceNotFound" ]} [{settings.RacingWheelLFERecordingDeviceGuid}]" );
-		}
+			{ RacingWheel.Algorithm.Native60Hz, localization[ "Native60Hz" ] },
+			{ RacingWheel.Algorithm.Native360Hz, localization[ "Native360Hz" ] },
+			{ RacingWheel.Algorithm.DetailBooster, localization[ "DetailBooster" ] },
+			{ RacingWheel.Algorithm.DeltaLimiter, localization[ "DeltaLimiter" ] },
+			{ RacingWheel.Algorithm.DetailBoosterOn60Hz, localization[ "DetailBoosterOn60Hz" ] },
+			{ RacingWheel.Algorithm.DeltaLimiterOn60Hz, localization[ "DeltaLimiterOn60Hz" ] },
+			{ RacingWheel.Algorithm.SlewAndTotalCompression, localization[ "SlewAndTotalCompression" ] },
+			{ RacingWheel.Algorithm.MultiAdjustmentToolkit, localization[ "MultiAdjustmentToolkit" ] }
+		};
 
 		app.Dispatcher.Invoke( () =>
 		{
-			LFERecordingDevice_MairaComboBox.ItemsSource = dictionary.OrderBy( keyValuePair => keyValuePair.Value );
-			LFERecordingDevice_MairaComboBox.OffValue = Guid.Empty;
+			Algorithm_MairaComboBox.ItemsSource = dictionary;
+			Algorithm_MairaComboBox.SelectedValue = settings.RacingWheelAlgorithm;
 		} );
 
-		app.Logger.WriteLine( "[RacingWheelPage] <<< UpdateLFERecordingDeviceOptions" );
+		app.Logger.WriteLine( "[RacingWheelPage] <<< UpdateAlgorithmOptions" );
+	}
+
+	public void UpdatePredictionModeOptions()
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[RacingWheelPage] UpdatePredictionModeOptions >>>" );
+
+		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+
+		var dictionary = new Dictionary<RacingWheel.PredictionMode, string>
+		{
+			{ RacingWheel.PredictionMode.Disabled, localization[ "Disabled" ] },
+			{ RacingWheel.PredictionMode.PredictK1, localization[ "PredictK1" ] },
+			{ RacingWheel.PredictionMode.PredictK2, localization[ "PredictK2" ] }
+		};
+
+		app.Dispatcher.Invoke( () =>
+		{
+			PredictionMode_MairaComboBox.ItemsSource = dictionary;
+			PredictionMode_MairaComboBox.SelectedValue = settings.RacingWheelPredictionMode;
+		} );
+
+		app.Logger.WriteLine( "[RacingWheelPage] <<< UpdatePredictionModeOptions" );
 	}
 
 	public void UpdatePreviewRecordingsOptions()
@@ -269,34 +297,31 @@ public partial class RacingWheelPage : UserControl
 		app.Logger.WriteLine( "[RacingWheelPage] <<< UpdatePreviewRecordingsOptions" );
 	}
 
-	public void UpdateAlgorithmOptions()
+	public void UpdateLFERecordingDeviceOptions()
 	{
 		var app = App.Instance!;
 
-		app.Logger.WriteLine( "[RacingWheelPage] UpdateAlgorithmOptions >>>" );
+		app.Logger.WriteLine( "[RacingWheelPage] UpdateLFERecordingDeviceOptions >>>" );
 
 		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
 		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 
-		var dictionary = new Dictionary<RacingWheel.Algorithm, string>
+		var dictionary = new Dictionary<Guid, string>();
+
+		app.LFE.CaptureDeviceList.ToList().ForEach( keyValuePair => dictionary[ keyValuePair.Key ] = keyValuePair.Value );
+
+		if ( !dictionary.ContainsKey( settings.RacingWheelLFERecordingDeviceGuid ) )
 		{
-			{ RacingWheel.Algorithm.Native60Hz, localization[ "Native60Hz" ] },
-			{ RacingWheel.Algorithm.Native360Hz, localization[ "Native360Hz" ] },
-			{ RacingWheel.Algorithm.DetailBooster, localization[ "DetailBooster" ] },
-			{ RacingWheel.Algorithm.DeltaLimiter, localization[ "DeltaLimiter" ] },
-			{ RacingWheel.Algorithm.DetailBoosterOn60Hz, localization[ "DetailBoosterOn60Hz" ] },
-			{ RacingWheel.Algorithm.DeltaLimiterOn60Hz, localization[ "DeltaLimiterOn60Hz" ] },
-			{ RacingWheel.Algorithm.SlewAndTotalCompression, localization[ "SlewAndTotalCompression" ] },
-			{ RacingWheel.Algorithm.MultiAdjustmentToolkit, localization[ "MultiAdjustmentToolkit" ] }
-		};
+			dictionary.Add( settings.RacingWheelLFERecordingDeviceGuid, $"{localization[ "DeviceNotFound" ]} [{settings.RacingWheelLFERecordingDeviceGuid}]" );
+		}
 
 		app.Dispatcher.Invoke( () =>
 		{
-			Algorithm_MairaComboBox.ItemsSource = dictionary;
-			Algorithm_MairaComboBox.SelectedValue = settings.RacingWheelAlgorithm;
+			LFERecordingDevice_MairaComboBox.ItemsSource = dictionary.OrderBy( keyValuePair => keyValuePair.Value );
+			LFERecordingDevice_MairaComboBox.OffValue = Guid.Empty;
 		} );
 
-		app.Logger.WriteLine( "[RacingWheelPage] <<< UpdateAlgorithmOptions" );
+		app.Logger.WriteLine( "[RacingWheelPage] <<< UpdateLFERecordingDeviceOptions" );
 	}
 
 	#endregion

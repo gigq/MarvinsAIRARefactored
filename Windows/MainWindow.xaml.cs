@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Controls;
 
 using Simagic;
 
@@ -142,9 +143,10 @@ public partial class MainWindow : Window
 			Title = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "AppTitle" ] + " " + Misc.GetVersion();
 
 			_racingWheelPage.UpdateSteeringDeviceOptions();
-			_racingWheelPage.UpdateLFERecordingDeviceOptions();
-			_racingWheelPage.UpdatePreviewRecordingsOptions();
 			_racingWheelPage.UpdateAlgorithmOptions();
+			_racingWheelPage.UpdatePredictionModeOptions();
+			_racingWheelPage.UpdatePreviewRecordingsOptions();
+			_racingWheelPage.UpdateLFERecordingDeviceOptions();
 
 			_steeringEffectsPage.UpdateCalibrationFileNameOptions();
 			_steeringEffectsPage.UpdateVibrationPatternOptions();
@@ -284,38 +286,64 @@ public partial class MainWindow : Window
 	{
 		Dispatcher.Invoke( () =>
 		{
-			var racingWheelDetailBoostKnobControlVisibility = Visibility.Hidden;
-			var racingWheelDetailBoostBiasKnobControlVisibility = Visibility.Hidden;
+			var racingWheelPredictionModeComboBoxVisibility = Visibility.Collapsed;
+			var racingWheelPredictionBlendKnobControlVisibility = Visibility.Collapsed;
+			var racingWheelPredictionControlsRow = 0;
 
-			var racingWheelDeltaLimitKnobControlVisibility = Visibility.Hidden;
-			var racingWheelDeltaLimiterBiasKnobControlVisibility = Visibility.Hidden;
+			var racingWheelDetailBoostKnobControlVisibility = Visibility.Collapsed;
+			var racingWheelDetailBoostBiasKnobControlVisibility = Visibility.Collapsed;
 
-			var racingWheelSlewCompressionThresholdVisibility = Visibility.Hidden;
-			var racingWheelSlewCompressionRateVisibility = Visibility.Hidden;
-			var racingWheelTotalCompressionThresholdVisibility = Visibility.Hidden;
-			var racingWheelTotalCompressionRateVisibility = Visibility.Hidden;
+			var racingWheelDeltaLimitKnobControlVisibility = Visibility.Collapsed;
+			var racingWheelDeltaLimiterBiasKnobControlVisibility = Visibility.Collapsed;
 
-			var racingWheelMultiTorqueCompressionVisibility = Visibility.Hidden;
-			var racingWheelMultiSlewRateReductionVisibility = Visibility.Hidden;
-			var racingWheelMultiDetailGainVisibility = Visibility.Hidden;
-			var racingWheelMultiOutputSmoothingVisibility = Visibility.Hidden;
+			var racingWheelSlewCompressionThresholdVisibility = Visibility.Collapsed;
+			var racingWheelSlewCompressionRateVisibility = Visibility.Collapsed;
+			var racingWheelTotalCompressionThresholdVisibility = Visibility.Collapsed;
+			var racingWheelTotalCompressionRateVisibility = Visibility.Collapsed;
+
+			var racingWheelMultiTorqueCompressionVisibility = Visibility.Collapsed;
+			var racingWheelMultiSlewRateReductionVisibility = Visibility.Collapsed;
+			var racingWheelMultiDetailGainVisibility = Visibility.Collapsed;
+			var racingWheelMultiOutputSmoothingVisibility = Visibility.Collapsed;
 
 			var racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Collapsed;
 
 			switch ( MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelAlgorithm )
 			{
+				case RacingWheel.Algorithm.Native60Hz:
+					racingWheelPredictionModeComboBoxVisibility = Visibility.Visible;
+					racingWheelPredictionBlendKnobControlVisibility = Visibility.Visible;
+					racingWheelPredictionControlsRow = 0;
+					break;
+
 				case RacingWheel.Algorithm.DetailBooster:
-				case RacingWheel.Algorithm.DetailBoosterOn60Hz:
 					racingWheelDetailBoostKnobControlVisibility = Visibility.Visible;
 					racingWheelDetailBoostBiasKnobControlVisibility = Visibility.Visible;
 					racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Visible;
 					break;
 
+				case RacingWheel.Algorithm.DetailBoosterOn60Hz:
+					racingWheelDetailBoostKnobControlVisibility = Visibility.Visible;
+					racingWheelDetailBoostBiasKnobControlVisibility = Visibility.Visible;
+					racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Visible;
+					racingWheelPredictionModeComboBoxVisibility = Visibility.Visible;
+					racingWheelPredictionBlendKnobControlVisibility = Visibility.Visible;
+					racingWheelPredictionControlsRow = 2;
+					break;
+
 				case RacingWheel.Algorithm.DeltaLimiter:
+					racingWheelDeltaLimitKnobControlVisibility = Visibility.Visible;
+					racingWheelDeltaLimiterBiasKnobControlVisibility = Visibility.Visible;
+					racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Visible;
+					break;
+
 				case RacingWheel.Algorithm.DeltaLimiterOn60Hz:
 					racingWheelDeltaLimitKnobControlVisibility = Visibility.Visible;
 					racingWheelDeltaLimiterBiasKnobControlVisibility = Visibility.Visible;
 					racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Visible;
+					racingWheelPredictionModeComboBoxVisibility = Visibility.Visible;
+					racingWheelPredictionBlendKnobControlVisibility = Visibility.Visible;
+					racingWheelPredictionControlsRow = 2;
 					break;
 
 				case RacingWheel.Algorithm.SlewAndTotalCompression:
@@ -334,6 +362,12 @@ public partial class MainWindow : Window
 					racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Visible;
 					break;
 			}
+
+			_racingWheelPage.PredictionMode_MairaComboBox.Visibility = racingWheelPredictionModeComboBoxVisibility;
+			_racingWheelPage.PredictionBlend_MairaKnob.Visibility = racingWheelPredictionBlendKnobControlVisibility;
+
+			Grid.SetRow( _racingWheelPage.PredictionMode_MairaComboBox, racingWheelPredictionControlsRow );
+			Grid.SetRow( _racingWheelPage.PredictionBlend_MairaKnob, racingWheelPredictionControlsRow );
 
 			_racingWheelPage.DetailBoost_MairaKnob.Visibility = racingWheelDetailBoostKnobControlVisibility;
 			_racingWheelPage.DetailBoostBias_MairaKnob.Visibility = racingWheelDetailBoostBiasKnobControlVisibility;

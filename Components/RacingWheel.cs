@@ -1,5 +1,9 @@
 ﻿
+using System.Globalization;
+using System.IO;
 using System.Runtime.CompilerServices;
+
+using CsvHelper;
 
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Windows;
@@ -19,6 +23,13 @@ public class RacingWheel
 		SlewAndTotalCompression,
 		MultiAdjustmentToolkit
 	};
+
+	public enum PredictionMode
+	{
+		Disabled,
+		PredictK1,
+		PredictK2
+	}
 
 	public enum VibrationPattern
 	{
@@ -101,6 +112,33 @@ public class RacingWheel
 	private int _updateCounter = UpdateInterval + 4;
 	private int _lastGear = 0;
 
+#if DEBUG
+
+	private struct PredictorSample
+	{
+		public int TickCount { get; set; }
+
+		public float InputFFBSample { get; set; }
+		public float WheelVelocity { get; set; }
+		public PredictionMode PredictionMode { get; set; }
+		public float PredictionBlend { get; set; }
+		public float PredictedValue { get; set; }
+		public bool DeltaClamped { get; set; }
+		public float OutputFFBSample { get; set; }
+	}
+
+	private float _lastLapDistPct = 0f;
+	private int _lapNumber = 0;
+	private readonly PredictorSample[] _predictorSampleArray = new PredictorSample[ 65536 ]; // enough for 18+ minutes a lap at 60 Hz
+	private int _predictorSampleCount = 0;
+
+#endif
+
+	private readonly RlsWheelVelocityPredictor _ffbPredictorK1 = new( horizon: 1 );
+	private readonly RlsWheelVelocityPredictor _ffbPredictorK2 = new( horizon: 2 );
+
+	private float _predictedSteeringWheelTorque60Hz = 0f;
+
 	public void Initialize()
 	{
 		var app = App.Instance!;
@@ -113,6 +151,15 @@ public class RacingWheel
 		app.Graph.SetLayerColors( Graph.LayerIndex.OutputTorque, 0f, 1f, 1f, 0f, 1f, 1f );
 
 		_algorithmPreviewGraphBase.Initialize( MainWindow._racingWheelPage.AlgorithmPreview_Image );
+
+#if DEBUG
+
+		for ( var i = 0; i < _predictorSampleArray.Length; i++ )
+		{
+			_predictorSampleArray[ i ] = new PredictorSample();
+		}
+
+#endif
 
 		app.Logger.WriteLine( "[RacingWheel] <<< Initialize" );
 	}
@@ -786,6 +833,9 @@ public class RacingWheel
 				}
 
 				app.MainWindow.UpdateRacingWheelPowerButton();
+
+				_ffbPredictorK1.Reset();
+				_ffbPredictorK2.Reset();
 			}
 
 			// check if we want to auto set max force
@@ -818,6 +868,65 @@ public class RacingWheel
 					_steeringWheelTorque360Hz[ 5 ] = app.Simulator.SteeringWheelTorque_ST[ 4 ];
 					_steeringWheelTorque360Hz[ 6 ] = app.Simulator.SteeringWheelTorque_ST[ 5 ];
 					_steeringWheelTorque360Hz[ 7 ] = app.Simulator.SteeringWheelTorque_ST[ 5 ];
+
+					// Run 60 Hz predictor
+
+					var predictedValue = settings.RacingWheelPredictionMode switch
+					{
+						PredictionMode.PredictK1 => _ffbPredictorK1.Step( _steeringWheelTorque360Hz[ 6 ], app.DirectInput.ForceFeedbackWheelVelocity ),
+						PredictionMode.PredictK2 => _ffbPredictorK2.Step( _steeringWheelTorque360Hz[ 6 ], app.DirectInput.ForceFeedbackWheelVelocity ),
+						_ => _steeringWheelTorque360Hz[ 6 ],
+					};
+
+					var unclampedDelta = predictedValue - _steeringWheelTorque360Hz[ 6 ];
+					var clampedDelta = Math.Clamp( unclampedDelta, -0.5f, 0.5f );
+
+					_predictedSteeringWheelTorque60Hz = MathZ.Lerp( _steeringWheelTorque360Hz[ 6 ], _steeringWheelTorque360Hz[ 6 ] + clampedDelta, settings.RacingWheelPredictionBlend );
+
+#if DEBUG
+
+					if ( ( _lastLapDistPct > 0.95f ) && ( app.Simulator.LapDistPct < 0.05f ) )
+					{
+						_lapNumber++;
+
+						var lapNumber = _lapNumber;
+
+						var snapshot = _predictorSampleArray.AsSpan( 0, _predictorSampleCount ).ToArray();
+
+						_predictorSampleCount = 0;
+
+						_ = Task.Run( async () =>
+						{
+							var path = Path.Combine( App.DocumentsFolder, "Predictor Data", $"Lap-{lapNumber}.csv" );
+
+							try
+							{
+								await DumpLapAsync( snapshot, path );
+							}
+							catch ( Exception exception )
+							{
+								app.Logger.WriteLine( $"[RacingWheel] Exception while dumping predictor data: {exception}" );
+							}
+						} );
+					}
+
+					if ( _predictorSampleCount < _predictorSampleArray.Length )
+					{
+						ref var predictorSample = ref _predictorSampleArray[ _predictorSampleCount++ ];
+
+						predictorSample.TickCount = app.Simulator.IRSDK.Data.TickCount;
+						predictorSample.InputFFBSample = app.Simulator.SteeringWheelTorque_ST[ 5 ];
+						predictorSample.WheelVelocity = app.DirectInput.ForceFeedbackWheelVelocity;
+						predictorSample.PredictionMode = settings.RacingWheelPredictionMode;
+						predictorSample.PredictionBlend = settings.RacingWheelPredictionBlend;
+						predictorSample.PredictedValue = predictedValue;
+						predictorSample.DeltaClamped = clampedDelta != unclampedDelta;
+						predictorSample.OutputFFBSample = _predictedSteeringWheelTorque60Hz;
+					}
+
+					_lastLapDistPct = app.Simulator.LapDistPct;
+
+#endif
 				}
 				else
 				{
@@ -931,7 +1040,7 @@ public class RacingWheel
 
 			// process the algorithm
 
-			var outputTorque = ProcessAlgorithm( 0, steeringWheelTorque60Hz, steeringWheelTorque500Hz, curbProtectionLerpFactor );
+			var outputTorque = ProcessAlgorithm( 0, _predictedSteeringWheelTorque60Hz, steeringWheelTorque500Hz, curbProtectionLerpFactor );
 
 			// understeer constant force effect
 
@@ -1239,4 +1348,24 @@ public class RacingWheel
 			MainWindow._racingWheelPage.Record_MairaMappableButton.Blink = app.RecordingManager.IsRecording;
 		}
 	}
+
+#if DEBUG
+
+	private static async Task DumpLapAsync( PredictorSample[] samples, string path )
+	{
+		var directoryPath = Path.GetDirectoryName( path );
+
+		if ( !string.IsNullOrEmpty( directoryPath ) )
+		{
+			Directory.CreateDirectory( directoryPath );
+		}
+
+		await using var stream = new FileStream( path, FileMode.Create, FileAccess.Write, FileShare.Read, 64 * 1024, useAsync: true );
+		await using var writer = new StreamWriter( stream );
+		await using var csv = new CsvWriter( writer, CultureInfo.InvariantCulture );
+
+		await csv.WriteRecordsAsync( samples );
+	}
+
+#endif
 }

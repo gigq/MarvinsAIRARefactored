@@ -474,7 +474,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region Racing wheel - Algorithm
 
-	private RacingWheel.Algorithm _racingWheelAlgorithm = RacingWheel.Algorithm.DetailBooster;
+	private RacingWheel.Algorithm _racingWheelAlgorithm = RacingWheel.Algorithm.DetailBoosterOn60Hz;
 
 	public RacingWheel.Algorithm RacingWheelAlgorithm
 	{
@@ -525,6 +525,76 @@ public class Settings : INotifyPropertyChanged
 	}
 
 	public ContextSwitches RacingWheelEnableSoftLimiterContextSwitches { get; set; } = new( true, true, false, false, false );
+
+	#endregion
+
+	#region Racing wheel - Prediction mode
+
+	private RacingWheel.PredictionMode _racingWheelPredictionMode = RacingWheel.PredictionMode.PredictK1;
+
+	public RacingWheel.PredictionMode RacingWheelPredictionMode
+	{
+		get => _racingWheelPredictionMode;
+
+		set
+		{
+			if ( value != _racingWheelPredictionMode )
+			{
+				_racingWheelPredictionMode = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches RacingWheelPredictionModeContextSwitches { get; set; } = new( false, false, false, false, false );
+
+	#endregion
+
+	#region Racing wheel - Prediction blend
+
+	private float _racingWheelPredictionBlend = 0.35f;
+
+	public float RacingWheelPredictionBlend
+	{
+		get => _racingWheelPredictionBlend;
+
+		set
+		{
+			value = Math.Clamp( value, 0f, 1f );
+
+			if ( value != _racingWheelPredictionBlend )
+			{
+				_racingWheelPredictionBlend = value;
+
+				OnPropertyChanged();
+			}
+
+			RacingWheelPredictionBlendString = $"{_racingWheelPredictionBlend * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+		}
+	}
+
+	private string _racingWheelPredictionBlendString = string.Empty;
+
+	[XmlIgnore]
+	public string RacingWheelPredictionBlendString
+	{
+		get => _racingWheelPredictionBlendString;
+
+		set
+		{
+			if ( value != _racingWheelPredictionBlendString )
+			{
+				_racingWheelPredictionBlendString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches RacingWheelPredictionBlendContextSwitches { get; set; } = new( false, false, false, false, false );
+	public ButtonMappings RacingWheelPredictionBlendPlusButtonMappings { get; set; } = new();
+	public ButtonMappings RacingWheelPredictionBlendMinusButtonMappings { get; set; } = new();
 
 	#endregion
 
