@@ -698,7 +698,7 @@
     <value>Enable Logitech omw/min lights</value>
   </data>
   <data name="Degrees" xml:space="preserve">
-    <value></value>
+    <value>Graden</value>
   </data>
   <data name="Master_UC" xml:space="preserve">
     <value>HOOFDNIVEAU</value>
@@ -1224,5 +1224,21 @@
   <data name="PedalsP700" xml:space="preserve">
     <value></value>
     <comment>Pedals device</comment>
+  </data>
+  <data name="FanStatus_UC" xml:space="preserve">
+    <value></value>
+    <comment>Wind</comment>
+  </data>
+  <data name="LateralGForce" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="POV" xml:space="preserve">
+    <value></value>
+    <comment>Button</comment>
+  </data>
+  <data name="SteeringEffectsCalibrationFileNotSelected" xml:space="preserve">
+    <value></value>
+    <comment>Steering effects</comment>
   </data>
 </root>
