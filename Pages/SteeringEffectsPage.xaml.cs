@@ -130,6 +130,8 @@ public partial class SteeringEffectsPage : UserControl
 			{ string.Empty, localization[ "CalibrationFileNotSelected" ] }
 		};
 
+		var autoSelectedValue = string.Empty;
+
 		if ( app.Simulator.CarScreenName != string.Empty )
 		{
 			foreach ( var filePath in Directory.GetFiles( SteeringEffects.CalibrationDirectory, $"{app.Simulator.CarScreenName} - *.csv" ) )
@@ -137,12 +139,23 @@ public partial class SteeringEffectsPage : UserControl
 				var option = Path.GetFileNameWithoutExtension( filePath );
 
 				dictionary.Add( option, option );
+
+				if ( settings.SteeringEffectsCalibrationFileName == string.Empty )
+				{
+					autoSelectedValue = option;
+				}
 			}
 		}
 
 		app.Dispatcher.Invoke( () =>
 		{
 			CalibrationFileName_MairaComboBox.ItemsSource = dictionary;
+
+			if ( autoSelectedValue != string.Empty )
+			{
+				settings.SteeringEffectsCalibrationFileName = autoSelectedValue;
+			}
+
 			CalibrationFileName_MairaComboBox.SelectedValue = settings.SteeringEffectsCalibrationFileName;
 			CalibrationFileName_MairaComboBox.OffValue = string.Empty;
 		} );
