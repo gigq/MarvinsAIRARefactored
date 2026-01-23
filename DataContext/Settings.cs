@@ -3812,7 +3812,7 @@ public class Settings : INotifyPropertyChanged
 				_ => ""
 			};
 
-			SteeringEffectsSeatOfPantsMinimumThresholdString = $"{_steeringEffectsSeatOfPantsMinimumThreshold:F2} {units}";
+			SteeringEffectsSeatOfPantsMinimumThresholdString = $"{_steeringEffectsSeatOfPantsMinimumThreshold:F1} {units}";
 		}
 	}
 
@@ -3868,7 +3868,7 @@ public class Settings : INotifyPropertyChanged
 				_ => ""
 			};
 
-			SteeringEffectsSeatOfPantsMaximumThresholdString = $"{_steeringEffectsSeatOfPantsMaximumThreshold:F2} {units}";
+			SteeringEffectsSeatOfPantsMaximumThresholdString = $"{_steeringEffectsSeatOfPantsMaximumThreshold:F1} {units}";
 		}
 	}
 
