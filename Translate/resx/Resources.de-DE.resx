@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" />
+  <xsd:schema xmlns="" id="root" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"/>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
@@ -1336,5 +1336,33 @@ Hier ist der Link zum Spenden:</value>
   <data name="FanStatus_UC" xml:space="preserve">
     <value></value>
     <comment>Wind</comment>
+  </data>
+  <data name="LateralGForce" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="POV" xml:space="preserve">
+    <value></value>
+    <comment>Button</comment>
+  </data>
+  <data name="SteeringEffectsCalibrationFileNotSelected" xml:space="preserve">
+    <value>Sie müssen eine Kalibrierungsdatei auswählen, damit dieser Effekt funktioniert.</value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="PredictionMode" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="PredictK1" xml:space="preserve">
+    <value></value>
+    <comment>Prediction mode list</comment>
+  </data>
+  <data name="PredictK2" xml:space="preserve">
+    <value></value>
+    <comment>Prediction mode list</comment>
+  </data>
+  <data name="PredictionBlend" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
   </data>
 </root>

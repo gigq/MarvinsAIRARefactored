@@ -1394,4 +1394,28 @@
     <value>Força-G lateral</value>
     <comment>Racing wheel</comment>
   </data>
+  <data name="POV" xml:space="preserve">
+    <value>POV</value>
+    <comment>Button</comment>
+  </data>
+  <data name="SteeringEffectsCalibrationFileNotSelected" xml:space="preserve">
+    <value></value>
+    <comment>Steering effects</comment>
+  </data>
+  <data name="PredictionMode" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="PredictK1" xml:space="preserve">
+    <value></value>
+    <comment>Prediction mode list</comment>
+  </data>
+  <data name="PredictK2" xml:space="preserve">
+    <value></value>
+    <comment>Prediction mode list</comment>
+  </data>
+  <data name="PredictionBlend" xml:space="preserve">
+    <value></value>
+    <comment>Racing wheel</comment>
+  </data>
 </root>

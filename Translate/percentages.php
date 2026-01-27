@@ -1,6 +1,7 @@
 <?php
 
 const PERCENTAGES = [
+	'uk-UA' => 100,
 	'es-ES' => 98,
 	'fr-FR' => 98,
 	'pt-BR' => 98,

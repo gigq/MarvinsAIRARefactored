@@ -323,6 +323,20 @@
                             <TextBlock Text="BATUDEV" />
                         </StackPanel>
 
+                        <!--uk-UA-->
+                        <!--Anton Hrebinnyk2-->
+                        <!--Giaval-->
+                        <StackPanel Margin="0,10,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/MarvinsAIRARefactored;component/Artwork/Flags/ukraine_fluttering_flag_64.png"
+                                       Height="32" />
+                                <TextBlock Text="Українська"
+                                           FontSize="30"
+                                           Foreground="#979797" />
+                            </StackPanel>
+                            <TextBlock Text="Anton Hrebinnyk2 &amp; Giaval" />
+                        </StackPanel>
+
                         <!--hy-AM-->
                         <!--Slavik-->
                         <StackPanel Margin="0,10,0,0">
