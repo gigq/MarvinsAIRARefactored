@@ -1428,19 +1428,4 @@
     <value>Суміш прогнозів</value>
     <comment>Racing wheel</comment>
   </data>
-  <data name="ГерцОдиниці" xml:space="preserve">
-    <value>Гц</value>
-  </data>
-  <data name="Одиниці наведення" xml:space="preserve">
-    <value>Ньютон-метрів/мілісекунду</value>
-  </data>
-  <data name="Відсоток" xml:space="preserve">
-    <value>Відсотків</value>
-  </data>
-  <data name="Одиниці виміру коефіцієнта стиснення" xml:space="preserve">
-    <value>відсотків на ньютон-метр</value>
-  </data>
-  <data name="Градуси" xml:space="preserve">
-    <value>	°</value>
-  </data>
 </root>
