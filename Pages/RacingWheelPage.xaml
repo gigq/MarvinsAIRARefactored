@@ -29,13 +29,20 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
                 <controls:MairaComboBox x:Name="SteeringDevice_MairaComboBox"
+                                        Grid.Row="0"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="3"
                                         Label="{Binding Localization[SteeringDevice]}"
                                         SelectedValue="{Binding Settings.RacingWheelSteeringDeviceGuid, Mode=TwoWay}" />
 
-                <Grid Grid.Column="5"
+                <Grid Grid.Row="0"
+                      Grid.Column="5"
                       HorizontalAlignment="Center">
 
                     <Grid.ColumnDefinitions>
@@ -70,6 +77,15 @@
                                                   Click="Reset_MairaMappableButton_Click" />
 
                 </Grid>
+
+                <TextBlock x:Name="SteeringDeviceFaultReason_TextBlock"
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="5"
+                           FontSize="20"
+                           Margin="0,5,0,0"
+                           d:Text="Just a test to see what this line looks like."
+                           Foreground="#ff5b2e" />
 
             </Grid>
 
