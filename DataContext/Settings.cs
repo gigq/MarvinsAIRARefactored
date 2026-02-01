@@ -9,6 +9,8 @@ using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Components;
 using MarvinsAIRARefactored.Windows;
 
+using static MarvinsAIRARefactored.Windows.MainWindow;
+
 namespace MarvinsAIRARefactored.DataContext;
 
 public class Settings : INotifyPropertyChanged
@@ -231,9 +233,7 @@ public class Settings : INotifyPropertyChanged
 				OnPropertyChanged();
 			}
 
-			var app = App.Instance!;
-
-			app.MainWindow.UpdateRacingWheelPowerButton();
+			_racingWheelPage.UpdateSteeringDeviceSection();
 		}
 	}
 
@@ -2433,9 +2433,7 @@ public class Settings : INotifyPropertyChanged
 				OnPropertyChanged();
 			}
 
-			var app = App.Instance!;
-
-			app.MainWindow.UpdateRacingWheelPowerButton();
+			_racingWheelPage.UpdateSteeringDeviceSection();
 		}
 	}
 
@@ -3812,7 +3810,7 @@ public class Settings : INotifyPropertyChanged
 				_ => ""
 			};
 
-			SteeringEffectsSeatOfPantsMinimumThresholdString = $"{_steeringEffectsSeatOfPantsMinimumThreshold:F1} {units}";
+			SteeringEffectsSeatOfPantsMinimumThresholdString = $"{_steeringEffectsSeatOfPantsMinimumThreshold:F2} {units}";
 		}
 	}
 
@@ -3868,7 +3866,7 @@ public class Settings : INotifyPropertyChanged
 				_ => ""
 			};
 
-			SteeringEffectsSeatOfPantsMaximumThresholdString = $"{_steeringEffectsSeatOfPantsMaximumThreshold:F1} {units}";
+			SteeringEffectsSeatOfPantsMaximumThresholdString = $"{_steeringEffectsSeatOfPantsMaximumThreshold:F2} {units}";
 		}
 	}
 

@@ -8,6 +8,8 @@ using CsvHelper;
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Windows;
 
+using static MarvinsAIRARefactored.Windows.MainWindow;
+
 namespace MarvinsAIRARefactored.Components;
 
 public class RacingWheel
@@ -744,7 +746,7 @@ public class RacingWheel
 					app.Logger.WriteLine( "[RacingWheel] Requesting resumption of force feedback" );
 				}
 
-				app.MainWindow.UpdateRacingWheelPowerButton();
+				_racingWheelPage.UpdateSteeringDeviceSection();
 			}
 
 			// check if we want to fade in or out the steering wheel torque data
@@ -752,8 +754,6 @@ public class RacingWheel
 			if ( UseSteeringWheelTorqueData != _usingSteeringWheelTorqueData )
 			{
 				_usingSteeringWheelTorqueData = UseSteeringWheelTorqueData;
-
-				app.MainWindow.UpdateRacingWheelPowerButton();
 
 				if ( settings.RacingWheelFadeEnabled )
 				{
@@ -784,19 +784,19 @@ public class RacingWheel
 
 					app.Logger.WriteLine( "[RacingWheel] Requesting reset of force feedback device" );
 				}
-
-				app.MainWindow.UpdateRacingWheelPowerButton();
 			}
 
-			// if power button is off, or suspend is requested, or unsuspend counter is still counting down, or replay is playing, then suspend the racing wheel force feedback
+			// if power button is off, or suspend is requested, or unsuspend counter is still counting down, or if sim mode is not "full", then suspend the racing wheel force feedback
 
-			if ( !settings.RacingWheelEnableForceFeedback || _isSuspended || ( _unsuspendTimerMS > 0f ) || app.Simulator.IsReplayPlaying )
+			if ( !settings.RacingWheelEnableForceFeedback || _isSuspended || ( _unsuspendTimerMS > 0f ) || ( app.Simulator.SimMode != "full" ) )
 			{
 				if ( _currentRacingWheelGuid != null )
 				{
 					app.Logger.WriteLine( "[RacingWheel] Suspending racing wheel force feedback" );
 
 					app.DirectInput.ShutdownForceFeedback();
+
+					_racingWheelPage.UpdateSteeringDeviceSection();
 
 					NextRacingWheelGuid = _currentRacingWheelGuid;
 
@@ -818,6 +818,8 @@ public class RacingWheel
 
 					app.DirectInput.ShutdownForceFeedback();
 
+					_racingWheelPage.UpdateSteeringDeviceSection();
+
 					_currentRacingWheelGuid = null;
 				}
 
@@ -830,9 +832,9 @@ public class RacingWheel
 					NextRacingWheelGuid = null;
 
 					app.DirectInput.InitializeForceFeedback( (Guid) _currentRacingWheelGuid );
-				}
 
-				app.MainWindow.UpdateRacingWheelPowerButton();
+					_racingWheelPage.UpdateSteeringDeviceSection();
+				}
 
 				_ffbPredictorK1.Reset();
 				_ffbPredictorK2.Reset();

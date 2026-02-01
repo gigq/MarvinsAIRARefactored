@@ -32,6 +32,7 @@ public class DirectInput
 
 	private static readonly Guid KeyboardGuid = new( "6f1d2b61-d5a0-11cf-bfc7-444553540000" );
 
+	public string ForceFeedbackErrorMessage { get; private set; } = string.Empty;
 	public bool ForceFeedbackInitialized { get => _forceFeedbackInitialized; }
 	public Joystick? ForceFeedbackJoystick { get; private set; } = null;
 	public float ForceFeedbackWheelPosition { get; private set; } = 0f;
@@ -117,64 +118,64 @@ public class DirectInput
 			_forceFeedbackDeviceInstanceGuid = deviceGuid;
 
 			ForceFeedbackJoystick = new Joystick( _directInput, _forceFeedbackDeviceInstanceGuid );
+
+			if ( ForceFeedbackJoystick != null )
+			{
+				app.Logger.WriteLine( "[DirectInput] Setting the cooperative level to exclusive and background mode" );
+
+				ForceFeedbackJoystick.SetCooperativeLevel( app.TopLevelWindow.WindowHandle, CooperativeLevel.Exclusive | CooperativeLevel.Background );
+
+				app.Logger.WriteLine( "[DirectInput] Acquiring the joystick" );
+
+				ForceFeedbackJoystick.Acquire();
+
+				foreach ( var effectInfo in ForceFeedbackJoystick.GetEffects() )
+				{
+					if ( ( effectInfo.Type & EffectType.Hardware ) == EffectType.ConstantForce )
+					{
+						_forceFeedbackEffectParameters = new EffectParameters
+						{
+							Flags = EffectFlags.ObjectOffsets | EffectFlags.Cartesian,
+							Duration = -1,
+							Gain = DI_FFNOMINALMAX,
+							SamplePeriod = 0,
+							StartDelay = 0,
+							TriggerButton = DIEB_NOTRIGGER,
+							TriggerRepeatInterval = 0,
+							Axes = [ 0 ],
+							Directions = [ 1 ],
+							Envelope = new Envelope(),
+							Parameters = new ConstantForce { Magnitude = 0 }
+						};
+
+						app.Logger.WriteLine( "[DirectInput] Creating the constant force effect" );
+
+						_forceFeedbackEffect = new Effect( ForceFeedbackJoystick, effectInfo.Guid, _forceFeedbackEffectParameters );
+
+						_forceFeedbackEffect.Download();
+						_forceFeedbackEffect.Start();
+
+						break;
+					}
+				}
+
+				if ( _forceFeedbackEffect == null )
+				{
+					app.Logger.WriteLine( "[DirectInput] Warning - constant force effect was not created (not supported?)" );
+				}
+
+				_forceFeedbackInitialized = true;
+			}
 		}
 		catch ( Exception exception )
 		{
-			app.Logger.WriteLine( $"[DirectInput] Exception caught: {exception.Message.Trim()}" );
+			ForceFeedbackErrorMessage = exception.Message.Trim();
+
+			app.Logger.WriteLine( $"[DirectInput] Exception caught: {ForceFeedbackErrorMessage}" );
 
 			app.RacingWheel.NextRacingWheelGuid = Guid.Empty;
 
 			_forceFeedbackDeviceInstanceGuid = Guid.Empty;
-		}
-
-		if ( ForceFeedbackJoystick != null )
-		{
-			app.Logger.WriteLine( "[DirectInput] Setting the cooperative level to exclusive and background mode" );
-
-			ForceFeedbackJoystick.SetCooperativeLevel( app.TopLevelWindow.WindowHandle, CooperativeLevel.Exclusive | CooperativeLevel.Background );
-
-			app.Logger.WriteLine( "[DirectInput] Acquiring the joystick" );
-
-			ForceFeedbackJoystick.Acquire();
-
-			foreach ( var effectInfo in ForceFeedbackJoystick.GetEffects() )
-			{
-				if ( ( effectInfo.Type & EffectType.Hardware ) == EffectType.ConstantForce )
-				{
-					_forceFeedbackEffectParameters = new EffectParameters
-					{
-						Flags = EffectFlags.ObjectOffsets | EffectFlags.Cartesian,
-						Duration = -1,
-						Gain = DI_FFNOMINALMAX,
-						SamplePeriod = 0,
-						StartDelay = 0,
-						TriggerButton = DIEB_NOTRIGGER,
-						TriggerRepeatInterval = 0,
-						Axes = [ 0 ],
-						Directions = [ 1 ],
-						Envelope = new Envelope(),
-						Parameters = new ConstantForce { Magnitude = 0 }
-					};
-
-					app.Logger.WriteLine( "[DirectInput] Creating the constant force effect" );
-
-					_forceFeedbackEffect = new Effect( ForceFeedbackJoystick, effectInfo.Guid, _forceFeedbackEffectParameters );
-
-					_forceFeedbackEffect.Download();
-					_forceFeedbackEffect.Start();
-
-					break;
-				}
-			}
-
-			if ( _forceFeedbackEffect == null )
-			{
-				app.Logger.WriteLine( "[DirectInput] Warning - constant force effect was not created (not supported?)" );
-			}
-
-			_forceFeedbackInitialized = true;
-
-			app.MainWindow.UpdateRacingWheelForceFeedbackButtons();
 		}
 
 		app.Logger.WriteLine( "[DirectInput] <<< InitializeForceFeedback" );
@@ -191,8 +192,6 @@ public class DirectInput
 			app.Logger.WriteLine( "[DirectInput] ShutdownForceFeedback >>>" );
 
 			_forceFeedbackInitialized = false;
-
-			app.MainWindow.UpdateRacingWheelForceFeedbackButtons();
 
 			ForceFeedbackWheelPosition = 0f;
 			ForceFeedbackWheelVelocity = 0f;

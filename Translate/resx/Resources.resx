@@ -1525,4 +1525,16 @@
     <value>Prediction Blend</value>
     <comment>Racing wheel</comment>
   </data>
+  <data name="FFBIsDisabled" xml:space="preserve">
+    <value>Force feedback has been manually shut off (emergency stop)</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="SimModeIsNotFull" xml:space="preserve">
+    <value>The iRacing simulator is in replay mode</value>
+    <comment>Racing wheel</comment>
+  </data>
+  <data name="FFBIsEnabledInSimulator" xml:space="preserve">
+    <value>Force feedback is enabled in the iRacing simulator</value>
+    <comment>Racing wheel</comment>
+  </data>
 </root>

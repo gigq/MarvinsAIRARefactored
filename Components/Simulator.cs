@@ -12,6 +12,8 @@ using PInvoke;
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Windows;
 
+using static MarvinsAIRARefactored.Windows.MainWindow;
+
 namespace MarvinsAIRARefactored.Components;
 
 public partial class Simulator
@@ -329,6 +331,8 @@ public partial class Simulator
 		app.MultimediaTimer.Suspend = true;
 
 		app.MainWindow.UpdateStatus();
+
+		_racingWheelPage.UpdateSteeringDeviceSection();
 
 		app.Logger.WriteLine( "[Simulator] <<< OnDisconnected" );
 	}

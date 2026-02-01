@@ -97,8 +97,7 @@ public partial class MainWindow : Window
 
 		app.Logger.WriteLine( "[MainWindow] Initialize >>>" );
 
-		UpdateRacingWheelPowerButton();
-		UpdateRacingWheelForceFeedbackButtons();
+		_racingWheelPage.UpdateSteeringDeviceSection();
 
 		AppMenuPopup.Initialize();
 
@@ -226,59 +225,6 @@ public partial class MainWindow : Window
 			StatusBar.StatusText4 = statusText4;
 
 			StatusBar.StatusStyle = statusStyle;
-		} );
-	}
-
-	public void UpdateRacingWheelPowerButton()
-	{
-		var app = App.Instance!;
-
-		Dispatcher.Invoke( () =>
-		{
-			ImageSource? imageSource;
-			var blink = false;
-
-			if ( !MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelEnableForceFeedback )
-			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-red.png" ) as ImageSource;
-			}
-			else if ( !app.Simulator.IsConnected || !app.DirectInput.ForceFeedbackInitialized )
-			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-orange.png" ) as ImageSource;
-
-				blink = true;
-			}
-			else if ( app.RacingWheel.SuspendForceFeedback )
-			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-yellow.png" ) as ImageSource;
-
-				blink = true;
-			}
-			else
-			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-green.png" ) as ImageSource;
-			}
-
-			if ( imageSource != null )
-			{
-				_racingWheelPage.Power_MairaMappableButton.Icon = imageSource;
-				_racingWheelPage.Power_MairaMappableButton.Blink = blink;
-			}
-		} );
-	}
-
-	public void UpdateRacingWheelForceFeedbackButtons()
-	{
-		var app = App.Instance!;
-
-		Dispatcher.Invoke( () =>
-		{
-			var disabled = !app.DirectInput.ForceFeedbackInitialized;
-
-			_racingWheelPage.Test_MairaMappableButton.Disabled = disabled;
-			_racingWheelPage.Reset_MairaMappableButton.Disabled = disabled;
-			_racingWheelPage.Set_MairaMappableButton.Disabled = disabled;
-			_racingWheelPage.Clear_MairaMappableButton.Disabled = disabled;
 		} );
 	}
 
