@@ -1,14 +1,17 @@
 ﻿
-using IRSDKSharper;
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.DataContext;
-using MarvinsAIRARefactored.Windows;
-using PInvoke;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
+
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
+
+using PInvoke;
+using IRSDKSharper;
+
+using MarvinsAIRARefactored.Classes;
+using MarvinsAIRARefactored.Windows;
+
 using static MarvinsAIRARefactored.Windows.MainWindow;
 
 namespace MarvinsAIRARefactored.Components;
@@ -881,7 +884,7 @@ public partial class Simulator
 		{
 			_updateCounter = UpdateInterval;
 
-			MainWindow._racingWheelPage.CurrentForce_TextBlock.Text = $"{MathF.Abs( SteeringWheelTorque_ST[ 5 ] ):F1} {DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
+			_racingWheelPage.CurrentForce_TextBlock.Text = $"{MathF.Abs( SteeringWheelTorque_ST[ 5 ] ):F1} {DataContext.DataContext.Instance.Localization[ "TorqueUnits" ]}";
 		}
 	}
 
