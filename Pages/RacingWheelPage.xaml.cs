@@ -396,7 +396,14 @@ public partial class RacingWheelPage : UserControl
 				}
 				else if ( app.RacingWheel.SuspendForceFeedback )
 				{
-					SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "FFBIsEnabledInSimulator" ];
+					if ( app.SteeringEffects.IsCalibrating )
+					{
+						SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "CalibrationIsRunning" ];
+					}
+					else
+					{
+						SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "FFBIsEnabledInSimulator" ];
+					}
 				}
 				else
 				{

@@ -1537,4 +1537,8 @@
     <value>Force feedback is enabled in the iRacing simulator</value>
     <comment>Racing wheel</comment>
   </data>
+  <data name="CalibrationIsRunning" xml:space="preserve">
+    <value>FFB is disabled because calibration is running</value>
+    <comment>Racing wheel</comment>
+  </data>
 </root>
