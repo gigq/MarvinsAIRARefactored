@@ -1,19 +1,19 @@
 <?php
 
 const PERCENTAGES = [
+	'de-DE' => 100,
+	'pt-BR' => 100,
 	'uk-UA' => 100,
 	'es-ES' => 98,
 	'fr-FR' => 98,
-	'pt-BR' => 98,
 	'pt-PT' => 98,
 	'ru-RU' => 94,
 	'pl-PL' => 93,
 	'da-DK' => 92,
-	'de-DE' => 91,
 	'it-IT' => 90,
+	'cs-CZ' => 81,
 	'hy-AM' => 81,
 	'nl-NL' => 81,
-	'cs-CZ' => 81,
 	'tr-TR' => 79,
 	'zh-Hans' => 79,
 	'fr-CA' => 64,
