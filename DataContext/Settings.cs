@@ -2516,6 +2516,8 @@ public class Settings : INotifyPropertyChanged
 				_steeringEffectsUndersteerEnabled = value;
 
 				OnPropertyChanged();
+
+				App.Instance!.SteeringEffects.RedrawCalibrationGraph = true;
 			}
 		}
 	}
@@ -3145,6 +3147,8 @@ public class Settings : INotifyPropertyChanged
 				_steeringEffectsOversteerEnabled = value;
 
 				OnPropertyChanged();
+
+				App.Instance!.SteeringEffects.RedrawCalibrationGraph = true;
 			}
 		}
 	}
