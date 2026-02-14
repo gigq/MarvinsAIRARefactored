@@ -65,7 +65,7 @@ public class RacingWheel
 	private bool _usingSteeringWheelTorqueData = false;
 
 	public Guid? NextRacingWheelGuid { private get; set; } = null;
-	public bool SuspendForceFeedback { get; set; } = true; // true if simulator is disconnected or if FFB is enabled in the simulator
+	public bool SuspendForceFeedback { get; private set; } = true; // true if we want to suspend FFB (for various reasons)
 	public bool ResetForceFeedback { private get; set; } = false; // set to true manually (via reset button)
 	public bool UseSteeringWheelTorqueData { private get; set; } = false; // false if simulator is disconnected or if driver is not on track
 	public bool UpdateSteeringWheelTorqueBuffer { private get; set; } = false; // true when simulator has new torque data to be copied
@@ -1353,7 +1353,7 @@ public class RacingWheel
 
 			// suspend racing wheel force feedback if iracing ffb is enabled or we are calibrating
 
-			SuspendForceFeedback = app.Simulator.SteeringFFBEnabled && !settings.RacingWheelAlwaysEnableFFB || app.SteeringEffects.IsCalibrating;
+			SuspendForceFeedback = !app.Simulator.IsConnected || ( app.Simulator.SteeringFFBEnabled && !settings.RacingWheelAlwaysEnableFFB ) || app.SteeringEffects.IsCalibrating;
 
 			/*
 			app.Debug.Label_1 = $"FadingIsActive: {FadingIsActive}";

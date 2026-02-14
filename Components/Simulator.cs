@@ -331,7 +331,6 @@ public partial class Simulator
 
 #endif
 
-		app.RacingWheel.SuspendForceFeedback = true;
 		app.MultimediaTimer.Suspend = true;
 
 		app.MainWindow.UpdateStatus();
