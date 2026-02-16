@@ -17,7 +17,7 @@
     <StackPanel>
 
         <controls:MairaGroupBox Label="{Binding Localization[CalibrationFile_UC]}"
-                                HelpTopic="steering-effects-calibration-file">
+                                HelpTopic="advanced/steering-effects/#calibration-file">
 
             <StackPanel>
 
@@ -167,7 +167,7 @@
             <StackPanel Grid.Column="2">
 
                 <controls:MairaGroupBox Label="{Binding Localization[Understeer_UC]}"
-                                        HelpTopic="steering-effects-thresholds">
+                                        HelpTopic="advanced/steering-effects/#enable-thresholds">
 
                     <Grid>
 
@@ -231,7 +231,7 @@
                 </controls:MairaGroupBox>
 
                 <controls:MairaGroupBox Label="{Binding Localization[UndersteerWheelVibrationEffect_UC]}"
-                                        HelpTopic="steering-effects-wheel-vibration-effect"
+                                        HelpTopic="advanced/steering-effects/#wheel-vibration-effect"
                                         Tag="Understeer">
 
                     <StackPanel>
@@ -315,7 +315,7 @@
                 </controls:MairaGroupBox>
 
                 <controls:MairaGroupBox Label="{Binding Localization[UndersteerWheelConstantForceEffect_UC]}"
-                                        HelpTopic="steering-effects-wheel-constant-force-effect"
+                                        HelpTopic="advanced/steering-effects/#wheel-constant-force-effect"
                                         Tag="Understeer">
 
                     <Grid>
@@ -363,7 +363,7 @@
                 </controls:MairaGroupBox>
 
                 <controls:MairaGroupBox Label="{Binding Localization[UndersteerPedalVibrationEffect_UC]}"
-                                        HelpTopic="steering-effects-pedal-vibration-effect"
+                                        HelpTopic="advanced/steering-effects/#pedal-vibration-effect"
                                         Tag="Understeer">
 
                     <Grid>
@@ -453,7 +453,7 @@
             <StackPanel Grid.Column="2">
 
                 <controls:MairaGroupBox Label="{Binding Localization[Oversteer_UC]}"
-                                        HelpTopic="steering-effects-thresholds">
+                                        HelpTopic="advanced/steering-effects/#enable-thresholds">
 
                     <Grid>
 
@@ -517,7 +517,7 @@
                 </controls:MairaGroupBox>
 
                 <controls:MairaGroupBox Label="{Binding Localization[OversteerWheelVibrationEffect_UC]}"
-                                        HelpTopic="steering-effects-wheel-vibration-effect"
+                                        HelpTopic="advanced/steering-effects/#wheel-vibration-effect"
                                         Tag="Oversteer">
 
                     <StackPanel>
@@ -601,7 +601,7 @@
                 </controls:MairaGroupBox>
 
                 <controls:MairaGroupBox Label="{Binding Localization[OversteerWheelConstantForceEffect_UC]}"
-                                        HelpTopic="steering-effects-wheel-constant-force-effect"
+                                        HelpTopic="advanced/steering-effects/#wheel-constant-force-effect"
                                         Tag="Oversteer">
 
                     <Grid>
@@ -649,7 +649,7 @@
                 </controls:MairaGroupBox>
 
                 <controls:MairaGroupBox Label="{Binding Localization[OversteerPedalVibrationEffect_UC]}"
-                                        HelpTopic="steering-effects-pedal-vibration-effect"
+                                        HelpTopic="advanced/steering-effects/#pedal-vibration-effect"
                                         Tag="Oversteer">
 
                     <Grid>
@@ -739,7 +739,7 @@
             <StackPanel Grid.Column="2">
 
                 <controls:MairaGroupBox Label="{Binding Localization[SeatOfPants_UC]}"
-                                        HelpTopic="steering-effects-thresholds">
+                                        HelpTopic="advanced/steering-effects/#enable-thresholds">
 
                     <Grid>
 
@@ -801,7 +801,7 @@
                 </controls:MairaGroupBox>
 
                 <controls:MairaGroupBox Label="{Binding Localization[SeatOfPantsWheelVibrationEffect_UC]}"
-                                        HelpTopic="steering-effects-wheel-vibration-effect"
+                                        HelpTopic="advanced/steering-effects/#wheel-vibration-effect"
                                         Tag="SeatOfPants">
 
                     <StackPanel>
@@ -885,7 +885,7 @@
                 </controls:MairaGroupBox>
 
                 <controls:MairaGroupBox Label="{Binding Localization[SeatOfPantsWheelConstantForceEffect_UC]}"
-                                        HelpTopic="steering-effects-wheel-constant-force-effect"
+                                        HelpTopic="advanced/steering-effects/#wheel-constant-force-effect"
                                         Tag="SeatOfPants">
 
                     <Grid>
@@ -933,7 +933,7 @@
                 </controls:MairaGroupBox>
 
                 <controls:MairaGroupBox Label="{Binding Localization[SeatOfPantsPedalVibrationEffect_UC]}"
-                                        HelpTopic="steering-effects-pedal-vibration-effect"
+                                        HelpTopic="advanced/steering-effects/#pedal-vibration-effect"
                                         Tag="SeatOfPants">
 
                     <Grid>
@@ -986,7 +986,7 @@
         </Grid>
 
         <controls:MairaGroupBox Label="{Binding Localization[GripOMeter_UC]}"
-                                HelpTopic="steering-effects-grip-o-meter">
+                                HelpTopic="advanced/steering-effects/#grip-o-meter">
 
             <Grid>
 
@@ -1038,7 +1038,7 @@
         </controls:MairaGroupBox>
 
         <controls:MairaGroupBox Label="{Binding Localization[Calibration_UC]}"
-                                HelpTopic="steering-effects-calibration">
+                                HelpTopic="advanced/steering-effects/#calibration">
 
             <StackPanel>
                 <Border x:Name="NotOnCentripetalCircuitTrack_Border"
