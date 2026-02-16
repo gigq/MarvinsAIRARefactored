@@ -526,7 +526,7 @@ public class RacingWheel
 					case VibrationPattern.SawtoothWaveIn:
 					{
 						var phase = ( timeInSeconds * frequency ) % 1f;
-						understeerEffectTorque = ( phase - 1f ) * -MathF.Sign( app.Simulator.SteeringWheelAngle );
+						understeerEffectTorque = ( 1f - phase ) * MathF.Sign( app.Simulator.SteeringWheelAngle );
 						break;
 					}
 

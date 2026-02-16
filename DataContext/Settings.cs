@@ -182,6 +182,13 @@ public class Settings : INotifyPropertyChanged
 			UpdateRacingWheelSlewCompressionThresholdString();
 			UpdateRacingWheelTotalCompressionThresholdString();
 
+			UpdateSteeringEffectsUndersteerWheelVibrationStrengthString();
+			UpdateSteeringEffectsUndersteerWheelConstantForceStrengthString();
+			UpdateSteeringEffectsOversteerWheelVibrationStrengthString();
+			UpdateSteeringEffectsOversteerWheelConstantForceStrengthString();
+			UpdateSteeringEffectsSeatOfPantsWheelVibrationStrengthString();
+			UpdateSteeringEffectsSeatOfPantsWheelConstantForceStrengthString();
+
 			var app = App.Instance!;
 
 			app.RacingWheel.UpdateAlgorithmPreview = true;
@@ -2695,14 +2702,7 @@ public class Settings : INotifyPropertyChanged
 				OnPropertyChanged();
 			}
 
-			if ( _steeringEffectsUndersteerWheelVibrationStrength == 0f )
-			{
-				SteeringEffectsUndersteerWheelVibrationStrengthString = DataContext.Instance.Localization[ "OFF" ];
-			}
-			else
-			{
-				SteeringEffectsUndersteerWheelVibrationStrengthString = $"{_steeringEffectsUndersteerWheelVibrationStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
-			}
+			UpdateSteeringEffectsUndersteerWheelVibrationStrengthString();
 		}
 	}
 
@@ -2721,6 +2721,20 @@ public class Settings : INotifyPropertyChanged
 
 				OnPropertyChanged();
 			}
+		}
+	}
+
+	private void UpdateSteeringEffectsUndersteerWheelVibrationStrengthString()
+	{
+		if ( _steeringEffectsUndersteerWheelVibrationStrength == 0f )
+		{
+			SteeringEffectsUndersteerWheelVibrationStrengthString = DataContext.Instance.Localization[ "OFF" ];
+		}
+		else
+		{
+			var convertedToTorque = RacingWheelMaxForce * _steeringEffectsUndersteerWheelVibrationStrength;
+
+			SteeringEffectsUndersteerWheelVibrationStrengthString = $"{_steeringEffectsUndersteerWheelVibrationStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToTorque:F1}{DataContext.Instance.Localization[ "TorqueUnits" ]})";
 		}
 	}
 
@@ -2920,14 +2934,7 @@ public class Settings : INotifyPropertyChanged
 				OnPropertyChanged();
 			}
 
-			if ( _steeringEffectsUndersteerWheelConstantForceStrength == 0f )
-			{
-				SteeringEffectsUndersteerWheelConstantForceStrengthString = DataContext.Instance.Localization[ "OFF" ];
-			}
-			else
-			{
-				SteeringEffectsUndersteerWheelConstantForceStrengthString = $"{_steeringEffectsUndersteerWheelConstantForceStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
-			}
+			UpdateSteeringEffectsUndersteerWheelConstantForceStrengthString();
 		}
 	}
 
@@ -2948,6 +2955,21 @@ public class Settings : INotifyPropertyChanged
 			}
 		}
 	}
+
+	private void UpdateSteeringEffectsUndersteerWheelConstantForceStrengthString()
+	{
+		if ( _steeringEffectsUndersteerWheelConstantForceStrength == 0f )
+		{
+			SteeringEffectsUndersteerWheelConstantForceStrengthString = DataContext.Instance.Localization[ "OFF" ];
+		}
+		else
+		{
+			var convertedToTorque = RacingWheelMaxForce * _steeringEffectsUndersteerWheelConstantForceStrength;
+
+			SteeringEffectsUndersteerWheelConstantForceStrengthString = $"{_steeringEffectsUndersteerWheelConstantForceStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToTorque:F1}{DataContext.Instance.Localization[ "TorqueUnits" ]})";
+		}
+	}
+
 
 	public ContextSwitches SteeringEffectsUndersteerWheelConstantForceStrengthContextSwitches { get; set; } = new( true, false, false, false, false );
 	public ButtonMappings SteeringEffectsUndersteerWheelConstantForceStrengthPlusButtonMappings { get; set; } = new();
@@ -3054,7 +3076,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _steeringEffectsUndersteerPedalVibrationMinimumFrequency ) );
 
-		SteeringEffectsUndersteerPedalVibrationMinimumFrequencyString = $"{_steeringEffectsUndersteerPedalVibrationMinimumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		SteeringEffectsUndersteerPedalVibrationMinimumFrequencyString = $"{_steeringEffectsUndersteerPedalVibrationMinimumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches SteeringEffectsUndersteerPedalVibrationMinimumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
@@ -3108,7 +3130,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _steeringEffectsUndersteerPedalVibrationMaximumFrequency ) );
 
-		SteeringEffectsUndersteerPedalVibrationMaximumFrequencyString = $"{_steeringEffectsUndersteerPedalVibrationMaximumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		SteeringEffectsUndersteerPedalVibrationMaximumFrequencyString = $"{_steeringEffectsUndersteerPedalVibrationMaximumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches SteeringEffectsUndersteerPedalVibrationMaximumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
@@ -3340,14 +3362,7 @@ public class Settings : INotifyPropertyChanged
 				OnPropertyChanged();
 			}
 
-			if ( _steeringEffectsOversteerWheelVibrationStrength == 0f )
-			{
-				SteeringEffectsOversteerWheelVibrationStrengthString = DataContext.Instance.Localization[ "OFF" ];
-			}
-			else
-			{
-				SteeringEffectsOversteerWheelVibrationStrengthString = $"{_steeringEffectsOversteerWheelVibrationStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
-			}
+			UpdateSteeringEffectsOversteerWheelVibrationStrengthString();
 		}
 	}
 
@@ -3366,6 +3381,20 @@ public class Settings : INotifyPropertyChanged
 
 				OnPropertyChanged();
 			}
+		}
+	}
+
+	private void UpdateSteeringEffectsOversteerWheelVibrationStrengthString()
+	{
+		if ( _steeringEffectsOversteerWheelVibrationStrength == 0f )
+		{
+			SteeringEffectsOversteerWheelVibrationStrengthString = DataContext.Instance.Localization[ "OFF" ];
+		}
+		else
+		{
+			var convertedToTorque = RacingWheelMaxForce * _steeringEffectsOversteerWheelVibrationStrength;
+
+			SteeringEffectsOversteerWheelVibrationStrengthString = $"{_steeringEffectsOversteerWheelVibrationStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToTorque:F1}{DataContext.Instance.Localization[ "TorqueUnits" ]})";
 		}
 	}
 
@@ -3565,14 +3594,7 @@ public class Settings : INotifyPropertyChanged
 				OnPropertyChanged();
 			}
 
-			if ( _steeringEffectsOversteerWheelConstantForceStrength == 0f )
-			{
-				SteeringEffectsOversteerWheelConstantForceStrengthString = DataContext.Instance.Localization[ "OFF" ];
-			}
-			else
-			{
-				SteeringEffectsOversteerWheelConstantForceStrengthString = $"{_steeringEffectsOversteerWheelConstantForceStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
-			}
+			UpdateSteeringEffectsOversteerWheelConstantForceStrengthString();
 		}
 	}
 
@@ -3591,6 +3613,20 @@ public class Settings : INotifyPropertyChanged
 
 				OnPropertyChanged();
 			}
+		}
+	}
+
+	private void UpdateSteeringEffectsOversteerWheelConstantForceStrengthString()
+	{
+		if ( _steeringEffectsOversteerWheelConstantForceStrength == 0f )
+		{
+			SteeringEffectsOversteerWheelConstantForceStrengthString = DataContext.Instance.Localization[ "OFF" ];
+		}
+		else
+		{
+			var convertedToTorque = RacingWheelMaxForce * _steeringEffectsOversteerWheelConstantForceStrength;
+
+			SteeringEffectsOversteerWheelConstantForceStrengthString = $"{_steeringEffectsOversteerWheelConstantForceStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToTorque:F1}{DataContext.Instance.Localization[ "TorqueUnits" ]})";
 		}
 	}
 
@@ -3699,7 +3735,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _steeringEffectsOversteerPedalVibrationMinimumFrequency ) );
 
-		SteeringEffectsOversteerPedalVibrationMinimumFrequencyString = $"{_steeringEffectsOversteerPedalVibrationMinimumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		SteeringEffectsOversteerPedalVibrationMinimumFrequencyString = $"{_steeringEffectsOversteerPedalVibrationMinimumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches SteeringEffectsOversteerPedalVibrationMinimumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
@@ -3753,7 +3789,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _steeringEffectsOversteerPedalVibrationMaximumFrequency ) );
 
-		SteeringEffectsOversteerPedalVibrationMaximumFrequencyString = $"{_steeringEffectsOversteerPedalVibrationMaximumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		SteeringEffectsOversteerPedalVibrationMaximumFrequencyString = $"{_steeringEffectsOversteerPedalVibrationMaximumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches SteeringEffectsOversteerPedalVibrationMaximumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
@@ -4019,14 +4055,7 @@ public class Settings : INotifyPropertyChanged
 				OnPropertyChanged();
 			}
 
-			if ( _steeringEffectsSeatOfPantsWheelVibrationStrength == 0f )
-			{
-				SteeringEffectsSeatOfPantsWheelVibrationStrengthString = DataContext.Instance.Localization[ "OFF" ];
-			}
-			else
-			{
-				SteeringEffectsSeatOfPantsWheelVibrationStrengthString = $"{_steeringEffectsSeatOfPantsWheelVibrationStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
-			}
+			UpdateSteeringEffectsSeatOfPantsWheelVibrationStrengthString();
 		}
 	}
 
@@ -4045,6 +4074,20 @@ public class Settings : INotifyPropertyChanged
 
 				OnPropertyChanged();
 			}
+		}
+	}
+
+	private void UpdateSteeringEffectsSeatOfPantsWheelVibrationStrengthString()
+	{
+		if ( _steeringEffectsSeatOfPantsWheelVibrationStrength == 0f )
+		{
+			SteeringEffectsSeatOfPantsWheelVibrationStrengthString = DataContext.Instance.Localization[ "OFF" ];
+		}
+		else
+		{
+			var convertedToTorque = RacingWheelMaxForce * _steeringEffectsSeatOfPantsWheelVibrationStrength;
+
+			SteeringEffectsSeatOfPantsWheelVibrationStrengthString = $"{_steeringEffectsSeatOfPantsWheelVibrationStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToTorque:F1}{DataContext.Instance.Localization[ "TorqueUnits" ]})";
 		}
 	}
 
@@ -4244,14 +4287,7 @@ public class Settings : INotifyPropertyChanged
 				OnPropertyChanged();
 			}
 
-			if ( _steeringEffectsSeatOfPantsWheelConstantForceStrength == 0f )
-			{
-				SteeringEffectsSeatOfPantsWheelConstantForceStrengthString = DataContext.Instance.Localization[ "OFF" ];
-			}
-			else
-			{
-				SteeringEffectsSeatOfPantsWheelConstantForceStrengthString = $"{_steeringEffectsSeatOfPantsWheelConstantForceStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
-			}
+			UpdateSteeringEffectsSeatOfPantsWheelConstantForceStrengthString();
 		}
 	}
 
@@ -4270,6 +4306,20 @@ public class Settings : INotifyPropertyChanged
 
 				OnPropertyChanged();
 			}
+		}
+	}
+
+	private void UpdateSteeringEffectsSeatOfPantsWheelConstantForceStrengthString()
+	{
+		if ( _steeringEffectsSeatOfPantsWheelConstantForceStrength == 0f )
+		{
+			SteeringEffectsSeatOfPantsWheelConstantForceStrengthString = DataContext.Instance.Localization[ "OFF" ];
+		}
+		else
+		{
+			var convertedToTorque = RacingWheelMaxForce * _steeringEffectsSeatOfPantsWheelConstantForceStrength;
+
+			SteeringEffectsSeatOfPantsWheelConstantForceStrengthString = $"{_steeringEffectsSeatOfPantsWheelConstantForceStrength * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToTorque:F1}{DataContext.Instance.Localization[ "TorqueUnits" ]})";
 		}
 	}
 
@@ -4378,7 +4428,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _steeringEffectsSeatOfPantsPedalVibrationMinimumFrequency ) );
 
-		SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyString = $"{_steeringEffectsSeatOfPantsPedalVibrationMinimumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyString = $"{_steeringEffectsSeatOfPantsPedalVibrationMinimumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches SteeringEffectsSeatOfPantsPedalVibrationMinimumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
@@ -4432,7 +4482,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _steeringEffectsSeatOfPantsPedalVibrationMaximumFrequency ) );
 
-		SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyString = $"{_steeringEffectsSeatOfPantsPedalVibrationMaximumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyString = $"{_steeringEffectsSeatOfPantsPedalVibrationMaximumFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches SteeringEffectsSeatOfPantsPedalVibrationMaximumFrequencyContextSwitches { get; set; } = new( true, true, false, false, false );
@@ -5674,7 +5724,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _pedalsShiftIntoGearFrequency ) );
 
-		PedalsShiftIntoGearFrequencyString = $"{_pedalsShiftIntoGearFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		PedalsShiftIntoGearFrequencyString = $"{_pedalsShiftIntoGearFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches PedalsShiftIntoGearFrequencyContextSwitches { get; set; } = new( false, false, false, false, false );
@@ -5822,7 +5872,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _pedalsShiftIntoNeutralFrequency ) );
 
-		PedalsShiftIntoNeutralFrequencyString = $"{_pedalsShiftIntoNeutralFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		PedalsShiftIntoNeutralFrequencyString = $"{_pedalsShiftIntoNeutralFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches PedalsShiftIntoNeutralFrequencyContextSwitches { get; set; } = new( false, false, false, false, false );
@@ -5970,7 +6020,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _pedalsABSEngagedFrequency ) );
 
-		PedalsABSEngagedFrequencyString = $"{_pedalsABSEngagedFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		PedalsABSEngagedFrequencyString = $"{_pedalsABSEngagedFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches PedalsABSEngagedFrequencyContextSwitches { get; set; } = new( false, false, false, false, false );
@@ -6187,7 +6237,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _pedalsWheelLockFrequency ) );
 
-		PedalsWheelLockFrequencyString = $"{_pedalsWheelLockFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		PedalsWheelLockFrequencyString = $"{_pedalsWheelLockFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches PedalsWheelLockFrequencyContextSwitches { get; set; } = new( false, false, false, false, false );
@@ -6311,7 +6361,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _pedalsWheelSpinFrequency ) );
 
-		PedalsWheelSpinFrequencyString = $"{_pedalsWheelSpinFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		PedalsWheelSpinFrequencyString = $"{_pedalsWheelSpinFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches PedalsWheelSpinFrequencyContextSwitches { get; set; } = new( false, false, false, false, false );
@@ -6533,7 +6583,7 @@ public class Settings : INotifyPropertyChanged
 	{
 		var convertedToHertz = Math.Round( MathZ.Lerp( PedalsMinimumFrequency, PedalsMaximumFrequency, _pedalsClutchSlipFrequency ) );
 
-		PedalsClutchSlipFrequencyString = $"{_pedalsClutchSlipFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz}{DataContext.Instance.Localization[ "HertzUnits" ]})";
+		PedalsClutchSlipFrequencyString = $"{_pedalsClutchSlipFrequency * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]} ({convertedToHertz:F0}{DataContext.Instance.Localization[ "HertzUnits" ]})";
 	}
 
 	public ContextSwitches PedalsClutchSlipFrequencyContextSwitches { get; set; } = new( false, false, false, false, false );
