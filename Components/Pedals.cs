@@ -394,7 +394,7 @@ public class Pedals
 
 		var factor = MathF.Abs( app.SteeringEffects.SeatOfPantsEffect );
 
-		if ( _testing || ( settings.SoundsSeatOfPantsEnabled && ( factor > 0f ) ) )
+		if ( _testing || ( settings.SteeringEffectsSeatOfPantsEnabled && ( factor > 0f ) ) )
 		{
 			if ( _testing )
 			{
