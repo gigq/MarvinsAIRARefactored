@@ -1057,7 +1057,7 @@ public partial class App : Application
 
 				if ( settings.RacingWheelInputMappedSettingUpdateEnabled )
 				{
-					RacingWheel.SendChatMessage( "ParkedStrength", settings.RacingWheelParkedStrengthString );
+					RacingWheel.SendChatMessage( "ForceFeedbackStrength", settings.RacingWheelParkedStrengthString );
 				}
 			}
 
@@ -1067,7 +1067,7 @@ public partial class App : Application
 
 				if ( settings.RacingWheelInputMappedSettingUpdateEnabled )
 				{
-					RacingWheel.SendChatMessage( "ParkedStrength", settings.RacingWheelParkedStrengthString );
+					RacingWheel.SendChatMessage( "ForceFeedbackStrength", settings.RacingWheelParkedStrengthString );
 				}
 			}
 
