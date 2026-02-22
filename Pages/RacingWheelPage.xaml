@@ -277,7 +277,7 @@
                                         ContextSwitches="{Binding Settings.RacingWheelDetailBoostContextSwitches}"
                                         PlusButtonMappings="{Binding Settings.RacingWheelDetailBoostPlusButtonMappings}"
                                         MinusButtonMappings="{Binding Settings.RacingWheelDetailBoostMinusButtonMappings}"
-                                        DefaultValue="0" />
+                                        DefaultValue="0.5" />
 
                     <controls:MairaKnob x:Name="DeltaLimit_MairaKnob"
                                         Grid.Column="2"

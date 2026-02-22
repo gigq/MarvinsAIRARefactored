@@ -632,7 +632,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region Racing wheel - Detail boost
 
-	private float _racingWheelDetailBoost = 0f;
+	private float _racingWheelDetailBoost = 0.5f;
 
 	public float RacingWheelDetailBoost
 	{

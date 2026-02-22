@@ -13,7 +13,7 @@ public class ContextSettings
 	public float RacingWheelAutoMargin { get; set; } = 0f;
 	public RacingWheel.Algorithm RacingWheelAlgorithm { get; set; } = RacingWheel.Algorithm.DetailBooster;
 	public bool RacingWheelEnableSoftLimiter { get; set; } = true;
-	public float RacingWheelDetailBoost { get; set; } = 0f;
+	public float RacingWheelDetailBoost { get; set; } = 0.5f;
 	public float RacingWheelDetailBoostBias { get; set; } = 0.1f;
 	public float RacingWheelDeltaLimit { get; set; } = 500f;
 	public float RacingWheelDeltaLimiterBias { get; set; } = 0.2f;
