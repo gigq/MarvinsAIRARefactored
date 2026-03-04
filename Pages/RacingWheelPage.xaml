@@ -834,7 +834,7 @@
                                     ContextSwitches="{Binding Settings.RacingWheelGearChangeVibrateStrengthContextSwitches}"
                                     PlusButtonMappings="{Binding Settings.RacingWheelGearChangeVibrateStrengthPlusButtonMappings}"
                                     MinusButtonMappings="{Binding Settings.RacingWheelGearChangeVibrateStrengthMinusButtonMappings}"
-                                    DefaultValue="0.1" />
+                                    DefaultValue="0.0" />
                 <controls:MairaKnob Grid.Column="2"
                                     Label="{Binding Localization[ABSVibrateStrength]}"
                                     Value="{Binding Settings.RacingWheelABSVibrateStrength, Mode=TwoWay}"
@@ -843,7 +843,7 @@
                                     ContextSwitches="{Binding Settings.RacingWheelABSVibrateStrengthContextSwitches}"
                                     PlusButtonMappings="{Binding Settings.RacingWheelABSVibrateStrengthPlusButtonMappings}"
                                     MinusButtonMappings="{Binding Settings.RacingWheelABSVibrateStrengthMinusButtonMappings}"
-                                    DefaultValue="0.1" />
+                                    DefaultValue="0.0" />
 
             </Grid>
 

@@ -41,8 +41,8 @@ public class ContextSettings
 	public float RacingWheelSoftLockStrength { get; set; } = 0.25f;
 	public float RacingWheelFriction { get; set; } = 0f;
 	public float RacingWheelWheelCenteringStrength { get; set; } = 0.75f;
-	public float RacingWheelGearChangeVibrateStrength { get; set; } = 0.1f;
-	public float RacingWheelABSVibrateStrength { get; set; } = 0.1f;
+	public float RacingWheelGearChangeVibrateStrength { get; set; } = 0.0f;
+	public float RacingWheelABSVibrateStrength { get; set; } = 0.0f;
 	public bool RacingWheelCenterWheelWhileRacing { get; set; } = false;
 	public bool RacingWheelCenterWheelWhileParked { get; set; } = true;
 	public bool RacingWheelFadeEnabled { get; set; } = true;

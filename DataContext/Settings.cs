@@ -2224,7 +2224,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region Racing wheel - Gear change vibrate strength
 
-	private float _racingWheelGearChangeVibrateStrength = 0.1f;
+	private float _racingWheelGearChangeVibrateStrength = 0.0f;
 
 	public float RacingWheelGearChangeVibrateStrength
 	{
@@ -2285,7 +2285,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region Racing wheel - ABS vibrate strength
 
-	private float _racingWheelABSVibrateStrength = 0.1f;
+	private float _racingWheelABSVibrateStrength = 0.0f;
 
 	public float RacingWheelABSVibrateStrength
 	{
