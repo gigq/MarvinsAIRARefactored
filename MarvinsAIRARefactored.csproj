@@ -175,6 +175,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="InnoSetup\Calibration\" />
     <Folder Include="InnoSetup\SimHub\" />
   </ItemGroup>
 
