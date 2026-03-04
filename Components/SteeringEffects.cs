@@ -69,6 +69,7 @@ public class SteeringEffects
 
 	private float _robotSettleTimer = 0f;
 	private float _robotThrottle = 0f;
+	private float _robotBrake = 0f;
 
 	private int _calibrationSamplesTaken = 0;
 	private float _steeringWheelAngleInDegreesRunningAverage = 0f;
@@ -367,6 +368,7 @@ public class SteeringEffects
 			_robotSettleTimer = Math.Max( _robotSettleTimer - deltaSeconds, 0f );
 
 			_robotThrottle = 0f;
+			_robotBrake = 1f;
 		}
 		else
 		{
@@ -403,13 +405,29 @@ public class SteeringEffects
 
 					_robotThrottle = MathZ.Saturate( _robotThrottle );
 				}
+
+				// update brake
+
+				if ( _robotThrottle == 0f )
+				{
+					if ( deltaToTarget < 0f )
+					{
+						_robotBrake -= Math.Clamp( deltaAcceleration, -deltaSeconds / 30f, deltaSeconds / 30f );
+
+						_robotBrake = MathZ.Saturate( _robotBrake );
+					}
+				}
+				else
+				{
+					_robotBrake = 0f;
+				}
 			}
 		}
 
 		// update virtual joystick
 
 		app.VirtualJoystick.Steering = (float) _targetSteeringWheelAngleInDegrees / MaxSteeringWheelAngleInDegrees;
-		app.VirtualJoystick.Brake = 0f;
+		app.VirtualJoystick.Brake = _robotBrake;
 		app.VirtualJoystick.Throttle = _robotThrottle;
 
 		// remember last frame speed
