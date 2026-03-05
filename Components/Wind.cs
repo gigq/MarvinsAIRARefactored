@@ -25,6 +25,9 @@ public partial class Wind
 	private bool _testingLeft = false;
 	private bool _testingRight = false;
 
+	private bool _previewActive = false;
+	private float _previewPowerNormalized = 0f;
+
 	private int _updateCounter = UpdateInterval + 7;
 
 	private static readonly Regex _fanRPMRegex = FanRPMRegex();
@@ -108,6 +111,17 @@ public partial class Wind
 	public void TestRight( bool enable )
 	{
 		_testingRight = enable;
+	}
+
+	public void StartPreview( float normalizedPower )
+	{
+		_previewActive = true;
+		_previewPowerNormalized = MathF.Max( 0f, MathF.Min( 1f, normalizedPower ) );
+	}
+
+	public void StopPreview()
+	{
+		_previewActive = false;
 	}
 
 	private void OnDataReceived( object? sender, string data )
@@ -220,17 +234,26 @@ public partial class Wind
 
 		// Negative curveFactor biases wind towards the left fan, positive towards the right fan
 
-		_leftFanPower = fanPower * ( 1f + MathF.Min( 0, curveFactor ) ) * settings.WindMasterWindPower * 320f;
-		_rightFanPower = fanPower * ( 1f - MathF.Max( 0, curveFactor ) ) * settings.WindMasterWindPower * 320f;
+		if ( _previewActive )
+		{
+			var previewFanPower = _previewPowerNormalized * settings.WindMasterWindPower * 320f;
 
-		_leftFanPower = _testingLeft ? 320 : Math.Max( 0f, _leftFanPower );
-		_rightFanPower = _testingRight ? 320 : Math.Max( 0f, _rightFanPower );
-
-		if ( !app.Simulator.IsOnTrack )
+			_leftFanPower = previewFanPower;
+			_rightFanPower = previewFanPower;
+		}
+		else if ( app.Simulator.IsOnTrack )
+		{
+			_leftFanPower = fanPower * ( 1f + MathF.Min( 0, curveFactor ) ) * settings.WindMasterWindPower * 320f;
+			_rightFanPower = fanPower * ( 1f - MathF.Max( 0, curveFactor ) ) * settings.WindMasterWindPower * 320f;
+		}
+		else
 		{
 			_leftFanPower = 0f;
 			_rightFanPower = 0f;
 		}
+
+		_leftFanPower = _testingLeft ? 320 : Math.Max( 0f, _leftFanPower );
+		_rightFanPower = _testingRight ? 320 : Math.Max( 0f, _rightFanPower );
 
 		// Format command into a stack-allocated UTF-8 buffer to avoid allocating a string
 
