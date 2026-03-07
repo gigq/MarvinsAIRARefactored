@@ -21,8 +21,12 @@ public class ContextSettings
 	public float RacingWheelSlewCompressionRate { get; set; } = 0.65f;
 	public float RacingWheelTotalCompressionThreshold { get; set; } = 0.65f;
 	public float RacingWheelTotalCompressionRate { get; set; } = 0.75f;
+	public float RacingWheelMulti360HzDetail { get; set; } = 1f;
 	public float RacingWheelMultiTorqueCompression { get; set; } = 0f;
+	public bool RacingWheelMultiEnableSlewPeakMode { get; set; } = true;
 	public float RacingWheelMultiSlewRateReduction { get; set; } = 0f;
+	public RacingWheel.MultiFFBSourceOptions RacingWheelMultiFFBSourceSelection { get; set; } = RacingWheel.MultiFFBSourceOptions.Native360Hz;
+	public RacingWheel.MultiFFBSource RacingWheelMultiFFBSource { get; set; } = RacingWheel.MultiFFBSource.Native360Hz;
 	public float RacingWheelMultiDetailGain { get; set; } = 0f;
 	public float RacingWheelMultiOutputSmoothing { get; set; } = 0f;
 	public float RacingWheelOutputMinimum { get; set; } = 0f;

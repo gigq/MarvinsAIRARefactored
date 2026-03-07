@@ -245,6 +245,41 @@ public partial class RacingWheelPage : UserControl
 		app.Logger.WriteLine( "[RacingWheelPage] <<< UpdateAlgorithmOptions" );
 	}
 
+	public void UpdateMultiFFBSourceOptions()
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[RacingWheelPage] UpdateFFBSourceOptions >>>" );
+
+		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+
+		var dictionary = new Dictionary<RacingWheel.MultiFFBSourceOptions, string>
+		{
+			{ RacingWheel.MultiFFBSourceOptions.Native60Hz, localization[ "Native60Hz" ] },
+			{ RacingWheel.MultiFFBSourceOptions.HybridVariable30, localization[ "HybridVariable30" ] },
+			{ RacingWheel.MultiFFBSourceOptions.Hybrid10, localization[ "Hybrid10" ] },
+			{ RacingWheel.MultiFFBSourceOptions.Native360Hz, localization[ "Native360Hz" ] },
+			{ RacingWheel.MultiFFBSourceOptions._Dummy_, "" },
+			{ RacingWheel.MultiFFBSourceOptions.DefaultsNative60Hz, localization[ "DefaultsNative60Hz" ] },
+			{ RacingWheel.MultiFFBSourceOptions.DefaultsHybridVariable30, localization[ "DefaultsHybridVariable30" ] },
+			{ RacingWheel.MultiFFBSourceOptions.DefaultsHybrid10, localization[ "DefaultsHybrid10" ] },
+			{ RacingWheel.MultiFFBSourceOptions.DefaultsNative360Hz, localization[ "DefaultsNative360Hz" ] },
+			{ RacingWheel.MultiFFBSourceOptions.PresetBasicFFB, localization[ "PresetBasicFFB" ] },
+			{ RacingWheel.MultiFFBSourceOptions.PresetBalancedFFB, localization[ "PresetBalancedFFB" ] },
+			{ RacingWheel.MultiFFBSourceOptions.PresetBoostDetail, localization[ "PresetBoostDetail" ] },
+			{ RacingWheel.MultiFFBSourceOptions.PresetReduceDetail, localization[ "PresetReduceDetail" ] }
+		};
+
+		app.Dispatcher.Invoke( () =>
+		{
+			MultiFFBSource_MairaComboBox.ItemsSource = dictionary;
+			MultiFFBSource_MairaComboBox.SelectedValue = settings.RacingWheelMultiFFBSourceSelection;
+		} );
+
+		app.Logger.WriteLine( "[RacingWheelPage] <<< UpdateFFBSourceOptions" );
+	}
+
 	public void UpdatePredictionModeOptions()
 	{
 		var app = App.Instance!;

@@ -143,6 +143,7 @@ public partial class MainWindow : Window
 
 			_racingWheelPage.UpdateSteeringDeviceOptions();
 			_racingWheelPage.UpdateAlgorithmOptions();
+			_racingWheelPage.UpdateMultiFFBSourceOptions();
 			_racingWheelPage.UpdatePredictionModeOptions();
 			_racingWheelPage.UpdatePreviewRecordingsOptions();
 			_racingWheelPage.UpdateLFERecordingDeviceOptions();
@@ -247,12 +248,17 @@ public partial class MainWindow : Window
 			var racingWheelTotalCompressionThresholdVisibility = Visibility.Collapsed;
 			var racingWheelTotalCompressionRateVisibility = Visibility.Collapsed;
 
+			var racingWheelMulti360HzDetailVisibility = Visibility.Collapsed;
 			var racingWheelMultiTorqueCompressionVisibility = Visibility.Collapsed;
+			var racingWheelMultiEnableSlewPeakModeVisibility = Visibility.Collapsed;
 			var racingWheelMultiSlewRateReductionVisibility = Visibility.Collapsed;
+			var racingWheelMultiFFBSourceVisibility = Visibility.Collapsed;
 			var racingWheelMultiDetailGainVisibility = Visibility.Collapsed;
 			var racingWheelMultiOutputSmoothingVisibility = Visibility.Collapsed;
 
 			var racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Collapsed;
+
+			var useThirdRowSpacer = false;
 
 			switch ( MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelAlgorithm )
 			{
@@ -301,14 +307,15 @@ public partial class MainWindow : Window
 					break;
 
 				case RacingWheel.Algorithm.MultiAdjustmentToolkit:
+					racingWheelMulti360HzDetailVisibility = Visibility.Visible;
 					racingWheelMultiTorqueCompressionVisibility = Visibility.Visible;
+					racingWheelMultiEnableSlewPeakModeVisibility = Visibility.Visible;
 					racingWheelMultiSlewRateReductionVisibility = Visibility.Visible;
+					racingWheelMultiFFBSourceVisibility = Visibility.Visible;
 					racingWheelMultiDetailGainVisibility = Visibility.Visible;
 					racingWheelMultiOutputSmoothingVisibility = Visibility.Visible;
-					racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Visible;
-					racingWheelPredictionModeComboBoxVisibility = Visibility.Visible;
-					racingWheelPredictionBlendKnobControlVisibility = Visibility.Visible;
-					racingWheelPredictionControlsRow = 4;
+
+					useThirdRowSpacer = true;
 					break;
 			}
 
@@ -318,7 +325,7 @@ public partial class MainWindow : Window
 			Grid.SetRow( _racingWheelPage.PredictionMode_MairaComboBox, racingWheelPredictionControlsRow );
 			Grid.SetRow( _racingWheelPage.PredictionBlend_MairaKnob, racingWheelPredictionControlsRow );
 
-			_racingWheelPage.AlgorithmThirdRowSpacer_RowDefinition.Height = new GridLength( ( racingWheelPredictionControlsRow == 4 ) ? 20 : 0 );
+			_racingWheelPage.AlgorithmThirdRowSpacer_RowDefinition.Height = new GridLength( useThirdRowSpacer ? 20 : 0 );
 
 			_racingWheelPage.DetailBoost_MairaKnob.Visibility = racingWheelDetailBoostKnobControlVisibility;
 			_racingWheelPage.DetailBoostBias_MairaKnob.Visibility = racingWheelDetailBoostBiasKnobControlVisibility;
@@ -331,8 +338,11 @@ public partial class MainWindow : Window
 			_racingWheelPage.TotalCompressionThreshold_MairaKnob.Visibility = racingWheelTotalCompressionThresholdVisibility;
 			_racingWheelPage.TotalCompressionRate_MairaKnob.Visibility = racingWheelTotalCompressionRateVisibility;
 
+			_racingWheelPage.Multi360HzDetail_MairaKnob.Visibility = racingWheelMulti360HzDetailVisibility;
 			_racingWheelPage.MultiTorqueCompression_MairaKnob.Visibility = racingWheelMultiTorqueCompressionVisibility;
+			_racingWheelPage.MultiEnableSlewPeakMode_MairaSwitch.Visibility = racingWheelMultiEnableSlewPeakModeVisibility;
 			_racingWheelPage.MultiSlewRateReduction_MairaKnob.Visibility = racingWheelMultiSlewRateReductionVisibility;
+			_racingWheelPage.MultiFFBSource_MairaComboBox.Visibility = racingWheelMultiFFBSourceVisibility;
 			_racingWheelPage.MultiDetailGain_MairaKnob.Visibility = racingWheelMultiDetailGainVisibility;
 			_racingWheelPage.MultiOutputSmoothing_MairaKnob.Visibility = racingWheelMultiOutputSmoothingVisibility;
 
