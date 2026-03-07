@@ -4762,6 +4762,31 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region Steering effects - Show Grip-O-Meter label
+
+	private bool _steeringEffectsShowGripOMeterLabel = false;
+
+	public bool SteeringEffectsShowGripOMeterLabel
+	{
+		get => _steeringEffectsShowGripOMeterLabel;
+
+		set
+		{
+			if ( value != _steeringEffectsShowGripOMeterLabel )
+			{
+				_steeringEffectsShowGripOMeterLabel = value;
+
+				OnPropertyChanged();
+			}
+
+			var app = App.Instance!;
+
+			app.GripOMeterWindow.UpdateVisibility();
+		}
+	}
+
+	#endregion
+
 	#region Pedals - Enabled
 
 	private bool _pedalsEnabled = false;
