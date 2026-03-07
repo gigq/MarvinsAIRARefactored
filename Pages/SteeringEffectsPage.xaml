@@ -1055,10 +1055,12 @@
 
         </controls:MairaGroupBox>
 
-        <controls:MairaGroupBox Label="{Binding Localization[Calibration_UC]}"
+        <controls:MairaGroupBox x:Name="Calibration_MairaGroupBox"
+                                Label="{Binding Localization[Calibration_UC]}"
                                 HelpTopic="advanced/steering-effects/#calibration">
 
             <StackPanel>
+
                 <Border x:Name="NotOnCentripetalCircuitTrack_Border"
                         BorderBrush="#993030"
                         BorderThickness="2"

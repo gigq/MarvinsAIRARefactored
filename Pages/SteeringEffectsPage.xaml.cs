@@ -18,6 +18,12 @@ public partial class SteeringEffectsPage : UserControl
 	public SteeringEffectsPage()
 	{
 		InitializeComponent();
+
+#if DEBUG
+		Calibration_MairaGroupBox.Visibility = Visibility.Visible;
+#else
+		Calibration_MairaGroupBox.Visibility = Visibility.Collapsed;
+#endif
 	}
 
 	#region User Control Events
