@@ -4,6 +4,8 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 
+using Color = System.Windows.Media.Color;
+
 using PInvoke;
 
 using static PInvoke.User32;
@@ -19,6 +21,8 @@ public partial class GripOMeterWindow : Window
 	private float _smoothedSeatOfPants = 0f;
 
 	private const float SmoothingFactor = 0.15f;
+
+	private readonly SolidColorBrush[] _backgroundBrushes = new SolidColorBrush[ 16 ];
 
 	public GripOMeterWindow()
 	{
@@ -47,6 +51,19 @@ public partial class GripOMeterWindow : Window
 		WindowStartupLocation = WindowStartupLocation.Manual;
 
 		_initialized = true;
+
+		// Create 16 brushes with channel values from 0..255 in 16 steps and freeze them to avoid allocations during high-frequency Tick calls
+
+		for ( var i = 0; i < _backgroundBrushes.Length; i++ )
+		{
+			var gradientValue = (byte) Math.Round( i * 255.0 / ( _backgroundBrushes.Length - 1 ) );
+
+			var brush = new SolidColorBrush( Color.FromRgb( 255, gradientValue, gradientValue ) );
+
+			brush.Freeze();
+
+			_backgroundBrushes[ i ] = brush;
+		}
 
 		UpdateVisibility();
 
@@ -147,8 +164,12 @@ public partial class GripOMeterWindow : Window
 			GripOMeter_SeatOfPants_Transform.X = _smoothedSeatOfPants * 144f;
 
 			var intensity = Math.Abs( _smoothedSkidSlip );
-			var channelValue = (byte) ( 255 * ( 1f - intensity ) );
-			GripOMeter_Background.Background = new SolidColorBrush( Color.FromRgb( 255, channelValue, channelValue ) );
+
+			var brushIndex = (int) Math.Round( ( 1.0 - intensity ) * ( _backgroundBrushes.Length - 1 ) );
+
+			brushIndex = Math.Clamp( brushIndex, 0, _backgroundBrushes.Length - 1 );
+
+			GripOMeter_Background.Background = _backgroundBrushes[ brushIndex ];
 		}
 	}
 }
