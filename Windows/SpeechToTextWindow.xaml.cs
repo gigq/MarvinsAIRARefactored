@@ -55,11 +55,16 @@ public partial class SpeechToTextWindow : Window
 
 	private void Window_Loaded( object sender, RoutedEventArgs e )
 	{
+		// Do not set WS_EX_TOOLWINDOW here so external window-pickers (like OpenKneeboard)
+		// can discover and select this window. Keep `ShowInTaskbar="False"` in XAML
+		// to avoid taskbar presence while still allowing enumeration by other tools.
+		/*
 		var hwnd = new WindowInteropHelper( this ).Handle;
 
 		var exStyle = User32.GetWindowLong( hwnd, WindowLongIndexFlags.GWL_EXSTYLE );
 
 		_ = User32.SetWindowLong( hwnd, WindowLongIndexFlags.GWL_EXSTYLE, (SetWindowLongFlags) ( (uint) exStyle | (uint) SetWindowLongFlags.WS_EX_TOOLWINDOW ) ); // Prevent Alt+Tab visibility
+		*/
 	}
 
 	private void Window_LocationChanged( object sender, EventArgs e )
