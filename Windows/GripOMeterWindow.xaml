@@ -54,22 +54,25 @@
                    HorizontalAlignment="Center"
                    FontSize="30" />
 
-        <Image Grid.Row="2"
-               Grid.RowSpan="3"
-               Grid.Column="0"
-               Source="/MarvinsAIRARefactored;component/Artwork/Misc/grip-o-meter.png"
-               Width="384"
-               Height="96"
-               RenderOptions.BitmapScalingMode="HighQuality" />
-
         <Border x:Name="GripOMeter_Background"
                 Grid.Row="2"
                 Grid.RowSpan="3"
                 Grid.Column="0"
-                Width="376"
-                Height="88"
-                CornerRadius="44"
-                IsHitTestVisible="False" />
+                Width="384"
+                Height="96"
+                CornerRadius="48"
+                Background="White"
+                BorderThickness="4"
+                BorderBrush="Black" />
+
+        <Border Grid.Row="2"
+                Grid.RowSpan="3"
+                Grid.Column="0"
+                Width="96"
+                Height="96"
+                CornerRadius="48"
+                BorderThickness="4"
+                BorderBrush="Black" />
 
         <Border Grid.Row="3"
                 Grid.Column="0"
