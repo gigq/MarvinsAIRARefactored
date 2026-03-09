@@ -14,6 +14,10 @@ namespace MarvinsAIRARefactored.Windows;
 
 public partial class GripOMeterWindow : Window
 {
+	private const int UpdateInterval = 0;
+
+	private int _updateCounter = UpdateInterval + 3;
+
 	private bool _initialized = false;
 	private bool _isDraggable = false;
 
@@ -163,19 +167,26 @@ public partial class GripOMeterWindow : Window
 	{
 		if ( Visibility == Visibility.Visible )
 		{
-			_smoothedSkidSlip += ( app.SteeringEffects.SkidSlip - _smoothedSkidSlip ) * SmoothingFactor;
-			_smoothedSeatOfPants += ( app.SteeringEffects.SeatOfPantsEffect - _smoothedSeatOfPants ) * SmoothingFactor;
+			_updateCounter--;
 
-			GripOMeter_Ball_Transform.X = _smoothedSkidSlip * 144f;
-			GripOMeter_SeatOfPants_Transform.X = _smoothedSeatOfPants * 144f;
+			if ( _updateCounter == 0 )
+			{
+				_updateCounter = UpdateInterval;
 
-			var intensity = Math.Abs( _smoothedSkidSlip );
+				_smoothedSkidSlip += ( app.SteeringEffects.SkidSlip - _smoothedSkidSlip ) * SmoothingFactor;
+				_smoothedSeatOfPants += ( app.SteeringEffects.SeatOfPantsEffect - _smoothedSeatOfPants ) * SmoothingFactor;
 
-			var brushIndex = (int) Math.Round( ( 1.0 - intensity ) * ( _backgroundBrushes.Length - 1 ) );
+				GripOMeter_Ball_Transform.X = _smoothedSkidSlip * 144f;
+				GripOMeter_SeatOfPants_Transform.X = _smoothedSeatOfPants * 144f;
 
-			brushIndex = Math.Clamp( brushIndex, 0, _backgroundBrushes.Length - 1 );
+				var intensity = Math.Abs( _smoothedSkidSlip );
 
-			GripOMeter_Background.Background = _backgroundBrushes[ brushIndex ];
+				var brushIndex = (int) Math.Round( ( 1.0 - intensity ) * ( _backgroundBrushes.Length - 1 ) );
+
+				brushIndex = Math.Clamp( brushIndex, 0, _backgroundBrushes.Length - 1 );
+
+				GripOMeter_Background.Background = _backgroundBrushes[ brushIndex ];
+			}
 		}
 	}
 }
