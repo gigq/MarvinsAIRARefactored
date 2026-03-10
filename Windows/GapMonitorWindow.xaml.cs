@@ -409,7 +409,7 @@ public partial class GapMonitorWindow : Window
 											totalChange += _aheadDeltaHistory[ idx ];
 										}
 
-										AheadDeltaText.Foreground = ( totalChange <= 0 ) ? Brushes.LightGreen : Brushes.Salmon;
+										AheadDeltaText.Foreground = ( totalChange >= -0.025 && totalChange <= 0.025 ) ? Brushes.White : ( totalChange <= 0 ) ? Brushes.LightGreen : Brushes.Salmon;
 									}
 									else
 									{
@@ -477,7 +477,7 @@ public partial class GapMonitorWindow : Window
 											totalChange += _behindDeltaHistory[ idx ];
 										}
 
-										BehindDeltaText.Foreground = ( totalChange >= 0 ) ? Brushes.LightGreen : Brushes.Salmon;
+										BehindDeltaText.Foreground = ( totalChange >= -0.025 && totalChange <= 0.025 ) ? Brushes.White : ( totalChange >= 0 ) ? Brushes.LightGreen : Brushes.Salmon;
 									}
 									else
 									{
