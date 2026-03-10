@@ -898,6 +898,7 @@ public partial class Simulator
 		if ( IsOnTrack != WasOnTrack )
 		{
 			app.GripOMeterWindow.UpdateVisibility();
+			app.GapMonitorWindow.UpdateVisibility();
 		}
 
 		// update steering effects

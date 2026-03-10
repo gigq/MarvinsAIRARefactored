@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MarvinsAIRARefactored.Windows"
         xmlns:datacontext="clr-namespace:MarvinsAIRARefactored.DataContext"
+        xmlns:converters="clr-namespace:MarvinsAIRARefactored.Converters"
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -18,6 +19,10 @@
         Cursor="SizeAll"
         Opacity="0.9">
 
+    <Window.Resources>
+        <converters:BooleanToVisibilityHiddenConverter x:Key="BoolToVis" />
+    </Window.Resources>
+
     <Window.DataContext>
         <Binding Source="{x:Static datacontext:DataContext.Instance}" />
     </Window.DataContext>
@@ -30,7 +35,22 @@
                             ScaleY="{Binding Settings.SpeechToTextOverlayWindowScale}" />
         </Grid.LayoutTransform>
 
-        <Border Width="1024"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="GapMonitor_Title"
+                   Style="{StaticResource MairaTextBlockStyle}"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Text="{Binding Localization[SpeechToText]}"
+                   Visibility="{Binding Settings.SpeechToTextShowOverlayWindowTitle, Converter={StaticResource BoolToVis}}"
+                   HorizontalAlignment="Center"
+                   FontSize="30" />
+
+        <Border Grid.Row="1"
+                Width="1024"
                 BorderThickness="2"
                 BorderBrush="White"
                 Background="Black"
@@ -38,7 +58,7 @@
                 Padding="20,0,20,20"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top">
-            
+
             <StackPanel>
 
                 <TextBlock x:Name="Final_Driver_TextBlock"
@@ -68,7 +88,7 @@
                            Visibility="Collapsed" />
 
             </StackPanel>
-            
+
         </Border>
 
     </Grid>

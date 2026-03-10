@@ -54,8 +54,6 @@ public partial class GripOMeterWindow : Window
 
 		WindowStartupLocation = WindowStartupLocation.Manual;
 
-		_initialized = true;
-
 		// Create 16 brushes with channel values from 0..255 in 16 steps and freeze them to avoid allocations during high-frequency Tick calls
 
 		for ( var i = 0; i < _backgroundBrushes.Length; i++ )
@@ -68,6 +66,8 @@ public partial class GripOMeterWindow : Window
 
 			_backgroundBrushes[ i ] = brush;
 		}
+
+		_initialized = true;
 
 		UpdateVisibility();
 
@@ -122,7 +122,7 @@ public partial class GripOMeterWindow : Window
 
 				var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 
-				if ( settings.SteeringEffectsShowGripOMeterWindow && app.Simulator.IsOnTrack )
+				if ( settings.SteeringEffectsMakeGripOMeterDraggable || ( settings.SteeringEffectsShowGripOMeterWindow && app.Simulator.IsOnTrack ) )
 				{
 					Show();
 					MakeDraggable();
@@ -135,7 +135,7 @@ public partial class GripOMeterWindow : Window
 		}
 	}
 
-	public void MakeDraggable()
+	private void MakeDraggable()
 	{
 		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 

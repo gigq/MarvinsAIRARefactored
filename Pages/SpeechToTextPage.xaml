@@ -70,8 +70,8 @@
                             Grid.Column="0"
                             Grid.ColumnSpan="3">
 
-                    <controls:MairaSwitch IsOn="{Binding Settings.SpeechToTextShowOverlayWindow, Mode=TwoWay}"
-                                          Label="{Binding Localization[ShowOverlayWindow]}" />
+                    <controls:MairaSwitch IsOn="{Binding Settings.SpeechToTextShowOverlayWindowTitle, Mode=TwoWay}"
+                                          Label="{Binding Localization[ShowOverlayWindowTitle]}" />
 
                     <controls:MairaSwitch Margin="0,10,0,0"
                                           IsOn="{Binding Settings.SpeechToTextMakeOverlayWindowDraggable, Mode=TwoWay}"

@@ -1471,7 +1471,7 @@ public class Settings : INotifyPropertyChanged
 		}
 	}
 
-	public ContextSwitches RacingWheelMultiFFBSourceSelectionContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ContextSwitches RacingWheelMultiFFBSourceSelectionContextSwitches { get; set; } = new( false, false, false, false, false );
 
 	#endregion
 
@@ -5015,6 +5015,31 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region Steering effects - Show Grip-O-Meter title
+
+	private bool _steeringEffectsShowGripOMeterTitle = true;
+
+	public bool SteeringEffectsShowGripOMeterTitle
+	{
+		get => _steeringEffectsShowGripOMeterTitle;
+
+		set
+		{
+			if ( value != _steeringEffectsShowGripOMeterTitle )
+			{
+				_steeringEffectsShowGripOMeterTitle = value;
+
+				OnPropertyChanged();
+			}
+
+			var app = App.Instance!;
+
+			app.GripOMeterWindow.UpdateVisibility();
+		}
+	}
+
+	#endregion
+
 	#region Steering effects - Make Grip-O-Meter draggable
 
 	private bool _steeringEffectsMakeGripOMeterDraggable = false;
@@ -5034,7 +5059,7 @@ public class Settings : INotifyPropertyChanged
 
 			var app = App.Instance!;
 
-			app.GripOMeterWindow.MakeDraggable();
+			app.GripOMeterWindow.UpdateVisibility();
 		}
 	}
 
@@ -5099,31 +5124,6 @@ public class Settings : INotifyPropertyChanged
 
 				OnPropertyChanged();
 			}
-		}
-	}
-
-	#endregion
-
-	#region Steering effects - Show Grip-O-Meter label
-
-	private bool _steeringEffectsShowGripOMeterTitle = true;
-
-	public bool SteeringEffectsShowGripOMeterTitle
-	{
-		get => _steeringEffectsShowGripOMeterTitle;
-
-		set
-		{
-			if ( value != _steeringEffectsShowGripOMeterTitle )
-			{
-				_steeringEffectsShowGripOMeterTitle = value;
-
-				OnPropertyChanged();
-			}
-
-			var app = App.Instance!;
-
-			app.GripOMeterWindow.UpdateVisibility();
 		}
 	}
 
@@ -8330,7 +8330,7 @@ public class Settings : INotifyPropertyChanged
 
 			var app = App.Instance!;
 
-			app.GapMonitorWindow.MakeDraggable();
+			app.GapMonitorWindow.UpdateVisibility();
 		}
 	}
 
@@ -8400,7 +8400,7 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
-	#region Overlays - Show Gap monitor label
+	#region Overlays - Show Gap monitor title
 
 	private bool _overlaysShowGapMonitorTitle = true;
 
@@ -9521,6 +9521,29 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region Speech to text - Show overlay window title
+
+	private bool _speechToTextShowOverlayWindowTitle = true;
+
+	public bool SpeechToTextShowOverlayWindowTitle
+	{
+		get => _speechToTextShowOverlayWindowTitle;
+
+		set
+		{
+			if ( value != _speechToTextShowOverlayWindowTitle )
+			{
+				_speechToTextShowOverlayWindowTitle = value;
+
+				OnPropertyChanged();
+			}
+
+			var app = App.Instance!;
+		}
+	}
+
+	#endregion
+
 	#region Speech to text - Make overlay window draggable
 
 	private bool _speechToTextMakeOverlayWindowDraggable = false;
@@ -9540,7 +9563,7 @@ public class Settings : INotifyPropertyChanged
 
 			var app = App.Instance!;
 
-			app.SpeechToTextWindow.MakeDraggable();
+			app.SpeechToTextWindow.UpdateVisibility();
 		}
 	}
 

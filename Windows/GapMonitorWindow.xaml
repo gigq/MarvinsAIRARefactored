@@ -19,7 +19,7 @@
         Cursor="SizeAll">
 
     <Window.Resources>
-        <converters:BooleanToVisibilityCollapsedConverter x:Key="BoolToVis" />
+        <converters:BooleanToVisibilityHiddenConverter x:Key="BoolToVis" />
     </Window.Resources>
 
     <Window.DataContext>
@@ -89,65 +89,65 @@
                            HorizontalAlignment="Center"
                            Text="⇩" />
 
-                <TextBlock x:Name="FrontCarNumberText"
+                <TextBlock x:Name="AheadCarNumberText"
                            Grid.Row="0"
                            Grid.Column="2"
                            Style="{StaticResource MairaTextBlockStyle}"
                            d:Text="#888" />
 
-                <TextBlock x:Name="BackCarNumberText"
+                <TextBlock x:Name="BehindCarNumberText"
                            Grid.Row="2"
                            Grid.Column="2"
                            Style="{StaticResource MairaTextBlockStyle}"
                            d:Text="#456" />
 
-                <TextBlock x:Name="FrontPositionText"
+                <TextBlock x:Name="AheadPositionText"
                            Grid.Row="0"
                            Grid.Column="4"
                            Style="{StaticResource MairaTextBlockStyle}"
                            d:Text="P2" />
 
-                <TextBlock x:Name="BackPositionText"
+                <TextBlock x:Name="BehindPositionText"
                            Grid.Row="2"
                            Grid.Column="4"
                            Style="{StaticResource MairaTextBlockStyle}"
                            d:Text="P88" />
 
-                <TextBlock x:Name="FrontIRatingText"
+                <TextBlock x:Name="AheadIRatingText"
                            Grid.Row="0"
                            Grid.Column="6"
                            Style="{StaticResource MairaTextBlockStyle}"
                            HorizontalAlignment="Right"
                            d:Text="1234" />
 
-                <TextBlock x:Name="BackIRatingText"
+                <TextBlock x:Name="BehindIRatingText"
                            Grid.Row="2"
                            Grid.Column="6"
                            Style="{StaticResource MairaTextBlockStyle}"
                            HorizontalAlignment="Right"
                            d:Text="2345" />
 
-                <TextBlock x:Name="FrontDeltaText"
+                <TextBlock x:Name="AheadDeltaText"
                            Grid.Row="0"
                            Grid.Column="8"
                            Style="{StaticResource MairaTextBlockStyle}"
                            HorizontalAlignment="Right"
                            d:Text="888.88s" />
 
-                <TextBlock x:Name="BackDeltaText"
+                <TextBlock x:Name="BehindDeltaText"
                            Grid.Row="2"
                            Grid.Column="8"
                            Style="{StaticResource MairaTextBlockStyle}"
                            HorizontalAlignment="Right"
                            d:Text="4.28s" />
 
-                <TextBlock x:Name="FrontDriverText"
+                <TextBlock x:Name="AheadDriverText"
                            Grid.Row="0"
                            Grid.Column="10"
                            Style="{StaticResource MairaTextBlockStyle}"
                            d:Text="Billy Bob" />
 
-                <TextBlock x:Name="BackDriverText"
+                <TextBlock x:Name="BehindDriverText"
                            Grid.Row="2"
                            Grid.Column="10"
                            Style="{StaticResource MairaTextBlockStyle}"

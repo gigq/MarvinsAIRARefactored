@@ -1027,15 +1027,15 @@
                             Grid.ColumnSpan="3">
 
                     <controls:MairaSwitch IsOn="{Binding Settings.SteeringEffectsShowGripOMeterWindow, Mode=TwoWay}"
-                                          Label="{Binding Localization[ShowGripOMeter]}" />
+                                          Label="{Binding Localization[EnableOverlayWindow]}" />
 
                     <controls:MairaSwitch Margin="0,10,0,0"
                                           IsOn="{Binding Settings.SteeringEffectsShowGripOMeterTitle, Mode=TwoWay}"
-                                          Label="{Binding Localization[ShowGripOMeterTitle]}" />
+                                          Label="{Binding Localization[ShowOverlayWindowTitle]}" />
 
                     <controls:MairaSwitch Margin="0,10,0,0"
                                           IsOn="{Binding Settings.SteeringEffectsMakeGripOMeterDraggable, Mode=TwoWay}"
-                                          Label="{Binding Localization[MakeGripOMeterDraggable]}" />
+                                          Label="{Binding Localization[MakeOverlayWindowDraggable]}" />
 
                 </StackPanel>
 
@@ -1052,7 +1052,7 @@
                                       Grid.Column="0"
                                       Grid.ColumnSpan="5"
                                       Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
-                                      Label="{Binding Localization[ResetGripOMeter]}"
+                                      Label="{Binding Localization[ResetOverlayWindow]}"
                                       Click="ResetGripOMeter_MairaButton_Click" />
 
             </Grid>

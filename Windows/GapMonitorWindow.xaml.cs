@@ -5,11 +5,11 @@ using System.Windows.Interop;
 
 using Brushes = System.Windows.Media.Brushes;
 
+using IRSDKSharper;
 using PInvoke;
 
 using static PInvoke.User32;
 
-using IRSDKSharper;
 using MarvinsAIRARefactored.Components;
 
 namespace MarvinsAIRARefactored.Windows;
@@ -23,14 +23,24 @@ public partial class GapMonitorWindow : Window
 	private bool _initialized = false;
 	private bool _isDraggable = false;
 
-	// New: track previous deltas and times to compute delta rate (sec/sec)
-	private const double DeltaRateThreshold = 0.05; // seconds per second
+	private int _prevAheadCarIdx = -1;
+	private int _prevBehindCarIdx = -1;
 
-	private double _prevFrontDelta = double.NaN;
-	private double _prevFrontDeltaTime = double.NaN;
+	private int _prevAheadMarkerIndex = -1;
+	private int _prevBehindMarkerIndex = -1;
 
-	private double _prevBackDelta = double.NaN;
-	private double _prevBackDeltaTime = double.NaN;
+	private double _prevAheadDelta = double.NaN;
+	private double _prevBehindDelta = double.NaN;
+
+	private const int DeltaHistorySize = 5;
+
+	private readonly double[] _aheadDeltaHistory = new double[ DeltaHistorySize ];
+	private int _aheadDeltaHistoryIndex = 0;
+	private int _aheadDeltaHistoryCount = 0;
+
+	private readonly double[] _behindDeltaHistory = new double[ DeltaHistorySize ];
+	private int _behindDeltaHistoryIndex = 0;
+	private int _behindDeltaHistoryCount = 0;
 
 	public GapMonitorWindow()
 	{
@@ -113,7 +123,7 @@ public partial class GapMonitorWindow : Window
 
 				var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 
-				if ( settings.OverlaysShowGapMonitorWindow && app.Simulator.IsOnTrack )
+				if ( settings.OverlaysMakeGapMonitorDraggable || ( settings.OverlaysShowGapMonitorWindow && app.Simulator.IsOnTrack ) )
 				{
 					Show();
 					MakeDraggable();
@@ -126,7 +136,7 @@ public partial class GapMonitorWindow : Window
 		}
 	}
 
-	public void MakeDraggable()
+	private void MakeDraggable()
 	{
 		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 
@@ -171,14 +181,14 @@ public partial class GapMonitorWindow : Window
 				}
 
 				// find the closest car ahead and behind based on relative lap distance percentage
-				var closestAheadCarIdx = -1;
-				var closestBehindCarIdx = -1;
+				var aheadCarIdx = -1;
+				var behindCarIdx = -1;
 
-				var closestAheadLapDistPct = 0f;
-				var closestBehindLapDistPct = 0f;
+				var aheadLapDistPct = 0f;
+				var behindLapDistPct = 0f;
 
-				Drivers.DriverInfo? closestAheadDriver = null;
-				Drivers.DriverInfo? closestBehindDriver = null;
+				Drivers.DriverInfo? aheadDriver = null;
+				Drivers.DriverInfo? behindDriver = null;
 
 				for ( var carIdx = 0; carIdx < IRacingSdkConst.MaxNumCars; carIdx++ )
 				{
@@ -214,168 +224,201 @@ public partial class GapMonitorWindow : Window
 
 					if ( lapDistPct > 0f ) // this car is ahead
 					{
-						if ( ( closestAheadCarIdx == -1 ) || ( lapDistPct < closestAheadLapDistPct ) )
+						if ( ( aheadCarIdx == -1 ) || ( lapDistPct < aheadLapDistPct ) )
 						{
-							closestAheadCarIdx = carIdx;
-							closestAheadLapDistPct = lapDistPct;
-							closestAheadDriver = driver;
+							aheadCarIdx = carIdx;
+							aheadLapDistPct = lapDistPct;
+							aheadDriver = driver;
 						}
 					}
 					else if ( lapDistPct < 0f ) // this car is behind
 					{
-						if ( ( closestBehindCarIdx == -1 ) || ( lapDistPct > closestBehindLapDistPct ) )
+						if ( ( behindCarIdx == -1 ) || ( lapDistPct > behindLapDistPct ) )
 						{
-							closestBehindCarIdx = carIdx;
-							closestBehindLapDistPct = lapDistPct;
-							closestBehindDriver = driver;
+							behindCarIdx = carIdx;
+							behindLapDistPct = lapDistPct;
+							behindDriver = driver;
 						}
 					}
 				}
 
-				// fill out car and driver info
-				if ( ( closestAheadCarIdx != -1 ) && ( closestAheadDriver is not null ) )
+				// fill out car and driver info for car ahead
+				if ( ( aheadCarIdx != -1 ) && ( aheadDriver is not null ) )
 				{
-					FrontCarNumberText.Text = $"#{closestAheadDriver.CarNumber}";
-					FrontIRatingText.Text = closestAheadDriver.IRating.ToString();
-					FrontDriverText.Text = closestAheadDriver.UserName;
+					AheadCarNumberText.Text = $"#{aheadDriver.CarNumber}";
+					AheadIRatingText.Text = aheadDriver.IRating > 0 ? aheadDriver.IRating.ToString() : string.Empty;
+					AheadDriverText.Text = aheadDriver.UserName;
 
-					if ( app.Simulator.CarIdxPosition[ closestAheadCarIdx ] > 0 )
+					if ( app.Simulator.CarIdxPosition[ aheadCarIdx ] > 0 )
 					{
-						FrontPositionText.Text = $"P{app.Simulator.CarIdxPosition[ closestAheadCarIdx ]}";
+						AheadPositionText.Text = $"P{app.Simulator.CarIdxPosition[ aheadCarIdx ]}";
 					}
 					else
 					{
-						FrontPositionText.Text = string.Empty;
+						AheadPositionText.Text = string.Empty;
 					}
 
 					// color code the position text
 					var playerLap = app.Simulator.Lap;
-					var otherLap = app.Simulator.CarIdxLap[ closestAheadCarIdx ];
+					var otherLap = app.Simulator.CarIdxLap[ aheadCarIdx ];
 
 					if ( ( playerLap == 0 ) || ( otherLap == 0 ) )
 					{
-						FrontPositionText.Foreground = Brushes.White;
+						AheadPositionText.Foreground = Brushes.White;
 					}
 					else
 					{
 						var playerCombined = playerLap + app.Simulator.LapDistPct;
-						var otherCombined = otherLap + app.Simulator.CarIdxLapDistPct[ closestAheadCarIdx ];
+						var otherCombined = otherLap + app.Simulator.CarIdxLapDistPct[ aheadCarIdx ];
 						var diff = otherCombined - playerCombined;
 
 						if ( ( diff >= -0.5f ) && ( diff <= 0.5f ) )
 						{
-							FrontPositionText.Foreground = Brushes.White;
+							AheadPositionText.Foreground = Brushes.White;
 						}
 						else if ( diff > 0.5f )
 						{
-							FrontPositionText.Foreground = Brushes.Red;
+							AheadPositionText.Foreground = Brushes.Red;
 						}
 						else
 						{
-							FrontPositionText.Foreground = Brushes.LightBlue;
+							AheadPositionText.Foreground = Brushes.Cyan;
 						}
 					}
 				}
 				else
 				{
-					FrontCarNumberText.Text = string.Empty;
-					FrontPositionText.Text = string.Empty;
-					FrontIRatingText.Text = string.Empty;
-					FrontDriverText.Text = string.Empty;
+					AheadCarNumberText.Text = string.Empty;
+					AheadPositionText.Text = string.Empty;
+					AheadIRatingText.Text = string.Empty;
+					AheadDriverText.Text = string.Empty;
 				}
 
-				if ( ( closestBehindCarIdx != -1 ) && ( closestBehindDriver is not null ) )
+				// fill out car and driver info for car behind
+				if ( ( behindCarIdx != -1 ) && ( behindDriver is not null ) )
 				{
-					BackCarNumberText.Text = $"#{closestBehindDriver.CarNumber}";
-					BackIRatingText.Text = closestBehindDriver.IRating.ToString();
-					BackDriverText.Text = closestBehindDriver.UserName;
+					BehindCarNumberText.Text = $"#{behindDriver.CarNumber}";
+					BehindIRatingText.Text = behindDriver.IRating > 0 ? behindDriver.IRating.ToString() : string.Empty;
+					BehindDriverText.Text = behindDriver.UserName;
 
-					if ( app.Simulator.CarIdxPosition[ closestBehindCarIdx ] > 0 )
+					if ( app.Simulator.CarIdxPosition[ behindCarIdx ] > 0 )
 					{
-						BackPositionText.Text = $"P{app.Simulator.CarIdxPosition[ closestBehindCarIdx ]}";
+						BehindPositionText.Text = $"P{app.Simulator.CarIdxPosition[ behindCarIdx ]}";
 					}
 					else
 					{
-						BackPositionText.Text = string.Empty;
+						BehindPositionText.Text = string.Empty;
 					}
 
 					// color code the position text
 					var playerLap = app.Simulator.Lap;
-					var otherLap = app.Simulator.CarIdxLap[ closestBehindCarIdx ];
+					var otherLap = app.Simulator.CarIdxLap[ behindCarIdx ];
 
 					if ( ( playerLap == 0 ) || ( otherLap == 0 ) )
 					{
-						BackPositionText.Foreground = Brushes.White;
+						BehindPositionText.Foreground = Brushes.White;
 					}
 					else
 					{
 						var playerCombined = playerLap + app.Simulator.LapDistPct;
-						var otherCombined = otherLap + app.Simulator.CarIdxLapDistPct[ closestBehindCarIdx ];
+						var otherCombined = otherLap + app.Simulator.CarIdxLapDistPct[ behindCarIdx ];
 						var diff = otherCombined - playerCombined;
 
 						if ( ( diff >= -0.5f ) && ( diff <= 0.5f ) )
 						{
-							BackPositionText.Foreground = Brushes.White;
+							BehindPositionText.Foreground = Brushes.White;
 						}
 						else if ( diff > 0.5f )
 						{
-							BackPositionText.Foreground = Brushes.Red;
+							BehindPositionText.Foreground = Brushes.Red;
 						}
 						else
 						{
-							BackPositionText.Foreground = Brushes.LightBlue;
+							BehindPositionText.Foreground = Brushes.Cyan;
 						}
 					}
 				}
 				else
 				{
-					BackCarNumberText.Text = string.Empty;
-					BackPositionText.Text = string.Empty;
-					BackIRatingText.Text = string.Empty;
-					BackDriverText.Text = string.Empty;
+					BehindCarNumberText.Text = string.Empty;
+					BehindPositionText.Text = string.Empty;
+					BehindIRatingText.Text = string.Empty;
+					BehindDriverText.Text = string.Empty;
+				}
+
+				// reset some stuff if the car ahead/behind has changed since the last tick
+				if ( aheadCarIdx != _prevAheadCarIdx )
+				{
+					_prevAheadMarkerIndex = -1;
+					_prevAheadDelta = double.NaN;
+
+					_aheadDeltaHistoryIndex = 0;
+					_aheadDeltaHistoryCount = 0;
+
+					Array.Clear( _aheadDeltaHistory );
+				}
+
+				if ( behindCarIdx != _prevBehindCarIdx )
+				{
+					_prevBehindMarkerIndex = -1;
+					_prevBehindDelta = double.NaN;
+
+					_behindDeltaHistoryIndex = 0;
+					_behindDeltaHistoryCount = 0;
+
+					Array.Clear( _behindDeltaHistory );
 				}
 
 				// get the closest ahead car's times at the player's most recently passed marker and calculate the time difference
 				var aheadIsInvalid = true;
 
-				if ( closestAheadCarIdx != -1 )
+				if ( aheadCarIdx != -1 )
 				{
-					if ( app.TimingMarkers.TryGetMarkerTimeAtLapPct( closestAheadCarIdx, app.Simulator.LapDistPct, out var aheadTime ) )
+					if ( app.TimingMarkers.TryGetMarkerTimeAtLapPct( aheadCarIdx, app.Simulator.LapDistPct, out var markerIndex, out var aheadTime ) )
 					{
-						if ( app.TimingMarkers.TryGetMarkerTimeAtLapPct( app.Simulator.PlayerCarIdx, app.Simulator.LapDistPct, out var playerTime ) )
+						if ( app.TimingMarkers.TryGetMarkerTimeAtLapPct( app.Simulator.PlayerCarIdx, app.Simulator.LapDistPct, out var _, out var playerTime ) )
 						{
-							var timeDelta = playerTime - aheadTime;
+							var delta = playerTime - aheadTime;
 
-							if ( timeDelta > 0 )
+							if ( delta > 0 )
 							{
 								aheadIsInvalid = false;
 
-								// display delta
-								FrontDeltaText.Text = $"{timeDelta:F2}s";
+								AheadDeltaText.Text = $"{delta:F2}s";
 
-								// compute trend (sec/sec) and color accordingly
-								var deltaTextForeground = Brushes.White;
-
-								if ( !double.IsNaN( _prevFrontDeltaTime ) )
+								if ( markerIndex != _prevAheadMarkerIndex )
 								{
-									var dt = app.Simulator.SessionTime - _prevFrontDeltaTime;
-
-									if ( dt > 0 )
+									if ( !double.IsNaN( _prevAheadDelta ) )
 									{
-										var rate = ( timeDelta - _prevFrontDelta ) / dt;
+										var change = delta - _prevAheadDelta;
 
-										// For the car ahead: closing (delta decreasing) => GREEN, opening => RED
-										if ( Math.Abs( rate ) >= DeltaRateThreshold )
+										_aheadDeltaHistory[ _aheadDeltaHistoryIndex ] = change;
+										_aheadDeltaHistoryIndex = ( _aheadDeltaHistoryIndex + 1 ) % DeltaHistorySize;
+
+										if ( _aheadDeltaHistoryCount < DeltaHistorySize )
 										{
-											deltaTextForeground = ( rate < 0 ) ? Brushes.Green : Brushes.Red;
+											_aheadDeltaHistoryCount++;
 										}
+
+										var totalChange = 0.0;
+
+										for ( var k = 0; k < _aheadDeltaHistoryCount; k++ )
+										{
+											var idx = ( _aheadDeltaHistoryIndex - 1 - k + DeltaHistorySize ) % DeltaHistorySize;
+
+											totalChange += _aheadDeltaHistory[ idx ];
+										}
+
+										AheadDeltaText.Foreground = ( totalChange <= 0 ) ? Brushes.LightGreen : Brushes.Salmon;
 									}
+									else
+									{
+										AheadDeltaText.Foreground = Brushes.White;
+									}
+
+									_prevAheadMarkerIndex = markerIndex;
+									_prevAheadDelta = delta;
 								}
-
-								FrontDeltaText.Foreground = deltaTextForeground;
-
-								_prevFrontDelta = timeDelta;
-								_prevFrontDeltaTime = app.Simulator.SessionTime;
 							}
 						}
 					}
@@ -383,65 +426,88 @@ public partial class GapMonitorWindow : Window
 
 				if ( aheadIsInvalid )
 				{
-					FrontDeltaText.Text = string.Empty;
+					AheadDeltaText.Text = string.Empty;
 
-					_prevFrontDelta = double.NaN;
-					_prevFrontDeltaTime = double.NaN;
+					_prevAheadMarkerIndex = -1;
+					_prevAheadDelta = double.NaN;
+
+					_aheadDeltaHistoryIndex = 0;
+					_aheadDeltaHistoryCount = 0;
+
+					Array.Clear( _aheadDeltaHistory );
 				}
 
 				// get the closest behind car's times at that car's most recently passed marker and calculate the time difference
 				var behindIsInvalid = true;
 
-				if ( closestBehindCarIdx != -1 )
+				if ( behindCarIdx != -1 )
 				{
-					if ( app.TimingMarkers.TryGetMarkerTimeAtLapPct( closestBehindCarIdx, app.Simulator.CarIdxLapDistPct[ closestBehindCarIdx ], out var behindTime ) )
+					if ( app.TimingMarkers.TryGetMarkerTimeAtLapPct( app.Simulator.PlayerCarIdx, app.Simulator.CarIdxLapDistPct[ behindCarIdx ], out var markerIndex, out var playerTime ) )
 					{
-						if ( app.TimingMarkers.TryGetMarkerTimeAtLapPct( app.Simulator.PlayerCarIdx, app.Simulator.CarIdxLapDistPct[ closestBehindCarIdx ], out var playerTime ) )
+						if ( app.TimingMarkers.TryGetMarkerTimeAtLapPct( behindCarIdx, app.Simulator.CarIdxLapDistPct[ behindCarIdx ], out var _, out var behindTime ) )
 						{
-							var timeDelta = behindTime - playerTime;
+							var delta = behindTime - playerTime;
 
-							if ( timeDelta > 0 )
+							if ( delta > 0 )
 							{
 								behindIsInvalid = false;
 
-								// display delta
-								BackDeltaText.Text = $"{timeDelta:F2}s";
+								BehindDeltaText.Text = $"{delta:F2}s";
 
-								// compute trend (sec/sec) and color accordingly
-								var deltaTextForeground = Brushes.White;
-
-								if ( !double.IsNaN( _prevBackDeltaTime ) )
+								if ( markerIndex != _prevBehindMarkerIndex )
 								{
-									var dt = app.Simulator.SessionTime - _prevBackDeltaTime;
-
-									if ( dt > 0 )
+									if ( !double.IsNaN( _prevBehindDelta ) )
 									{
-										var rate = ( timeDelta - _prevBackDelta ) / dt;
+										var change = delta - _prevBehindDelta;
 
-										// For the car behind: closing (delta decreasing) => RED, opening => GREEN
-										if ( Math.Abs( rate ) >= DeltaRateThreshold )
+										_behindDeltaHistory[ _behindDeltaHistoryIndex ] = change;
+										_behindDeltaHistoryIndex = ( _behindDeltaHistoryIndex + 1 ) % DeltaHistorySize;
+
+										if ( _behindDeltaHistoryCount < DeltaHistorySize )
 										{
-											deltaTextForeground = ( rate < 0 ) ? Brushes.Red : Brushes.Green;
+											_behindDeltaHistoryCount++;
 										}
+
+										var totalChange = 0.0;
+
+										for ( var k = 0; k < _behindDeltaHistoryCount; k++ )
+										{
+											var idx = ( _behindDeltaHistoryIndex - 1 - k + DeltaHistorySize ) % DeltaHistorySize;
+
+											totalChange += _behindDeltaHistory[ idx ];
+										}
+
+										BehindDeltaText.Foreground = ( totalChange >= 0 ) ? Brushes.LightGreen : Brushes.Salmon;
 									}
+									else
+									{
+										BehindDeltaText.Foreground = Brushes.White;
+									}
+
+									_prevBehindMarkerIndex = markerIndex;
+									_prevBehindDelta = delta;
 								}
-
-								BackDeltaText.Foreground = deltaTextForeground;
-
-								_prevBackDelta = timeDelta;
-								_prevBackDeltaTime = app.Simulator.SessionTime;
 							}
 						}
 					}
+
+					if ( behindIsInvalid )
+					{
+						BehindDeltaText.Text = string.Empty;
+
+						_prevBehindMarkerIndex = -1;
+						_prevBehindDelta = double.NaN;
+
+						_behindDeltaHistoryIndex = 0;
+						_behindDeltaHistoryCount = 0;
+
+						Array.Clear( _behindDeltaHistory );
+					}
 				}
 
-				if ( behindIsInvalid )
-				{
-					BackDeltaText.Text = string.Empty;
-
-					_prevBackDelta = double.NaN;
-					_prevBackDeltaTime = double.NaN;
-				}
+				// remember the closest ahead and behind car indices for the next tick
+				_prevAheadCarIdx = aheadCarIdx;
+				_prevBehindCarIdx = behindCarIdx;
 			}
 		}
 	}

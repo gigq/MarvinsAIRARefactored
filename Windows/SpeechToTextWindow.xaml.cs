@@ -100,7 +100,7 @@ public partial class SpeechToTextWindow : Window
 
 				var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 
-				if ( settings.SpeechToTextEnabled && settings.SpeechToTextShowOverlayWindow && app.Simulator.IsConnected )
+				if ( settings.SpeechToTextMakeOverlayWindowDraggable || ( settings.SpeechToTextEnabled && settings.SpeechToTextShowOverlayWindow && app.Simulator.IsConnected ) )
 				{
 					Show();
 					MakeDraggable();
@@ -113,7 +113,7 @@ public partial class SpeechToTextWindow : Window
 		}
 	}
 
-	public void MakeDraggable()
+	private void MakeDraggable()
 	{
 		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 

@@ -58,8 +58,9 @@ public class TimingMarkers
 		}
 	}
 
-	public bool TryGetMarkerTimeAtLapPct( int carIdx, float lapPct, out double time )
+	public bool TryGetMarkerTimeAtLapPct( int carIdx, float lapPct, out int markerIndex, out double time )
 	{
+		markerIndex = -1;
 		time = 0f;
 
 		if ( ( carIdx < 0 ) || ( carIdx >= cars.Length ) )
@@ -78,7 +79,8 @@ public class TimingMarkers
 		}
 
 		var trackPositionInMeters = lapPct * trackLengthInMeters;
-		var markerIndex = (int) Math.Floor( trackPositionInMeters / markerSpacingInMeters );
+		
+		markerIndex = (int) Math.Floor( trackPositionInMeters / markerSpacingInMeters );
 
 		if ( markerIndex < 0 )
 		{
