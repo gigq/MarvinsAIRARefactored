@@ -847,20 +847,12 @@
     <value>Сбросить калибровку</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="ShowGripOMeter" xml:space="preserve">
-    <value>Показать окно Grip-O-Meter</value>
-    <comment>Steering effects</comment>
-  </data>
   <data name="MakeGripOMeterDraggable" xml:space="preserve">
     <value>Разрешить перетаскивания окна Grip-O-Meter</value>
     <comment>Steering effects</comment>
   </data>
   <data name="GripOMeter_UC" xml:space="preserve">
     <value>Grip-O-Meter</value>
-    <comment>Steering effects</comment>
-  </data>
-  <data name="ResetGripOMeter" xml:space="preserve">
-    <value>Сбросить положение окна Grip-O-Meter</value>
     <comment>Steering effects</comment>
   </data>
   <data name="UndersteerWheelVibrationEffect_UC" xml:space="preserve">

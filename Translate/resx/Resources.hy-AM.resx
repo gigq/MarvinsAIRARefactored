@@ -888,20 +888,12 @@
     <value>Վերականգնել Կալիբրացիան</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="ShowGripOMeter" xml:space="preserve">
-    <value>Ցույց տալ Grip-O-Meter պատուհանը</value>
-    <comment>Steering effects</comment>
-  </data>
   <data name="MakeGripOMeterDraggable" xml:space="preserve">
     <value>Թույլ տալ տեղափոխել Grip-O-Meter պատուհանը</value>
     <comment>Steering effects</comment>
   </data>
   <data name="GripOMeter_UC" xml:space="preserve">
     <value />
-    <comment>Steering effects</comment>
-  </data>
-  <data name="ResetGripOMeter" xml:space="preserve">
-    <value>Վերականգնել Grip-O-Meter պատուհանի դիրքը</value>
     <comment>Steering effects</comment>
   </data>
   <data name="UndersteerWheelVibrationEffect_UC" xml:space="preserve">

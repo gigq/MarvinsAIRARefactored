@@ -832,17 +832,11 @@
   <data name="ResetCalibration" xml:space="preserve">
     <value>Resetuj Kalibrację</value>
   </data>
-  <data name="ShowGripOMeter" xml:space="preserve">
-    <value>Wyświetl Okno Odczuć Przyczepności</value>
-  </data>
   <data name="MakeGripOMeterDraggable" xml:space="preserve">
     <value>Umożliwiaj przeciąganie okna Odczuć Przyczepności</value>
   </data>
   <data name="GripOMeter_UC" xml:space="preserve">
     <value>ODCZUCIA PRZYCZEPNOŚCI</value>
-  </data>
-  <data name="ResetGripOMeter" xml:space="preserve">
-    <value>Resetuj pozycję okna Odczuć Przyczepności</value>
   </data>
   <data name="UndersteerWheelVibrationEffect_UC" xml:space="preserve">
     <value>EFEKT WIBRACJI KIEROWNICY (PODSTEROWNOŚĆ)</value>

@@ -861,20 +861,12 @@
     <value>Réinitialiser l'étalonnage</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="ShowGripOMeter" xml:space="preserve">
-    <value>Afficher la fenêtre Grip-O-Meter</value>
-    <comment>Steering effects</comment>
-  </data>
   <data name="MakeGripOMeterDraggable" xml:space="preserve">
     <value>Rendre la fenêtre Grip-O-Meter déplaçable</value>
     <comment>Steering effects</comment>
   </data>
   <data name="GripOMeter_UC" xml:space="preserve">
     <value>GRIP-O-METER</value>
-    <comment>Steering effects</comment>
-  </data>
-  <data name="ResetGripOMeter" xml:space="preserve">
-    <value>Réinitialiser la position de la fenêtre du Grip-O-Meter</value>
     <comment>Steering effects</comment>
   </data>
   <data name="UndersteerWheelVibrationEffect_UC" xml:space="preserve">

@@ -820,20 +820,12 @@ Hier ist der Link zum Spenden:</value>
     <value>Kalibrierung zurücksetzen</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="ShowGripOMeter" xml:space="preserve">
-    <value>Zeige das Grip-O-Meter Fenster</value>
-    <comment>Steering effects</comment>
-  </data>
   <data name="MakeGripOMeterDraggable" xml:space="preserve">
     <value>Grip-O-Meter Fenster verschiebbar machen</value>
     <comment>Steering effects</comment>
   </data>
   <data name="GripOMeter_UC" xml:space="preserve">
     <value>Lenkungseffekte</value>
-  </data>
-  <data name="ResetGripOMeter" xml:space="preserve">
-    <value>Grip-O-Meter Fensterposition zurücksetzen</value>
-    <comment>Steering effects</comment>
   </data>
   <data name="UndersteerWheelVibrationEffect_UC" xml:space="preserve">
     <value>UNTERSTEUERN – LENKRADVIBRATIONS-EFFEKT</value>

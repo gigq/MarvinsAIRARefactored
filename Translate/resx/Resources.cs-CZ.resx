@@ -846,20 +846,12 @@
     <value>Reset kalibrace</value>
     <comment>Steering effects</comment>
   </data>
-  <data name="ShowGripOMeter" xml:space="preserve">
-    <value>Zobrazit Grip-O-Meter okno</value>
-    <comment>Steering effects</comment>
-  </data>
   <data name="MakeGripOMeterDraggable" xml:space="preserve">
     <value>Nechat Grip-O-Meter posouvatelné</value>
     <comment>Steering effects</comment>
   </data>
   <data name="GripOMeter_UC" xml:space="preserve">
     <value></value>
-    <comment>Steering effects</comment>
-  </data>
-  <data name="ResetGripOMeter" xml:space="preserve">
-    <value>Obnovit pozici okna Grip-O-Meter</value>
     <comment>Steering effects</comment>
   </data>
   <data name="UndersteerWheelVibrationEffect_UC" xml:space="preserve">

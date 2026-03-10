@@ -823,17 +823,11 @@
   <data name="ResetCalibration" xml:space="preserve">
     <value>Restablecer calibración</value>
   </data>
-  <data name="ShowGripOMeter" xml:space="preserve">
-    <value>Mostrar la ventana del Medidor de Grip</value>
-  </data>
   <data name="MakeGripOMeterDraggable" xml:space="preserve">
     <value>Hacer que la ventana del Medidor de Grip se pueda arrastrar</value>
   </data>
   <data name="GripOMeter_UC" xml:space="preserve">
     <value>MEDIDOR DE GRIP</value>
-  </data>
-  <data name="ResetGripOMeter" xml:space="preserve">
-    <value>Restablecer la posición de la ventana del Medidor de Grip</value>
   </data>
   <data name="UndersteerWheelVibrationEffect_UC" xml:space="preserve">
     <value>EFECTO DE VIBRACIÓN EN VOLANTE POR SUBVIRAJE</value>

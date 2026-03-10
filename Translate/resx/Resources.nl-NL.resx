@@ -766,17 +766,11 @@
   <data name="ResetCalibration" xml:space="preserve">
     <value>Zet calibratie terug naar standaardwaarden</value>
   </data>
-  <data name="ShowGripOMeter" xml:space="preserve">
-    <value>Toon het Grip-O-Meter scherm</value>
-  </data>
   <data name="MakeGripOMeterDraggable" xml:space="preserve">
     <value>Maak het Grip-O-Meter scherm verplaatsbaar</value>
   </data>
   <data name="GripOMeter_UC" xml:space="preserve">
     <value></value>
-  </data>
-  <data name="ResetGripOMeter" xml:space="preserve">
-    <value>Reset de Grip-O-Meter schermpositie</value>
   </data>
   <data name="UndersteerWheelVibrationEffect_UC" xml:space="preserve">
     <value>onderstuur stuur vibratie effect</value>
