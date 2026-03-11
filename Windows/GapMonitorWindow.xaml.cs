@@ -123,7 +123,7 @@ public partial class GapMonitorWindow : Window
 
 				var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 
-				if ( settings.OverlaysMakeGapMonitorDraggable || ( settings.OverlaysShowGapMonitorWindow && app.Simulator.IsOnTrack ) )
+				if ( settings.OverlaysMakeGapMonitorDraggable || ( settings.OverlaysShowGapMonitorWindow && app.Simulator.IsConnected && app.Simulator.IsOnTrack ) )
 				{
 					Show();
 					MakeDraggable();

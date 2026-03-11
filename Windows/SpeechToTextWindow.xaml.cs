@@ -100,7 +100,7 @@ public partial class SpeechToTextWindow : Window
 
 				var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 
-				if ( settings.SpeechToTextMakeOverlayWindowDraggable || ( settings.SpeechToTextEnabled && settings.SpeechToTextShowOverlayWindow && app.Simulator.IsConnected ) )
+				if ( settings.SpeechToTextMakeOverlayWindowDraggable )
 				{
 					Show();
 					MakeDraggable();
@@ -248,7 +248,7 @@ public partial class SpeechToTextWindow : Window
 					Partial_Driver_TextBlock.Visibility = Visibility.Collapsed;
 					Partial_Message_TextBlock.Visibility = Visibility.Collapsed;
 
-					if ( !settings.SpeechToTextShowOverlayWindow )
+					if ( !settings.SpeechToTextMakeOverlayWindowDraggable )
 					{
 						Hide();
 					}

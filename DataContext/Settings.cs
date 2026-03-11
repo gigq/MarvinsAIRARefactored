@@ -9496,31 +9496,6 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
-	#region Speech to text - Show overlay window
-
-	private bool _speechToTextShowOverlayWindow = false;
-
-	public bool SpeechToTextShowOverlayWindow
-	{
-		get => _speechToTextShowOverlayWindow;
-
-		set
-		{
-			if ( value != _speechToTextShowOverlayWindow )
-			{
-				_speechToTextShowOverlayWindow = value;
-
-				OnPropertyChanged();
-			}
-
-			var app = App.Instance!;
-
-			app.SpeechToTextWindow.UpdateVisibility();
-		}
-	}
-
-	#endregion
-
 	#region Speech to text - Show overlay window title
 
 	private bool _speechToTextShowOverlayWindowTitle = true;

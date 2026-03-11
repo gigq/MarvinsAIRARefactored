@@ -349,6 +349,10 @@ public partial class Simulator
 		app.SpeechToText.SimulatorDisconnected();
 		app.TimingMarkers.Reset();
 
+		app.GripOMeterWindow.UpdateVisibility();
+		app.SpeechToTextWindow.UpdateVisibility();
+		app.GapMonitorWindow.UpdateVisibility();
+
 #endif
 
 		app.MultimediaTimer.Suspend = true;
