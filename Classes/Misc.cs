@@ -58,6 +58,30 @@ public class Misc
 		app.Logger.WriteLine( "[Misc] <<< DisableThrottling" );
 	}
 
+	public static Process? GetProcessFromWindowHandle( IntPtr windowHandle )
+	{
+		if ( windowHandle == IntPtr.Zero )
+		{
+			return null;
+		}
+
+		_ = User32.GetWindowThreadProcessId( windowHandle, out var processId );
+
+		if ( processId == 0 )
+		{
+			return null;
+		}
+
+		try
+		{
+			return Process.GetProcessById( (int) processId );
+		}
+		catch
+		{
+			return null;
+		}
+	}
+
 	public static void ForcePropertySetters( object obj )
 	{
 		if ( obj == null ) return;

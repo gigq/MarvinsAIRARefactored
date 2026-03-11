@@ -10168,6 +10168,38 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region App - CPU affinity
+
+	private ulong _appAffinityMaskBits = 0xFFFFFFFFFFFFFFFF;
+
+	public ulong AppAffinityMaskBits
+	{
+		get => _appAffinityMaskBits;
+
+		set
+		{
+			if ( value != _appAffinityMaskBits )
+			{
+				_appAffinityMaskBits = value;
+
+				OnPropertyChanged();
+
+				try
+				{
+					CpuAffinityHelper.SetCpuAffinity( _appAffinityMaskBits );
+				}
+				catch ( Exception ex )
+				{
+					var app = App.Instance!;
+
+					app.Logger.WriteLine( $"[Settings] Failed to set CPU affinity: {ex.Message}" );
+				}
+			}
+		}
+	}
+
+	#endregion
+
 	#region Trading paints - Enabled
 
 	private bool _tradingPaintsEnabled = false;

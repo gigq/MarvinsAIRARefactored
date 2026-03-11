@@ -160,7 +160,20 @@
             </Grid>
 
         </controls:MairaGroupBox>
-        
+    
+        <controls:MairaGroupBox Label="{Binding Localization[CPUAffinity_UC]}"
+                                Tag="HideIfAdminBoxx"
+                                HelpTopic="advanced/app-settings/#cpu-affinity">
+
+            <UniformGrid x:Name="CpuAffinityPanel"
+                         Columns="4">
+
+                <!-- CPU affinity checkboxes will be dynamically added here -->
+
+            </UniformGrid>
+
+        </controls:MairaGroupBox>
+
     </StackPanel>
 
 </UserControl>

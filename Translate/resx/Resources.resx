@@ -1605,4 +1605,8 @@
     <value>Show the overlay window title</value>
     <comment>Overlays</comment>
   </data>
+  <data name="CPUAffinity_UC" xml:space="preserve">
+    <value>CPU Affinity</value>
+    <comment>App settings</comment>
+  </data>
 </root>
