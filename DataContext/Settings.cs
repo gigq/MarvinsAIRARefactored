@@ -8440,6 +8440,17 @@ public class Settings : INotifyPropertyChanged
 				_soundsMasterEnabled = value;
 
 				OnPropertyChanged();
+
+				var app = App.Instance!;
+
+				if ( _soundsMasterEnabled )
+				{
+					app.AudioManager.OpenDevice();
+				}
+				else
+				{
+					app.AudioManager.CloseDevice();
+				}
 			}
 		}
 	}

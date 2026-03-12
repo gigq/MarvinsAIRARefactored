@@ -17,8 +17,8 @@ public sealed class AudioManager : IDisposable
 
 	private FileSystemWatcher? _fileSystemWatcher = null;
 
-	private readonly XAudio2? _xaudio2;
-	private readonly MasteringVoice? _masteringVoice;
+	private XAudio2? _xaudio2;
+	private MasteringVoice? _masteringVoice;
 
 	private readonly Dictionary<string, DateTime> _debounceMap = [];
 
@@ -28,20 +28,83 @@ public sealed class AudioManager : IDisposable
 
 		app.Logger.WriteLine( "[AudioManager] Constructor >>>" );
 
-		try
-		{
-			_xaudio2 = new XAudio2();
-			_masteringVoice = new MasteringVoice( _xaudio2 );
-		}
-		catch ( Exception exception )
-		{
-			_xaudio2 = null;
-			_masteringVoice = null;
-
-			app.Logger.WriteLine( $"[AudioManager] Failed to initialize XAudio2: {exception.Message}" );
-		}
-
 		app.Logger.WriteLine( "[AudioManager] <<< Constructor" );
+	}
+
+	public void OpenDevice()
+	{
+		using ( _lock.EnterScope() )
+		{
+			if ( _xaudio2 != null )
+			{
+				return; // Already open
+			}
+
+			var app = App.Instance!;
+
+			app.Logger.WriteLine( "[AudioManager] OpenDevice >>>" );
+
+			try
+			{
+				_xaudio2 = new XAudio2();
+				_masteringVoice = new MasteringVoice( _xaudio2 );
+
+				// Reload all cached sounds
+				var soundPaths = _soundCache.Keys.ToList();
+
+				foreach ( var key in soundPaths )
+				{
+					var sound = _soundCache[ key ];
+					var player = new CachedSoundPlayer( sound, _xaudio2 );
+
+					_soundPlayerCache[ key ] = player;
+				}
+
+				app.Logger.WriteLine( "[AudioManager] Audio device opened successfully" );
+			}
+			catch ( Exception exception )
+			{
+				_xaudio2 = null;
+				_masteringVoice = null;
+
+				app.Logger.WriteLine( $"[AudioManager] Failed to open audio device: {exception.Message}" );
+			}
+
+			app.Logger.WriteLine( "[AudioManager] <<< OpenDevice" );
+		}
+	}
+
+	public void CloseDevice()
+	{
+		using ( _lock.EnterScope() )
+		{
+			if ( _xaudio2 == null )
+			{
+				return; // Already closed
+			}
+
+			var app = App.Instance!;
+
+			app.Logger.WriteLine( "[AudioManager] CloseDevice >>>" );
+
+			// Dispose all sound players
+			foreach ( var player in _soundPlayerCache.Values )
+			{
+				player.Dispose();
+			}
+			_soundPlayerCache.Clear();
+
+			// Dispose XAudio2 resources
+			_masteringVoice?.Dispose();
+			_xaudio2?.Dispose();
+
+			_masteringVoice = null;
+			_xaudio2 = null;
+
+			app.Logger.WriteLine( "[AudioManager] Audio device closed" );
+
+			app.Logger.WriteLine( "[AudioManager] <<< CloseDevice" );
+		}
 	}
 
 	public void Initialize()
@@ -65,6 +128,12 @@ public sealed class AudioManager : IDisposable
 		_fileSystemWatcher.Changed += OnSoundFileChanged;
 		_fileSystemWatcher.Created += OnSoundFileChanged;
 		_fileSystemWatcher.Renamed += OnSoundFileChanged;
+
+		// Open device if master sound is enabled
+		if ( DataContext.DataContext.Instance.Settings.SoundsMasterEnabled )
+		{
+			OpenDevice();
+		}
 
 		app.Logger.WriteLine( "[AudioManager] <<< Initialize" );
 	}
@@ -139,26 +208,31 @@ public sealed class AudioManager : IDisposable
 
 	private void LoadSound( string path )
 	{
-		if ( ( _xaudio2 != null ) && File.Exists( path ) )
+		if ( File.Exists( path ) )
 		{
 			var key = Path.GetFileNameWithoutExtension( path )?.ToLower();
 
 			if ( key != null )
 			{
 				var sound = new CachedSound( path );
-				var player = new CachedSoundPlayer( sound, _xaudio2 );
 
 				using ( _lock.EnterScope() )
 				{
 					_soundCache[ key ] = sound;
 
-					if ( _soundPlayerCache.TryGetValue( key, out var existing ) )
+					// Only create player if device is open
+					if ( _xaudio2 != null )
 					{
-						existing.Stop();
-						existing.Dispose();
-					}
+						var player = new CachedSoundPlayer( sound, _xaudio2 );
 
-					_soundPlayerCache[ key ] = player;
+						if ( _soundPlayerCache.TryGetValue( key, out var existing ) )
+						{
+							existing.Stop();
+							existing.Dispose();
+						}
+
+						_soundPlayerCache[ key ] = player;
+					}
 				}
 			}
 		}
@@ -234,18 +308,11 @@ public sealed class AudioManager : IDisposable
 	{
 		_fileSystemWatcher?.Dispose();
 
+		CloseDevice();
+
 		using ( _lock.EnterScope() )
 		{
-			foreach ( var player in _soundPlayerCache.Values )
-			{
-				player.Dispose();
-			}
-
-			_soundPlayerCache.Clear();
 			_soundCache.Clear();
 		}
-
-		_masteringVoice?.Dispose();
-		_xaudio2?.Dispose();
 	}
 }
