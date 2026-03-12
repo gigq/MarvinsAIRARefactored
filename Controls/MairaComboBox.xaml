@@ -5,8 +5,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
+             xmlns:converters="clr-namespace:MarvinsAIRARefactored.Converters"
              mc:Ignorable="d"
              Background="Transparent">
+
+    <UserControl.Resources>
+        <converters:StartsWithUnderscoreConverter x:Key="StartsWithUnderscoreConverter" />
+    </UserControl.Resources>
 
     <Grid>
 
@@ -59,8 +64,50 @@
                   DisplayMemberPath="Value"
                   SelectedValuePath="Key"
                   ItemsSource="{Binding ItemsSource, ElementName=Root}"
-                  SelectedValue="{Binding SelectedValue, ElementName=Root}"
-                  IsEditable="False" />
+                  SelectedValue="{Binding SelectedValue, ElementName=Root, Mode=TwoWay}"
+                  IsEditable="False">
+
+            <ComboBox.ItemContainerStyle>
+
+                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+
+                    <Style.Triggers>
+
+                        <!-- Disable items where the Value (display text) is blank or empty -->
+                        <DataTrigger Binding="{Binding Value}"
+                                     Value="">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                            <Setter Property="Focusable"
+                                    Value="False" />
+                        </DataTrigger>
+
+                        <!-- Disable items where the Value starts with underscore (dummy separators) -->
+                        <DataTrigger Binding="{Binding Value, Converter={StaticResource StartsWithUnderscoreConverter}}"
+                                     Value="True">
+                            <Setter Property="IsEnabled"
+                                    Value="False" />
+                            <Setter Property="Focusable"
+                                    Value="False" />
+                            <Setter Property="Height"
+                                    Value="10" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ComboBoxItem">
+                                        <Separator />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+
+                        </DataTrigger>
+
+                    </Style.Triggers>
+
+                </Style>
+
+            </ComboBox.ItemContainerStyle>
+
+        </ComboBox>
 
     </Grid>
 

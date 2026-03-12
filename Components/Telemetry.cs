@@ -414,7 +414,9 @@ public class Telemetry
 
 					case RacingWheel.Algorithm.MultiAdjustmentToolkit:
 
-						switch ( settings.RacingWheelMultiFFBSource )
+						var multiFFBSource = RacingWheel.GetMultiFFBSource();
+
+						switch ( multiFFBSource )
 						{
 							case RacingWheel.MultiFFBSource.Native60Hz:
 								dataBuffer.racingWheelAlgorithmSettings[ 0 ] = 0f;
@@ -448,7 +450,7 @@ public class Telemetry
 						dataBuffer.SetRacingWheelAlgorithmSettingName( 5, localization[ "DetailGain" ] );
 						dataBuffer.SetRacingWheelAlgorithmSettingName( 6, localization[ "OutputSmoothing" ] );
 
-						switch ( settings.RacingWheelMultiFFBSource )
+						switch ( multiFFBSource )
 						{
 							case RacingWheel.MultiFFBSource.Native60Hz:
 								dataBuffer.SetRacingWheelAlgorithmSettingValue( 0, localization[ "Native60Hz" ] );

@@ -48,7 +48,8 @@ public class RacingWheel
 		PresetReduceDetail,
 		PresetBasicFFB,
 		PresetBalancedFFB,
-		_Dummy_
+		_Dummy1_,
+		_Dummy2_
 	};
 
 	public enum PredictionMode
@@ -122,6 +123,7 @@ public class RacingWheel
 
 	private readonly float[,] _algorithmProperties = new float[ 2, 12 ];
 	private readonly Algorithm[] _lastAlgorithm = new Algorithm[ 2 ];
+	private bool _preventSwitchToNoncannedMultiAdjustAlgorithmSource = false;
 
 	private float _outputTorque = 0f;
 	private float _peakTorque = 0f;
@@ -207,6 +209,157 @@ public class RacingWheel
 
 			app.ChatQueue.SendMessage( $"/{playerName} (MAIRA) {DataContext.DataContext.Instance.Localization[ key ]}", value );
 		}
+	}
+
+	public static MultiFFBSource GetMultiFFBSource()
+	{
+		var settings = DataContext.DataContext.Instance.Settings;
+
+		var multiFFBSource = settings.RacingWheelMultiFFBSourceSelection switch
+		{
+			RacingWheel.MultiFFBSourceOptions.Native60Hz or RacingWheel.MultiFFBSourceOptions.DefaultsNative60Hz => RacingWheel.MultiFFBSource.Native60Hz,
+			RacingWheel.MultiFFBSourceOptions.Native360Hz or RacingWheel.MultiFFBSourceOptions.DefaultsNative360Hz => RacingWheel.MultiFFBSource.Native360Hz,
+			RacingWheel.MultiFFBSourceOptions.Hybrid10 or RacingWheel.MultiFFBSourceOptions.DefaultsHybrid10 => RacingWheel.MultiFFBSource.Hybrid10,
+			_ => RacingWheel.MultiFFBSource.HybridVariable30,
+		};
+
+		return multiFFBSource;
+	}
+
+	public static bool MultiAdjustAlgorithmSourceIsCanned()
+	{
+		var settings = DataContext.DataContext.Instance.Settings;
+
+		return settings.RacingWheelMultiFFBSourceSelection > MultiFFBSourceOptions.HybridVariable30;
+	}
+
+	public void SwitchToNonCannedMultiAdjustAlgorithmSource()
+	{
+		if ( _preventSwitchToNoncannedMultiAdjustAlgorithmSource )
+		{
+			return;
+		}
+
+		var multiFFBSource = GetMultiFFBSource();
+
+		var settings = DataContext.DataContext.Instance.Settings;
+
+		settings.RacingWheelMultiFFBSourceSelection = settings.RacingWheelMultiFFBSourceSelection switch
+		{
+			MultiFFBSourceOptions.Native60Hz => MultiFFBSourceOptions.Native60Hz,
+			MultiFFBSourceOptions.Native360Hz => MultiFFBSourceOptions.Native360Hz,
+			MultiFFBSourceOptions.Hybrid10 => MultiFFBSourceOptions.Hybrid10,
+			MultiFFBSourceOptions.HybridVariable30 => MultiFFBSourceOptions.HybridVariable30,
+
+			RacingWheel.MultiFFBSourceOptions.DefaultsNative60Hz => RacingWheel.MultiFFBSourceOptions.Native60Hz,
+			RacingWheel.MultiFFBSourceOptions.DefaultsNative360Hz => RacingWheel.MultiFFBSourceOptions.Native360Hz,
+			RacingWheel.MultiFFBSourceOptions.DefaultsHybrid10 => RacingWheel.MultiFFBSourceOptions.Hybrid10,
+			RacingWheel.MultiFFBSourceOptions.DefaultsHybridVariable30 => RacingWheel.MultiFFBSourceOptions.HybridVariable30,
+
+			RacingWheel.MultiFFBSourceOptions.PresetBasicFFB => RacingWheel.MultiFFBSourceOptions.HybridVariable30,
+			RacingWheel.MultiFFBSourceOptions.PresetBalancedFFB => RacingWheel.MultiFFBSourceOptions.HybridVariable30,
+			RacingWheel.MultiFFBSourceOptions.PresetBoostDetail or RacingWheel.MultiFFBSourceOptions.PresetReduceDetail => multiFFBSource switch
+			{
+				RacingWheel.MultiFFBSource.Native60Hz => RacingWheel.MultiFFBSourceOptions.Native60Hz,
+				RacingWheel.MultiFFBSource.HybridVariable30 => RacingWheel.MultiFFBSourceOptions.HybridVariable30,
+				RacingWheel.MultiFFBSource.Hybrid10 => RacingWheel.MultiFFBSourceOptions.Hybrid10,
+				RacingWheel.MultiFFBSource.Native360Hz => RacingWheel.MultiFFBSourceOptions.Native360Hz,
+				_ => throw new NotImplementedException()
+			},
+			_ => throw new NotImplementedException()
+		};
+	}
+
+	public void SetCannedMultiAdjustAlgorithmValues()
+	{
+		_preventSwitchToNoncannedMultiAdjustAlgorithmSource = true;
+
+		var settings = DataContext.DataContext.Instance.Settings;
+
+		switch ( settings.RacingWheelMultiFFBSourceSelection )
+		{
+			case MultiFFBSourceOptions.Native60Hz:
+				settings.RacingWheelMulti360HzDetail = 1f;
+				settings.RacingWheelMultiOutputSmoothing = 0.25f;
+				settings.RacingWheelMultiSlewRateReduction = 0.1f;
+				break;
+
+			case MultiFFBSourceOptions.Native360Hz:
+				settings.RacingWheelMulti360HzDetail = 1f;
+				break;
+
+			case MultiFFBSourceOptions.Hybrid10:
+				break;
+
+			case MultiFFBSourceOptions.HybridVariable30:
+				settings.RacingWheelMultiOutputSmoothing = 0.1f;
+				settings.RacingWheelMultiSlewRateReduction = 0.1f * ( 1f - MathZ.Saturate( ( 8f - settings.RacingWheelWheelForce ) / 6f ) );
+				break;
+
+			case MultiFFBSourceOptions.DefaultsNative60Hz:
+				settings.RacingWheelMulti360HzDetail = 1f;
+				settings.RacingWheelMultiTorqueCompression = 0f;
+				settings.RacingWheelMultiEnableSlewPeakMode = true;
+				settings.RacingWheelMultiSlewRateReduction = 0.1f;
+				settings.RacingWheelMultiDetailGain = 0f;
+				settings.RacingWheelMultiOutputSmoothing = 0.25f;
+				break;
+
+			case MultiFFBSourceOptions.DefaultsNative360Hz:
+				settings.RacingWheelMulti360HzDetail = 1f;
+				settings.RacingWheelMultiTorqueCompression = 0f;
+				settings.RacingWheelMultiEnableSlewPeakMode = true;
+				settings.RacingWheelMultiSlewRateReduction = 0f;
+				settings.RacingWheelMultiDetailGain = 0f;
+				settings.RacingWheelMultiOutputSmoothing = 0f;
+				break;
+
+			case MultiFFBSourceOptions.DefaultsHybrid10:
+				settings.RacingWheelMulti360HzDetail = 1f;
+				settings.RacingWheelMultiTorqueCompression = 0f;
+				settings.RacingWheelMultiEnableSlewPeakMode = true;
+				settings.RacingWheelMultiSlewRateReduction = 0f;
+				settings.RacingWheelMultiDetailGain = 0f;
+				settings.RacingWheelMultiOutputSmoothing = 0f;
+				break;
+
+			case MultiFFBSourceOptions.DefaultsHybridVariable30:
+				settings.RacingWheelMulti360HzDetail = 1f;
+				settings.RacingWheelMultiTorqueCompression = 0f;
+				settings.RacingWheelMultiEnableSlewPeakMode = true;
+				settings.RacingWheelMultiSlewRateReduction = 0.1f * ( 1f - MathZ.Saturate( ( 8f - settings.RacingWheelWheelForce ) / 6f ) );
+				settings.RacingWheelMultiDetailGain = 0f;
+				settings.RacingWheelMultiOutputSmoothing = 0.1f;
+				break;
+
+			case MultiFFBSourceOptions.PresetBoostDetail:
+				settings.RacingWheelMultiDetailGain = 1f;
+				settings.RacingWheelMultiOutputSmoothing = 0.1f;
+				break;
+
+			case MultiFFBSourceOptions.PresetReduceDetail:
+				settings.RacingWheelMultiDetailGain = -0.3f;
+				settings.RacingWheelMultiOutputSmoothing = 0f;
+				break;
+
+			case MultiFFBSourceOptions.PresetBasicFFB:
+				settings.RacingWheelMulti360HzDetail = 0.3f;
+				settings.RacingWheelMultiEnableSlewPeakMode = true;
+				settings.RacingWheelMultiSlewRateReduction = 0f;
+				settings.RacingWheelMultiDetailGain = 0f;
+				settings.RacingWheelMultiOutputSmoothing = 0f;
+				break;
+
+			case MultiFFBSourceOptions.PresetBalancedFFB:
+				settings.RacingWheelMulti360HzDetail = 0.55f;
+				settings.RacingWheelMultiEnableSlewPeakMode = true;
+				settings.RacingWheelMultiSlewRateReduction = 0f;
+				settings.RacingWheelMultiDetailGain = 0f;
+				settings.RacingWheelMultiOutputSmoothing = 0f;
+				break;
+		}
+
+		_preventSwitchToNoncannedMultiAdjustAlgorithmSource = false;
 	}
 
 	[MethodImpl( MethodImplOptions.AggressiveInlining )]
@@ -359,7 +512,9 @@ public class RacingWheel
 				var hfScaledDelta = ( steeringWheelTorque500Hz - _algorithmProperties[ algorithmPropertyIndex, index360HzLastTorque ] ) * settings.RacingWheelMulti360HzDetail;
 				var hybridTorque = 0f;
 
-				switch ( settings.RacingWheelMultiFFBSource )
+				var multiFFBSource = GetMultiFFBSource();
+
+				switch ( multiFFBSource )
 				{
 					case MultiFFBSource.Native60Hz:
 						hybridTorque = steeringWheelTorque60Hz;
