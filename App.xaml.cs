@@ -2467,134 +2467,179 @@ public partial class App : Application
 
 	public void EnsureGripOMeterWindowExists()
 	{
-		if ( GripOMeterWindow == null )
-		{
-			Dispatcher.Invoke( () =>
-			{
-				Logger.WriteLine( "[App] Creating GripOMeterWindow" );
+		var app = App.Instance!;
 
-				GripOMeterWindow = new();
-			} );
-		}
+		app.Dispatcher.InvokeAsync( () =>
+		{
+			if ( GripOMeterWindow == null )
+			{
+				Dispatcher.Invoke( () =>
+				{
+					Logger.WriteLine( "[App] Creating GripOMeterWindow" );
+
+					GripOMeterWindow = new();
+				} );
+			}
+		} );
 	}
 
 	public void DestroyGripOMeterWindow()
 	{
-		if ( GripOMeterWindow != null )
+		var app = App.Instance!;
+
+		app.Dispatcher.InvokeAsync( () =>
 		{
-			Dispatcher.Invoke( () =>
+			if ( GripOMeterWindow != null )
 			{
-				Logger.WriteLine( "[App] Destroying GripOMeterWindow" );
+				Dispatcher.Invoke( () =>
+				{
+					Logger.WriteLine( "[App] Destroying GripOMeterWindow" );
 
-				GripOMeterWindow.Close();
+					GripOMeterWindow.Close();
 
-				GripOMeterWindow = null;
-			} );
-		}
+					GripOMeterWindow = null;
+				} );
+			}
+		} );
 	}
 
 	public void EnsureGapMonitorWindowExists()
 	{
-		if ( GapMonitorWindow == null )
-		{
-			Dispatcher.Invoke( () =>
-			{
-				Logger.WriteLine( "[App] Creating GapMonitorWindow" );
+		var app = App.Instance!;
 
-				GapMonitorWindow = new();
-			} );
-		}
+		app.Dispatcher.InvokeAsync( () =>
+		{
+			if ( GapMonitorWindow == null )
+			{
+				Dispatcher.Invoke( () =>
+				{
+					Logger.WriteLine( "[App] Creating GapMonitorWindow" );
+
+					GapMonitorWindow = new();
+				} );
+			}
+		} );
 	}
 
 	public void DestroyGapMonitorWindow()
 	{
-		if ( GapMonitorWindow != null )
+		var app = App.Instance!;
+
+		app.Dispatcher.InvokeAsync( () =>
 		{
-			Dispatcher.Invoke( () =>
+			if ( GapMonitorWindow != null )
 			{
-				Logger.WriteLine( "[App] Destroying GapMonitorWindow" );
+				Dispatcher.Invoke( () =>
+				{
+					Logger.WriteLine( "[App] Destroying GapMonitorWindow" );
 
-				GapMonitorWindow.Close();
+					GapMonitorWindow.Close();
 
-				GapMonitorWindow = null;
-			} );
-		}
+					GapMonitorWindow = null;
+				} );
+			}
+		} );
 	}
 
 	public void EnsureSpeechToTextWindowExists()
 	{
-		if ( SpeechToTextWindow == null )
-		{
-			Dispatcher.Invoke( () =>
-			{
-				Logger.WriteLine( "[App] Creating SpeechToTextWindow" );
+		var app = App.Instance!;
 
-				SpeechToTextWindow = new();
-			} );
-		}
+		app.Dispatcher.InvokeAsync( () =>
+		{
+			if ( SpeechToTextWindow == null )
+			{
+				Dispatcher.Invoke( () =>
+				{
+					Logger.WriteLine( "[App] Creating SpeechToTextWindow" );
+
+					SpeechToTextWindow = new();
+				} );
+			}
+		} );
 	}
 
 	public void DestroySpeechToTextWindow()
 	{
-		if ( SpeechToTextWindow != null )
+		var app = App.Instance!;
+
+		app.Dispatcher.InvokeAsync( () =>
 		{
-			Dispatcher.Invoke( () =>
+			if ( SpeechToTextWindow != null )
 			{
-				Logger.WriteLine( "[App] Destroying SpeechToTextWindow" );
+				Dispatcher.Invoke( () =>
+				{
+					Logger.WriteLine( "[App] Destroying SpeechToTextWindow" );
 
-				SpeechToTextWindow.Close();
+					SpeechToTextWindow.Close();
 
-				SpeechToTextWindow = null;
-			} );
-		}
+					SpeechToTextWindow = null;
+				} );
+			}
+		} );
 	}
 
 	public void UpdateGripOMeterWindowVisibility()
 	{
-		var settings = DataContext.DataContext.Instance.Settings;
+		var app = App.Instance!;
 
-		if ( settings.SteeringEffectsMakeGripOMeterDraggable || ( settings.SteeringEffectsShowGripOMeterWindow && Simulator.IsConnected && Simulator.IsOnTrack ) )
+		app.Dispatcher.InvokeAsync( () =>
 		{
-			EnsureGripOMeterWindowExists();
+			var settings = DataContext.DataContext.Instance.Settings;
 
-			GripOMeterWindow?.MakeDraggable();
-		}
-		else
-		{
-			DestroyGripOMeterWindow();
-		}
+			if ( settings.SteeringEffectsMakeGripOMeterDraggable || ( settings.SteeringEffectsShowGripOMeterWindow && Simulator.IsConnected && Simulator.IsOnTrack ) )
+			{
+				EnsureGripOMeterWindowExists();
+
+				GripOMeterWindow?.MakeDraggable();
+			}
+			else
+			{
+				DestroyGripOMeterWindow();
+			}
+		} );
 	}
 
 	public void UpdateGapMonitorWindowVisibility()
 	{
-		var settings = DataContext.DataContext.Instance.Settings;
+		var app = App.Instance!;
 
-		if ( settings.OverlaysMakeGapMonitorDraggable || ( settings.OverlaysShowGapMonitorWindow && Simulator.IsConnected && Simulator.IsOnTrack ) )
+		app.Dispatcher.InvokeAsync( () =>
 		{
-			EnsureGapMonitorWindowExists();
+			var settings = DataContext.DataContext.Instance.Settings;
 
-			GapMonitorWindow?.MakeDraggable();
-		}
-		else
-		{
-			DestroyGapMonitorWindow();
-		}
+			if ( settings.OverlaysMakeGapMonitorDraggable || ( settings.OverlaysShowGapMonitorWindow && Simulator.IsConnected && Simulator.IsOnTrack ) )
+			{
+				EnsureGapMonitorWindowExists();
+
+				GapMonitorWindow?.MakeDraggable();
+			}
+			else
+			{
+				DestroyGapMonitorWindow();
+			}
+		} );
 	}
 
 	public void UpdateSpeechToTextWindowVisibility()
 	{
-		var settings = DataContext.DataContext.Instance.Settings;
+		var app = App.Instance!;
 
-		if ( settings.SpeechToTextMakeOverlayWindowDraggable )
+		app.Dispatcher.InvokeAsync( () =>
 		{
-			EnsureSpeechToTextWindowExists();
+			var settings = DataContext.DataContext.Instance.Settings;
 
-			SpeechToTextWindow?.MakeDraggable();
-		}
-		else
-		{
-			DestroySpeechToTextWindow();
-		}
+			if ( settings.SpeechToTextMakeOverlayWindowDraggable )
+			{
+				EnsureSpeechToTextWindowExists();
+
+				SpeechToTextWindow?.MakeDraggable();
+			}
+			else
+			{
+				DestroySpeechToTextWindow();
+			}
+		} );
 	}
 
 	#endregion
