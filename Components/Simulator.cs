@@ -44,7 +44,9 @@ public partial class Simulator
 	public int CurrentTireIndex { get; private set; } = -1;
 	public string CurrentTireCompoundType { get; private set; } = string.Empty;
 	public int DisplayUnits { get; private set; } = 0;
+	public float FrameRate { get; private set; } = 0;
 	public int Gear { get; private set; } = 0;
+	public float GpuUsage { get; private set; } = 0f;
 	public float LongitudinalGForce { get; private set; } = 0f;
 	public float LateralGForce { get; private set; } = 0f;
 	public bool IsConnected { get => _irsdk.IsConnected; }
@@ -122,7 +124,9 @@ public partial class Simulator
 	private IRacingSdkDatum? _clutchDatum = null;
 	private IRacingSdkDatum? _crShockVel_STDatum = null;
 	private IRacingSdkDatum? _displayUnitsDatum = null;
+	private IRacingSdkDatum? _frameRateDatum = null;
 	private IRacingSdkDatum? _gearDatum = null;
+	private IRacingSdkDatum? _gpuUsageDatum = null;
 	private IRacingSdkDatum? _isOnTrackDatum = null;
 	private IRacingSdkDatum? _isReplayPlayingDatum = null;
 	private IRacingSdkDatum? _lapDatum = null;
@@ -158,6 +162,12 @@ public partial class Simulator
 	private IRacingSdkDatum? _weatherDeclaredWetDatum = null;
 	private IRacingSdkDatum? _yawNorthDatum = null;
 	private IRacingSdkDatum? _yawRateDatum = null;
+
+	private float _minMaxLogAccumulator = 0f;
+	private float _minFrameRate = float.MaxValue;
+	private float _maxFrameRate = float.MinValue;
+	private float _minGpuUsage = float.MaxValue;
+	private float _maxGpuUsage = float.MinValue;
 
 	private int _updateCounter = UpdateInterval + 5;
 
@@ -339,6 +349,12 @@ public partial class Simulator
 		_sessionFlagsLastFrame = null;
 		_currentTireIndexLastFrame = null;
 
+		_minMaxLogAccumulator = 0f;
+		_minFrameRate = float.MaxValue;
+		_maxFrameRate = float.MinValue;
+		_minGpuUsage = float.MaxValue;
+		_maxGpuUsage = float.MinValue;
+
 		DataContext.DataContext.Instance.Settings.UpdateSettings( false );
 
 		app.AdminBoxx.SimulatorDisconnected();
@@ -517,7 +533,9 @@ public partial class Simulator
 			_carIdxTireCompoundDatum = _irsdk.Data.TelemetryDataProperties[ "CarIdxTireCompound" ];
 			_clutchDatum = _irsdk.Data.TelemetryDataProperties[ "Clutch" ];
 			_displayUnitsDatum = _irsdk.Data.TelemetryDataProperties[ "DisplayUnits" ];
+			_frameRateDatum = _irsdk.Data.TelemetryDataProperties[ "FrameRate" ];
 			_gearDatum = _irsdk.Data.TelemetryDataProperties[ "Gear" ];
+			_gpuUsageDatum = _irsdk.Data.TelemetryDataProperties[ "GpuUsage" ];
 			_isOnTrackDatum = _irsdk.Data.TelemetryDataProperties[ "IsOnTrack" ];
 			_isReplayPlayingDatum = _irsdk.Data.TelemetryDataProperties[ "IsReplayPlaying" ];
 			_lapDatum = _irsdk.Data.TelemetryDataProperties[ "Lap" ];
@@ -590,7 +608,7 @@ public partial class Simulator
 			return;
 		}
 
-		// poll directinput devices right before we process the algorithm
+		// poll directinput devices right before we process the algorithm (setting app.RacingWheel.UpdateSteeringWheelTorqueBuffer = true updates the prediction on the multimedia timer thread)
 
 		app.DirectInput.PollDevices( deltaSeconds );
 
@@ -600,31 +618,119 @@ public partial class Simulator
 
 		app.RacingWheel.UpdateSteeringWheelTorqueBuffer = true;
 
-		// update brake abs active
-
-		BrakeABSactive = _irsdk.Data.GetBool( _brakeABSactiveDatum );
-
-		// update clutch, brake, throttle
-
-		Clutch = _irsdk.Data.GetFloat( _clutchDatum );
-		Brake = _irsdk.Data.GetFloat( _brakeDatum );
-		Throttle = _irsdk.Data.GetFloat( _throttleDatum );
-
-		// update rpm
-
-		RPM = _irsdk.Data.GetFloat( _rpmDatum );
-
-		// update was / is on track status
+		// save last frame values
 
 		WasOnTrack = IsOnTrack;
 
+		// update non-array telemetry data properties
+
+		BrakeABSactive = _irsdk.Data.GetBool( _brakeABSactiveDatum );
+		Brake = _irsdk.Data.GetFloat( _brakeDatum );
+		Clutch = _irsdk.Data.GetFloat( _clutchDatum );
+		DisplayUnits = _irsdk.Data.GetInt( _displayUnitsDatum );
+		FrameRate = _irsdk.Data.GetFloat( _frameRateDatum );
+		Gear = _irsdk.Data.GetInt( _gearDatum );
+		GpuUsage = _irsdk.Data.GetFloat( _gpuUsageDatum );
 		IsOnTrack = _irsdk.Data.GetBool( _isOnTrackDatum );
+		IsReplayPlaying = _irsdk.Data.GetBool( _isReplayPlayingDatum );
+		Lap = _irsdk.Data.GetInt( _lapDatum );
+		LapDist = _irsdk.Data.GetFloat( _lapDistDatum );
+		LapDistPct = _irsdk.Data.GetFloat( _lapDistPctDatum );
+		LatAccel = _irsdk.Data.GetFloat( _latAccelDatum );
+		LoadNumTextures = _irsdk.Data.GetBool( _loadNumTexturesDatum );
+		LongAccel = _irsdk.Data.GetFloat( _longAccelDatum );
+		PaceMode = (IRacingSdkEnum.PaceMode) _irsdk.Data.GetInt( _paceModeDatum );
+		PlayerCarIdx = _irsdk.Data.GetInt( _playerCarIdxDatum );
+		PlayerTrackSurface = (IRacingSdkEnum.TrkLoc) _irsdk.Data.GetInt( _playerTrackSurfaceDatum );
+		PlayerTrackSurfaceMaterial = (IRacingSdkEnum.TrkSurf) _irsdk.Data.GetInt( _playerTrackSurfaceMaterialDatum );
+		RadioTransmitCarIdx = _irsdk.Data.GetInt( _radioTransmitCarIdxDatum );
+		ReplayFrameNumEnd = _irsdk.Data.GetInt( _replayFrameNumEndDatum );
+		ReplayPlaySlowMotion = _irsdk.Data.GetBool( _replayPlaySlowMotionDatum );
+		ReplayPlaySpeed = _irsdk.Data.GetInt( _replayPlaySpeedDatum );
+		RPM = _irsdk.Data.GetFloat( _rpmDatum );
+		SessionFlags = (IRacingSdkEnum.Flags) _irsdk.Data.GetBitField( _sessionFlagsDatum );
+		SessionNum = _irsdk.Data.GetInt( _sessionNumDatum );
+		SessionTime = _irsdk.Data.GetDouble( _sessionTimeDatum );
+		Speed = _irsdk.Data.GetFloat( _speedDatum );
+		SteeringFFBEnabled = _irsdk.Data.GetBool( _steeringFFBEnabledDatum );
+		SteeringWheelAngle = _irsdk.Data.GetFloat( _steeringWheelAngleDatum );
+		SteeringWheelAngleMax = _irsdk.Data.GetFloat( _steeringWheelAngleMaxDatum );
+		Throttle = _irsdk.Data.GetFloat( _throttleDatum );
+		VelocityX = _irsdk.Data.GetFloat( _velocityXDatum );
+		VelocityY = _irsdk.Data.GetFloat( _velocityYDatum );
+		WeatherDeclaredWet = _irsdk.Data.GetBool( _weatherDeclaredWetDatum );
+		YawNorth = _irsdk.Data.GetFloat( _yawNorthDatum );
+		YawRate = _irsdk.Data.GetFloat( _yawRateDatum );
+
+		// update min/max FrameRate and GpuUsage, log every second
+
+#if DEBUG
+
+		_minFrameRate = MathF.Min( _minFrameRate, FrameRate );
+		_maxFrameRate = MathF.Max( _maxFrameRate, FrameRate );
+		_minGpuUsage = MathF.Min( _minGpuUsage, GpuUsage );
+		_maxGpuUsage = MathF.Max( _maxGpuUsage, GpuUsage );
+
+		_minMaxLogAccumulator += deltaSeconds;
+
+		if ( _minMaxLogAccumulator >= 1f )
+		{
+			app.Logger.WriteLine( $"[Simulator] FrameRate min={_minFrameRate:F1} max={_maxFrameRate:F1}, GpuUsage min={_minGpuUsage:F1} max={_maxGpuUsage:F1}" );
+
+			_minMaxLogAccumulator -= 1f;
+
+			_minFrameRate = float.MaxValue;
+			_maxFrameRate = float.MinValue;
+			_minGpuUsage = float.MaxValue;
+			_maxGpuUsage = float.MinValue;
+		}
+
+#endif
+
+		// update array telemetry data properties
+
+		_irsdk.Data.GetIntArray( _carIdxLapDatum, CarIdxLap, 0, _carIdxLapDatum!.Count );
+		_irsdk.Data.GetFloatArray( _carIdxLapDistPctDatum, CarIdxLapDistPct, 0, _carIdxLapDistPctDatum!.Count );
+		_irsdk.Data.GetIntArray( _carIdxPositionDatum, CarIdxPosition, 0, _carIdxPositionDatum!.Count );
+		_irsdk.Data.GetBoolArray( _carIdxOnPitRoadDatum, CarIdxOnPitRoad, 0, _carIdxOnPitRoadDatum!.Count );
+
+		// get next 360 Hz shock velocity samples
+
+		if ( _cfShockVel_STDatum != null )
+		{
+			_irsdk.Data.GetFloatArray( _cfShockVel_STDatum, CFShockVel_ST, 0, CFShockVel_ST.Length );
+		}
+
+		if ( _crShockVel_STDatum != null )
+		{
+			_irsdk.Data.GetFloatArray( _crShockVel_STDatum, CRShockVel_ST, 0, CRShockVel_ST.Length );
+		}
+
+		if ( _lfShockVel_STDatum != null )
+		{
+			_irsdk.Data.GetFloatArray( _lfShockVel_STDatum, LFShockVel_ST, 0, LFShockVel_ST.Length );
+		}
+
+		if ( _lrShockVel_STDatum != null )
+		{
+			_irsdk.Data.GetFloatArray( _lrShockVel_STDatum, LRShockVel_ST, 0, LRShockVel_ST.Length );
+		}
+
+		if ( _rfShockVel_STDatum != null )
+		{
+			_irsdk.Data.GetFloatArray( _rfShockVel_STDatum, RFShockVel_ST, 0, RFShockVel_ST.Length );
+		}
+
+		if ( _rrShockVel_STDatum != null )
+		{
+			_irsdk.Data.GetFloatArray( _rrShockVel_STDatum, RRShockVel_ST, 0, RRShockVel_ST.Length );
+		}
+
+		// update racing wheel
 
 		app.RacingWheel.UseSteeringWheelTorqueData = IsOnTrack;
 
-		// update replay status
-
-		IsReplayPlaying = _irsdk.Data.GetBool( _isReplayPlayingDatum );
+		// update adminboxx
 
 		if ( IsReplayPlaying != _isReplayPlayingLastFrame )
 		{
@@ -633,35 +739,6 @@ public partial class Simulator
 
 		_isReplayPlayingLastFrame = IsReplayPlaying;
 
-		// update lap, lap dist, and lap dist pct
-
-		Lap = _irsdk.Data.GetInt( _lapDatum );
-		LapDist = _irsdk.Data.GetFloat( _lapDistDatum );
-		LapDistPct = _irsdk.Data.GetFloat( _lapDistPctDatum );
-
-		_irsdk.Data.GetIntArray( _carIdxLapDatum, CarIdxLap, 0, _carIdxLapDatum!.Count );
-		_irsdk.Data.GetFloatArray( _carIdxLapDistPctDatum, CarIdxLapDistPct, 0, _carIdxLapDistPctDatum!.Count );
-
-		// get the leaderboard position of each car
-
-		_irsdk.Data.GetIntArray( _carIdxPositionDatum, CarIdxPosition, 0, _carIdxPositionDatum!.Count );
-
-		// get whether each car is on pit road
-
-		_irsdk.Data.GetBoolArray( _carIdxOnPitRoadDatum, CarIdxOnPitRoad, 0, _carIdxOnPitRoadDatum!.Count );
-
-		// load num textures
-
-		LoadNumTextures = _irsdk.Data.GetBool( _loadNumTexturesDatum );
-
-		// update steering ffb enabled
-
-		SteeringFFBEnabled = _irsdk.Data.GetBool( _steeringFFBEnabledDatum );
-
-		// get the session flags
-
-		SessionFlags = (IRacingSdkEnum.Flags) _irsdk.Data.GetBitField( _sessionFlagsDatum );
-
 		if ( SessionFlags != _sessionFlagsLastFrame )
 		{
 			app.AdminBoxx.SessionFlagsChanged();
@@ -669,72 +746,23 @@ public partial class Simulator
 
 		_sessionFlagsLastFrame = SessionFlags;
 
-		// get the session number and time
-
-		SessionNum = _irsdk.Data.GetInt( _sessionNumDatum );
-		SessionTime = _irsdk.Data.GetDouble( _sessionTimeDatum );
-
-		// get the current pace mode
-
-		PaceMode = (IRacingSdkEnum.PaceMode) _irsdk.Data.GetInt( _paceModeDatum );
-
-		// get the player car index
-
-		PlayerCarIdx = _irsdk.Data.GetInt( _playerCarIdxDatum );
-
-		// get the player track surface
-
-		PlayerTrackSurface = (IRacingSdkEnum.TrkLoc) _irsdk.Data.GetInt( _playerTrackSurfaceDatum );
-
-		// get the player track surface material
-
-		PlayerTrackSurfaceMaterial = (IRacingSdkEnum.TrkSurf) _irsdk.Data.GetInt( _playerTrackSurfaceMaterialDatum );
-
-		// get the car index using the radio
-
-		RadioTransmitCarIdx = _irsdk.Data.GetInt( _radioTransmitCarIdxDatum );
+		// update speech-to-text
 
 		if ( RadioTransmitCarIdx != -1 )
 		{
 			LastRadioTransmitCarIdx = RadioTransmitCarIdx;
 		}
 
-		// get the replay play status
-
-		ReplayFrameNumEnd = _irsdk.Data.GetInt( _replayFrameNumEndDatum );
-		ReplayPlaySlowMotion = _irsdk.Data.GetBool( _replayPlaySlowMotionDatum );
-		ReplayPlaySpeed = _irsdk.Data.GetInt( _replayPlaySpeedDatum );
-
-		// get steering wheel angle and max angle
-
-		SteeringWheelAngle = _irsdk.Data.GetFloat( _steeringWheelAngleDatum );
-		SteeringWheelAngleMax = _irsdk.Data.GetFloat( _steeringWheelAngleMaxDatum );
-
-		// get display units
-
-		DisplayUnits = _irsdk.Data.GetInt( _displayUnitsDatum );
-
-		// get gear
-
-		Gear = _irsdk.Data.GetInt( _gearDatum );
-
-		// get car body speed and velocities
-
-		Speed = _irsdk.Data.GetFloat( _speedDatum );
-
-		VelocityX = _irsdk.Data.GetFloat( _velocityXDatum );
-		VelocityY = _irsdk.Data.GetFloat( _velocityYDatum );
+		// update velocity
 
 		Velocity = MathF.Sqrt( VelocityX * VelocityX + VelocityY * VelocityY );
 
-		// get car body accelerations
+		// calculate g forces (convert from m/s^2 to g's)
 
-		LatAccel = _irsdk.Data.GetFloat( _latAccelDatum );
-		LongAccel = _irsdk.Data.GetFloat( _longAccelDatum );
+		LongitudinalGForce = MathF.Abs( LongAccel ) * MathZ.OneOverG;
+		LateralGForce = MathF.Abs( LatAccel ) * MathZ.OneOverG;
 
-		// get weather declared wet and reload settings if it was changed
-
-		WeatherDeclaredWet = _irsdk.Data.GetBool( _weatherDeclaredWetDatum );
+		// reload settings if "weather declared wet" property has changed
 
 		if ( _weatherDeclaredWetLastFrame != null )
 		{
@@ -770,16 +798,6 @@ public partial class Simulator
 			_currentTireIndexLastFrame = CurrentTireIndex;
 		}
 
-		// get the yaw north and rate
-
-		YawNorth = _irsdk.Data.GetFloat( _yawNorthDatum );
-		YawRate = _irsdk.Data.GetFloat( _yawRateDatum );
-
-		// calculate g forces
-
-		LongitudinalGForce = MathF.Abs( LongAccel ) * MathZ.OneOverG;
-		LateralGForce = MathF.Abs( LatAccel ) * MathZ.OneOverG;
-
 		// crash protection processing
 
 		if ( IsOnTrack )
@@ -802,38 +820,6 @@ public partial class Simulator
 					}
 				}
 			}
-		}
-
-		// get next 360 Hz shock velocity samples
-
-		if ( _cfShockVel_STDatum != null )
-		{
-			_irsdk.Data.GetFloatArray( _cfShockVel_STDatum, CFShockVel_ST, 0, CFShockVel_ST.Length );
-		}
-
-		if ( _crShockVel_STDatum != null )
-		{
-			_irsdk.Data.GetFloatArray( _crShockVel_STDatum, CRShockVel_ST, 0, CRShockVel_ST.Length );
-		}
-
-		if ( _lfShockVel_STDatum != null )
-		{
-			_irsdk.Data.GetFloatArray( _lfShockVel_STDatum, LFShockVel_ST, 0, LFShockVel_ST.Length );
-		}
-
-		if ( _lrShockVel_STDatum != null )
-		{
-			_irsdk.Data.GetFloatArray( _lrShockVel_STDatum, LRShockVel_ST, 0, LRShockVel_ST.Length );
-		}
-
-		if ( _rfShockVel_STDatum != null )
-		{
-			_irsdk.Data.GetFloatArray( _rfShockVel_STDatum, RFShockVel_ST, 0, RFShockVel_ST.Length );
-		}
-
-		if ( _rrShockVel_STDatum != null )
-		{
-			_irsdk.Data.GetFloatArray( _rrShockVel_STDatum, RRShockVel_ST, 0, RRShockVel_ST.Length );
 		}
 
 		// curb protection processing
