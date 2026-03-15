@@ -397,6 +397,9 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+# Ignore PHPStorm files
+/.idea
+
 # Ignore files for ChatGPT
 /MarvinsAIRARefactored.zip
 Translate.zip
