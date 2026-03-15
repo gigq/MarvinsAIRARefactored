@@ -163,11 +163,15 @@ public partial class Simulator
 	private IRacingSdkDatum? _yawNorthDatum = null;
 	private IRacingSdkDatum? _yawRateDatum = null;
 
+#if DEBUG
+
 	private float _minMaxLogAccumulator = 0f;
 	private float _minFrameRate = float.MaxValue;
 	private float _maxFrameRate = float.MinValue;
 	private float _minGpuUsage = float.MaxValue;
 	private float _maxGpuUsage = float.MinValue;
+
+#endif
 
 	private int _updateCounter = UpdateInterval + 5;
 
@@ -349,11 +353,15 @@ public partial class Simulator
 		_sessionFlagsLastFrame = null;
 		_currentTireIndexLastFrame = null;
 
+#if DEBUG
+
 		_minMaxLogAccumulator = 0f;
 		_minFrameRate = float.MaxValue;
 		_maxFrameRate = float.MinValue;
 		_minGpuUsage = float.MaxValue;
 		_maxGpuUsage = float.MinValue;
+
+#endif
 
 		DataContext.DataContext.Instance.Settings.UpdateSettings( false );
 
@@ -369,7 +377,7 @@ public partial class Simulator
 			app.UpdateSpeechToTextWindowVisibility();
 			app.UpdateGapMonitorWindowVisibility();
 
-		#endif
+#endif
 
 		app.MultimediaTimer.Suspend = true;
 
