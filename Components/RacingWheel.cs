@@ -7,6 +7,7 @@ using CsvHelper;
 
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Windows;
+
 using static MarvinsAIRARefactored.Windows.MainWindow;
 
 namespace MarvinsAIRARefactored.Components;
@@ -115,7 +116,6 @@ public class RacingWheel
 
 	private readonly float[,] _algorithmProperties = new float[ 2, 12 ];
 	private readonly Algorithm[] _lastAlgorithm = new Algorithm[ 2 ];
-	private bool _preventSwitchToNonCannedMultiAdjustAlgorithmSource = false;
 
 	private float _outputTorque = 0f;
 	private float _peakTorque = 0f;
@@ -205,8 +205,6 @@ public class RacingWheel
 
 	public void SetCannedMultiAdjustAlgorithmValues()
 	{
-		_preventSwitchToNonCannedMultiAdjustAlgorithmSource = true;
-
 		var settings = DataContext.DataContext.Instance.Settings;
 
 		switch ( settings.RacingWheelMultiFFBSourceSelection )
@@ -299,8 +297,6 @@ public class RacingWheel
 				settings.RacingWheelMultiOutputSmoothing = 0.08f;
 				break;
 		}
-
-		_preventSwitchToNonCannedMultiAdjustAlgorithmSource = false;
 	}
 
 	[MethodImpl( MethodImplOptions.AggressiveInlining )]
