@@ -3,7 +3,7 @@ param(
     [string]$Root = (Get-Location).Path,
 
     [Parameter(Position=1)]
-    [string]$DestinationZip = "MarvinsAIRARefactored.zip",
+    [string]$DestinationZip = ("MarvinsAIRARefactored-{0}.zip" -f (Get-Date -Format 'yyyyMMdd-HHmm')),
 
     # Optional: put every entry under a top-level folder inside the zip
     [string]$RootFolderName = ""
