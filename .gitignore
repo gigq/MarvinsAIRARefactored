@@ -405,3 +405,6 @@ FodyWeavers.xsd
 Translate.zip
 Help/.idea/webServers.xml
 Website/.idea/deployment.xml
+
+# Ignore zip Files
+*.zip
