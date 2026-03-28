@@ -10,16 +10,7 @@ public class Debug
 {
 	private const int UpdateInterval = 6;
 
-	public string Label_1 { private get; set; } = string.Empty;
-	public string Label_2 { private get; set; } = string.Empty;
-	public string Label_3 { private get; set; } = string.Empty;
-	public string Label_4 { private get; set; } = string.Empty;
-	public string Label_5 { private get; set; } = string.Empty;
-	public string Label_6 { private get; set; } = string.Empty;
-	public string Label_7 { private get; set; } = string.Empty;
-	public string Label_8 { private get; set; } = string.Empty;
-	public string Label_9 { private get; set; } = string.Empty;
-	public string Label_10 { private get; set; } = string.Empty;
+	public readonly string[] Message = [ string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty ];
 
 	private int _updateCounter = UpdateInterval + 1;
 
@@ -34,16 +25,19 @@ public class Debug
 
 			if ( MairaAppMenuPopup.CurrentAppPage == MainWindow.AppPage.Debug )
 			{
-				MainWindow._debugPage.Debug_TextBlock_1.Text = Label_1;
-				MainWindow._debugPage.Debug_TextBlock_2.Text = Label_2;
-				MainWindow._debugPage.Debug_TextBlock_3.Text = Label_3;
-				MainWindow._debugPage.Debug_TextBlock_4.Text = Label_4;
-				MainWindow._debugPage.Debug_TextBlock_5.Text = Label_5;
-				MainWindow._debugPage.Debug_TextBlock_6.Text = Label_6;
-				MainWindow._debugPage.Debug_TextBlock_7.Text = Label_7;
-				MainWindow._debugPage.Debug_TextBlock_8.Text = Label_8;
-				MainWindow._debugPage.Debug_TextBlock_9.Text = Label_9;
-				MainWindow._debugPage.Debug_TextBlock_10.Text = Label_10;
+				MainWindow._debugPage.Debug_TextBlock_1.Text = Message[ 0 ];
+				MainWindow._debugPage.Debug_TextBlock_2.Text = Message[ 1 ];
+				MainWindow._debugPage.Debug_TextBlock_3.Text = Message[ 2 ];
+				MainWindow._debugPage.Debug_TextBlock_4.Text = Message[ 3 ];
+				MainWindow._debugPage.Debug_TextBlock_5.Text = Message[ 4 ];
+				MainWindow._debugPage.Debug_TextBlock_6.Text = Message[ 5 ];
+				MainWindow._debugPage.Debug_TextBlock_7.Text = Message[ 6 ];
+				MainWindow._debugPage.Debug_TextBlock_8.Text = Message[ 7 ];
+				MainWindow._debugPage.Debug_TextBlock_9.Text = Message[ 8 ];
+				MainWindow._debugPage.Debug_TextBlock_10.Text = Message[ 9 ];
+				MainWindow._debugPage.Debug_TextBlock_11.Text = Message[ 10 ];
+				MainWindow._debugPage.Debug_TextBlock_12.Text = Message[ 11 ];
+				MainWindow._debugPage.Debug_TextBlock_13.Text = Message[ 12 ];
 			}
 		}
 	}
