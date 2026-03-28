@@ -27,6 +27,8 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="20" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -54,6 +56,14 @@
                                            Grid.ColumnSpan="5"
                                            Label="{Binding Localization[IRacingPaintFolder]}"
                                            Value="{Binding Settings.TradingPaintsFolder, Mode=TwoWay}" />
+
+                    <controls:MairaKnob Grid.Row="4"
+                                        Grid.Column="0"
+                                        Label="{Binding Localization[MaxDownloadSpeed]}"
+                                        Value="{Binding Settings.TradingPaintsMaxDownloadSpeedKbps, Mode=TwoWay}"
+                                        ValueString="{Binding Settings.TradingPaintsMaxDownloadSpeedKbpsString}"
+                                        StepSize="64"
+                                        DefaultValue="1024" />
 
                 </Grid>
 

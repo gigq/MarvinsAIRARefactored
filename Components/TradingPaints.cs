@@ -1,5 +1,4 @@
 ﻿
-using System.Collections.Concurrent;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -419,9 +418,12 @@ public class TradingPaints
 
 			// success
 
+			var maxBytesPerSecond = (int) ( DataContext.DataContext.Instance.Settings.TradingPaintsMaxDownloadSpeedKbps * 1024f );
+
+			await using var contentStream = await resp.Content.ReadAsStreamAsync( cancellationToken );
 			await using var fs = new FileStream( destPath, FileMode.Create, FileAccess.Write, FileShare.None, 1 << 20, useAsync: true );
 
-			await resp.Content.CopyToAsync( fs, cancellationToken );
+			await ThrottledCopyAsync( contentStream, fs, maxBytesPerSecond, cancellationToken );
 
 			return;
 		}
@@ -450,6 +452,35 @@ public class TradingPaints
 		http.DefaultRequestHeaders.AcceptEncoding.Add( new StringWithQualityHeaderValue( "deflate" ) );
 
 		return http;
+	}
+
+	private static async Task ThrottledCopyAsync( Stream source, Stream destination, int bytesPerSecond, CancellationToken cancellationToken )
+	{
+		var buffer = new byte[ 16 * 1024 ];
+		long totalBytesRead = 0;
+		var startTick = Environment.TickCount64;
+
+		while ( true )
+		{
+			var bytesRead = await source.ReadAsync( buffer.AsMemory(), cancellationToken );
+
+			if ( bytesRead == 0 )
+			{
+				break;
+			}
+
+			await destination.WriteAsync( buffer.AsMemory( 0, bytesRead ), cancellationToken );
+
+			totalBytesRead += bytesRead;
+
+			var expectedMs = totalBytesRead * 1000L / bytesPerSecond;
+			var actualMs = Environment.TickCount64 - startTick;
+
+			if ( actualMs < expectedMs )
+			{
+				await Task.Delay( (int) ( expectedMs - actualMs ), cancellationToken );
+			}
+		}
 	}
 
 	private static bool TryDecompressBZip2ToTga( string bz2Path, string tgaOutPath )

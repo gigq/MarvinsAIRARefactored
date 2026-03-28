@@ -10386,4 +10386,47 @@ public class Settings : INotifyPropertyChanged
 	}
 
 	#endregion
+
+	#region Trading paints - Max Download Speed
+
+	private float _tradingPaintsMaxDownloadSpeedKbps = 1024f;
+
+	public float TradingPaintsMaxDownloadSpeedKbps
+	{
+		get => _tradingPaintsMaxDownloadSpeedKbps;
+
+		set
+		{
+			value = Math.Clamp( value, 64f, 10240f );
+
+			if ( value != _tradingPaintsMaxDownloadSpeedKbps )
+			{
+				_tradingPaintsMaxDownloadSpeedKbps = value;
+
+				OnPropertyChanged();
+			}
+
+			TradingPaintsMaxDownloadSpeedKbpsString = $"{(int) MathF.Round( _tradingPaintsMaxDownloadSpeedKbps )} KB/s";
+		}
+	}
+
+	private string _tradingPaintsMaxDownloadSpeedKbpsString = "1024 KB/s";
+
+	[XmlIgnore]
+	public string TradingPaintsMaxDownloadSpeedKbpsString
+	{
+		get => _tradingPaintsMaxDownloadSpeedKbpsString;
+
+		set
+		{
+			if ( value != _tradingPaintsMaxDownloadSpeedKbpsString )
+			{
+				_tradingPaintsMaxDownloadSpeedKbpsString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	#endregion
 }
