@@ -68,7 +68,7 @@ public class Sounds
 
 		soundEffect.Volume = volume;
 
-		var finalVolume  = soundEffect.Volume * soundEffect.GetVolume() * settings.SoundsMasterVolume;
+		var finalVolume = soundEffect.Volume * soundEffect.GetVolume() * settings.SoundsMasterVolume;
 
 		app.AudioManager.Play( soundEffect.SoundKey, finalVolume, soundEffect.GetFrequencyRatio(), soundEffect.LoopSound );
 
@@ -122,7 +122,7 @@ public class Sounds
 
 			if ( settings.SoundsWheelLockEnabled )
 			{
-				if ( ( app.Simulator.CurrentRpmSpeedRatio > 0f ) && ( app.Simulator.Gear > 0 ) )
+				if ( ( app.Simulator.CurrentRpmSpeedRatio > 0f ) && ( app.Simulator.Gear > 0 ) && ( app.Simulator.RPMSpeedRatios[ app.Simulator.Gear ] > 0f ) )
 				{
 					var difference = app.Simulator.CurrentRpmSpeedRatio - app.Simulator.RPMSpeedRatios[ app.Simulator.Gear ];
 					var differencePct = ( difference / app.Simulator.RPMSpeedRatios[ app.Simulator.Gear ] ) - ( 1f - settings.SoundsWheelLockSensitivity );
@@ -139,7 +139,7 @@ public class Sounds
 
 			if ( settings.SoundsWheelSpinEnabled )
 			{
-				if ( ( app.Simulator.CurrentRpmSpeedRatio > 0f ) && ( app.Simulator.Gear > 0 ) )
+				if ( ( app.Simulator.CurrentRpmSpeedRatio > 0f ) && ( app.Simulator.Gear > 0 ) && ( app.Simulator.RPMSpeedRatios[ app.Simulator.Gear ] > 0f ) )
 				{
 					var difference = app.Simulator.RPMSpeedRatios[ app.Simulator.Gear ] - app.Simulator.CurrentRpmSpeedRatio;
 					var differencePct = ( difference / app.Simulator.RPMSpeedRatios[ app.Simulator.Gear ] ) - ( 1f - settings.SoundsWheelSpinSensitivity );
