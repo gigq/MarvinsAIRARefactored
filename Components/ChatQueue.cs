@@ -1,8 +1,7 @@
 ﻿
 using IRSDKSharper;
-using MarvinsAIRARefactored.Classes;
 using PInvoke;
-using System.Text;
+
 using static PInvoke.User32;
 
 namespace MarvinsAIRARefactored.Components;
@@ -30,8 +29,6 @@ public partial class ChatQueue
 	private int _chatWindowClosingCounter = 0;
 
 	private int _updateCounter = UpdateInterval + 0;
-
-	private static readonly Encoding Latin1Encoding = Encoding.GetEncoding( "iso-8859-1", new EncoderReplacementFallback( "?" ), new DecoderReplacementFallback( "?" ) );
 
 	public void SendMessage( string messageTemplate, string? value = null )
 	{
@@ -87,7 +84,7 @@ public partial class ChatQueue
 				{
 					var message = _messageList[ 0 ];
 
-					var stringToSend = Misc.ToIracingChatSafeText( message.MessageTemplate );
+					var stringToSend = message.MessageTemplate;
 
 					if ( message.Value != null )
 					{
@@ -98,11 +95,9 @@ public partial class ChatQueue
 
 					app.Logger.WriteLine( $"[ChatQueue] Sending message: {stringToSend}" );
 
-					var latin1Bytes = Latin1Encoding.GetBytes( stringToSend );
-
-					foreach ( var latin1Byte in latin1Bytes )
+					foreach ( var ch in stringToSend )
 					{
-						SendKey( app, latin1Byte );
+						SendKey( app, ch );
 					}
 
 					_messageList.RemoveAt( 0 );
@@ -141,25 +136,28 @@ public partial class ChatQueue
 		}
 	}
 
-	private static void SendKey( App app, byte key )
+	private static void SendKey( App app, char key )
 	{
-		if ( key == '\r' )
+		if ( app.Simulator.WindowHandle is not null )
 		{
-			var virtualKey = PInvoke.User32.VkKeyScanW( '\r' );
+			if ( key == '\r' )
+			{
+				var virtualKey = PInvoke.User32.VkKeyScanW( '\r' );
 
-			var scanCode = User32.MapVirtualKey( virtualKey, MapVirtualKeyTranslation.MAPVK_VK_TO_VSC );
+				var scanCode = User32.MapVirtualKey( virtualKey, MapVirtualKeyTranslation.MAPVK_VK_TO_VSC );
 
-			var lParamDown = (IntPtr) ( 1 | ( scanCode << 16 ) | ( 0 << 24 ) | ( 0 << 29 ) | ( 0 << 30 ) | ( 0 << 31 ) );
+				var lParamDown = (IntPtr) ( 1 | ( scanCode << 16 ) | ( 0 << 24 ) | ( 0 << 29 ) | ( 0 << 30 ) | ( 0 << 31 ) );
 
-			User32.PostMessage( (IntPtr) app.Simulator.WindowHandle!, User32.WindowMessage.WM_KEYDOWN, (IntPtr) User32.VirtualKey.VK_RETURN, lParamDown );
+				User32.PostMessage( (IntPtr) app.Simulator.WindowHandle, User32.WindowMessage.WM_KEYDOWN, (IntPtr) User32.VirtualKey.VK_RETURN, lParamDown );
 
-			var lParamUp = (IntPtr) ( 1 | ( scanCode << 16 ) | ( 0 << 24 ) | ( 0 << 29 ) | ( 1 << 30 ) | ( 1 << 31 ) );
+				var lParamUp = (IntPtr) ( 1 | ( scanCode << 16 ) | ( 0 << 24 ) | ( 0 << 29 ) | ( 1 << 30 ) | ( 1 << 31 ) );
 
-			User32.PostMessage( (IntPtr) app.Simulator.WindowHandle!, User32.WindowMessage.WM_KEYUP, (IntPtr) User32.VirtualKey.VK_RETURN, lParamUp );
-		}
-		else
-		{
-			User32.PostMessage( (IntPtr) app.Simulator.WindowHandle!, User32.WindowMessage.WM_CHAR, (IntPtr) key, IntPtr.Zero );
+				User32.PostMessage( (IntPtr) app.Simulator.WindowHandle, User32.WindowMessage.WM_KEYUP, (IntPtr) User32.VirtualKey.VK_RETURN, lParamUp );
+			}
+			else
+			{
+				User32.PostMessage( (IntPtr) app.Simulator.WindowHandle, User32.WindowMessage.WM_CHAR, (IntPtr) key, IntPtr.Zero );
+			}
 		}
 	}
 
