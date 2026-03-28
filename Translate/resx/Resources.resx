@@ -1365,6 +1365,10 @@
     <value>iRacing Paint Folder</value>
     <comment>Trading paints</comment>
   </data>
+  <data name="MaxDownloadSpeed" xml:space="preserve">
+    <value>Max Download Speed</value>
+    <comment>Trading paints</comment>
+  </data>
   <data name="TradingPaints" xml:space="preserve">
     <value>Trading Paints</value>
     <comment>App menu item</comment>
