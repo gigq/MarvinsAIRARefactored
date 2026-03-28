@@ -56,7 +56,7 @@ public class Pedals
 	public float ThrottleFrequency { get => _frequency[ (int) HPR.Channel.Throttle ]; }
 	public float ThrottleAmplitude { get => _amplitude[ (int) HPR.Channel.Throttle ]; }
 
-	public void Initialize()
+	public static void Initialize()
 	{
 		var app = App.Instance!;
 
@@ -206,6 +206,8 @@ public class Pedals
 			var frequency = 0f;
 			var amplitude = 0f;
 
+			var effectName = string.Empty;
+
 			for ( var effectIndex = 0; effectIndex < 3; effectIndex++ )
 			{
 				if ( _testing && ( _testEffectIndex != effectIndex ) )
@@ -217,6 +219,7 @@ public class Pedals
 
 				if ( effectActive )
 				{
+					effectName = effectConfiguration[ pedalIndex, effectIndex ].Item1.ToString();
 					break;
 				}
 			}
@@ -227,6 +230,10 @@ public class Pedals
 
 				_frequency[ pedalIndex ] = (int) ( Math.Clamp( frequency, 1f, 50f ) );
 				_amplitude[ pedalIndex ] = amplitude;
+
+				// app.Debug.Message[ pedalIndex * 4 + 0 ] = ( (HPR.Channel) pedalIndex ).ToString() + ": " + effectName;
+				// app.Debug.Message[ pedalIndex * 4 + 1 ] = frequency.ToString() + "Hz";
+				// app.Debug.Message[ pedalIndex * 4 + 2 ] = amplitude.ToString();
 			}
 			else
 			{
@@ -237,6 +244,10 @@ public class Pedals
 				_frequency[ pedalIndex ] = 0f;
 				_amplitude[ pedalIndex ] = 0f;
 				_cycles[ pedalIndex ] = 0f;
+
+				// app.Debug.Message[ pedalIndex * 4 + 0 ] = "Inactive";
+				// app.Debug.Message[ pedalIndex * 4 + 1 ] = string.Empty;
+				// app.Debug.Message[ pedalIndex * 4 + 2 ] = string.Empty;
 			}
 		}
 
@@ -314,7 +325,14 @@ public class Pedals
 
 			if ( rpm >= startingRPM )
 			{
-				rpm = MathZ.Saturate( ( rpm - startingRPM ) / rpmRange );
+				if ( rpmRange > 0 )
+				{
+					rpm = MathZ.Saturate( ( rpm - startingRPM ) / rpmRange );
+				}
+				else
+				{
+					rpm = 1f;
+				}
 
 				var frequency = MathZ.Lerp( settings.PedalsMinimumFrequency, settings.PedalsMaximumFrequency, MathF.Pow( rpm, MathZ.CurveToPower( settings.PedalsFrequencyCurve ) ) );
 
