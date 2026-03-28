@@ -60,6 +60,18 @@
                            Style="{StaticResource MairaTextBlockStyle}"
                            Text="Test 10" />
 
+                <TextBlock x:Name="Debug_TextBlock_11"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 11" />
+
+                <TextBlock x:Name="Debug_TextBlock_12"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 12" />
+
+                <TextBlock x:Name="Debug_TextBlock_13"
+                           Style="{StaticResource MairaTextBlockStyle}"
+                           Text="Test 13" />
+
             </StackPanel>
 
         </controls:MairaGroupBox>
