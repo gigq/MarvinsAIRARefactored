@@ -31,7 +31,7 @@ public partial class Simulator
 	public List<IRacingSdkSessionInfo.DriverInfoModel.DriverTireModel>? AvailableTires = null;
 	public bool BrakeABSactive { get; private set; } = false;
 	public float Brake { get; private set; } = 0f;
-	public int[] CarIdxLap {  get; private set; } = new int[ IRacingSdkConst.MaxNumCars ];
+	public int[] CarIdxLap { get; private set; } = new int[ IRacingSdkConst.MaxNumCars ];
 	public float[] CarIdxLapDistPct { get; private set; } = new float[ IRacingSdkConst.MaxNumCars ];
 	public bool[] CarIdxOnPitRoad { get; private set; } = new bool[ IRacingSdkConst.MaxNumCars ];
 	public int[] CarIdxPosition { get; private set; } = new int[ IRacingSdkConst.MaxNumCars ];
@@ -52,7 +52,7 @@ public partial class Simulator
 	public bool IsConnected { get => _irsdk.IsConnected; }
 	public bool IsOnTrack { get; private set; } = false;
 	public bool IsReplayPlaying { get; private set; } = false;
-	public int Lap { get; private set;  } = 0;
+	public int Lap { get; private set; } = 0;
 	public float LapDist { get; private set; } = 0;
 	public float LapDistPct { get; private set; } = 0f;
 	public int LastRadioTransmitCarIdx { get; private set; } = -1;
@@ -175,6 +175,10 @@ public partial class Simulator
 
 #endif
 
+	private readonly float[] _rpmSpeedRatioAccumulator = new float[ MaxNumGears ];
+	private readonly int[] _rpmSpeedRatioSampleCount = new int[ MaxNumGears ];
+	private const int RpmSpeedRatioMinSamples = 20;
+
 	private int _updateCounter = UpdateInterval + 5;
 
 	public void Initialize()
@@ -261,10 +265,9 @@ public partial class Simulator
 
 #endif
 
-		for ( var gear = 0; gear < MaxNumGears; gear++ )
-		{
-			RPMSpeedRatios[ gear ] = 0f;
-		}
+		Array.Clear( RPMSpeedRatios );
+		Array.Clear( _rpmSpeedRatioAccumulator );
+		Array.Clear( _rpmSpeedRatioSampleCount );
 
 		app.Logger.WriteLine( "[Simulator] <<< OnConnected" );
 	}
@@ -346,9 +349,13 @@ public partial class Simulator
 		Array.Clear( LFShockVel_ST );
 		Array.Clear( LRShockVel_ST );
 		Array.Clear( RFShockVel_ST );
-		Array.Clear( RPMSpeedRatios );
 		Array.Clear( RRShockVel_ST );
+
 		Array.Clear( SteeringWheelTorque_ST );
+
+		Array.Clear( RPMSpeedRatios );
+		Array.Clear( _rpmSpeedRatioAccumulator );
+		Array.Clear( _rpmSpeedRatioSampleCount );
 
 		_tickCountLastFrame = null;
 		_weatherDeclaredWetLastFrame = null;
@@ -372,13 +379,13 @@ public partial class Simulator
 
 #if !ADMINBOXX
 
-			app.SteeringEffects.SimulatorDisconnected();
-			app.SpeechToText.SimulatorDisconnected();
-			app.TimingMarkers.Reset();
+		app.SteeringEffects.SimulatorDisconnected();
+		app.SpeechToText.SimulatorDisconnected();
+		app.TimingMarkers.Reset();
 
-			app.UpdateGripOMeterWindowVisibility();
-			app.UpdateSpeechToTextWindowVisibility();
-			app.UpdateGapMonitorWindowVisibility();
+		app.UpdateGripOMeterWindowVisibility();
+		app.UpdateSpeechToTextWindowVisibility();
+		app.UpdateGapMonitorWindowVisibility();
 
 #endif
 
@@ -862,39 +869,46 @@ public partial class Simulator
 
 		// update rpm / speed ratios
 
-		CurrentRpmSpeedRatio = 0f;
-
 		if ( IsOnTrack && ( Gear > 0 ) && ( Clutch == 1f ) && ( RPM > 500f ) && ( VelocityX >= 10f * MathZ.MPHToMPS ) )
 		{
 			CurrentRpmSpeedRatio = VelocityX / RPM;
 
 			if ( ( Brake == 0f ) && ( VelocityY < 0.1f ) && ( PlayerTrackSurface == IRacingSdkEnum.TrkLoc.OnTrack ) )
 			{
-				var delta = MathF.Abs( CurrentRpmSpeedRatio - RPMSpeedRatios[ Gear ] );
+				if ( RPMSpeedRatios[ Gear ] == 0f )
+				{
+					// accumulate samples until we have enough to initialize
 
-				if ( delta > 0.001f )
-				{
-					RPMSpeedRatios[ Gear ] = CurrentRpmSpeedRatio;
-				}
-				else if ( delta > 0f )
-				{
-					RPMSpeedRatios[ Gear ] = MathZ.Lerp( RPMSpeedRatios[ Gear ], CurrentRpmSpeedRatio, 0.001f );
+					_rpmSpeedRatioAccumulator[ Gear ] += CurrentRpmSpeedRatio;
+					_rpmSpeedRatioSampleCount[ Gear ]++;
+
+					if ( _rpmSpeedRatioSampleCount[ Gear ] >= RpmSpeedRatioMinSamples )
+					{
+						RPMSpeedRatios[ Gear ] = _rpmSpeedRatioAccumulator[ Gear ] / _rpmSpeedRatioSampleCount[ Gear ];
+
+						_rpmSpeedRatioAccumulator[ Gear ] = 0f;
+						_rpmSpeedRatioSampleCount[ Gear ] = 0;
+					}
 				}
 				else
 				{
-					RPMSpeedRatios[ Gear ] = MathZ.Lerp( RPMSpeedRatios[ Gear ], CurrentRpmSpeedRatio, 0.01f );
-				}
+					// converge to the current sample over approximately 15 seconds (~95% in 15s with rate=0.2)
 
-				/*
-				app.Debug.Label_1 = $"{RPMSpeedRatios[ 1 ]:F8}";
-				app.Debug.Label_2 = $"{RPMSpeedRatios[ 2 ]:F8}";
-				app.Debug.Label_3 = $"{RPMSpeedRatios[ 3 ]:F8}";
-				app.Debug.Label_4 = $"{RPMSpeedRatios[ 4 ]:F8}";
-				app.Debug.Label_5 = $"{RPMSpeedRatios[ 5 ]:F8}";
-				app.Debug.Label_6 = $"{RPMSpeedRatios[ 6 ]:F8}";
-				*/
+					var alpha = 1f - MathF.Exp( -deltaSeconds * 0.2f );
+
+					RPMSpeedRatios[ Gear ] = MathZ.Lerp( RPMSpeedRatios[ Gear ], CurrentRpmSpeedRatio, alpha );
+				}
 			}
 		}
+		else
+		{
+			CurrentRpmSpeedRatio = 0f;
+		}
+
+		// for ( var gear = 0; gear < Simulator.MaxNumGears; gear++ )
+		// {
+		// 	app.Debug.Message[ gear ] = $"RPM Speed Ratio Gear {gear}: {RPMSpeedRatios[ gear ] * 100f:F4}";
+		// }
 
 		// update visibility of overlays
 
