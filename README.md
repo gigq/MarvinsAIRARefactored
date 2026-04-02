@@ -1,12 +1,12 @@
-﻿# This is the MAIRA Refactored (2.0) GitHub repo!
+# MAIRA Refactored LMU Fork
 
-Check out my progress on my Trello board here - https://trello.com/b/o7vbR74U/maira-refactored-20
+This repository is a Le Mans Ultimate-focused fork of the original MAIRA Refactored project.
 
-I need help with translating the app into multiple languages - https://herboldracing.com/translations
+Original repository:
 
-For any questions or suggestions, please reach out to me on my Discord server - https://discord.gg/Y7JN3BAz72
+- https://github.com/mherbold/MarvinsAIRARefactored
 
-Feel free to contribute to the project by forking the repo and submitting pull requests. Your contributions are greatly appreciated!
+Feel free to contribute to this fork by opening issues or submitting pull requests.
 
 ## Current Simulator Support
 
