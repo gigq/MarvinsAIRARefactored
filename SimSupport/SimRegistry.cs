@@ -37,13 +37,38 @@ public static class SimRegistry
 
 	public static string GetOptionLabel( SimId simId )
 	{
+		return GetDefinition( simId ).DisplayName;
+	}
+
+	public static string GetNotRunningStatusText( SimId simId )
+	{
 		var definition = GetDefinition( simId );
 
-		return definition.SupportLevel switch
-		{
-			SimSupportLevel.Supported => definition.DisplayName,
-			_ => $"{definition.DisplayName} (scaffold)"
-		};
+		return $"The {definition.DisplayName} simulator is not running";
+	}
+
+	public static string GetReplayModeStatusText( SimId simId )
+	{
+		var definition = GetDefinition( simId );
+
+		return $"The {definition.DisplayName} simulator is not in an active driving session";
+	}
+
+	public static string GetSimulatorForceFeedbackStatusText( SimId simId )
+	{
+		var definition = GetDefinition( simId );
+
+		return $"Force feedback is enabled in the {definition.DisplayName} simulator";
+	}
+
+	public static string GetForceFeedbackWaitingStatusText()
+	{
+		return "Force feedback is waiting to resume";
+	}
+
+	public static string GetForceFeedbackSuspendedStatusText()
+	{
+		return "Force feedback is currently suspended";
 	}
 
 	public static string GetDefaultTradingPaintsFolder( SimId simId )

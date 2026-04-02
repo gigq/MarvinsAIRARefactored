@@ -4,7 +4,7 @@ namespace MarvinsAIRARefactored.Components;
 
 public partial class Simulator
 {
-	public SimId SelectedSimId => DataContext.DataContext.Instance.Settings.AppSelectedSimulator;
+	public SimId SelectedSimId => App.RuntimeSimulatorOverride ?? DataContext.DataContext.Instance.Settings.AppSelectedSimulator;
 
 	public SimDefinition CurrentSimDefinition => SimRegistry.GetDefinition( SelectedSimId );
 

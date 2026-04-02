@@ -100,12 +100,14 @@ public class RacingWheel
 	public bool CrashProtectionIsActive { get => _crashProtectionTimerMS > 0f; }
 	public bool CurbProtectionIsActive { get => _curbProtectionTimerMS > 0f; }
 	public bool FadingIsActive { get => _fadeTimerMS > 0f; }
+	public bool WaitingForForceFeedbackResume { get => _unsuspendTimerMS > 0f; }
 
 	private float _unsuspendTimerMS = 0f;
 	private float _fadeTimerMS = 0f;
 	private float _testSignalTimerMS = 0f;
 	private float _crashProtectionTimerMS = 0f;
 	private float _curbProtectionTimerMS = 0f;
+	private DateTime _nextLmuDiagnosticsLogUtc = DateTime.MinValue;
 	private float _understeerEffectTimerMS = 0f;
 	private float _oversteerEffectTimerMS = 0f;
 	private float _seatOfPantsEffectTimerMS = 0f;
@@ -124,6 +126,7 @@ public class RacingWheel
 	private float _lastUnfadedOutputTorque = 0f;
 
 	private float _elapsedMilliseconds = 0f;
+	private DateTime _nextLmuBackendPollUtc = DateTime.MinValue;
 
 	private readonly GraphBase _algorithmPreviewGraphBase = new();
 
@@ -659,9 +662,22 @@ public class RacingWheel
 
 		try
 		{
-			// easy reference to settings
+			if ( app.Simulator.SelectedSimId == SimSupport.SimId.LeMansUltimate )
+			{
+				var nowUtc = DateTime.UtcNow;
 
-			var settings = DataContext.DataContext.Instance.Settings;
+				if ( nowUtc >= _nextLmuBackendPollUtc )
+				{
+					// LMU needs to refresh on the high-rate wheel thread; the normal app worker thread
+					// is too bursty during startup and UI work, which leaves us reusing stale torque samples.
+					_nextLmuBackendPollUtc = nowUtc.AddMilliseconds( 4 );
+					app.Simulator.PollSelectedTelemetryBackend();
+				}
+			}
+
+ 			// easy reference to settings
+
+ 			var settings = DataContext.DataContext.Instance.Settings;
 
 			// initialize generated vibration torque
 
@@ -979,15 +995,27 @@ public class RacingWheel
 
 				if ( NextRacingWheelGuid == null )
 				{
-					NextRacingWheelGuid = _currentRacingWheelGuid;
+					NextRacingWheelGuid = _currentRacingWheelGuid ?? settings.RacingWheelSteeringDeviceGuid;
 
 					app.Logger.WriteLine( "[RacingWheel] Requesting reset of force feedback device" );
 				}
 			}
 
-			// if power button is off, or suspend is requested, or unsuspend counter is still counting down, or if sim mode is not "full", then suspend the racing wheel force feedback
+			var bypassLmuGuards = app.Simulator.SelectedSimId == SimSupport.SimId.LeMansUltimate;
+			var requiresFullSimMode = app.Simulator.SelectedSimId == SimSupport.SimId.IRacing;
 
-			if ( !settings.RacingWheelEnableForceFeedback || _isSuspended || ( _unsuspendTimerMS > 0f ) || ( app.Simulator.SimMode != "full" ) )
+			if ( bypassLmuGuards && app.Simulator.IsConnected && ( _currentRacingWheelGuid == null ) && ( NextRacingWheelGuid == null ) && ( settings.RacingWheelSteeringDeviceGuid != Guid.Empty ) )
+			{
+				NextRacingWheelGuid = settings.RacingWheelSteeringDeviceGuid;
+
+				app.Logger.WriteLine( "[RacingWheel] LMU forcing initialization of force feedback device" );
+			}
+
+			// if power button is off, or suspend is requested, or unsuspend counter is still counting down, or if the selected sim requires a full driving mode, then suspend the racing wheel force feedback
+
+			if ( !settings.RacingWheelEnableForceFeedback
+				|| ( bypassLmuGuards ? !app.Simulator.IsConnected : _isSuspended || ( _unsuspendTimerMS > 0f ) )
+				|| ( requiresFullSimMode && ( app.Simulator.SimMode != "full" ) ) )
 			{
 				if ( _currentRacingWheelGuid != null )
 				{
@@ -1002,7 +1030,10 @@ public class RacingWheel
 					_currentRacingWheelGuid = null;
 				}
 
-				_unsuspendTimerMS -= deltaMilliseconds;
+				if ( !bypassLmuGuards )
+				{
+					_unsuspendTimerMS -= deltaMilliseconds;
+				}
 
 				return;
 			}
@@ -1412,6 +1443,19 @@ public class RacingWheel
 
 			app.DirectInput.UpdateForceFeedbackEffect( outputTorque );
 
+			if ( app.Simulator.SelectedSimId == SimSupport.SimId.LeMansUltimate )
+			{
+				var nowUtc = DateTime.UtcNow;
+
+				if ( nowUtc >= _nextLmuDiagnosticsLogUtc )
+				{
+					_nextLmuDiagnosticsLogUtc = nowUtc.AddSeconds( 1 );
+
+					app.Logger.WriteLine(
+						$"[LMU-FFB] raw={steeringWheelTorque500Hz:F3}Nm out={outputTorque:F3} norm maxForce={settings.RacingWheelMaxForce:F2} speed={app.Simulator.Speed:F2}m/s vel={app.Simulator.Velocity:F2}m/s parked={parkedFactor:F2} initialized={app.DirectInput.ForceFeedbackInitialized}" );
+				}
+			}
+
 			// update graph
 
 			app.Graph.UpdateLayer( Graph.LayerIndex.InputTorque60Hz, steeringWheelTorque60Hz, steeringWheelTorque60Hz / settings.RacingWheelMaxForce );
@@ -1460,6 +1504,11 @@ public class RacingWheel
 
 	public void Tick( App app )
 	{
+		if ( app.Simulator.SelectedSimId == SimSupport.SimId.LeMansUltimate )
+		{
+			app.Simulator.PollSelectedTelemetryBackend();
+		}
+
 		_updateCounter--;
 
 		if ( _updateCounter <= 0 )
@@ -1551,9 +1600,12 @@ public class RacingWheel
 			_racingWheelPage.Record_MairaMappableButton.Disabled = !app.Simulator.IsOnTrack;
 			_racingWheelPage.Record_MairaMappableButton.Blink = app.RecordingManager.IsRecording;
 
-			// suspend racing wheel force feedback if iracing ffb is enabled or we are calibrating
+			// suspend racing wheel force feedback if iRacing FFB is enabled or we are calibrating
 
-			SuspendForceFeedback = !app.Simulator.IsConnected || ( app.Simulator.SteeringFFBEnabled && !settings.RacingWheelAlwaysEnableFFB ) || app.SteeringEffects.IsCalibrating;
+			var simulatorOwnsForceFeedback = ( app.Simulator.SelectedSimId == SimSupport.SimId.IRacing ) && app.Simulator.SteeringFFBEnabled && !settings.RacingWheelAlwaysEnableFFB;
+
+			SuspendForceFeedback = !app.Simulator.IsConnected
+				|| ( app.Simulator.SelectedSimId != SimSupport.SimId.LeMansUltimate && ( simulatorOwnsForceFeedback || app.SteeringEffects.IsCalibrating ) );
 
 			/*
 			app.Debug.Label_1 = $"FadingIsActive: {FadingIsActive}";

@@ -146,6 +146,7 @@ public partial class MainWindow : Window
 
 			Title = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "AppTitle" ] + " " + Misc.GetVersion();
 
+			_racingWheelPage.UpdateSteeringDeviceSection();
 			_racingWheelPage.UpdateSteeringDeviceOptions();
 			_racingWheelPage.UpdateAlgorithmOptions();
 			_racingWheelPage.UpdateMultiFFBSourceOptions();
@@ -230,7 +231,7 @@ public partial class MainWindow : Window
 			}
 			else
 			{
-				statusText1 = localization[ "SimulatorNotRunning" ];
+				statusText1 = SimRegistry.GetNotRunningStatusText( simDefinition.Id );
 
 				statusStyle = MairaStatusBar.StatusStyleEnum.Error;
 			}

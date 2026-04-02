@@ -9,6 +9,7 @@ using Point = System.Windows.Point;
 using UserControl = System.Windows.Controls.UserControl;
 
 using MarvinsAIRARefactored.Components;
+using MarvinsAIRARefactored.SimSupport;
 
 namespace MarvinsAIRARefactored.Pages;
 
@@ -425,11 +426,11 @@ public partial class RacingWheelPage : UserControl
 				}
 				else if ( !app.Simulator.IsConnected )
 				{
-					SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "SimulatorNotRunning" ];
+					SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetNotRunningStatusText( app.Simulator.SelectedSimId );
 				}
-				else if ( app.Simulator.SimMode != "full" )
+				else if ( ( app.Simulator.SelectedSimId == SimId.IRacing ) && ( app.Simulator.SimMode != "full" ) )
 				{
-					SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "SimModeIsNotFull" ];
+					SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetReplayModeStatusText( app.Simulator.SelectedSimId );
 				}
 				else if ( app.RacingWheel.SuspendForceFeedback )
 				{
@@ -437,9 +438,17 @@ public partial class RacingWheelPage : UserControl
 					{
 						SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "CalibrationIsRunning" ];
 					}
+					else if ( ( app.Simulator.SelectedSimId == SimId.IRacing ) && app.Simulator.SteeringFFBEnabled && !settings.RacingWheelAlwaysEnableFFB )
+					{
+						SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetSimulatorForceFeedbackStatusText( app.Simulator.SelectedSimId );
+					}
+					else if ( app.RacingWheel.WaitingForForceFeedbackResume )
+					{
+						SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetForceFeedbackWaitingStatusText();
+					}
 					else
 					{
-						SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "FFBIsEnabledInSimulator" ];
+						SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetForceFeedbackSuspendedStatusText();
 					}
 				}
 				else

@@ -30,6 +30,7 @@ public partial class App : Application
 #endif
 
 	public static string DocumentsFolder { get; } = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.MyDocuments ), AppName );
+	public static SimId? RuntimeSimulatorOverride { get; private set; } = null;
 
 	public static readonly string DevRootPath = GetDevRootPath();
 
@@ -56,6 +57,17 @@ public partial class App : Application
 	}
 
 	private static bool IsInDesignMode => System.ComponentModel.DesignerProperties.GetIsInDesignMode( new DependencyObject() );
+
+	private static readonly IReadOnlyDictionary<string, SimId> _simulatorArgumentMap = new Dictionary<string, SimId>( StringComparer.OrdinalIgnoreCase )
+	{
+		[ "iracing" ] = SimId.IRacing,
+		[ "i-racing" ] = SimId.IRacing,
+		[ "lmu" ] = SimId.LeMansUltimate,
+		[ "lemansultimate" ] = SimId.LeMansUltimate,
+		[ "le-mans-ultimate" ] = SimId.LeMansUltimate,
+		[ "le_mans_ultimate" ] = SimId.LeMansUltimate,
+		[ "lemans" ] = SimId.LeMansUltimate
+	};
 
 	public static App? Instance { get; private set; }
 	public bool Ready { get; private set; } = false;
@@ -153,6 +165,53 @@ public partial class App : Application
 		TradingPaints = new();
 
 		_timer.Elapsed += OnTimer;
+	}
+
+	private static bool TryParseSimulatorArgument( string[] args, out SimId simId )
+	{
+		simId = default;
+
+		for ( var i = 0; i < args.Length; i++ )
+		{
+			var argument = args[ i ];
+
+			if ( string.IsNullOrWhiteSpace( argument ) )
+			{
+				continue;
+			}
+
+			if ( argument.StartsWith( "--sim=", StringComparison.OrdinalIgnoreCase ) || argument.StartsWith( "--simulator=", StringComparison.OrdinalIgnoreCase ) )
+			{
+				var separatorIndex = argument.IndexOf( '=' );
+				var value = separatorIndex >= 0 ? argument[ ( separatorIndex + 1 ).. ] : string.Empty;
+
+				if ( TryMapSimulatorArgument( value, out simId ) )
+				{
+					return true;
+				}
+			}
+			else if ( argument.Equals( "--sim", StringComparison.OrdinalIgnoreCase ) || argument.Equals( "--simulator", StringComparison.OrdinalIgnoreCase ) )
+			{
+				if ( ( i + 1 ) < args.Length && TryMapSimulatorArgument( args[ i + 1 ], out simId ) )
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private static bool TryMapSimulatorArgument( string value, out SimId simId )
+	{
+		if ( _simulatorArgumentMap.TryGetValue( value.Trim(), out simId ) )
+		{
+			return true;
+		}
+
+		simId = default;
+
+		return false;
 	}
 
 	[MethodImpl( MethodImplOptions.AggressiveInlining )]
@@ -264,6 +323,19 @@ public partial class App : Application
 				Logger.Initialize();
 				TopLevelWindow.Initialize();
 				SettingsFile.Initialize();
+
+				if ( TryParseSimulatorArgument( e.Args, out var simulatorFromArgs ) )
+				{
+					Logger.WriteLine( $"[App] Applying simulator override from command line: {simulatorFromArgs}" );
+
+					RuntimeSimulatorOverride = simulatorFromArgs;
+					DataContext.DataContext.Instance.Settings.AppSelectedSimulator = simulatorFromArgs;
+				}
+				else
+				{
+					RuntimeSimulatorOverride = null;
+				}
+
 				SteeringEffects.RefreshCalibrationDirectory();
 				AdminBoxx.Initialize();
 				AudioManager.Initialize();

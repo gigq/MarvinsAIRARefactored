@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -27,6 +28,8 @@ public partial class Simulator
 
 	private readonly IRacingSdk _irsdk = new();
 	private readonly IReadOnlyDictionary<SimId, ISimTelemetryBackend> _telemetryBackends;
+	private DateTime _nextBackendDiagnosticsLogUtc = DateTime.MinValue;
+	private int _backendTickMutex = 0;
 
 	public IRacingSdk IRSDK { get => _irsdk; }
 
@@ -682,7 +685,18 @@ public partial class Simulator
 
 	public void Tick( App app )
 	{
-		GetSelectedTelemetryBackend().Tick();
+		var nowUtc = DateTime.UtcNow;
+
+		if ( nowUtc >= _nextBackendDiagnosticsLogUtc )
+		{
+			_nextBackendDiagnosticsLogUtc = nowUtc.AddSeconds( 1 );
+			app.Logger.WriteLine( $"[SimulatorTick] selected={SelectedSimId} backend={GetSelectedTelemetryBackend().GetType().Name}" );
+		}
+
+		if ( SelectedSimId != SimId.LeMansUltimate )
+		{
+			PollSelectedTelemetryBackend();
+		}
 
 		_updateCounter--;
 
@@ -706,6 +720,23 @@ public partial class Simulator
 	private ISimTelemetryBackend GetTelemetryBackend( SimId simId )
 	{
 		return _telemetryBackends.TryGetValue( simId, out var backend ) ? backend : _telemetryBackends[ SimId.IRacing ];
+	}
+
+	internal void PollSelectedTelemetryBackend()
+	{
+		if ( Interlocked.Exchange( ref _backendTickMutex, 1 ) != 0 )
+		{
+			return;
+		}
+
+		try
+		{
+			GetSelectedTelemetryBackend().Tick();
+		}
+		finally
+		{
+			Volatile.Write( ref _backendTickMutex, 0 );
+		}
 	}
 
 	private ISimTelemetryBackend GetSelectedTelemetryBackend()
@@ -857,7 +888,7 @@ public partial class Simulator
 
 		WasOnTrack = IsOnTrack;
 
-		BrakeABSactive = false;
+		BrakeABSactive = snapshot.ABSactive;
 		Brake = snapshot.Brake;
 		CarScreenName = snapshot.CarScreenName;
 		CarSetupName = string.Empty;
@@ -890,7 +921,7 @@ public partial class Simulator
 		SessionTime = snapshot.SessionTime;
 		ShiftLightsFirstRPM = snapshot.ShiftLightsFirstRPM;
 		ShiftLightsShiftRPM = snapshot.ShiftLightsShiftRPM;
-		SimMode = snapshot.IsOnTrack ? "full" : string.Empty;
+		SimMode = snapshot.IsDrivingSession ? "full" : string.Empty;
 		Speed = snapshot.Speed;
 		SteeringFFBEnabled = false;
 		SteeringOffsetInDegrees = 0f;
@@ -952,6 +983,7 @@ public partial class Simulator
 		Array.Clear( _rpmSpeedRatioSampleCount );
 
 		app.MainWindow.UpdateStatus();
+		_racingWheelPage.UpdateSteeringDeviceSection();
 
 		app.Logger.WriteLine( "[Simulator] <<< OnConnected" );
 	}
@@ -960,7 +992,7 @@ public partial class Simulator
 	{
 		app.DirectInput.PollDevices( deltaSeconds );
 		app.RacingWheel.UpdateSteeringWheelTorqueBuffer = true;
-		app.RacingWheel.UseSteeringWheelTorqueData = IsOnTrack;
+		app.RacingWheel.UseSteeringWheelTorqueData = ( SelectedSimId == SimId.LeMansUltimate ) ? IsConnected : IsOnTrack;
 
 		if ( IsReplayPlaying != _isReplayPlayingLastFrame )
 		{
