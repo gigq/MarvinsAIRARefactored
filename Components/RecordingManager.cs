@@ -12,7 +12,7 @@ namespace MarvinsAIRARefactored.Components;
 
 public sealed class RecordingManager : IDisposable
 {
-	private string CurrentRecordingsDirectory => App.GetSimulatorContentDirectory( DataContext.DataContext.Instance.Settings.AppSelectedSimulator, "Recordings" );
+	private string CurrentRecordingsDirectory => App.GetSimulatorContentDirectory( App.Instance!.Simulator.ContextSimId, "Recordings" );
 
 	public Dictionary<string, Recording> Recordings { get; private set; } = [];
 
@@ -20,7 +20,14 @@ public sealed class RecordingManager : IDisposable
 	{
 		get
 		{
-			if ( Recordings.TryGetValue( DataContext.DataContext.Instance.Settings.RacingWheelSelectedRecording, out var value ) )
+			var selectedRecording = DataContext.DataContext.Instance.Settings.RacingWheelSelectedRecording;
+
+			if ( string.IsNullOrEmpty( selectedRecording ) )
+			{
+				return null;
+			}
+
+			if ( Recordings.TryGetValue( selectedRecording, out var value ) )
 			{
 				return value;
 			}
@@ -91,9 +98,9 @@ public sealed class RecordingManager : IDisposable
 			LoadRecording( filePath );
 		}
 
-		if ( ( settings.RacingWheelSelectedRecording == string.Empty ) || !Recordings.ContainsKey( settings.RacingWheelSelectedRecording ) )
+		if ( string.IsNullOrEmpty( settings.RacingWheelSelectedRecording ) || !Recordings.ContainsKey( settings.RacingWheelSelectedRecording ) )
 		{
-			settings.RacingWheelSelectedRecording = Recordings.FirstOrDefault().Key;
+			settings.RacingWheelSelectedRecording = Recordings.Keys.FirstOrDefault() ?? string.Empty;
 		}
 
 		if ( app.Ready )

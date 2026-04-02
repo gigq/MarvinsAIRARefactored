@@ -9,6 +9,7 @@ using Point = System.Windows.Point;
 using UserControl = System.Windows.Controls.UserControl;
 
 using MarvinsAIRARefactored.Components;
+using MarvinsAIRARefactored.SimSupport;
 
 namespace MarvinsAIRARefactored.Pages;
 
@@ -178,6 +179,96 @@ public partial class RacingWheelPage : UserControl
 
 	#region Logic
 
+	private static string GetSimulatorAwareAlgorithmLabel( SimId selectedSimId, RacingWheel.Algorithm algorithm, Components.Localization localization )
+	{
+		if ( selectedSimId != SimId.LeMansUltimate )
+		{
+			return algorithm switch
+			{
+				RacingWheel.Algorithm.Native60Hz => localization[ "Native60Hz" ],
+				RacingWheel.Algorithm.Native360Hz => localization[ "Native360Hz" ],
+				RacingWheel.Algorithm.DetailBooster => localization[ "DetailBooster" ],
+				RacingWheel.Algorithm.DeltaLimiter => localization[ "DeltaLimiter" ],
+				RacingWheel.Algorithm.DetailBoosterOn60Hz => localization[ "DetailBoosterOn60Hz" ],
+				RacingWheel.Algorithm.DeltaLimiterOn60Hz => localization[ "DeltaLimiterOn60Hz" ],
+				RacingWheel.Algorithm.SlewAndTotalCompression => localization[ "SlewAndTotalCompression" ],
+				RacingWheel.Algorithm.MultiAdjustmentToolkit => localization[ "MultiAdjustmentToolkit" ],
+				_ => algorithm.ToString()
+			};
+		}
+
+		return algorithm switch
+		{
+			RacingWheel.Algorithm.Native60Hz => "Latest LMU sample (hold-latest, ~500 Hz)",
+			RacingWheel.Algorithm.Native360Hz => "Interpolated LMU stream (~500 Hz)",
+			RacingWheel.Algorithm.DetailBooster => "Detail Booster on interpolated LMU stream (~500 Hz)",
+			RacingWheel.Algorithm.DeltaLimiter => "Delta Limiter on interpolated LMU stream (~500 Hz)",
+			RacingWheel.Algorithm.DetailBoosterOn60Hz => "Detail Booster on latest LMU sample (~500 Hz)",
+			RacingWheel.Algorithm.DeltaLimiterOn60Hz => "Delta Limiter on latest LMU sample (~500 Hz)",
+			RacingWheel.Algorithm.SlewAndTotalCompression => "Slew + Total Compression on interpolated LMU stream (~500 Hz)",
+			RacingWheel.Algorithm.MultiAdjustmentToolkit => "Multi Adjustment Toolkit (LMU stream aware, ~500 Hz)",
+			_ => algorithm.ToString()
+		};
+	}
+
+	private static string GetSimulatorAwareMultiFfbSourceLabel( SimId selectedSimId, RacingWheel.MultiFFBSourceOptions option, Components.Localization localization )
+	{
+		if ( selectedSimId != SimId.LeMansUltimate )
+		{
+			return option switch
+			{
+				RacingWheel.MultiFFBSourceOptions.Native60Hz => localization[ "Native60Hz" ],
+				RacingWheel.MultiFFBSourceOptions.HybridVariable30 => localization[ "HybridVariable30" ],
+				RacingWheel.MultiFFBSourceOptions.Hybrid10 => localization[ "Hybrid10" ],
+				RacingWheel.MultiFFBSourceOptions.Native360Hz => localization[ "Native360Hz" ],
+				RacingWheel.MultiFFBSourceOptions.DefaultsNative60Hz => localization[ "DefaultsNative60Hz" ],
+				RacingWheel.MultiFFBSourceOptions.DefaultsHybridVariable30 => localization[ "DefaultsHybridVariable30" ],
+				RacingWheel.MultiFFBSourceOptions.DefaultsHybrid10 => localization[ "DefaultsHybrid10" ],
+				RacingWheel.MultiFFBSourceOptions.DefaultsNative360Hz => localization[ "DefaultsNative360Hz" ],
+				RacingWheel.MultiFFBSourceOptions.PresetBasicFFB => localization[ "PresetBasicFFB" ],
+				RacingWheel.MultiFFBSourceOptions.PresetBalancedFFB => localization[ "PresetBalancedFFB" ],
+				RacingWheel.MultiFFBSourceOptions.PresetSmoothVariableBlend => localization[ "PresetSmoothVariableBlend" ],
+				RacingWheel.MultiFFBSourceOptions.PresetBoostDetail => localization[ "PresetBoostDetail" ],
+				RacingWheel.MultiFFBSourceOptions.PresetReduceDetail => localization[ "PresetReduceDetail" ],
+				RacingWheel.MultiFFBSourceOptions.PresetReduceBigBumps => localization[ "PresetReduceBigBumps" ],
+				RacingWheel.MultiFFBSourceOptions._Dummy1_ => "_",
+				RacingWheel.MultiFFBSourceOptions._Dummy2_ => "_",
+				_ => option.ToString()
+			};
+		}
+
+		return option switch
+		{
+			RacingWheel.MultiFFBSourceOptions.Native60Hz => "Latest LMU sample (hold-latest, ~500 Hz)",
+			RacingWheel.MultiFFBSourceOptions.HybridVariable30 => "Interpolated on latest LMU sample (variable blend, ~500 Hz)",
+			RacingWheel.MultiFFBSourceOptions.Hybrid10 => "Interpolated on latest LMU sample (10% blend, ~500 Hz)",
+			RacingWheel.MultiFFBSourceOptions.Native360Hz => "Interpolated LMU stream (~500 Hz)",
+			RacingWheel.MultiFFBSourceOptions.DefaultsNative60Hz => "Defaults: latest LMU sample (~500 Hz)",
+			RacingWheel.MultiFFBSourceOptions.DefaultsHybridVariable30 => "Defaults: interpolated on latest LMU sample (variable, ~500 Hz)",
+			RacingWheel.MultiFFBSourceOptions.DefaultsHybrid10 => "Defaults: interpolated on latest LMU sample (10%, ~500 Hz)",
+			RacingWheel.MultiFFBSourceOptions.DefaultsNative360Hz => "Defaults: interpolated LMU stream (~500 Hz)",
+			RacingWheel.MultiFFBSourceOptions.PresetBasicFFB => localization[ "PresetBasicFFB" ],
+			RacingWheel.MultiFFBSourceOptions.PresetBalancedFFB => localization[ "PresetBalancedFFB" ],
+			RacingWheel.MultiFFBSourceOptions.PresetSmoothVariableBlend => localization[ "PresetSmoothVariableBlend" ],
+			RacingWheel.MultiFFBSourceOptions.PresetBoostDetail => localization[ "PresetBoostDetail" ],
+			RacingWheel.MultiFFBSourceOptions.PresetReduceDetail => localization[ "PresetReduceDetail" ],
+			RacingWheel.MultiFFBSourceOptions.PresetReduceBigBumps => localization[ "PresetReduceBigBumps" ],
+			RacingWheel.MultiFFBSourceOptions._Dummy1_ => "_",
+			RacingWheel.MultiFFBSourceOptions._Dummy2_ => "_",
+			_ => option.ToString()
+		};
+	}
+
+	private static string GetSimulatorAwareMultiDetailLabel( SimId selectedSimId, Components.Localization localization )
+	{
+		if ( selectedSimId != SimId.LeMansUltimate )
+		{
+			return localization[ "Multi360HzDetail" ];
+		}
+
+		return "Surface Detail";
+	}
+
 	public void UpdateSteeringDeviceOptions()
 	{
 		var app = App.Instance!;
@@ -223,17 +314,18 @@ public partial class RacingWheelPage : UserControl
 
 		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
 		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var selectedSimId = app.Simulator.SelectedSimId;
 
 		var dictionary = new Dictionary<RacingWheel.Algorithm, string>
 		{
-			{ RacingWheel.Algorithm.Native60Hz, localization[ "Native60Hz" ] },
-			{ RacingWheel.Algorithm.Native360Hz, localization[ "Native360Hz" ] },
-			{ RacingWheel.Algorithm.DetailBooster, localization[ "DetailBooster" ] },
-			{ RacingWheel.Algorithm.DeltaLimiter, localization[ "DeltaLimiter" ] },
-			{ RacingWheel.Algorithm.DetailBoosterOn60Hz, localization[ "DetailBoosterOn60Hz" ] },
-			{ RacingWheel.Algorithm.DeltaLimiterOn60Hz, localization[ "DeltaLimiterOn60Hz" ] },
-			{ RacingWheel.Algorithm.SlewAndTotalCompression, localization[ "SlewAndTotalCompression" ] },
-			{ RacingWheel.Algorithm.MultiAdjustmentToolkit, localization[ "MultiAdjustmentToolkit" ] }
+			{ RacingWheel.Algorithm.Native60Hz, GetSimulatorAwareAlgorithmLabel( selectedSimId, RacingWheel.Algorithm.Native60Hz, localization ) },
+			{ RacingWheel.Algorithm.Native360Hz, GetSimulatorAwareAlgorithmLabel( selectedSimId, RacingWheel.Algorithm.Native360Hz, localization ) },
+			{ RacingWheel.Algorithm.DetailBooster, GetSimulatorAwareAlgorithmLabel( selectedSimId, RacingWheel.Algorithm.DetailBooster, localization ) },
+			{ RacingWheel.Algorithm.DeltaLimiter, GetSimulatorAwareAlgorithmLabel( selectedSimId, RacingWheel.Algorithm.DeltaLimiter, localization ) },
+			{ RacingWheel.Algorithm.DetailBoosterOn60Hz, GetSimulatorAwareAlgorithmLabel( selectedSimId, RacingWheel.Algorithm.DetailBoosterOn60Hz, localization ) },
+			{ RacingWheel.Algorithm.DeltaLimiterOn60Hz, GetSimulatorAwareAlgorithmLabel( selectedSimId, RacingWheel.Algorithm.DeltaLimiterOn60Hz, localization ) },
+			{ RacingWheel.Algorithm.SlewAndTotalCompression, GetSimulatorAwareAlgorithmLabel( selectedSimId, RacingWheel.Algorithm.SlewAndTotalCompression, localization ) },
+			{ RacingWheel.Algorithm.MultiAdjustmentToolkit, GetSimulatorAwareAlgorithmLabel( selectedSimId, RacingWheel.Algorithm.MultiAdjustmentToolkit, localization ) }
 		};
 
 		app.Dispatcher.Invoke( () =>
@@ -253,30 +345,33 @@ public partial class RacingWheelPage : UserControl
 
 		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
 		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var selectedSimId = app.Simulator.SelectedSimId;
 
 		var dictionary = new Dictionary<RacingWheel.MultiFFBSourceOptions, string>
 		{
-			{ RacingWheel.MultiFFBSourceOptions.Native60Hz, localization[ "Native60Hz" ] },
-			{ RacingWheel.MultiFFBSourceOptions.HybridVariable30, localization[ "HybridVariable30" ] },
-			{ RacingWheel.MultiFFBSourceOptions.Hybrid10, localization[ "Hybrid10" ] },
-			{ RacingWheel.MultiFFBSourceOptions.Native360Hz, localization[ "Native360Hz" ] },
+			{ RacingWheel.MultiFFBSourceOptions.Native60Hz, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.Native60Hz, localization ) },
+			{ RacingWheel.MultiFFBSourceOptions.HybridVariable30, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.HybridVariable30, localization ) },
+			{ RacingWheel.MultiFFBSourceOptions.Hybrid10, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.Hybrid10, localization ) },
+			{ RacingWheel.MultiFFBSourceOptions.Native360Hz, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.Native360Hz, localization ) },
 			{ RacingWheel.MultiFFBSourceOptions._Dummy1_, "_" },
-			{ RacingWheel.MultiFFBSourceOptions.DefaultsNative60Hz, localization[ "DefaultsNative60Hz" ] },
-			{ RacingWheel.MultiFFBSourceOptions.DefaultsHybridVariable30, localization[ "DefaultsHybridVariable30" ] },
-			{ RacingWheel.MultiFFBSourceOptions.DefaultsHybrid10, localization[ "DefaultsHybrid10" ] },
-			{ RacingWheel.MultiFFBSourceOptions.DefaultsNative360Hz, localization[ "DefaultsNative360Hz" ] },
+			{ RacingWheel.MultiFFBSourceOptions.DefaultsNative60Hz, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.DefaultsNative60Hz, localization ) },
+			{ RacingWheel.MultiFFBSourceOptions.DefaultsHybridVariable30, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.DefaultsHybridVariable30, localization ) },
+			{ RacingWheel.MultiFFBSourceOptions.DefaultsHybrid10, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.DefaultsHybrid10, localization ) },
+			{ RacingWheel.MultiFFBSourceOptions.DefaultsNative360Hz, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.DefaultsNative360Hz, localization ) },
 			{ RacingWheel.MultiFFBSourceOptions._Dummy2_, "_" },
-			{ RacingWheel.MultiFFBSourceOptions.PresetBasicFFB, localization[ "PresetBasicFFB" ] },
-			{ RacingWheel.MultiFFBSourceOptions.PresetBalancedFFB, localization[ "PresetBalancedFFB" ] },
-			{ RacingWheel.MultiFFBSourceOptions.PresetBoostDetail, localization[ "PresetBoostDetail" ] },
-			{ RacingWheel.MultiFFBSourceOptions.PresetReduceDetail, localization[ "PresetReduceDetail" ] },
-			{ RacingWheel.MultiFFBSourceOptions.PresetReduceBigBumps, localization[ "PresetReduceBigBumps" ] }
+			{ RacingWheel.MultiFFBSourceOptions.PresetBasicFFB, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.PresetBasicFFB, localization ) },
+			{ RacingWheel.MultiFFBSourceOptions.PresetBalancedFFB, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.PresetBalancedFFB, localization ) },
+			{ RacingWheel.MultiFFBSourceOptions.PresetSmoothVariableBlend, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.PresetSmoothVariableBlend, localization ) },
+			{ RacingWheel.MultiFFBSourceOptions.PresetBoostDetail, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.PresetBoostDetail, localization ) },
+			{ RacingWheel.MultiFFBSourceOptions.PresetReduceDetail, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.PresetReduceDetail, localization ) },
+			{ RacingWheel.MultiFFBSourceOptions.PresetReduceBigBumps, GetSimulatorAwareMultiFfbSourceLabel( selectedSimId, RacingWheel.MultiFFBSourceOptions.PresetReduceBigBumps, localization ) }
 		};
 
 		app.Dispatcher.Invoke( () =>
 		{
 			MultiFFBSource_MairaComboBox.ItemsSource = dictionary;
 			MultiFFBSource_MairaComboBox.SelectedValue = settings.RacingWheelMultiFFBSourceSelection;
+			Multi360HzDetail_MairaKnob.Label = GetSimulatorAwareMultiDetailLabel( selectedSimId, localization );
 		} );
 
 		app.Logger.WriteLine( "[RacingWheelPage] <<< UpdateFFBSourceOptions" );
@@ -415,7 +510,15 @@ public partial class RacingWheelPage : UserControl
 
 			if ( app.DirectInput.ForceFeedbackInitialized )
 			{
-				SteeringDeviceFaultReason_TextBlock.Visibility = Visibility.Collapsed;
+				if ( app.Simulator.IsAutoSelecting && app.Simulator.IsConnected )
+				{
+					SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetConnectedStatusText( app.Simulator.SelectedSimId );
+					SteeringDeviceFaultReason_TextBlock.Visibility = Visibility.Visible;
+				}
+				else
+				{
+					SteeringDeviceFaultReason_TextBlock.Visibility = Visibility.Collapsed;
+				}
 			}
 			else
 			{
@@ -425,11 +528,11 @@ public partial class RacingWheelPage : UserControl
 				}
 				else if ( !app.Simulator.IsConnected )
 				{
-					SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "SimulatorNotRunning" ];
+					SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetNotRunningStatusText( app.Simulator.SelectedSimId );
 				}
-				else if ( app.Simulator.SimMode != "full" )
+				else if ( ( app.Simulator.SelectedSimId == SimId.IRacing ) && ( app.Simulator.SimMode != "full" ) )
 				{
-					SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "SimModeIsNotFull" ];
+					SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetReplayModeStatusText( app.Simulator.SelectedSimId );
 				}
 				else if ( app.RacingWheel.SuspendForceFeedback )
 				{
@@ -437,9 +540,17 @@ public partial class RacingWheelPage : UserControl
 					{
 						SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "CalibrationIsRunning" ];
 					}
+					else if ( ( app.Simulator.SelectedSimId == SimId.IRacing ) && app.Simulator.SteeringFFBEnabled && !settings.RacingWheelAlwaysEnableFFB )
+					{
+						SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetSimulatorForceFeedbackStatusText( app.Simulator.SelectedSimId );
+					}
+					else if ( app.RacingWheel.WaitingForForceFeedbackResume )
+					{
+						SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetForceFeedbackWaitingStatusText();
+					}
 					else
 					{
-						SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "FFBIsEnabledInSimulator" ];
+						SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetForceFeedbackSuspendedStatusText();
 					}
 				}
 				else

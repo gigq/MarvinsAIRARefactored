@@ -25,7 +25,7 @@ public class Context : IComparable<Context?>
 	{
 		var app = App.Instance!;
 
-		SimulatorId = DataContext.Instance.Settings.AppSelectedSimulator;
+		SimulatorId = app.Simulator.ContextSimId;
 
 		if ( contextSwitches.PerWheelbase )
 		{
@@ -34,9 +34,9 @@ public class Context : IComparable<Context?>
 
 		if ( contextSwitches.PerCar )
 		{
-			if ( ( app.Simulator.IsConnected ) && ( app.Simulator.CarScreenName != string.Empty ) )
+			if ( ( app.Simulator.IsConnected ) && ( app.Simulator.CarContextName != string.Empty ) )
 			{
-				CarName = app.Simulator.CarScreenName;
+				CarName = app.Simulator.CarContextName;
 			}
 		}
 

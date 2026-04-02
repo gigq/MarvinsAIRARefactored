@@ -146,6 +146,7 @@ public partial class MainWindow : Window
 
 			Title = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "AppTitle" ] + " " + Misc.GetVersion();
 
+			_racingWheelPage.UpdateSteeringDeviceSection();
 			_racingWheelPage.UpdateSteeringDeviceOptions();
 			_racingWheelPage.UpdateAlgorithmOptions();
 			_racingWheelPage.UpdateMultiFFBSourceOptions();
@@ -214,12 +215,35 @@ public partial class MainWindow : Window
 			}
 			else if ( app.Simulator.IsConnected )
 			{
-				statusText1 = app.Simulator.CarScreenName == string.Empty ? localization[ "Default" ] : app.Simulator.CarScreenName;
+				if ( ( app.Simulator.SelectedSimId == SimId.LeMansUltimate ) &&
+					 ( app.Simulator.CarContextName != string.Empty ) )
+				{
+					statusText1 = app.Simulator.CarContextName;
+				}
+				else if ( app.Simulator.CarScreenName != string.Empty )
+				{
+					statusText1 = app.Simulator.CarScreenName;
+				}
+				else if ( app.Simulator.CarContextName != string.Empty )
+				{
+					statusText1 = app.Simulator.CarContextName;
+				}
+				else
+				{
+					statusText1 = localization[ "Default" ];
+				}
+
 				statusText2 = app.Simulator.TrackDisplayName == string.Empty ? localization[ "Default" ] : app.Simulator.TrackDisplayName;
 				statusText3 = app.Simulator.TrackConfigName == string.Empty ? localization[ "Default" ] : app.Simulator.TrackConfigName;
 				statusText4 = localization[ app.Simulator.WeatherDeclaredWet ? "Wet" : "Dry" ];
 
 				statusStyle = MairaStatusBar.StatusStyleEnum.Normal;
+			}
+			else if ( simDefinition.Id == SimId.Auto )
+			{
+				statusText1 = SimRegistry.GetNotRunningStatusText( SimId.Auto );
+
+				statusStyle = MairaStatusBar.StatusStyleEnum.Error;
 			}
 			else if ( !simDefinition.Supports( SimFeature.TelemetryBackend ) )
 			{
@@ -230,7 +254,7 @@ public partial class MainWindow : Window
 			}
 			else
 			{
-				statusText1 = localization[ "SimulatorNotRunning" ];
+				statusText1 = SimRegistry.GetNotRunningStatusText( app.Simulator.SelectedSimId );
 
 				statusStyle = MairaStatusBar.StatusStyleEnum.Error;
 			}
@@ -274,6 +298,9 @@ public partial class MainWindow : Window
 			var racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Collapsed;
 
 			var useThirdRowSpacer = false;
+			var app = App.Instance!;
+			var selectedSimId = app.Simulator.SelectedSimId;
+			var selectedMultiFfbSource = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelMultiFFBSourceSelection;
 
 			switch ( MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelAlgorithm )
 			{
@@ -332,6 +359,12 @@ public partial class MainWindow : Window
 
 					useThirdRowSpacer = true;
 					break;
+			}
+
+			if ( ( selectedSimId == SimId.LeMansUltimate )
+				&& ( selectedMultiFfbSource is RacingWheel.MultiFFBSourceOptions.Native60Hz or RacingWheel.MultiFFBSourceOptions.Native360Hz ) )
+			{
+				racingWheelMulti360HzDetailVisibility = Visibility.Collapsed;
 			}
 
 			_racingWheelPage.PredictionMode_MairaComboBox.Visibility = racingWheelPredictionModeComboBoxVisibility;

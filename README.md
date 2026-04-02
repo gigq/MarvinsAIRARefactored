@@ -8,6 +8,43 @@ For any questions or suggestions, please reach out to me on my Discord server - 
 
 Feel free to contribute to the project by forking the repo and submitting pull requests. Your contributions are greatly appreciated!
 
+## Current Simulator Support
+
+MAIRA Refactored in this fork now supports:
+
+- `iRacing`
+- `Le Mans Ultimate`
+- `Auto detect` mode to switch between supported sims when one is running
+
+### Le Mans Ultimate Status
+
+This fork supports LMU with:
+
+- connect to LMU through its native shared-memory interface
+- produce wheel FFB from LMU steering shaft torque
+- auto-detect LMU when `Auto detect` is selected
+- save settings per LMU car model
+- use LMU without the iRacing-only pages/features that do not apply
+
+### LMU Notes
+
+- Disable in-game LMU wheel FFB when using MAIRA for steering FFB.
+- LMU car settings are keyed from the model name when available, for example `Porsche 911 GT3 R LMGT3`.
+- Some MAIRA features remain iRacing-only because they depend on iRacing-specific data or integrations.
+- Trading Paints and the legacy iRacing diagnostics workflows are still iRacing-specific.
+
+### Selecting a Simulator
+
+You can choose the simulator in `App Settings`, or launch from the command line:
+
+```powershell
+.\MarvinsAIRARefactored.exe --sim auto
+.\MarvinsAIRARefactored.exe --sim iracing
+.\MarvinsAIRARefactored.exe --sim lmu
+```
+
+Accepted LMU aliases include `lmu`, `lemans`, `le-mans-ultimate`, and `LeMansUltimate`.
+
 ### Architecture Overview (ChatGPT Description)
 
 This document captures the architectural description from the initial ChatGPT analysis of the MAIRA Refactored codebase.
@@ -33,7 +70,7 @@ At a very high level, the solution looks like this:
 
 Examples (not exhaustive):
 
-- `Simulator` (iRacing telemetry, **IRSDKSharper**)
+- `Simulator` (normalized sim telemetry and backend selection)
 - `DirectInput`
 - `RacingWheel`
 - `Pedals`
@@ -303,8 +340,10 @@ SettingsFile
 
 **Simulator**
 
-- Uses `IRSDKSharper.IRacingSdk`.
-- Produces live properties: lap data, tire data, RPM, flags, etc.
+- Uses backend integrations including:
+  - `IRSDKSharper.IRacingSdk` for iRacing
+  - LMU native shared memory for Le Mans Ultimate
+- Produces normalized live properties: lap data, RPM, speed, steering torque, car/track identity, and sim state.
 - Updates other components or is polled by them.
   - Example: `RacingWheel` uses RPM, speed, slip, surface data.
 
@@ -444,8 +483,9 @@ The pattern is **MVVM-flavored** but:
    - `App` owns a worker thread (`_workerThread`) and an `AutoResetEvent`.
    - This drives periodic work for telemetry updates.
    - `Simulator`:
-     - Connects to iRacing via `IRSDKSharper.IRacingSdk`.
-     - On each tick, pulls telemetry and updates its properties.
+     - selects the active sim backend
+     - reads telemetry from iRacing or LMU
+     - updates normalized simulator properties used by the rest of the app
 
 2. **Hardware Components Consume Telemetry**
    - `RacingWheel`:
@@ -478,7 +518,7 @@ The pattern is **MVVM-flavored** but:
 **End-to-end mental pipeline:**
 
 ```text
-iRacing (IRSDK)
+Supported simulator backend (iRacing IRSDK / LMU shared memory)
    ↓
 Simulator
    ↓
