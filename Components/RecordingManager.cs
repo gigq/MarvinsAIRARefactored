@@ -12,7 +12,7 @@ namespace MarvinsAIRARefactored.Components;
 
 public sealed class RecordingManager : IDisposable
 {
-	private readonly string _recordingsDirectory = Path.Combine( App.DocumentsFolder, "Recordings" );
+	private string CurrentRecordingsDirectory => App.GetSimulatorContentDirectory( DataContext.DataContext.Instance.Settings.AppSelectedSimulator, "Recordings" );
 
 	public Dictionary<string, Recording> Recordings { get; private set; } = [];
 
@@ -46,14 +46,34 @@ public sealed class RecordingManager : IDisposable
 
 		app.Logger.WriteLine( "[RecordingManager] Initialize >>>" );
 
-		var settings = DataContext.DataContext.Instance.Settings;
+		ReloadForCurrentSimulator();
 
-		if ( !Directory.Exists( _recordingsDirectory ) )
+		for ( var i = 0; i < _recordingData.Length; i++ )
 		{
-			Directory.CreateDirectory( _recordingsDirectory );
+			_recordingData[ i ] = new RecordingData();
 		}
 
-		_fileSystemWatcher = new FileSystemWatcher( _recordingsDirectory, "*.csv" )
+		app.Logger.WriteLine( "[RecordingManager] <<< Initialize" );
+	}
+
+	public void ReloadForCurrentSimulator()
+	{
+		var app = App.Instance!;
+		var settings = DataContext.DataContext.Instance.Settings;
+		var recordingsDirectory = CurrentRecordingsDirectory;
+
+		app.Logger.WriteLine( $"[RecordingManager] ReloadForCurrentSimulator >>> {recordingsDirectory}" );
+
+		_fileSystemWatcher?.Dispose();
+		_fileSystemWatcher = null;
+		Recordings.Clear();
+
+		if ( !Directory.Exists( recordingsDirectory ) )
+		{
+			Directory.CreateDirectory( recordingsDirectory );
+		}
+
+		_fileSystemWatcher = new FileSystemWatcher( recordingsDirectory, "*.csv" )
 		{
 			NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName,
 			EnableRaisingEvents = true,
@@ -64,12 +84,10 @@ public sealed class RecordingManager : IDisposable
 		_fileSystemWatcher.Created += OnRecordingFilesChanged;
 		_fileSystemWatcher.Renamed += OnRecordingFilesChanged;
 
-		var files = Directory.GetFiles( _recordingsDirectory, "*.csv" );
+		var files = Directory.GetFiles( recordingsDirectory, "*.csv" );
 
-		foreach ( var file in files )
+		foreach ( var filePath in files )
 		{
-			var filePath = Path.Combine( _recordingsDirectory, file );
-
 			LoadRecording( filePath );
 		}
 
@@ -78,12 +96,12 @@ public sealed class RecordingManager : IDisposable
 			settings.RacingWheelSelectedRecording = Recordings.FirstOrDefault().Key;
 		}
 
-		for ( var i = 0; i < _recordingData.Length; i++ )
+		if ( app.Ready )
 		{
-			_recordingData[ i ] = new RecordingData();
+			MainWindow._racingWheelPage.UpdatePreviewRecordingsOptions();
 		}
 
-		app.Logger.WriteLine( "[RecordingManager] <<< Initialize" );
+		app.Logger.WriteLine( "[RecordingManager] <<< ReloadForCurrentSimulator" );
 	}
 
 	private void OnRecordingFilesChanged( object sender, FileSystemEventArgs e )
@@ -196,7 +214,7 @@ public sealed class RecordingManager : IDisposable
 
 		var fileName = $"{app.Simulator.CarScreenName} @ {app.Simulator.TrackDisplayName} - {app.Simulator.TrackConfigName} ({_trackPosition}%)";
 
-		var filePath = Path.Combine( _recordingsDirectory, $"{fileName}.csv" );
+		var filePath = Path.Combine( CurrentRecordingsDirectory, $"{fileName}.csv" );
 
 		using var writer = new StreamWriter( filePath );
 

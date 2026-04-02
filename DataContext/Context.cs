@@ -1,4 +1,6 @@
 ﻿
+using MarvinsAIRARefactored.SimSupport;
+
 namespace MarvinsAIRARefactored.DataContext;
 
 public class Context : IComparable<Context?>
@@ -7,6 +9,7 @@ public class Context : IComparable<Context?>
 	public static string WetContextName { get; } = "Wet";
 	public static string DryContextName { get; } = "Dry";
 
+	public SimId SimulatorId { get; set; } = SimId.IRacing;
 	public Guid WheelbaseGuid { get; set; } = Guid.Empty;
 
 	public string CarName { get; set; } = DefaultContextName;
@@ -21,6 +24,8 @@ public class Context : IComparable<Context?>
 	public Context( ContextSwitches contextSwitches )
 	{
 		var app = App.Instance!;
+
+		SimulatorId = DataContext.Instance.Settings.AppSelectedSimulator;
 
 		if ( contextSwitches.PerWheelbase )
 		{
@@ -64,6 +69,7 @@ public class Context : IComparable<Context?>
 	{
 		if ( other == null ) return 1;
 
+		if ( SimulatorId != other.SimulatorId ) return SimulatorId.CompareTo( other.SimulatorId );
 		if ( WheelbaseGuid != other.WheelbaseGuid ) return WheelbaseGuid.CompareTo( other.WheelbaseGuid );
 		if ( CarName != other.CarName ) return CarName.CompareTo( other.CarName );
 		if ( TrackName != other.TrackName ) return TrackName.CompareTo( other.TrackName );

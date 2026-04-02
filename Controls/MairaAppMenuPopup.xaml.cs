@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
+using MarvinsAIRARefactored.SimSupport;
 using static MarvinsAIRARefactored.Windows.MainWindow;
 
 using UserControl = System.Windows.Controls.UserControl;
@@ -209,80 +210,27 @@ namespace MarvinsAIRARefactored.Controls
 
 		public void Initialize()
 		{
+			RefreshAppMenuItems();
+		}
+
+		public void RefreshAppMenuItems()
+		{
+			AppMenuItems.Clear();
 
 #if !ADMINBOXX
 
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.Help,
-				PageUserControl = _helpPage
-			} );
-
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.RacingWheel,
-				PageUserControl = _racingWheelPage
-			} );
-
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.SteeringEffects,
-				PageUserControl = _steeringEffectsPage
-			} );
-
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.Pedals,
-				PageUserControl = _pedalsPage
-			} );
-
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.Wind,
-				PageUserControl = _windPage
-			} );
-
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.SeatBeltTensioner,
-				PageUserControl = _seatBeltTensionerPage
-			} );
-
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.Overlays,
-				PageUserControl = _overlaysPage
-			} );
-
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.Sounds,
-				PageUserControl = _soundsPage
-			} );
-
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.SpeechToText,
-				PageUserControl = _speechToTextPage
-			} );
-
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.TradingPaints,
-				PageUserControl = _tradingPaintsPage
-			} );
-
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.Graph,
-				PageUserControl = _graphPage
-			} );
-
-			AppMenuItems.Add( new AppMenuItem
-			{
-				AppPage = AppPage.Simulator,
-				PageUserControl = _simulatorPage
-			} );
+			AddAppMenuItemIfSupported( AppPage.Help, _helpPage );
+			AddAppMenuItemIfSupported( AppPage.RacingWheel, _racingWheelPage );
+			AddAppMenuItemIfSupported( AppPage.SteeringEffects, _steeringEffectsPage );
+			AddAppMenuItemIfSupported( AppPage.Pedals, _pedalsPage );
+			AddAppMenuItemIfSupported( AppPage.Wind, _windPage );
+			AddAppMenuItemIfSupported( AppPage.SeatBeltTensioner, _seatBeltTensionerPage );
+			AddAppMenuItemIfSupported( AppPage.Overlays, _overlaysPage );
+			AddAppMenuItemIfSupported( AppPage.Sounds, _soundsPage );
+			AddAppMenuItemIfSupported( AppPage.SpeechToText, _speechToTextPage );
+			AddAppMenuItemIfSupported( AppPage.TradingPaints, _tradingPaintsPage );
+			AddAppMenuItemIfSupported( AppPage.Graph, _graphPage );
+			AddAppMenuItemIfSupported( AppPage.Simulator, _simulatorPage );
 
 #endif
 
@@ -329,8 +277,20 @@ namespace MarvinsAIRARefactored.Controls
 #endif
 
 			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			var hasExistingSelection = ( SelectedAppMenuItem != null ) && AppMenuItems.Any( appMenuItem => appMenuItem.AppPage == SelectedAppPage );
+			var selectedPage = hasExistingSelection ? SelectedAppPage : settings.AppDefaultPage;
 
-			object currentPage = settings.AppDefaultPage switch
+			if ( !SimRegistry.SupportsPage( settings.AppSelectedSimulator, selectedPage ) )
+			{
+				selectedPage = settings.AppDefaultPage;
+			}
+
+			if ( !SimRegistry.SupportsPage( settings.AppSelectedSimulator, selectedPage ) || !AppMenuItems.Any( appMenuItem => appMenuItem.AppPage == selectedPage ) )
+			{
+				selectedPage = AppMenuItems.First().AppPage;
+			}
+
+			object currentPage = selectedPage switch
 			{
 				AppPage.Help => _helpPage,
 				AppPage.RacingWheel => _racingWheelPage,
@@ -352,13 +312,27 @@ namespace MarvinsAIRARefactored.Controls
 				_ => _racingWheelPage
 			};
 
-			SelectedAppPage = settings.AppDefaultPage;
+			SelectedAppPage = selectedPage;
 			SelectedAppPageUserControl = currentPage;
 			SelectedAppMenuItem = AppMenuItems.FirstOrDefault( appMenuItem => appMenuItem.AppPage == SelectedAppPage );
 
 			CurrentAppPage = SelectedAppPage;
 
 			UpdateSelectedAppPageText();
+		}
+
+		private void AddAppMenuItemIfSupported( AppPage appPage, UserControl pageUserControl )
+		{
+			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+
+			if ( SimRegistry.SupportsPage( settings.AppSelectedSimulator, appPage ) )
+			{
+				AppMenuItems.Add( new AppMenuItem
+				{
+					AppPage = appPage,
+					PageUserControl = pageUserControl
+				} );
+			}
 		}
 
 		public void RelocalizeAppMenuItems()

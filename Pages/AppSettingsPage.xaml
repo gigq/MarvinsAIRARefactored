@@ -16,6 +16,32 @@
 
     <StackPanel>
 
+        <controls:MairaGroupBox Label="Simulation"
+                                Tag="HideIfAdminBoxx">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <controls:MairaComboBox x:Name="Simulator_MairaComboBox"
+                                        Grid.Row="0"
+                                        SelectedValue="{Binding Settings.AppSelectedSimulator, Mode=TwoWay}" />
+
+                <TextBlock x:Name="SimulatorSupportNote_TextBlock"
+                           Grid.Row="1"
+                           Margin="0,10,0,0"
+                           FontSize="16"
+                           TextWrapping="Wrap"
+                           Foreground="#bbbbbb"
+                           Style="{StaticResource MairaTextBlockStyle}" />
+
+            </Grid>
+
+        </controls:MairaGroupBox>
+
         <controls:MairaGroupBox Label="{Binding Localization[Language_UC]}"
                                 Tag="HideIfAdminBoxx"
                                 HelpTopic="advanced/app-settings/#language">

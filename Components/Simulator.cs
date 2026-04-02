@@ -10,6 +10,7 @@ using PInvoke;
 using IRSDKSharper;
 
 using MarvinsAIRARefactored.Classes;
+using MarvinsAIRARefactored.SimSupport;
 using MarvinsAIRARefactored.Windows;
 
 using static MarvinsAIRARefactored.Windows.MainWindow;
@@ -217,7 +218,7 @@ public partial class Simulator
 
 	public void Start()
 	{
-		_irsdk.Start();
+		ApplySelectedSimulator();
 	}
 
 	public IRacingSdkSessionInfo.DriverInfoModel.DriverModel? GetDriver( int carIdx )
@@ -249,7 +250,14 @@ public partial class Simulator
 
 		app.Logger.WriteLine( "[Simulator] OnConnected >>>" );
 
-		WindowHandle = User32.FindWindow( null, "iRacing.com Simulator" );
+		if ( CurrentSimDefinition.WindowTitle != null )
+		{
+			WindowHandle = User32.FindWindow( null, CurrentSimDefinition.WindowTitle );
+		}
+		else
+		{
+			WindowHandle = null;
+		}
 
 		app.MultimediaTimer.Suspend = false;
 
@@ -517,13 +525,17 @@ public partial class Simulator
 
 		var sessionInfoYaml = _irsdk.Data.SessionInfoYaml;
 
-		var filePath = Path.Combine( App.DocumentsFolder, "SessionInfo.yaml" );
+		var diagnosticsDirectory = App.GetSimulatorContentDirectory( SelectedSimId, "Diagnostics" );
+
+		Directory.CreateDirectory( diagnosticsDirectory );
+
+		var filePath = Path.Combine( diagnosticsDirectory, "SessionInfo.yaml" );
 
 		File.WriteAllText( filePath, sessionInfoYaml );
 
 		// Write out TelemetryData.yaml file
 
-		filePath = Path.Combine( App.DocumentsFolder, "TelemetryData.yaml" );
+		filePath = Path.Combine( diagnosticsDirectory, "TelemetryData.yaml" );
 
 		var serializer = new SerializerBuilder().WithNamingConvention( CamelCaseNamingConvention.Instance ).Build();
 

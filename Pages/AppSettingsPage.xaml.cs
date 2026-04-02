@@ -5,6 +5,7 @@ using UserControl = System.Windows.Controls.UserControl;
 
 using MarvinsAIRARefactored.Windows;
 using MarvinsAIRARefactored.Classes;
+using MarvinsAIRARefactored.SimSupport;
 
 namespace MarvinsAIRARefactored.Pages;
 
@@ -30,6 +31,8 @@ public partial class AppSettingsPage : UserControl
 #endif
 
 		InitializeCpuAffinityUI();
+		UpdateSimulatorOptions();
+		UpdateDefaultPageOptions();
 		UpdateCpuAffinityUI();
 	}
 
@@ -83,10 +86,37 @@ public partial class AppSettingsPage : UserControl
 			{ MainWindow.AppPage.Donate, localization[ "Donate" ] }
 		};
 
-		DefaultPage_MairaComboBox.ItemsSource = defaultPageOptions.ToList();
+		var supportedDefaultPages = defaultPageOptions
+			.Where( keyValuePair => SimRegistry.SupportsPage( settings.AppSelectedSimulator, keyValuePair.Key ) )
+			.ToList();
+
+		if ( !SimRegistry.SupportsPage( settings.AppSelectedSimulator, settings.AppDefaultPage ) && ( supportedDefaultPages.Count > 0 ) )
+		{
+			settings.AppDefaultPage = supportedDefaultPages[ 0 ].Key;
+		}
+
+		DefaultPage_MairaComboBox.ItemsSource = supportedDefaultPages;
 		DefaultPage_MairaComboBox.SelectedValue = settings.AppDefaultPage;
 
 		app.Logger.WriteLine( "[AppSettingsPage] <<< UpdateDefaultPageOptions" );
+	}
+
+	public void UpdateSimulatorOptions()
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[AppSettingsPage] UpdateSimulatorOptions >>>" );
+
+		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var simulatorOptions = SimRegistry.Definitions
+			.ToDictionary( definition => definition.Id, definition => SimRegistry.GetOptionLabel( definition.Id ) );
+		var selectedSimulatorDefinition = SimRegistry.GetDefinition( settings.AppSelectedSimulator );
+
+		Simulator_MairaComboBox.ItemsSource = simulatorOptions.ToList();
+		Simulator_MairaComboBox.SelectedValue = settings.AppSelectedSimulator;
+		SimulatorSupportNote_TextBlock.Text = selectedSimulatorDefinition.SupportSummary;
+
+		app.Logger.WriteLine( "[AppSettingsPage] <<< UpdateSimulatorOptions" );
 	}
 
 	private void InitializeCpuAffinityUI()
