@@ -670,7 +670,7 @@ public class RacingWheel
 				{
 					// LMU needs to refresh on the high-rate wheel thread; the normal app worker thread
 					// is too bursty during startup and UI work, which leaves us reusing stale torque samples.
-					_nextLmuBackendPollUtc = nowUtc.AddMilliseconds( 4 );
+					_nextLmuBackendPollUtc = nowUtc.AddMilliseconds( 2 );
 					app.Simulator.PollSelectedTelemetryBackend();
 				}
 			}
