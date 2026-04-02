@@ -45,10 +45,17 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 	private const int VehicleAbsActiveOffset = 746;
 	private const int VehicleTcActiveOffset = 747;
 	private const int VehicleModelOffset = 796;
+	private const int VehicleWheelArrayOffset = 848;
+	private const int VehicleWheelSize = 260;
 
 	private const int ScoringVehicleNameOffset = 36;
 	private const int ScoringVehicleClassOffset = 200;
 	private const int ScoringVehicleFilenameOffset = 544;
+	private const int WheelSuspensionDeflectionOffset = 0;
+	private const int WheelRotationOffset = 40;
+	private const int WheelLateralPatchVelocityOffset = 48;
+	private const int WheelLongitudinalPatchVelocityOffset = 56;
+	private const int WheelSurfaceTypeOffset = 176;
 
 	private bool _started = false;
 	private bool _openLogged = false;
@@ -58,6 +65,8 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 	private DateTime _nextTickDiagnosticsLogUtc = DateTime.MinValue;
 	private double _lastSessionTimeSeconds = double.NaN;
 	private DateTime _lastSessionTimeAdvanceUtc = DateTime.MinValue;
+	private readonly double[] _lastWheelSuspensionDeflections = new double[ 4 ];
+	private bool _lastWheelSuspensionDeflectionsValid = false;
 
 	public bool IsStarted => _started;
 
@@ -138,6 +147,8 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 		_lastSessionTimeSeconds = double.NaN;
 		_lastSessionTimeAdvanceUtc = DateTime.MinValue;
 		_openLogged = false;
+		Array.Clear( _lastWheelSuspensionDeflections );
+		_lastWheelSuspensionDeflectionsValid = false;
 	}
 
 	public void Shutdown()
@@ -227,6 +238,7 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 		var physicalSteeringWheelRange = view.ReadSingle( vehicleOffset + VehiclePhysicalSteeringWheelRangeOffset );
 		var absActive = view.ReadBoolean( vehicleOffset + VehicleAbsActiveOffset );
 		var tcActive = view.ReadBoolean( vehicleOffset + VehicleTcActiveOffset );
+		var wheelStates = ReadWheelStates( view, vehicleOffset, deltaTime );
 
 		var velocityX = (float) -localVelocityZ;
 		var velocityY = (float) -localVelocityX;
@@ -256,6 +268,18 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 			0f,
 			0f,
 			0f,
+			wheelStates.FrontAxleLateralPatchVelocity,
+			wheelStates.RearAxleLateralPatchVelocity,
+			wheelStates.FrontAxleLongitudinalPatchVelocity,
+			wheelStates.RearAxleLongitudinalPatchVelocity,
+			wheelStates.FrontAxleWheelRotation,
+			wheelStates.RearAxleWheelRotation,
+			wheelStates.CFShockVelocity,
+			wheelStates.CRShockVelocity,
+			wheelStates.LFShockVelocity,
+			wheelStates.LRShockVelocity,
+			wheelStates.RFShockVelocity,
+			wheelStates.RRShockVelocity,
 			gear,
 			maxGears,
 			rpm,
@@ -279,8 +303,8 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 			false,
 			absActive,
 			tcActive,
-			IRacingSdkEnum.TrkLoc.OnTrack,
-			IRacingSdkEnum.TrkSurf.Asphalt1Material );
+			MapTrackSurface( wheelStates.FrontAxleSurfaceType, wheelStates.RearAxleSurfaceType ),
+			MapTrackSurfaceMaterial( wheelStates.FrontAxleSurfaceType, wheelStates.RearAxleSurfaceType ) );
 
 		return true;
 	}
@@ -314,6 +338,75 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 		}
 
 		return Encoding.ASCII.GetString( bytes, 0, length ).Trim();
+	}
+
+	private WheelStateSnapshot ReadWheelStates( MemoryMappedViewAccessor view, int vehicleOffset, float deltaTime )
+	{
+		var suspensionVelocities = new float[ 4 ];
+		var lateralPatchVelocities = new float[ 4 ];
+		var longitudinalPatchVelocities = new float[ 4 ];
+		var wheelRotations = new float[ 4 ];
+		var surfaceTypes = new byte[ 4 ];
+
+		// LMU headers expose mTireLoad and mGripFract, but on the cars we tested those channels
+		// stayed pinned at zero, so we intentionally do not map them into MAIRA for now.
+
+		for ( var wheelIndex = 0; wheelIndex < 4; wheelIndex++ )
+		{
+			var wheelOffset = vehicleOffset + VehicleWheelArrayOffset + ( wheelIndex * VehicleWheelSize );
+			var suspensionDeflection = view.ReadDouble( wheelOffset + WheelSuspensionDeflectionOffset );
+
+			if ( _lastWheelSuspensionDeflectionsValid && ( deltaTime > 0f ) )
+			{
+				suspensionVelocities[ wheelIndex ] = (float) ( ( suspensionDeflection - _lastWheelSuspensionDeflections[ wheelIndex ] ) / deltaTime );
+			}
+
+			_lastWheelSuspensionDeflections[ wheelIndex ] = suspensionDeflection;
+			lateralPatchVelocities[ wheelIndex ] = (float) view.ReadDouble( wheelOffset + WheelLateralPatchVelocityOffset );
+			longitudinalPatchVelocities[ wheelIndex ] = (float) view.ReadDouble( wheelOffset + WheelLongitudinalPatchVelocityOffset );
+			wheelRotations[ wheelIndex ] = (float) view.ReadDouble( wheelOffset + WheelRotationOffset );
+			surfaceTypes[ wheelIndex ] = view.ReadByte( wheelOffset + WheelSurfaceTypeOffset );
+		}
+
+		_lastWheelSuspensionDeflectionsValid = true;
+
+		return new WheelStateSnapshot(
+			( MathF.Abs( lateralPatchVelocities[ 0 ] ) + MathF.Abs( lateralPatchVelocities[ 1 ] ) ) * 0.5f,
+			( MathF.Abs( lateralPatchVelocities[ 2 ] ) + MathF.Abs( lateralPatchVelocities[ 3 ] ) ) * 0.5f,
+			( MathF.Abs( longitudinalPatchVelocities[ 0 ] ) + MathF.Abs( longitudinalPatchVelocities[ 1 ] ) ) * 0.5f,
+			( MathF.Abs( longitudinalPatchVelocities[ 2 ] ) + MathF.Abs( longitudinalPatchVelocities[ 3 ] ) ) * 0.5f,
+			( MathF.Abs( wheelRotations[ 0 ] ) + MathF.Abs( wheelRotations[ 1 ] ) ) * 0.5f,
+			( MathF.Abs( wheelRotations[ 2 ] ) + MathF.Abs( wheelRotations[ 3 ] ) ) * 0.5f,
+			(byte) Math.Max( surfaceTypes[ 0 ], surfaceTypes[ 1 ] ),
+			(byte) Math.Max( surfaceTypes[ 2 ], surfaceTypes[ 3 ] ),
+			( suspensionVelocities[ 0 ] + suspensionVelocities[ 1 ] ) * 0.5f,
+			( suspensionVelocities[ 2 ] + suspensionVelocities[ 3 ] ) * 0.5f,
+			suspensionVelocities[ 0 ],
+			suspensionVelocities[ 2 ],
+			suspensionVelocities[ 1 ],
+			suspensionVelocities[ 3 ] );
+	}
+
+	private static IRacingSdkEnum.TrkLoc MapTrackSurface( byte frontSurfaceType, byte rearSurfaceType )
+	{
+		return ( frontSurfaceType == 0 ) && ( rearSurfaceType == 0 )
+			? IRacingSdkEnum.TrkLoc.OnTrack
+			: IRacingSdkEnum.TrkLoc.OffTrack;
+	}
+
+	private static IRacingSdkEnum.TrkSurf MapTrackSurfaceMaterial( byte frontSurfaceType, byte rearSurfaceType )
+	{
+		var surfaceType = Math.Max( frontSurfaceType, rearSurfaceType );
+
+		return surfaceType switch
+		{
+			2 => IRacingSdkEnum.TrkSurf.Grass1Material,
+			3 => IRacingSdkEnum.TrkSurf.Dirt1Material,
+			4 => IRacingSdkEnum.TrkSurf.Gravel1Material,
+			5 => IRacingSdkEnum.TrkSurf.Asphalt1Material,
+			6 => IRacingSdkEnum.TrkSurf.Concrete1Material,
+			_ => IRacingSdkEnum.TrkSurf.Asphalt1Material,
+		};
 	}
 
 	private static string FirstNonEmpty( params string[] values )
@@ -368,6 +461,18 @@ internal readonly record struct LmuTelemetrySnapshot(
 	float LapDist,
 	float LapDistPct,
 	float TrackLength,
+	float FrontAxleLateralPatchVelocity,
+	float RearAxleLateralPatchVelocity,
+	float FrontAxleLongitudinalPatchVelocity,
+	float RearAxleLongitudinalPatchVelocity,
+	float FrontAxleWheelRotation,
+	float RearAxleWheelRotation,
+	float CFShockVelocity,
+	float CRShockVelocity,
+	float LFShockVelocity,
+	float LRShockVelocity,
+	float RFShockVelocity,
+	float RRShockVelocity,
 	int Gear,
 	int NumForwardGears,
 	float RPM,
@@ -393,3 +498,19 @@ internal readonly record struct LmuTelemetrySnapshot(
 	bool TCactive,
 	IRacingSdkEnum.TrkLoc PlayerTrackSurface,
 	IRacingSdkEnum.TrkSurf PlayerTrackSurfaceMaterial );
+
+internal readonly record struct WheelStateSnapshot(
+	float FrontAxleLateralPatchVelocity,
+	float RearAxleLateralPatchVelocity,
+	float FrontAxleLongitudinalPatchVelocity,
+	float RearAxleLongitudinalPatchVelocity,
+	float FrontAxleWheelRotation,
+	float RearAxleWheelRotation,
+	byte FrontAxleSurfaceType,
+	byte RearAxleSurfaceType,
+	float CFShockVelocity,
+	float CRShockVelocity,
+	float LFShockVelocity,
+	float LRShockVelocity,
+	float RFShockVelocity,
+	float RRShockVelocity );

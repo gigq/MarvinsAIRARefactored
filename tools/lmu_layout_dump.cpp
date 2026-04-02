@@ -39,6 +39,16 @@ int main()
     std::cout << "offsetof(TelemInfoV01,mTCActive)=" << offsetof(TelemInfoV01, mTCActive) << "\n";
     std::cout << "offsetof(TelemInfoV01,mVehicleModel)=" << offsetof(TelemInfoV01, mVehicleModel) << "\n";
     std::cout << "offsetof(TelemInfoV01,mVehicleClass)=" << offsetof(TelemInfoV01, mVehicleClass) << "\n";
+    std::cout << "offsetof(TelemInfoV01,mWheel)=" << offsetof(TelemInfoV01, mWheel) << "\n";
+    std::cout << "sizeof(TelemWheelV01)=" << sizeof(TelemWheelV01) << "\n";
+    std::cout << "offsetof(TelemWheelV01,mSuspensionDeflection)=" << offsetof(TelemWheelV01, mSuspensionDeflection) << "\n";
+    std::cout << "offsetof(TelemWheelV01,mRotation)=" << offsetof(TelemWheelV01, mRotation) << "\n";
+    std::cout << "offsetof(TelemWheelV01,mLateralPatchVel)=" << offsetof(TelemWheelV01, mLateralPatchVel) << "\n";
+    std::cout << "offsetof(TelemWheelV01,mLongitudinalPatchVel)=" << offsetof(TelemWheelV01, mLongitudinalPatchVel) << "\n";
+    std::cout << "offsetof(TelemWheelV01,mLateralForce)=" << offsetof(TelemWheelV01, mLateralForce) << "\n";
+    std::cout << "offsetof(TelemWheelV01,mTireLoad)=" << offsetof(TelemWheelV01, mTireLoad) << "\n";
+    std::cout << "offsetof(TelemWheelV01,mGripFract)=" << offsetof(TelemWheelV01, mGripFract) << "\n";
+    std::cout << "offsetof(TelemWheelV01,mSurfaceType)=" << offsetof(TelemWheelV01, mSurfaceType) << "\n";
     std::cout << "offsetof(SharedMemoryScoringData,scoringInfo)=" << offsetof(SharedMemoryScoringData, scoringInfo) << "\n";
     std::cout << "offsetof(SharedMemoryScoringData,vehScoringInfo)=" << offsetof(SharedMemoryScoringData, vehScoringInfo) << "\n";
     std::cout << "sizeof(VehicleScoringInfoV01)=" << sizeof(VehicleScoringInfoV01) << "\n";

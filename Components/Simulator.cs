@@ -73,6 +73,12 @@ public partial class Simulator
 	public bool LoadNumTextures { get; private set; } = false;
 	public float LongAccel { get; private set; } = 0f;
 	public float[] LRShockVel_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
+	public float FrontAxleLateralPatchVelocity { get; private set; } = 0f;
+	public float RearAxleLateralPatchVelocity { get; private set; } = 0f;
+	public float FrontAxleLongitudinalPatchVelocity { get; private set; } = 0f;
+	public float RearAxleLongitudinalPatchVelocity { get; private set; } = 0f;
+	public float FrontAxleWheelRotation { get; private set; } = 0f;
+	public float RearAxleWheelRotation { get; private set; } = 0f;
 	public int NumForwardGears { get; private set; } = 0;
 	public IRacingSdkEnum.PaceMode PaceMode { get; private set; } = IRacingSdkEnum.PaceMode.NotPacing;
 	public int PlayerCarIdx { get; private set; } = 0;
@@ -791,6 +797,12 @@ public partial class Simulator
 		CurrentTireCompoundType = string.Empty;
 		DisplayUnits = 0;
 		FrameRate = 0f;
+		FrontAxleLateralPatchVelocity = 0f;
+		RearAxleLateralPatchVelocity = 0f;
+		FrontAxleLongitudinalPatchVelocity = 0f;
+		RearAxleLongitudinalPatchVelocity = 0f;
+		FrontAxleWheelRotation = 0f;
+		RearAxleWheelRotation = 0f;
 		Gear = 0;
 		GpuUsage = 0f;
 		LongitudinalGForce = 0f;
@@ -918,6 +930,12 @@ public partial class Simulator
 		Clutch = snapshot.Clutch;
 		DisplayUnits = 0;
 		FrameRate = 0f;
+		FrontAxleLateralPatchVelocity = snapshot.FrontAxleLateralPatchVelocity;
+		RearAxleLateralPatchVelocity = snapshot.RearAxleLateralPatchVelocity;
+		FrontAxleLongitudinalPatchVelocity = snapshot.FrontAxleLongitudinalPatchVelocity;
+		RearAxleLongitudinalPatchVelocity = snapshot.RearAxleLongitudinalPatchVelocity;
+		FrontAxleWheelRotation = snapshot.FrontAxleWheelRotation;
+		RearAxleWheelRotation = snapshot.RearAxleWheelRotation;
 		Gear = snapshot.Gear;
 		GpuUsage = 0f;
 		IsOnTrack = snapshot.IsOnTrack;
@@ -966,6 +984,12 @@ public partial class Simulator
 
 		for ( var i = 0; i < SteeringWheelTorque_ST.Length; i++ )
 		{
+			CFShockVel_ST[ i ] = snapshot.CFShockVelocity;
+			CRShockVel_ST[ i ] = snapshot.CRShockVelocity;
+			LFShockVel_ST[ i ] = snapshot.LFShockVelocity;
+			LRShockVel_ST[ i ] = snapshot.LRShockVelocity;
+			RFShockVel_ST[ i ] = snapshot.RFShockVelocity;
+			RRShockVel_ST[ i ] = snapshot.RRShockVelocity;
 			SteeringWheelTorque_ST[ i ] = snapshot.SteeringWheelTorque;
 		}
 
