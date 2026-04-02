@@ -7,6 +7,7 @@ using System.Windows.Threading;
 using System.Xml.Serialization;
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Components;
+using MarvinsAIRARefactored.SimSupport;
 using MarvinsAIRARefactored.Windows;
 
 using static MarvinsAIRARefactored.Windows.MainWindow;
@@ -132,7 +133,7 @@ public class Settings : INotifyPropertyChanged
 								{
 									var valueType = settingsPropertyValue?.GetType().Name ?? "null";
 
-									app.Logger.WriteLine( $"[Settings] Updating context setting {contextSettingsProperty.Name} to ({valueType}) {settingsPropertyValue} from setting ({context.WheelbaseGuid}|{context.CarName}|{context.TrackName}|{context.TrackConfigurationName}|{context.WetDryName})" );
+									app.Logger.WriteLine( $"[Settings] Updating context setting {contextSettingsProperty.Name} to ({valueType}) {settingsPropertyValue} from setting ({context.SimulatorId}|{context.WheelbaseGuid}|{context.CarName}|{context.TrackName}|{context.TrackConfigurationName}|{context.WetDryName})" );
 
 									contextSettingsProperty.SetValue( contextSettings, settingsPropertyValue );
 								}
@@ -140,7 +141,7 @@ public class Settings : INotifyPropertyChanged
 								{
 									var valueType = contextSettingsPropertyValue?.GetType().Name ?? "null";
 
-									app.Logger.WriteLine( $"[Settings] Updating setting {settingsProperty.Name} to ({valueType}) {contextSettingsPropertyValue} from context setting ({context.WheelbaseGuid}|{context.CarName}|{context.TrackName}|{context.TrackConfigurationName}|{context.WetDryName})" );
+									app.Logger.WriteLine( $"[Settings] Updating setting {settingsProperty.Name} to ({valueType}) {contextSettingsPropertyValue} from context setting ({context.SimulatorId}|{context.WheelbaseGuid}|{context.CarName}|{context.TrackName}|{context.TrackConfigurationName}|{context.WetDryName})" );
 
 									settingsProperty.SetValue( this, contextSettingsPropertyValue );
 								}
@@ -9777,6 +9778,46 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region App - Selected simulator
+
+	private SimId _appSelectedSimulator = SimId.IRacing;
+
+	public SimId AppSelectedSimulator
+	{
+		get => _appSelectedSimulator;
+
+		set
+		{
+			if ( value != _appSelectedSimulator )
+			{
+				var previousSim = _appSelectedSimulator;
+
+				_appSelectedSimulator = value;
+
+				var previousDefaultTradingPaintsFolder = SimRegistry.GetDefaultTradingPaintsFolder( previousSim );
+
+				if ( string.IsNullOrWhiteSpace( _tradingPaintsFolder ) || string.Equals( _tradingPaintsFolder, previousDefaultTradingPaintsFolder, StringComparison.OrdinalIgnoreCase ) )
+				{
+					TradingPaintsFolder = SimRegistry.GetDefaultTradingPaintsFolder( value );
+				}
+
+				OnPropertyChanged();
+
+				var app = App.Instance;
+
+				if ( app?.Ready == true )
+				{
+					app.SteeringEffects.RefreshCalibrationDirectory();
+					app.RecordingManager.ReloadForCurrentSimulator();
+					app.Simulator.ApplySelectedSimulator();
+					app.MainWindow.RefreshWindow();
+				}
+			}
+		}
+	}
+
+	#endregion
+
 	#region App - Topmost window enabled
 
 	private bool _appTopmostWindowEnabled = false;
@@ -10368,7 +10409,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region Trading paints - Folder
 
-	private string _tradingPaintsFolder = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.MyDocuments ), "iRacing", "paint" );
+	private string _tradingPaintsFolder = SimRegistry.GetDefaultTradingPaintsFolder( SimId.IRacing );
 
 	public string TradingPaintsFolder
 	{

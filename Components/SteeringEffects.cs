@@ -13,6 +13,7 @@ using Point = System.Windows.Point;
 
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Controls;
+using MarvinsAIRARefactored.SimSupport;
 using MarvinsAIRARefactored.Windows;
 
 namespace MarvinsAIRARefactored.Components;
@@ -21,7 +22,7 @@ public class SteeringEffects
 {
 	private const int UpdateInterval = 6;
 
-	public static string CalibrationDirectory { get; private set; } = Path.Combine( App.DocumentsFolder, "Calibration" );
+	public static string CalibrationDirectory { get; private set; } = App.GetSimulatorContentDirectory( SimId.IRacing, "Calibration" );
 
 	public enum SeatOfPantsAlgorithm
 	{
@@ -127,6 +128,21 @@ public class SteeringEffects
 		_calibrationGraphMaximumThresholdPen.Freeze();
 
 		app.Logger.WriteLine( "[SteeringEffects] <<< Constructor" );
+	}
+
+	public void RefreshCalibrationDirectory()
+	{
+		CalibrationDirectory = App.GetSimulatorContentDirectory( DataContext.DataContext.Instance.Settings.AppSelectedSimulator, "Calibration" );
+
+		if ( !Directory.Exists( CalibrationDirectory ) )
+		{
+			Directory.CreateDirectory( CalibrationDirectory );
+		}
+
+		if ( App.Instance?.Ready == true )
+		{
+			MainWindow._steeringEffectsPage.UpdateCalibrationFileNameOptions();
+		}
 	}
 
 	public void SimulatorDisconnected()

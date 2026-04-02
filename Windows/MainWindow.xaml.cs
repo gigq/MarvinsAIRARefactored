@@ -15,6 +15,7 @@ using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Components;
 using MarvinsAIRARefactored.Controls;
 using MarvinsAIRARefactored.Pages;
+using MarvinsAIRARefactored.SimSupport;
 
 namespace MarvinsAIRARefactored.Windows;
 
@@ -163,7 +164,9 @@ public partial class MainWindow : Window
 
 			app.SpeechToText.UpdateStrings();
 
+			_appSettingsPage.UpdateSimulatorOptions();
 			_appSettingsPage.UpdateDefaultPageOptions();
+			AppMenuPopup.RefreshAppMenuItems();
 
 #endif
 
@@ -182,6 +185,7 @@ public partial class MainWindow : Window
 			var app = App.Instance!;
 
 			var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+			var simDefinition = app.Simulator.CurrentSimDefinition;
 
 			var statusText1 = string.Empty;
 			var statusText2 = string.Empty;
@@ -216,6 +220,13 @@ public partial class MainWindow : Window
 				statusText4 = localization[ app.Simulator.WeatherDeclaredWet ? "Wet" : "Dry" ];
 
 				statusStyle = MairaStatusBar.StatusStyleEnum.Normal;
+			}
+			else if ( !simDefinition.Supports( SimFeature.TelemetryBackend ) )
+			{
+				statusText1 = simDefinition.DisplayName;
+				statusText2 = "Backend scaffolded";
+
+				statusStyle = MairaStatusBar.StatusStyleEnum.Warning;
 			}
 			else
 			{

@@ -12,6 +12,7 @@ using Timer = System.Timers.Timer;
 
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Components;
+using MarvinsAIRARefactored.SimSupport;
 using MarvinsAIRARefactored.Windows;
 
 namespace MarvinsAIRARefactored;
@@ -31,6 +32,23 @@ public partial class App : Application
 	public static string DocumentsFolder { get; } = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.MyDocuments ), AppName );
 
 	public static readonly string DevRootPath = GetDevRootPath();
+
+	public static string GetSimulatorDocumentsFolder( SimId simId )
+	{
+		var definition = SimRegistry.GetDefinition( simId );
+
+		if ( definition.UsesLegacyDocumentsLayout )
+		{
+			return DocumentsFolder;
+		}
+
+		return Path.Combine( DocumentsFolder, "Sims", definition.FolderName );
+	}
+
+	public static string GetSimulatorContentDirectory( SimId simId, string folderName )
+	{
+		return Path.Combine( GetSimulatorDocumentsFolder( simId ), folderName );
+	}
 
 	private static string GetDevRootPath( [CallerFilePath] string callerFile = "" )
 	{
@@ -246,6 +264,7 @@ public partial class App : Application
 				Logger.Initialize();
 				TopLevelWindow.Initialize();
 				SettingsFile.Initialize();
+				SteeringEffects.RefreshCalibrationDirectory();
 				AdminBoxx.Initialize();
 				AudioManager.Initialize();
 				Simulator.Initialize();
