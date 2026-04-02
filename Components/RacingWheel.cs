@@ -1504,7 +1504,7 @@ public class RacingWheel
 
 	public void Tick( App app )
 	{
-		if ( app.Simulator.SelectedSimId == SimSupport.SimId.LeMansUltimate )
+		if ( ( app.Simulator.SelectedSimId == SimSupport.SimId.LeMansUltimate ) && !app.Simulator.IsConnected )
 		{
 			app.Simulator.PollSelectedTelemetryBackend();
 		}

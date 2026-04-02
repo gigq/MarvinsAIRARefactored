@@ -10,7 +10,7 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 	private const string SharedMemoryMapName = "LMU_Data";
 	private static readonly TimeSpan DisconnectGracePeriod = TimeSpan.FromSeconds( 1 );
 	private const int GenericFfbTorqueOffset = 68;
-	private const float SteeringTorqueScale = 1.5f;
+	private const float SteeringTorqueScale = 0.9f;
 	private const float ParkingTorqueStartSpeed = 0.5f;
 	private const float ParkingTorqueFullSpeed = 3f;
 
