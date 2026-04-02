@@ -1,4 +1,5 @@
 ﻿
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -71,6 +72,7 @@ public class RacingWheel
 
 	private const int UpdateInterval = 6;
 	private const int MaxSteeringWheelTorque360HzIndex = Simulator.SamplesPerFrame360Hz + 1;
+	private const int LmuTorqueHistoryCapacity = 32;
 
 	private const float UnsuspendTimeMS = 1000f;
 	private const float FadeInTimeMS = 2000f;
@@ -115,6 +117,10 @@ public class RacingWheel
 	private float _vibrateOnABSTimerMS = 0f;
 
 	private readonly float[] _steeringWheelTorque360Hz = new float[ Simulator.SamplesPerFrame360Hz + 2 ];
+	private readonly float[] _lmuTorqueHistory = new float[ LmuTorqueHistoryCapacity ];
+	private readonly double[] _lmuTorqueHistoryTimestampsMS = new double[ LmuTorqueHistoryCapacity ];
+	private int _lmuTorqueHistoryWriteIndex = 0;
+	private int _lmuTorqueHistoryCount = 0;
 
 	private readonly float[,] _algorithmProperties = new float[ 2, 12 ];
 	private readonly Algorithm[] _lastAlgorithm = new Algorithm[ 2 ];
@@ -162,6 +168,98 @@ public class RacingWheel
 
 	private float _predictedSteeringWheelTorque60Hz = 0f;
 
+	private static double GetMonotonicMilliseconds()
+	{
+		return Stopwatch.GetTimestamp() * 1000.0 / Stopwatch.Frequency;
+	}
+
+	private void ResetLmuTorqueHistory()
+	{
+		Array.Clear( _lmuTorqueHistory );
+		Array.Clear( _lmuTorqueHistoryTimestampsMS );
+
+		_lmuTorqueHistoryWriteIndex = 0;
+		_lmuTorqueHistoryCount = 0;
+	}
+
+	private void AppendLmuTorqueSample( float torqueSample )
+	{
+		var timestampMS = GetMonotonicMilliseconds();
+
+		if ( _lmuTorqueHistoryCount > 0 )
+		{
+			var lastIndex = ( _lmuTorqueHistoryWriteIndex + LmuTorqueHistoryCapacity - 1 ) % LmuTorqueHistoryCapacity;
+			var lastTimestampMS = _lmuTorqueHistoryTimestampsMS[ lastIndex ];
+
+			if ( timestampMS <= lastTimestampMS )
+			{
+				timestampMS = lastTimestampMS + 0.001;
+			}
+		}
+
+		_lmuTorqueHistory[ _lmuTorqueHistoryWriteIndex ] = torqueSample;
+		_lmuTorqueHistoryTimestampsMS[ _lmuTorqueHistoryWriteIndex ] = timestampMS;
+
+		_lmuTorqueHistoryWriteIndex = ( _lmuTorqueHistoryWriteIndex + 1 ) % LmuTorqueHistoryCapacity;
+		_lmuTorqueHistoryCount = Math.Min( _lmuTorqueHistoryCount + 1, LmuTorqueHistoryCapacity );
+	}
+
+	private float GetLatestLmuTorqueSample()
+	{
+		if ( _lmuTorqueHistoryCount == 0 )
+		{
+			return 0f;
+		}
+
+		var latestIndex = ( _lmuTorqueHistoryWriteIndex + LmuTorqueHistoryCapacity - 1 ) % LmuTorqueHistoryCapacity;
+
+		return _lmuTorqueHistory[ latestIndex ];
+	}
+
+	private float SampleLmuTorqueHistory( double sampleTimestampMS )
+	{
+		if ( _lmuTorqueHistoryCount == 0 )
+		{
+			return 0f;
+		}
+
+		var oldestIndex = ( _lmuTorqueHistoryWriteIndex + LmuTorqueHistoryCapacity - _lmuTorqueHistoryCount ) % LmuTorqueHistoryCapacity;
+		var previousIndex = oldestIndex;
+		var previousTimestampMS = _lmuTorqueHistoryTimestampsMS[ previousIndex ];
+		var previousValue = _lmuTorqueHistory[ previousIndex ];
+
+		if ( sampleTimestampMS <= previousTimestampMS )
+		{
+			return previousValue;
+		}
+
+		for ( var i = 1; i < _lmuTorqueHistoryCount; i++ )
+		{
+			var currentIndex = ( oldestIndex + i ) % LmuTorqueHistoryCapacity;
+			var currentTimestampMS = _lmuTorqueHistoryTimestampsMS[ currentIndex ];
+			var currentValue = _lmuTorqueHistory[ currentIndex ];
+
+			if ( sampleTimestampMS <= currentTimestampMS )
+			{
+				var intervalMS = currentTimestampMS - previousTimestampMS;
+
+				if ( intervalMS <= 0.000001 )
+				{
+					return currentValue;
+				}
+
+				var lerpFactor = (float) ( ( sampleTimestampMS - previousTimestampMS ) / intervalMS );
+
+				return MathZ.Lerp( previousValue, currentValue, lerpFactor );
+			}
+
+			previousTimestampMS = currentTimestampMS;
+			previousValue = currentValue;
+		}
+
+		return GetLatestLmuTorqueSample();
+	}
+
 	public void Initialize()
 	{
 		var app = App.Instance!;
@@ -174,6 +272,7 @@ public class RacingWheel
 		app.Graph.SetLayerColors( Graph.LayerIndex.OutputTorque, 0f, 1f, 1f, 0f, 1f, 1f );
 
 		_algorithmPreviewGraphBase.Initialize( MainWindow._racingWheelPage.AlgorithmPreview_Image );
+		ResetLmuTorqueHistory();
 
 #if DEBUG
 
@@ -1088,88 +1187,105 @@ public class RacingWheel
 
 			// update steering wheel torque data
 
+			var usingLmuNativeStream = app.Simulator.SelectedSimId == SimSupport.SimId.LeMansUltimate;
+
 			if ( UpdateSteeringWheelTorqueBuffer )
 			{
 				if ( _usingSteeringWheelTorqueData )
 				{
-					_steeringWheelTorque360Hz[ 0 ] = _steeringWheelTorque360Hz[ 7 ];
-					_steeringWheelTorque360Hz[ 1 ] = app.Simulator.SteeringWheelTorque_ST[ 0 ];
-					_steeringWheelTorque360Hz[ 2 ] = app.Simulator.SteeringWheelTorque_ST[ 1 ];
-					_steeringWheelTorque360Hz[ 3 ] = app.Simulator.SteeringWheelTorque_ST[ 2 ];
-					_steeringWheelTorque360Hz[ 4 ] = app.Simulator.SteeringWheelTorque_ST[ 3 ];
-					_steeringWheelTorque360Hz[ 5 ] = app.Simulator.SteeringWheelTorque_ST[ 4 ];
-					_steeringWheelTorque360Hz[ 6 ] = app.Simulator.SteeringWheelTorque_ST[ 5 ];
-					_steeringWheelTorque360Hz[ 7 ] = app.Simulator.SteeringWheelTorque_ST[ 5 ];
-
-					// Run 60 Hz predictor
-
-					var predictedValue = settings.RacingWheelPredictionMode switch
+					if ( usingLmuNativeStream )
 					{
-						PredictionMode.PredictK1 => _ffbPredictorK1.Step( _steeringWheelTorque360Hz[ 6 ], app.DirectInput.ForceFeedbackWheelVelocity ),
-						PredictionMode.PredictK2 => _ffbPredictorK2.Step( _steeringWheelTorque360Hz[ 6 ], app.DirectInput.ForceFeedbackWheelVelocity ),
-						_ => _steeringWheelTorque360Hz[ 6 ],
-					};
+						AppendLmuTorqueSample( app.Simulator.SteeringWheelTorque_ST[ 5 ] );
+						_predictedSteeringWheelTorque60Hz = GetLatestLmuTorqueSample();
+					}
+					else
+					{
+						_steeringWheelTorque360Hz[ 0 ] = _steeringWheelTorque360Hz[ 7 ];
+						_steeringWheelTorque360Hz[ 1 ] = app.Simulator.SteeringWheelTorque_ST[ 0 ];
+						_steeringWheelTorque360Hz[ 2 ] = app.Simulator.SteeringWheelTorque_ST[ 1 ];
+						_steeringWheelTorque360Hz[ 3 ] = app.Simulator.SteeringWheelTorque_ST[ 2 ];
+						_steeringWheelTorque360Hz[ 4 ] = app.Simulator.SteeringWheelTorque_ST[ 3 ];
+						_steeringWheelTorque360Hz[ 5 ] = app.Simulator.SteeringWheelTorque_ST[ 4 ];
+						_steeringWheelTorque360Hz[ 6 ] = app.Simulator.SteeringWheelTorque_ST[ 5 ];
+						_steeringWheelTorque360Hz[ 7 ] = app.Simulator.SteeringWheelTorque_ST[ 5 ];
 
-					var unclampedDelta = predictedValue - _steeringWheelTorque360Hz[ 6 ];
-					var clampedDelta = Math.Clamp( unclampedDelta, -0.5f, 0.5f );
+						// Run 60 Hz predictor
 
-					_predictedSteeringWheelTorque60Hz = MathZ.Lerp( _steeringWheelTorque360Hz[ 6 ], _steeringWheelTorque360Hz[ 6 ] + clampedDelta, settings.RacingWheelPredictionBlend );
+						var predictedValue = settings.RacingWheelPredictionMode switch
+						{
+							PredictionMode.PredictK1 => _ffbPredictorK1.Step( _steeringWheelTorque360Hz[ 6 ], app.DirectInput.ForceFeedbackWheelVelocity ),
+							PredictionMode.PredictK2 => _ffbPredictorK2.Step( _steeringWheelTorque360Hz[ 6 ], app.DirectInput.ForceFeedbackWheelVelocity ),
+							_ => _steeringWheelTorque360Hz[ 6 ],
+						};
+
+						var unclampedDelta = predictedValue - _steeringWheelTorque360Hz[ 6 ];
+						var clampedDelta = Math.Clamp( unclampedDelta, -0.5f, 0.5f );
+
+						_predictedSteeringWheelTorque60Hz = MathZ.Lerp( _steeringWheelTorque360Hz[ 6 ], _steeringWheelTorque360Hz[ 6 ] + clampedDelta, settings.RacingWheelPredictionBlend );
 
 #if DEBUG
 
-					if ( ( _lastLapDistPct > 0.95f ) && ( app.Simulator.LapDistPct < 0.05f ) )
-					{
-						_lapNumber++;
-
-						var lapNumber = _lapNumber;
-
-						var snapshot = _predictorSampleArray.AsSpan( 0, _predictorSampleCount ).ToArray();
-
-						_predictorSampleCount = 0;
-
-						_ = Task.Run( async () =>
+						if ( ( _lastLapDistPct > 0.95f ) && ( app.Simulator.LapDistPct < 0.05f ) )
 						{
-							var path = Path.Combine( App.DocumentsFolder, "Predictor Data", $"Lap-{lapNumber}.csv" );
+							_lapNumber++;
 
-							try
+							var lapNumber = _lapNumber;
+
+							var snapshot = _predictorSampleArray.AsSpan( 0, _predictorSampleCount ).ToArray();
+
+							_predictorSampleCount = 0;
+
+							_ = Task.Run( async () =>
 							{
-								await DumpLapAsync( snapshot, path );
-							}
-							catch ( Exception exception )
-							{
-								app.Logger.WriteLine( $"[RacingWheel] Exception while dumping predictor data: {exception}" );
-							}
-						} );
-					}
+								var path = Path.Combine( App.DocumentsFolder, "Predictor Data", $"Lap-{lapNumber}.csv" );
 
-					if ( _predictorSampleCount < _predictorSampleArray.Length )
-					{
-						ref var predictorSample = ref _predictorSampleArray[ _predictorSampleCount++ ];
+								try
+								{
+									await DumpLapAsync( snapshot, path );
+								}
+								catch ( Exception exception )
+								{
+									app.Logger.WriteLine( $"[RacingWheel] Exception while dumping predictor data: {exception}" );
+								}
+							} );
+						}
 
-						predictorSample.TickCount = app.Simulator.IRSDK.Data.TickCount;
-						predictorSample.InputFFBSample = app.Simulator.SteeringWheelTorque_ST[ 5 ];
-						predictorSample.WheelVelocity = app.DirectInput.ForceFeedbackWheelVelocity;
-						predictorSample.PredictionMode = settings.RacingWheelPredictionMode;
-						predictorSample.PredictionBlend = settings.RacingWheelPredictionBlend;
-						predictorSample.PredictedValue = predictedValue;
-						predictorSample.DeltaClamped = clampedDelta != unclampedDelta;
-						predictorSample.OutputFFBSample = _predictedSteeringWheelTorque60Hz;
-					}
+						if ( _predictorSampleCount < _predictorSampleArray.Length )
+						{
+							ref var predictorSample = ref _predictorSampleArray[ _predictorSampleCount++ ];
 
-					_lastLapDistPct = app.Simulator.LapDistPct;
+							predictorSample.TickCount = app.Simulator.IRSDK.Data.TickCount;
+							predictorSample.InputFFBSample = app.Simulator.SteeringWheelTorque_ST[ 5 ];
+							predictorSample.WheelVelocity = app.DirectInput.ForceFeedbackWheelVelocity;
+							predictorSample.PredictionMode = settings.RacingWheelPredictionMode;
+							predictorSample.PredictionBlend = settings.RacingWheelPredictionBlend;
+							predictorSample.PredictedValue = predictedValue;
+							predictorSample.DeltaClamped = clampedDelta != unclampedDelta;
+							predictorSample.OutputFFBSample = _predictedSteeringWheelTorque60Hz;
+						}
+
+						_lastLapDistPct = app.Simulator.LapDistPct;
 
 #endif
+					}
 				}
 				else
 				{
-					_steeringWheelTorque360Hz[ 0 ] = 0f;
-					_steeringWheelTorque360Hz[ 1 ] = 0f;
-					_steeringWheelTorque360Hz[ 2 ] = 0f;
-					_steeringWheelTorque360Hz[ 3 ] = 0f;
-					_steeringWheelTorque360Hz[ 4 ] = 0f;
-					_steeringWheelTorque360Hz[ 5 ] = 0f;
-					_steeringWheelTorque360Hz[ 6 ] = 0f;
-					_steeringWheelTorque360Hz[ 7 ] = 0f;
+					if ( usingLmuNativeStream )
+					{
+						ResetLmuTorqueHistory();
+					}
+					else
+					{
+						_steeringWheelTorque360Hz[ 0 ] = 0f;
+						_steeringWheelTorque360Hz[ 1 ] = 0f;
+						_steeringWheelTorque360Hz[ 2 ] = 0f;
+						_steeringWheelTorque360Hz[ 3 ] = 0f;
+						_steeringWheelTorque360Hz[ 4 ] = 0f;
+						_steeringWheelTorque360Hz[ 5 ] = 0f;
+						_steeringWheelTorque360Hz[ 6 ] = 0f;
+						_steeringWheelTorque360Hz[ 7 ] = 0f;
+					}
 
 					_predictedSteeringWheelTorque60Hz = 0f;
 				}
@@ -1179,24 +1295,35 @@ public class RacingWheel
 				UpdateSteeringWheelTorqueBuffer = false;
 			}
 
-			// get next 60Hz and 360Hz steering wheel torque samples
+			// get next steering wheel torque samples
 
-			var steeringWheelTorque360HzIndex = 1f + ( _elapsedMilliseconds * 360f / 1000f );
+			float steeringWheelTorque60Hz;
+			float steeringWheelTorque500Hz;
 
-			var i1 = Math.Min( MaxSteeringWheelTorque360HzIndex, (int) MathF.Truncate( steeringWheelTorque360HzIndex ) );
-			var i2 = Math.Min( MaxSteeringWheelTorque360HzIndex, i1 + 1 );
-			var i3 = Math.Min( MaxSteeringWheelTorque360HzIndex, i2 + 1 );
-			var i0 = Math.Max( 0, i1 - 1 );
+			if ( usingLmuNativeStream )
+			{
+				steeringWheelTorque60Hz = GetLatestLmuTorqueSample();
+				steeringWheelTorque500Hz = _usingSteeringWheelTorqueData ? SampleLmuTorqueHistory( GetMonotonicMilliseconds() ) : 0f;
+			}
+			else
+			{
+				var steeringWheelTorque360HzIndex = 1f + ( _elapsedMilliseconds * 360f / 1000f );
 
-			var t = MathF.Min( 1f, steeringWheelTorque360HzIndex - i1 );
+				var i1 = Math.Min( MaxSteeringWheelTorque360HzIndex, (int) MathF.Truncate( steeringWheelTorque360HzIndex ) );
+				var i2 = Math.Min( MaxSteeringWheelTorque360HzIndex, i1 + 1 );
+				var i3 = Math.Min( MaxSteeringWheelTorque360HzIndex, i2 + 1 );
+				var i0 = Math.Max( 0, i1 - 1 );
 
-			var m0 = _steeringWheelTorque360Hz[ i0 ];
-			var m1 = _steeringWheelTorque360Hz[ i1 ];
-			var m2 = _steeringWheelTorque360Hz[ i2 ];
-			var m3 = _steeringWheelTorque360Hz[ i3 ];
+				var t = MathF.Min( 1f, steeringWheelTorque360HzIndex - i1 );
 
-			var steeringWheelTorque60Hz = _steeringWheelTorque360Hz[ 6 ];
-			var steeringWheelTorque500Hz = MathZ.InterpolateHermite( m0, m1, m2, m3, t );
+				var m0 = _steeringWheelTorque360Hz[ i0 ];
+				var m1 = _steeringWheelTorque360Hz[ i1 ];
+				var m2 = _steeringWheelTorque360Hz[ i2 ];
+				var m3 = _steeringWheelTorque360Hz[ i3 ];
+
+				steeringWheelTorque60Hz = _steeringWheelTorque360Hz[ 6 ];
+				steeringWheelTorque500Hz = MathZ.InterpolateHermite( m0, m1, m2, m3, t );
+			}
 
 			// update peak torque
 
