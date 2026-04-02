@@ -16,6 +16,9 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 
 	// Offsets below come from the local LMU shared-memory headers (pack=4) via tools/lmu_layout_dump.cpp.
 	private const int SharedMemoryTelemetryOffset = 128464;
+	private const int SharedMemoryScoringOffset = 1632;
+	private const int SharedMemoryScoringVehicleArrayOffset = SharedMemoryScoringOffset + 560;
+	private const int SharedMemoryScoringVehicleSize = 584;
 	private const int TelemetryPlayerVehicleIndexOffset = SharedMemoryTelemetryOffset + 1;
 	private const int TelemetryPlayerHasVehicleOffset = SharedMemoryTelemetryOffset + 2;
 	private const int TelemetryVehicleArrayOffset = SharedMemoryTelemetryOffset + 4;
@@ -41,6 +44,11 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 	private const int VehiclePhysicalSteeringWheelRangeOffset = 692;
 	private const int VehicleAbsActiveOffset = 746;
 	private const int VehicleTcActiveOffset = 747;
+	private const int VehicleModelOffset = 796;
+
+	private const int ScoringVehicleNameOffset = 36;
+	private const int ScoringVehicleClassOffset = 200;
+	private const int ScoringVehicleFilenameOffset = 544;
 
 	private bool _started = false;
 	private bool _openLogged = false;
@@ -187,7 +195,12 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 		var sessionTime = view.ReadDouble( vehicleOffset + VehicleElapsedTimeOffset );
 		var lap = view.ReadInt32( vehicleOffset + VehicleLapNumberOffset );
 		var vehicleName = ReadFixedString( view, vehicleOffset + VehicleNameOffset, 64 );
+		var vehicleModel = ReadFixedString( view, vehicleOffset + VehicleModelOffset, 30 );
 		var trackName = ReadFixedString( view, vehicleOffset + VehicleTrackNameOffset, 64 );
+		var scoringVehicleOffset = SharedMemoryScoringVehicleArrayOffset + ( playerVehicleIndex * SharedMemoryScoringVehicleSize );
+		var scoringVehicleName = ReadFixedString( view, scoringVehicleOffset + ScoringVehicleNameOffset, 64 );
+		var scoringVehicleClass = ReadFixedString( view, scoringVehicleOffset + ScoringVehicleClassOffset, 32 );
+		var scoringVehicleFilename = ReadFixedString( view, scoringVehicleOffset + ScoringVehicleFilenameOffset, 32 );
 
 		var localVelocityX = view.ReadDouble( vehicleOffset + VehicleLocalVelocityOffset );
 		var localVelocityY = view.ReadDouble( vehicleOffset + VehicleLocalVelocityOffset + 8 );
@@ -226,11 +239,15 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 		var parkingFade = Math.Clamp( ( forwardSpeed - ParkingTorqueStartSpeed ) / ( ParkingTorqueFullSpeed - ParkingTorqueStartSpeed ), 0f, 1f );
 		steeringTorque *= parkingFade;
 
+		var carDisplayName = FirstNonEmpty( vehicleName, scoringVehicleName, vehicleModel );
+		var carContextName = BuildCarContextName( vehicleModel, scoringVehicleClass, scoringVehicleFilename, carDisplayName );
+
 		LogSnapshotDiagnostics( sessionTime, playerVehicleIndex, steeringInput, genericFfbTorque, steeringTorque, forwardSpeed, throttle, brake, gear );
 
 		snapshot = new LmuTelemetrySnapshot(
 			deltaTime,
-			vehicleName,
+			carDisplayName,
+			carContextName,
 			trackName,
 			string.Empty,
 			true,
@@ -299,11 +316,50 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 		return Encoding.ASCII.GetString( bytes, 0, length ).Trim();
 	}
 
+	private static string FirstNonEmpty( params string[] values )
+	{
+		foreach ( var value in values )
+		{
+			if ( !string.IsNullOrWhiteSpace( value ) )
+			{
+				return value.Trim();
+			}
+		}
+
+		return string.Empty;
+	}
+
+	private static string BuildCarContextName( string vehicleModel, string vehicleClass, string scoringVehicleFilename, string carDisplayName )
+	{
+		if ( !string.IsNullOrWhiteSpace( vehicleModel ) )
+		{
+			return vehicleModel.Trim();
+		}
+
+		if ( !string.IsNullOrWhiteSpace( scoringVehicleFilename ) )
+		{
+			var normalizedFilename = Path.GetFileNameWithoutExtension( scoringVehicleFilename ).Replace( '_', ' ' ).Trim();
+
+			if ( normalizedFilename != string.Empty )
+			{
+				return normalizedFilename;
+			}
+		}
+
+		if ( !string.IsNullOrWhiteSpace( vehicleClass ) )
+		{
+			return vehicleClass.Trim();
+		}
+
+		return carDisplayName;
+	}
+
 }
 
 internal readonly record struct LmuTelemetrySnapshot(
 	float DeltaSeconds,
 	string CarScreenName,
+	string CarContextName,
 	string TrackDisplayName,
 	string UserName,
 	bool IsDrivingSession,

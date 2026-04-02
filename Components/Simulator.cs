@@ -46,6 +46,7 @@ public partial class Simulator
 	public bool[] CarIdxOnPitRoad { get; private set; } = new bool[ IRacingSdkConst.MaxNumCars ];
 	public int[] CarIdxPosition { get; private set; } = new int[ IRacingSdkConst.MaxNumCars ];
 	public string CarScreenName { get; private set; } = string.Empty;
+	public string CarContextName { get; private set; } = string.Empty;
 	public string CarSetupName { get; private set; } = string.Empty;
 	public float[] CFShockVel_ST { get; private set; } = new float[ SamplesPerFrame360Hz ];
 	public float Clutch { get; private set; } = 0f;
@@ -188,6 +189,11 @@ public partial class Simulator
 	private readonly float[] _rpmSpeedRatioAccumulator = new float[ MaxNumGears ];
 	private readonly int[] _rpmSpeedRatioSampleCount = new int[ MaxNumGears ];
 	private const int RpmSpeedRatioMinSamples = 20;
+	private readonly DataContext.ContextSwitches _fullContextSwitches = new( true, true, true, true, true );
+	private DataContext.Context? _activeSettingsContextLastFrame = null;
+	private string _carScreenNameLastFrame = string.Empty;
+	private string _trackDisplayNameLastFrame = string.Empty;
+	private string _trackConfigNameLastFrame = string.Empty;
 
 	private int _updateCounter = UpdateInterval + 5;
 
@@ -306,6 +312,7 @@ public partial class Simulator
 			if ( driver.CarIdx == sessionInfo.DriverInfo.DriverCarIdx )
 			{
 				CarScreenName = driver.CarScreenName ?? string.Empty;
+				CarContextName = CarScreenName;
 				UserName = driver.UserName ?? string.Empty;
 				break;
 			}
@@ -776,6 +783,7 @@ public partial class Simulator
 		BrakeABSactive = false;
 		Brake = 0f;
 		CarScreenName = string.Empty;
+		CarContextName = string.Empty;
 		CarSetupName = string.Empty;
 		Clutch = 0f;
 		CurrentRpmSpeedRatio = 0f;
@@ -856,6 +864,10 @@ public partial class Simulator
 		_isReplayPlayingLastFrame = null;
 		_sessionFlagsLastFrame = null;
 		_currentTireIndexLastFrame = null;
+		_activeSettingsContextLastFrame = null;
+		_carScreenNameLastFrame = string.Empty;
+		_trackDisplayNameLastFrame = string.Empty;
+		_trackConfigNameLastFrame = string.Empty;
 
 #if DEBUG
 
@@ -901,6 +913,7 @@ public partial class Simulator
 		BrakeABSactive = snapshot.ABSactive;
 		Brake = snapshot.Brake;
 		CarScreenName = snapshot.CarScreenName;
+		CarContextName = snapshot.CarContextName;
 		CarSetupName = string.Empty;
 		Clutch = snapshot.Clutch;
 		DisplayUnits = 0;
@@ -1029,19 +1042,28 @@ public partial class Simulator
 		LateralGForce = MathF.Abs( LatAccel ) * MathZ.OneOverG;
 
 		var settings = DataContext.DataContext.Instance.Settings;
+		var activeSettingsContext = new DataContext.Context( _fullContextSwitches );
 
-		if ( _weatherDeclaredWetLastFrame != null )
+		if ( ( _activeSettingsContextLastFrame == null ) || ( activeSettingsContext.CompareTo( _activeSettingsContextLastFrame ) != 0 ) )
 		{
-			if ( WeatherDeclaredWet != _weatherDeclaredWetLastFrame )
+			if ( !_waitingForFirstSessionInfo )
 			{
-				if ( !_waitingForFirstSessionInfo )
-				{
-					settings.UpdateSettings( false );
-				}
+				app.Logger.WriteLine( $"[Simulator] Active settings context changed to ({activeSettingsContext.SimulatorId}|{activeSettingsContext.WheelbaseGuid}|{activeSettingsContext.CarName}|{activeSettingsContext.TrackName}|{activeSettingsContext.TrackConfigurationName}|{activeSettingsContext.WetDryName})" );
+				settings.UpdateSettings( false );
 			}
 		}
 
+		_activeSettingsContextLastFrame = activeSettingsContext;
 		_weatherDeclaredWetLastFrame = WeatherDeclaredWet;
+
+		if ( ( CarScreenName != _carScreenNameLastFrame ) || ( TrackDisplayName != _trackDisplayNameLastFrame ) || ( TrackConfigName != _trackConfigNameLastFrame ) )
+		{
+			app.MainWindow.UpdateStatus();
+
+			_carScreenNameLastFrame = CarScreenName;
+			_trackDisplayNameLastFrame = TrackDisplayName;
+			_trackConfigNameLastFrame = TrackConfigName;
+		}
 
 		if ( SelectedSimId == SimId.IRacing && ( _carIdxTireCompoundDatum != null ) && ( PlayerCarIdx >= 0 ) && ( PlayerCarIdx < _carIdxTireCompoundDatum.Count ) )
 		{

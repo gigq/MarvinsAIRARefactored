@@ -34,9 +34,9 @@ public class Context : IComparable<Context?>
 
 		if ( contextSwitches.PerCar )
 		{
-			if ( ( app.Simulator.IsConnected ) && ( app.Simulator.CarScreenName != string.Empty ) )
+			if ( ( app.Simulator.IsConnected ) && ( app.Simulator.CarContextName != string.Empty ) )
 			{
-				CarName = app.Simulator.CarScreenName;
+				CarName = app.Simulator.CarContextName;
 			}
 		}
 

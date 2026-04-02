@@ -215,7 +215,24 @@ public partial class MainWindow : Window
 			}
 			else if ( app.Simulator.IsConnected )
 			{
-				statusText1 = app.Simulator.CarScreenName == string.Empty ? localization[ "Default" ] : app.Simulator.CarScreenName;
+				if ( ( app.Simulator.SelectedSimId == SimId.LeMansUltimate ) &&
+					 ( app.Simulator.CarContextName != string.Empty ) )
+				{
+					statusText1 = app.Simulator.CarContextName;
+				}
+				else if ( app.Simulator.CarScreenName != string.Empty )
+				{
+					statusText1 = app.Simulator.CarScreenName;
+				}
+				else if ( app.Simulator.CarContextName != string.Empty )
+				{
+					statusText1 = app.Simulator.CarContextName;
+				}
+				else
+				{
+					statusText1 = localization[ "Default" ];
+				}
+
 				statusText2 = app.Simulator.TrackDisplayName == string.Empty ? localization[ "Default" ] : app.Simulator.TrackDisplayName;
 				statusText3 = app.Simulator.TrackConfigName == string.Empty ? localization[ "Default" ] : app.Simulator.TrackConfigName;
 				statusText4 = localization[ app.Simulator.WeatherDeclaredWet ? "Wet" : "Dry" ];

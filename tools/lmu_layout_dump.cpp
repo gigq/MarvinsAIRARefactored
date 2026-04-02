@@ -37,5 +37,14 @@ int main()
     std::cout << "offsetof(TelemInfoV01,mPhysicalSteeringWheelRange)=" << offsetof(TelemInfoV01, mPhysicalSteeringWheelRange) << "\n";
     std::cout << "offsetof(TelemInfoV01,mABSActive)=" << offsetof(TelemInfoV01, mABSActive) << "\n";
     std::cout << "offsetof(TelemInfoV01,mTCActive)=" << offsetof(TelemInfoV01, mTCActive) << "\n";
+    std::cout << "offsetof(TelemInfoV01,mVehicleModel)=" << offsetof(TelemInfoV01, mVehicleModel) << "\n";
+    std::cout << "offsetof(TelemInfoV01,mVehicleClass)=" << offsetof(TelemInfoV01, mVehicleClass) << "\n";
+    std::cout << "offsetof(SharedMemoryScoringData,scoringInfo)=" << offsetof(SharedMemoryScoringData, scoringInfo) << "\n";
+    std::cout << "offsetof(SharedMemoryScoringData,vehScoringInfo)=" << offsetof(SharedMemoryScoringData, vehScoringInfo) << "\n";
+    std::cout << "sizeof(VehicleScoringInfoV01)=" << sizeof(VehicleScoringInfoV01) << "\n";
+    std::cout << "offsetof(VehicleScoringInfoV01,mVehicleName)=" << offsetof(VehicleScoringInfoV01, mVehicleName) << "\n";
+    std::cout << "offsetof(VehicleScoringInfoV01,mVehicleClass)=" << offsetof(VehicleScoringInfoV01, mVehicleClass) << "\n";
+    std::cout << "offsetof(VehicleScoringInfoV01,mPitGroup)=" << offsetof(VehicleScoringInfoV01, mPitGroup) << "\n";
+    std::cout << "offsetof(VehicleScoringInfoV01,mVehFilename)=" << offsetof(VehicleScoringInfoV01, mVehFilename) << "\n";
     return 0;
 }
