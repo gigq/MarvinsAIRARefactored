@@ -266,7 +266,7 @@ public partial class RacingWheelPage : UserControl
 			return localization[ "Multi360HzDetail" ];
 		}
 
-		return "Interpolated Detail Mix (~500 Hz)";
+		return "Surface Detail";
 	}
 
 	public void UpdateSteeringDeviceOptions()

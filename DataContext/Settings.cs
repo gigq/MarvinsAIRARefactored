@@ -1125,6 +1125,7 @@ public class Settings : INotifyPropertyChanged
                         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RacingWheelMultiFFBSourceSelection)));
                     }));
                 }
+                app.MainWindow.UpdateRacingWheelAlgorithmControls();
                 app.RacingWheel.UpdateAlgorithmPreview = true;
             }
         }

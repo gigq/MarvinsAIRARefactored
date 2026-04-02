@@ -402,7 +402,7 @@ public class RacingWheel
 
 			case MultiFFBSourceOptions.PresetSmoothVariableBlend:
 				settings.RacingWheelEnableSoftLimiter = true;
-				settings.RacingWheelMulti360HzDetail = 0.2f;
+				settings.RacingWheelMulti360HzDetail = 0f;
 				settings.RacingWheelMultiTorqueCompression = 0f;
 				settings.RacingWheelMultiEnableSlewPeakMode = true;
 				settings.RacingWheelMultiSlewRateReduction = 0f;

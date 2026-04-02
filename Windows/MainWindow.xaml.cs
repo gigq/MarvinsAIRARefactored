@@ -275,6 +275,9 @@ public partial class MainWindow : Window
 			var racingWheelCurbProtectionMairaGroupBoxVisibility = Visibility.Collapsed;
 
 			var useThirdRowSpacer = false;
+			var app = App.Instance!;
+			var selectedSimId = app.Simulator.SelectedSimId;
+			var selectedMultiFfbSource = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelMultiFFBSourceSelection;
 
 			switch ( MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelAlgorithm )
 			{
@@ -333,6 +336,12 @@ public partial class MainWindow : Window
 
 					useThirdRowSpacer = true;
 					break;
+			}
+
+			if ( ( selectedSimId == SimId.LeMansUltimate )
+				&& ( selectedMultiFfbSource is RacingWheel.MultiFFBSourceOptions.Native60Hz or RacingWheel.MultiFFBSourceOptions.Native360Hz ) )
+			{
+				racingWheelMulti360HzDetailVisibility = Visibility.Collapsed;
 			}
 
 			_racingWheelPage.PredictionMode_MairaComboBox.Visibility = racingWheelPredictionModeComboBoxVisibility;
