@@ -13,19 +13,20 @@ public partial class Simulator
 	public void ApplySelectedSimulator()
 	{
 		var app = App.Instance!;
+		var selectedBackend = GetSelectedTelemetryBackend();
 
 		app.Logger.WriteLine( $"[Simulator] ApplySelectedSimulator >>> {CurrentSimDefinition.DisplayName}" );
 
-		if ( SupportsSelectedSimulatorBackend )
+		foreach ( var backend in _telemetryBackends.Values )
 		{
-			if ( !_irsdk.IsStarted )
+			if ( ReferenceEquals( backend, selectedBackend ) && SupportsSelectedSimulatorBackend )
 			{
-				_irsdk.Start();
+				backend.Start();
 			}
-		}
-		else if ( _irsdk.IsStarted )
-		{
-			_irsdk.Stop();
+			else
+			{
+				backend.Stop();
+			}
 		}
 
 		app.Logger.WriteLine( "[Simulator] <<< ApplySelectedSimulator" );

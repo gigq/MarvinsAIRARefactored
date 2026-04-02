@@ -22,10 +22,10 @@ public static class SimRegistry
 			"Le Mans Ultimate",
 			"LeMansUltimate",
 			SimSupportLevel.Scaffolded,
-			SimFeature.None,
+			SimFeature.TelemetryBackend,
 			false,
 			"Le Mans Ultimate",
-			"The app shell, page gating, and file layout are prepared for an LMU backend, but the LMU telemetry adapter still needs to be implemented." )
+			"Experimental LMU telemetry is available through the shared-memory plugin path, while simulator diagnostics, Trading Paints, and other iRacing-specific features remain unsupported." )
 	};
 
 	public static IReadOnlyList<SimDefinition> Definitions { get; } = _definitions.Values.ToList().AsReadOnly();

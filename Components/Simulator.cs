@@ -1,6 +1,7 @@
 ﻿
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 using YamlDotNet.Serialization;
@@ -10,6 +11,7 @@ using PInvoke;
 using IRSDKSharper;
 
 using MarvinsAIRARefactored.Classes;
+using MarvinsAIRARefactored.Components.SimBackends;
 using MarvinsAIRARefactored.SimSupport;
 using MarvinsAIRARefactored.Windows;
 
@@ -24,6 +26,7 @@ public partial class Simulator
 	private const int MaxNumGears = 10;
 
 	private readonly IRacingSdk _irsdk = new();
+	private readonly IReadOnlyDictionary<SimId, ISimTelemetryBackend> _telemetryBackends;
 
 	public IRacingSdk IRSDK { get => _irsdk; }
 
@@ -50,7 +53,7 @@ public partial class Simulator
 	public float GpuUsage { get; private set; } = 0f;
 	public float LongitudinalGForce { get; private set; } = 0f;
 	public float LateralGForce { get; private set; } = 0f;
-	public bool IsConnected { get => _irsdk.IsConnected; }
+	public bool IsConnected => GetSelectedTelemetryBackend().IsConnected;
 	public bool IsOnTrack { get; private set; } = false;
 	public bool IsReplayPlaying { get; private set; } = false;
 	public int Lap { get; private set; } = 0;
@@ -182,18 +185,25 @@ public partial class Simulator
 
 	private int _updateCounter = UpdateInterval + 5;
 
+	public Simulator()
+	{
+		_telemetryBackends = new Dictionary<SimId, ISimTelemetryBackend>
+		{
+			[ SimId.IRacing ] = new IRacingTelemetryBackend( _irsdk, OnException, OnConnected, OnDisconnected, OnSessionInfo, OnTelemetryData, OnDebugLog ),
+			[ SimId.LeMansUltimate ] = new LmuTelemetryBackend( this )
+		};
+	}
+
 	public void Initialize()
 	{
 		var app = App.Instance!;
 
 		app.Logger.WriteLine( "[Simulator] Initialize >>>" );
 
-		_irsdk.OnException += OnException;
-		_irsdk.OnConnected += OnConnected;
-		_irsdk.OnDisconnected += OnDisconnected;
-		_irsdk.OnSessionInfo += OnSessionInfo;
-		_irsdk.OnTelemetryData += OnTelemetryData;
-		_irsdk.OnDebugLog += OnDebugLog;
+		foreach ( var backend in _telemetryBackends.Values )
+		{
+			backend.Initialize();
+		}
 
 		app.Logger.WriteLine( "[Simulator] <<< Initialize" );
 	}
@@ -204,13 +214,9 @@ public partial class Simulator
 
 		app.Logger.WriteLine( "[Simulator] Shutdown >>>" );
 
-		app.Logger.WriteLine( "[Simulator] Stopping IRSDKSharper" );
-
-		_irsdk.Stop();
-
-		while ( _irsdk.IsStarted )
+		foreach ( var backend in _telemetryBackends.Values )
 		{
-			Thread.Sleep( 50 );
+			backend.Shutdown();
 		}
 
 		app.Logger.WriteLine( "[Simulator] <<< Shutdown" );
@@ -223,6 +229,11 @@ public partial class Simulator
 
 	public IRacingSdkSessionInfo.DriverInfoModel.DriverModel? GetDriver( int carIdx )
 	{
+		if ( SelectedSimId != SimId.IRacing )
+		{
+			return null;
+		}
+
 		var sessionInfo = _irsdk.Data.SessionInfo;
 
 		if ( ( sessionInfo != null ) && ( sessionInfo.DriverInfo != null ) && ( sessionInfo.DriverInfo.Drivers != null ) )
@@ -246,168 +257,26 @@ public partial class Simulator
 
 	private void OnConnected()
 	{
-		var app = App.Instance!;
-
-		app.Logger.WriteLine( "[Simulator] OnConnected >>>" );
-
-		if ( CurrentSimDefinition.WindowTitle != null )
+		if ( SelectedSimId != SimId.IRacing )
 		{
-			WindowHandle = User32.FindWindow( null, CurrentSimDefinition.WindowTitle );
-		}
-		else
-		{
-			WindowHandle = null;
+			return;
 		}
 
-		app.MultimediaTimer.Suspend = false;
-
-		_waitingForFirstSessionInfo = true;
-
-		app.RacingWheel.ResetForceFeedback = true;
-
-		app.AdminBoxx.SimulatorConnected();
-
-#if !ADMINBOXX
-
-		app.SpeechToText.SimulatorConnected();
-
-#endif
-
-		Array.Clear( RPMSpeedRatios );
-		Array.Clear( _rpmSpeedRatioAccumulator );
-		Array.Clear( _rpmSpeedRatioSampleCount );
-
-		app.Logger.WriteLine( "[Simulator] <<< OnConnected" );
+		HandleBackendConnected( true );
 	}
 
 	private void OnDisconnected()
 	{
-		var app = App.Instance!;
-
-		app.Logger.WriteLine( "[Simulator] OnDisconnected >>>" );
-
-		app.RacingWheel.UseSteeringWheelTorqueData = false;
-
-		WindowHandle = null;
-
-		_telemetryDataInitialized = false;
-		_waitingForFirstSessionInfo = false;
-
-		AvailableTires = null;
-		BrakeABSactive = false;
-		Brake = 0f;
-		CarScreenName = string.Empty;
-		CarSetupName = string.Empty;
-		Clutch = 0f;
-		CurrentRpmSpeedRatio = 0f;
-		CurrentTireIndex = -1;
-		CurrentTireCompoundType = string.Empty;
-		DisplayUnits = 0;
-		Gear = 0;
-		LongitudinalGForce = 0f;
-		LateralGForce = 0f;
-		IsOnTrack = false;
-		IsReplayPlaying = false;
-		Lap = 0;
-		LapDist = 0f;
-		LapDistPct = 0f;
-		LastRadioTransmitCarIdx = -1;
-		LatAccel = 0f;
-		LoadNumTextures = false;
-		LongAccel = 0f;
-		NumForwardGears = 0;
-		PaceMode = IRacingSdkEnum.PaceMode.NotPacing;
-		PlayerCarIdx = 0;
-		PlayerTrackSurface = IRacingSdkEnum.TrkLoc.NotInWorld;
-		PlayerTrackSurfaceMaterial = IRacingSdkEnum.TrkSurf.SurfaceNotInWorld;
-		RadioTransmitCarIdx = -1;
-		ReplayFrameNumEnd = 1;
-		ReplayPlaySlowMotion = false;
-		ReplayPlaySpeed = 1;
-		RPM = 0f;
-		SessionFlags = 0;
-		SessionID = 0;
-		SessionNum = 0;
-		SessionTime = 0;
-		Speed = 0f;
-		ShiftLightsFirstRPM = 0f;
-		ShiftLightsShiftRPM = 0f;
-		SimMode = string.Empty;
-		SteeringFFBEnabled = false;
-		SteeringOffsetInDegrees = 0f;
-		SteeringRatio = 10f;
-		SteeringWheelAngle = 0f;
-		SteeringWheelAngleMax = 0f;
-		Throttle = 0f;
-		TrackDisplayName = string.Empty;
-		TrackConfigName = string.Empty;
-		TrackLength = 0f;
-		UserName = string.Empty;
-		Velocity = 0f;
-		VelocityX = 0f;
-		VelocityY = 0f;
-		VertAccel = 0f;
-		WasOnTrack = false;
-		WeatherDeclaredWet = false;
-		YawNorth = 0f;
-		YawRate = 0f;
-
-		Array.Clear( CFShockVel_ST );
-		Array.Clear( CRShockVel_ST );
-		Array.Clear( LFShockVel_ST );
-		Array.Clear( LRShockVel_ST );
-		Array.Clear( RFShockVel_ST );
-		Array.Clear( RRShockVel_ST );
-
-		Array.Clear( SteeringWheelTorque_ST );
-
-		Array.Clear( RPMSpeedRatios );
-		Array.Clear( _rpmSpeedRatioAccumulator );
-		Array.Clear( _rpmSpeedRatioSampleCount );
-
-		_tickCountLastFrame = null;
-		_weatherDeclaredWetLastFrame = null;
-		_isReplayPlayingLastFrame = null;
-		_sessionFlagsLastFrame = null;
-		_currentTireIndexLastFrame = null;
-
-#if DEBUG
-
-		_minMaxLogAccumulator = 0f;
-		_minFrameRate = float.MaxValue;
-		_maxFrameRate = float.MinValue;
-		_minGpuUsage = float.MaxValue;
-		_maxGpuUsage = float.MinValue;
-
-#endif
-
-		DataContext.DataContext.Instance.Settings.UpdateSettings( false );
-
-		app.AdminBoxx.SimulatorDisconnected();
-
-#if !ADMINBOXX
-
-		app.SteeringEffects.SimulatorDisconnected();
-		app.SpeechToText.SimulatorDisconnected();
-		app.TimingMarkers.Reset();
-
-		app.UpdateGripOMeterWindowVisibility();
-		app.UpdateSpeechToTextWindowVisibility();
-		app.UpdateGapMonitorWindowVisibility();
-
-#endif
-
-		app.MultimediaTimer.Suspend = true;
-
-		app.MainWindow.UpdateStatus();
-
-		_racingWheelPage.UpdateSteeringDeviceSection();
-
-		app.Logger.WriteLine( "[Simulator] <<< OnDisconnected" );
+		HandleBackendDisconnected();
 	}
 
 	private void OnSessionInfo()
 	{
+		if ( SelectedSimId != SimId.IRacing )
+		{
+			return;
+		}
+
 		var app = App.Instance!;
 
 		var sessionInfo = _irsdk.Data.SessionInfo;
@@ -548,6 +417,11 @@ public partial class Simulator
 
 	private void OnTelemetryData()
 	{
+		if ( SelectedSimId != SimId.IRacing )
+		{
+			return;
+		}
+
 		var app = App.Instance!;
 
 		// initialize telemetry data properties
@@ -641,13 +515,9 @@ public partial class Simulator
 
 		// poll directinput devices right before we process the algorithm (setting app.RacingWheel.UpdateSteeringWheelTorqueBuffer = true updates the prediction on the multimedia timer thread)
 
-		app.DirectInput.PollDevices( deltaSeconds );
-
 		// get next 360 Hz steering wheel torque samples
 
 		_irsdk.Data.GetFloatArray( _steeringWheelTorque_STDatum, SteeringWheelTorque_ST, 0, SteeringWheelTorque_ST.Length );
-
-		app.RacingWheel.UpdateSteeringWheelTorqueBuffer = true;
 
 		// save last frame values
 
@@ -758,189 +628,18 @@ public partial class Simulator
 			_irsdk.Data.GetFloatArray( _rrShockVel_STDatum, RRShockVel_ST, 0, RRShockVel_ST.Length );
 		}
 
-		// update racing wheel
-
-		app.RacingWheel.UseSteeringWheelTorqueData = IsOnTrack;
-
-		// update adminboxx
-
-		if ( IsReplayPlaying != _isReplayPlayingLastFrame )
-		{
-			app.AdminBoxx.ReplayPlayingChanged();
-		}
-
-		_isReplayPlayingLastFrame = IsReplayPlaying;
-
-		if ( SessionFlags != _sessionFlagsLastFrame )
-		{
-			app.AdminBoxx.SessionFlagsChanged();
-		}
-
-		_sessionFlagsLastFrame = SessionFlags;
-
-		// update speech-to-text
-
-		if ( RadioTransmitCarIdx != -1 )
-		{
-			LastRadioTransmitCarIdx = RadioTransmitCarIdx;
-		}
-
-		// update velocity
-
-		Velocity = MathF.Sqrt( VelocityX * VelocityX + VelocityY * VelocityY );
-
-		// calculate g forces (convert from m/s^2 to g's)
-
-		LongitudinalGForce = MathF.Abs( LongAccel ) * MathZ.OneOverG;
-		LateralGForce = MathF.Abs( LatAccel ) * MathZ.OneOverG;
-
-		// reload settings if "weather declared wet" property has changed
-
-		if ( _weatherDeclaredWetLastFrame != null )
-		{
-			if ( WeatherDeclaredWet != _weatherDeclaredWetLastFrame )
-			{
-				if ( !_waitingForFirstSessionInfo )
-				{
-					settings.UpdateSettings( false );
-				}
-			}
-		}
-
-		_weatherDeclaredWetLastFrame = WeatherDeclaredWet;
-
-		// get the current tire index and the current tire compound type
-
-		if ( ( PlayerCarIdx >= 0 ) && ( PlayerCarIdx < _carIdxTireCompoundDatum!.Count ) )
-		{
-			int[] carIdxTireCompounds = new int[ _carIdxTireCompoundDatum!.Count ];
-
-			_irsdk.Data.GetIntArray( _carIdxTireCompoundDatum, carIdxTireCompounds, 0, _carIdxTireCompoundDatum.Count );
-
-			CurrentTireIndex = carIdxTireCompounds[ PlayerCarIdx ]; // iracing's "carIdxTireCompound" data name is wrong - it should probably have been "carIdxTireIdx"
-
-			if ( _currentTireIndexLastFrame != null )
-			{
-				if ( CurrentTireIndex != _currentTireIndexLastFrame )
-				{
-					UpdateTireProperties();
-				}
-			}
-
-			_currentTireIndexLastFrame = CurrentTireIndex;
-		}
-
-		// crash protection processing
-
-		if ( IsOnTrack )
-		{
-			if ( ( settings.RacingWheelCrashProtectionDuration > 0f ) && ( settings.RacingWheelCrashProtectionForceReduction > 0f ) )
-			{
-				if ( settings.RacingWheelCrashProtectionLongitudalGForce < 20f )
-				{
-					if ( LongitudinalGForce >= settings.RacingWheelCrashProtectionLongitudalGForce )
-					{
-						app.RacingWheel.ActivateCrashProtection = true;
-					}
-				}
-
-				if ( settings.RacingWheelCrashProtectionLateralGForce < 20f )
-				{
-					if ( LateralGForce >= settings.RacingWheelCrashProtectionLateralGForce )
-					{
-						app.RacingWheel.ActivateCrashProtection = true;
-					}
-				}
-			}
-		}
-
-		// curb protection processing
-
-		if ( IsOnTrack )
-		{
-			if ( ( settings.RacingWheelCurbProtectionShockVelocity > 0f ) && ( settings.RacingWheelCurbProtectionDuration > 0f ) && ( settings.RacingWheelCurbProtectionForceReduction > 0f ) )
-			{
-				var maxShockVelocity = 0f;
-
-				for ( var i = 0; i < SamplesPerFrame360Hz; i++ )
-				{
-					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( CFShockVel_ST[ i ] ) );
-					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( CRShockVel_ST[ i ] ) );
-					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( LFShockVel_ST[ i ] ) );
-					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( LRShockVel_ST[ i ] ) );
-					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( RFShockVel_ST[ i ] ) );
-					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( RRShockVel_ST[ i ] ) );
-				}
-
-				if ( maxShockVelocity >= settings.RacingWheelCurbProtectionShockVelocity )
-				{
-					app.RacingWheel.ActivateCurbProtection = true;
-				}
-			}
-		}
-
-		// update rpm / speed ratios
-
-		if ( IsOnTrack && ( Gear > 0 ) && ( Clutch == 1f ) && ( RPM > 500f ) && ( VelocityX >= 10f * MathZ.MPHToMPS ) )
-		{
-			CurrentRpmSpeedRatio = VelocityX / RPM;
-
-			if ( ( Brake == 0f ) && ( VelocityY < 0.1f ) && ( PlayerTrackSurface == IRacingSdkEnum.TrkLoc.OnTrack ) )
-			{
-				if ( RPMSpeedRatios[ Gear ] == 0f )
-				{
-					// accumulate samples until we have enough to initialize
-
-					_rpmSpeedRatioAccumulator[ Gear ] += CurrentRpmSpeedRatio;
-					_rpmSpeedRatioSampleCount[ Gear ]++;
-
-					if ( _rpmSpeedRatioSampleCount[ Gear ] >= RpmSpeedRatioMinSamples )
-					{
-						RPMSpeedRatios[ Gear ] = _rpmSpeedRatioAccumulator[ Gear ] / _rpmSpeedRatioSampleCount[ Gear ];
-
-						_rpmSpeedRatioAccumulator[ Gear ] = 0f;
-						_rpmSpeedRatioSampleCount[ Gear ] = 0;
-					}
-				}
-				else
-				{
-					// converge to the current sample over approximately 15 seconds (~95% in 15s with rate=0.2)
-
-					var alpha = 1f - MathF.Exp( -deltaSeconds * 0.2f );
-
-					RPMSpeedRatios[ Gear ] = MathZ.Lerp( RPMSpeedRatios[ Gear ], CurrentRpmSpeedRatio, alpha );
-				}
-			}
-		}
-		else
-		{
-			CurrentRpmSpeedRatio = 0f;
-		}
-
-		// for ( var gear = 0; gear < Simulator.MaxNumGears; gear++ )
-		// {
-		// 	app.Debug.Message[ gear ] = $"RPM Speed Ratio Gear {gear}: {RPMSpeedRatios[ gear ] * 100f:F4}";
-		// }
-
-		// update visibility of overlays
-
-		if ( IsOnTrack != WasOnTrack )
-		{
-			app.UpdateGripOMeterWindowVisibility();
-			app.UpdateGapMonitorWindowVisibility();
-		}
-
-		// update steering effects
-
-		app.SteeringEffects.Update( app, deltaSeconds );
-
-		// trigger the app worker thread
-
-		app.TriggerWorkerThread();
+		FinalizeTelemetryFrame( app, deltaSeconds );
 	}
 
 	private void UpdateTireProperties()
 	{
+		if ( SelectedSimId != SimId.IRacing )
+		{
+			CurrentTireCompoundType = "unknown";
+			AvailableTires = null;
+			return;
+		}
+
 		var tireFound = false;
 
 		var sessionInfo = _irsdk.Data.SessionInfo;
@@ -983,6 +682,8 @@ public partial class Simulator
 
 	public void Tick( App app )
 	{
+		GetSelectedTelemetryBackend().Tick();
+
 		_updateCounter--;
 
 		if ( _updateCounter <= 0 )
@@ -1001,4 +702,400 @@ public partial class Simulator
 
 	[GeneratedRegex( @"([-+]?[0-9]*\.?[0-9]+)", RegexOptions.IgnoreCase, "en-US" )]
 	private static partial Regex TrackLengthRegex();
+
+	private ISimTelemetryBackend GetTelemetryBackend( SimId simId )
+	{
+		return _telemetryBackends.TryGetValue( simId, out var backend ) ? backend : _telemetryBackends[ SimId.IRacing ];
+	}
+
+	private ISimTelemetryBackend GetSelectedTelemetryBackend()
+	{
+		return GetTelemetryBackend( SelectedSimId );
+	}
+
+	internal void HandleBackendConnected()
+	{
+		HandleBackendConnected( false );
+	}
+
+	internal void HandleBackendDisconnected()
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[Simulator] OnDisconnected >>>" );
+
+		app.RacingWheel.UseSteeringWheelTorqueData = false;
+
+		WindowHandle = null;
+
+		_telemetryDataInitialized = false;
+		_waitingForFirstSessionInfo = false;
+
+		AvailableTires = null;
+		BrakeABSactive = false;
+		Brake = 0f;
+		CarScreenName = string.Empty;
+		CarSetupName = string.Empty;
+		Clutch = 0f;
+		CurrentRpmSpeedRatio = 0f;
+		CurrentTireIndex = -1;
+		CurrentTireCompoundType = string.Empty;
+		DisplayUnits = 0;
+		FrameRate = 0f;
+		Gear = 0;
+		GpuUsage = 0f;
+		LongitudinalGForce = 0f;
+		LateralGForce = 0f;
+		IsOnTrack = false;
+		IsReplayPlaying = false;
+		Lap = 0;
+		LapDist = 0f;
+		LapDistPct = 0f;
+		LastRadioTransmitCarIdx = -1;
+		LatAccel = 0f;
+		LeagueID = 0;
+		LoadNumTextures = false;
+		LongAccel = 0f;
+		NumForwardGears = 0;
+		PaceMode = IRacingSdkEnum.PaceMode.NotPacing;
+		PlayerCarIdx = -1;
+		PlayerTrackSurface = IRacingSdkEnum.TrkLoc.NotInWorld;
+		PlayerTrackSurfaceMaterial = IRacingSdkEnum.TrkSurf.SurfaceNotInWorld;
+		RadioTransmitCarIdx = -1;
+		ReplayFrameNumEnd = 1;
+		ReplayPlaySlowMotion = false;
+		ReplayPlaySpeed = 1;
+		RPM = 0f;
+		SessionFlags = 0;
+		SessionID = 0;
+		SessionNum = 0;
+		SessionTime = 0;
+		SeriesID = 0;
+		Speed = 0f;
+		ShiftLightsFirstRPM = 0f;
+		ShiftLightsShiftRPM = 0f;
+		SimMode = string.Empty;
+		SteeringFFBEnabled = false;
+		SteeringOffsetInDegrees = 0f;
+		SteeringRatio = 10f;
+		SteeringWheelAngle = 0f;
+		SteeringWheelAngleMax = 0f;
+		Throttle = 0f;
+		TimeOfDay = string.Empty;
+		TrackDisplayName = string.Empty;
+		TrackConfigName = string.Empty;
+		TrackLength = 0f;
+		UserName = string.Empty;
+		Velocity = 0f;
+		VelocityX = 0f;
+		VelocityY = 0f;
+		VertAccel = 0f;
+		WasOnTrack = false;
+		WeatherDeclaredWet = false;
+		YawNorth = 0f;
+		YawRate = 0f;
+
+		Array.Clear( CarIdxLap );
+		Array.Clear( CarIdxLapDistPct );
+		Array.Clear( CarIdxOnPitRoad );
+		Array.Clear( CarIdxPosition );
+		Array.Clear( CFShockVel_ST );
+		Array.Clear( CRShockVel_ST );
+		Array.Clear( LFShockVel_ST );
+		Array.Clear( LRShockVel_ST );
+		Array.Clear( RFShockVel_ST );
+		Array.Clear( RRShockVel_ST );
+		Array.Clear( SteeringWheelTorque_ST );
+		Array.Clear( RPMSpeedRatios );
+		Array.Clear( _rpmSpeedRatioAccumulator );
+		Array.Clear( _rpmSpeedRatioSampleCount );
+
+		_tickCountLastFrame = null;
+		_weatherDeclaredWetLastFrame = null;
+		_isReplayPlayingLastFrame = null;
+		_sessionFlagsLastFrame = null;
+		_currentTireIndexLastFrame = null;
+
+#if DEBUG
+
+		_minMaxLogAccumulator = 0f;
+		_minFrameRate = float.MaxValue;
+		_maxFrameRate = float.MinValue;
+		_minGpuUsage = float.MaxValue;
+		_maxGpuUsage = float.MinValue;
+
+#endif
+
+		DataContext.DataContext.Instance.Settings.UpdateSettings( false );
+
+		app.AdminBoxx.SimulatorDisconnected();
+
+#if !ADMINBOXX
+
+		app.SteeringEffects.SimulatorDisconnected();
+		app.SpeechToText.SimulatorDisconnected();
+		app.TimingMarkers.Reset();
+
+		app.UpdateGripOMeterWindowVisibility();
+		app.UpdateSpeechToTextWindowVisibility();
+		app.UpdateGapMonitorWindowVisibility();
+
+#endif
+
+		app.MultimediaTimer.Suspend = true;
+
+		app.MainWindow.UpdateStatus();
+
+		_racingWheelPage.UpdateSteeringDeviceSection();
+
+		app.Logger.WriteLine( "[Simulator] <<< OnDisconnected" );
+	}
+
+	internal void ApplyLmuTelemetry( LmuTelemetrySnapshot snapshot )
+	{
+		var app = App.Instance!;
+
+		WasOnTrack = IsOnTrack;
+
+		BrakeABSactive = false;
+		Brake = snapshot.Brake;
+		CarScreenName = snapshot.CarScreenName;
+		CarSetupName = string.Empty;
+		Clutch = snapshot.Clutch;
+		DisplayUnits = 0;
+		FrameRate = 0f;
+		Gear = snapshot.Gear;
+		GpuUsage = 0f;
+		IsOnTrack = snapshot.IsOnTrack;
+		IsReplayPlaying = false;
+		Lap = snapshot.Lap;
+		LapDist = snapshot.LapDist;
+		LapDistPct = snapshot.LapDistPct;
+		LatAccel = snapshot.LatAccel;
+		LeagueID = 0;
+		LoadNumTextures = false;
+		LongAccel = snapshot.LongAccel;
+		NumForwardGears = snapshot.NumForwardGears;
+		PaceMode = IRacingSdkEnum.PaceMode.NotPacing;
+		PlayerCarIdx = -1;
+		PlayerTrackSurface = snapshot.PlayerTrackSurface;
+		PlayerTrackSurfaceMaterial = snapshot.PlayerTrackSurfaceMaterial;
+		RadioTransmitCarIdx = -1;
+		ReplayFrameNumEnd = 1;
+		ReplayPlaySlowMotion = false;
+		ReplayPlaySpeed = 1;
+		RPM = snapshot.RPM;
+		SessionFlags = 0;
+		SessionNum = snapshot.SessionNum;
+		SessionTime = snapshot.SessionTime;
+		ShiftLightsFirstRPM = snapshot.ShiftLightsFirstRPM;
+		ShiftLightsShiftRPM = snapshot.ShiftLightsShiftRPM;
+		SimMode = snapshot.IsOnTrack ? "full" : string.Empty;
+		Speed = snapshot.Speed;
+		SteeringFFBEnabled = false;
+		SteeringOffsetInDegrees = 0f;
+		SteeringRatio = 10f;
+		SteeringWheelAngle = snapshot.SteeringWheelAngle;
+		SteeringWheelAngleMax = snapshot.SteeringWheelAngleMax;
+		Throttle = snapshot.Throttle;
+		TimeOfDay = string.Empty;
+		TrackDisplayName = snapshot.TrackDisplayName;
+		TrackConfigName = string.Empty;
+		TrackLength = snapshot.TrackLength;
+		UserName = snapshot.UserName;
+		VelocityX = snapshot.VelocityX;
+		VelocityY = snapshot.VelocityY;
+		VertAccel = snapshot.VertAccel;
+		WeatherDeclaredWet = snapshot.WeatherDeclaredWet;
+		YawNorth = 0f;
+		YawRate = snapshot.YawRate;
+
+		for ( var i = 0; i < SteeringWheelTorque_ST.Length; i++ )
+		{
+			SteeringWheelTorque_ST[ i ] = snapshot.SteeringWheelTorque;
+		}
+
+		FinalizeTelemetryFrame( app, snapshot.DeltaSeconds );
+	}
+
+	private void HandleBackendConnected( bool waitForFirstSessionInfo )
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[Simulator] OnConnected >>>" );
+
+		if ( CurrentSimDefinition.WindowTitle != null )
+		{
+			WindowHandle = User32.FindWindow( null, CurrentSimDefinition.WindowTitle );
+		}
+		else
+		{
+			WindowHandle = null;
+		}
+
+		app.MultimediaTimer.Suspend = false;
+
+		_waitingForFirstSessionInfo = waitForFirstSessionInfo;
+
+		app.RacingWheel.ResetForceFeedback = true;
+
+		app.AdminBoxx.SimulatorConnected();
+
+#if !ADMINBOXX
+
+		app.SpeechToText.SimulatorConnected();
+
+#endif
+
+		Array.Clear( RPMSpeedRatios );
+		Array.Clear( _rpmSpeedRatioAccumulator );
+		Array.Clear( _rpmSpeedRatioSampleCount );
+
+		app.MainWindow.UpdateStatus();
+
+		app.Logger.WriteLine( "[Simulator] <<< OnConnected" );
+	}
+
+	private void FinalizeTelemetryFrame( App app, float deltaSeconds )
+	{
+		app.DirectInput.PollDevices( deltaSeconds );
+		app.RacingWheel.UpdateSteeringWheelTorqueBuffer = true;
+		app.RacingWheel.UseSteeringWheelTorqueData = IsOnTrack;
+
+		if ( IsReplayPlaying != _isReplayPlayingLastFrame )
+		{
+			app.AdminBoxx.ReplayPlayingChanged();
+		}
+
+		_isReplayPlayingLastFrame = IsReplayPlaying;
+
+		if ( SessionFlags != _sessionFlagsLastFrame )
+		{
+			app.AdminBoxx.SessionFlagsChanged();
+		}
+
+		_sessionFlagsLastFrame = SessionFlags;
+
+		if ( RadioTransmitCarIdx != -1 )
+		{
+			LastRadioTransmitCarIdx = RadioTransmitCarIdx;
+		}
+
+		Velocity = MathF.Sqrt( VelocityX * VelocityX + VelocityY * VelocityY );
+
+		LongitudinalGForce = MathF.Abs( LongAccel ) * MathZ.OneOverG;
+		LateralGForce = MathF.Abs( LatAccel ) * MathZ.OneOverG;
+
+		var settings = DataContext.DataContext.Instance.Settings;
+
+		if ( _weatherDeclaredWetLastFrame != null )
+		{
+			if ( WeatherDeclaredWet != _weatherDeclaredWetLastFrame )
+			{
+				if ( !_waitingForFirstSessionInfo )
+				{
+					settings.UpdateSettings( false );
+				}
+			}
+		}
+
+		_weatherDeclaredWetLastFrame = WeatherDeclaredWet;
+
+		if ( SelectedSimId == SimId.IRacing && ( _carIdxTireCompoundDatum != null ) && ( PlayerCarIdx >= 0 ) && ( PlayerCarIdx < _carIdxTireCompoundDatum.Count ) )
+		{
+			int[] carIdxTireCompounds = new int[ _carIdxTireCompoundDatum.Count ];
+
+			_irsdk.Data.GetIntArray( _carIdxTireCompoundDatum, carIdxTireCompounds, 0, _carIdxTireCompoundDatum.Count );
+
+			CurrentTireIndex = carIdxTireCompounds[ PlayerCarIdx ];
+
+			if ( _currentTireIndexLastFrame != null )
+			{
+				if ( CurrentTireIndex != _currentTireIndexLastFrame )
+				{
+					UpdateTireProperties();
+				}
+			}
+
+			_currentTireIndexLastFrame = CurrentTireIndex;
+		}
+
+		if ( IsOnTrack )
+		{
+			if ( ( settings.RacingWheelCrashProtectionDuration > 0f ) && ( settings.RacingWheelCrashProtectionForceReduction > 0f ) )
+			{
+				if ( ( settings.RacingWheelCrashProtectionLongitudalGForce < 20f ) && ( LongitudinalGForce >= settings.RacingWheelCrashProtectionLongitudalGForce ) )
+				{
+					app.RacingWheel.ActivateCrashProtection = true;
+				}
+
+				if ( ( settings.RacingWheelCrashProtectionLateralGForce < 20f ) && ( LateralGForce >= settings.RacingWheelCrashProtectionLateralGForce ) )
+				{
+					app.RacingWheel.ActivateCrashProtection = true;
+				}
+			}
+		}
+
+		if ( IsOnTrack )
+		{
+			if ( ( settings.RacingWheelCurbProtectionShockVelocity > 0f ) && ( settings.RacingWheelCurbProtectionDuration > 0f ) && ( settings.RacingWheelCurbProtectionForceReduction > 0f ) )
+			{
+				var maxShockVelocity = 0f;
+
+				for ( var i = 0; i < SamplesPerFrame360Hz; i++ )
+				{
+					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( CFShockVel_ST[ i ] ) );
+					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( CRShockVel_ST[ i ] ) );
+					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( LFShockVel_ST[ i ] ) );
+					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( LRShockVel_ST[ i ] ) );
+					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( RFShockVel_ST[ i ] ) );
+					maxShockVelocity = MathF.Max( maxShockVelocity, MathF.Abs( RRShockVel_ST[ i ] ) );
+				}
+
+				if ( maxShockVelocity >= settings.RacingWheelCurbProtectionShockVelocity )
+				{
+					app.RacingWheel.ActivateCurbProtection = true;
+				}
+			}
+		}
+
+		if ( IsOnTrack && ( Gear > 0 ) && ( Clutch == 1f ) && ( RPM > 500f ) && ( VelocityX >= 10f * MathZ.MPHToMPS ) )
+		{
+			CurrentRpmSpeedRatio = VelocityX / RPM;
+
+			if ( ( Brake == 0f ) && ( VelocityY < 0.1f ) && ( PlayerTrackSurface == IRacingSdkEnum.TrkLoc.OnTrack ) )
+			{
+				if ( RPMSpeedRatios[ Gear ] == 0f )
+				{
+					_rpmSpeedRatioAccumulator[ Gear ] += CurrentRpmSpeedRatio;
+					_rpmSpeedRatioSampleCount[ Gear ]++;
+
+					if ( _rpmSpeedRatioSampleCount[ Gear ] >= RpmSpeedRatioMinSamples )
+					{
+						RPMSpeedRatios[ Gear ] = _rpmSpeedRatioAccumulator[ Gear ] / _rpmSpeedRatioSampleCount[ Gear ];
+						_rpmSpeedRatioAccumulator[ Gear ] = 0f;
+						_rpmSpeedRatioSampleCount[ Gear ] = 0;
+					}
+				}
+				else
+				{
+					var alpha = 1f - MathF.Exp( -deltaSeconds * 0.2f );
+					RPMSpeedRatios[ Gear ] = MathZ.Lerp( RPMSpeedRatios[ Gear ], CurrentRpmSpeedRatio, alpha );
+				}
+			}
+		}
+		else
+		{
+			CurrentRpmSpeedRatio = 0f;
+		}
+
+		if ( IsOnTrack != WasOnTrack )
+		{
+			app.UpdateGripOMeterWindowVisibility();
+			app.UpdateGapMonitorWindowVisibility();
+		}
+
+		app.SteeringEffects.Update( app, deltaSeconds );
+		app.TriggerWorkerThread();
+	}
 }

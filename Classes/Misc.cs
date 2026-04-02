@@ -12,7 +12,6 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
-using IWshRuntimeLibrary;
 using PInvoke;
 
 using Point = System.Windows.Point;
@@ -198,13 +197,14 @@ public class Misc
 		{
 			if ( !System.IO.File.Exists( shortcutPath ) )
 			{
-				var shell = new WshShell();
+				var shellType = Type.GetTypeFromProgID( "WScript.Shell" ) ?? throw new InvalidOperationException( "WScript.Shell is unavailable." );
+				var shell = Activator.CreateInstance( shellType ) ?? throw new InvalidOperationException( "Unable to create WScript.Shell." );
+				var shortcut = shellType.InvokeMember( "CreateShortcut", BindingFlags.InvokeMethod, null, shell, [ shortcutPath ] ) ?? throw new InvalidOperationException( "Unable to create startup shortcut." );
+				var shortcutType = shortcut.GetType();
 
-				var shortcut = (IWshShortcut) shell.CreateShortcut( shortcutPath );
-
-				shortcut.TargetPath = Environment.ProcessPath;
-				shortcut.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-				shortcut.Save();
+				shortcutType.InvokeMember( "TargetPath", BindingFlags.SetProperty, null, shortcut, [ Environment.ProcessPath ] );
+				shortcutType.InvokeMember( "WorkingDirectory", BindingFlags.SetProperty, null, shortcut, [ AppDomain.CurrentDomain.BaseDirectory ] );
+				shortcutType.InvokeMember( "Save", BindingFlags.InvokeMethod, null, shortcut, null );
 			}
 		}
 		else
