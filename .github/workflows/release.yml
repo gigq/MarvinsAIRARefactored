@@ -21,7 +21,7 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: Publish app
-        run: dotnet publish MarvinsAIRARefactored.csproj -c Release -r win-x64 --self-contained false -o bin\publish /p:Version=${{ github.ref_name }}
+        run: dotnet publish MarvinsAIRARefactored.csproj -c Release -r win-x64 --self-contained true -o bin\publish /p:Version=${{ github.ref_name }}
 
       - name: Install Inno Setup
         run: choco install innosetup --no-progress -y

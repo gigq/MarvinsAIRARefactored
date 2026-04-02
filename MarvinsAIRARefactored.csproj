@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <Version Condition="'$(Version)' == ''">2.0.360.1387</Version>
+    <Version Condition="'$(Version)' == ''">2.0.360.1388</Version>
     <InformationalVersion Condition="'$(InformationalVersion)' == ''">$(Version) (LMU fork, based on upstream 2.0.360.1386)</InformationalVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Platforms>AnyCPU;x64</Platforms>
