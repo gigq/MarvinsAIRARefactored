@@ -510,7 +510,15 @@ public partial class RacingWheelPage : UserControl
 
 			if ( app.DirectInput.ForceFeedbackInitialized )
 			{
-				SteeringDeviceFaultReason_TextBlock.Visibility = Visibility.Collapsed;
+				if ( app.Simulator.IsAutoSelecting && app.Simulator.IsConnected )
+				{
+					SteeringDeviceFaultReason_TextBlock.Text = SimRegistry.GetConnectedStatusText( app.Simulator.SelectedSimId );
+					SteeringDeviceFaultReason_TextBlock.Visibility = Visibility.Visible;
+				}
+				else
+				{
+					SteeringDeviceFaultReason_TextBlock.Visibility = Visibility.Collapsed;
+				}
 			}
 			else
 			{

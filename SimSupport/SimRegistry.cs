@@ -8,6 +8,15 @@ public static class SimRegistry
 {
 	private static readonly IReadOnlyDictionary<SimId, SimDefinition> _definitions = new Dictionary<SimId, SimDefinition>
 	{
+		[ SimId.Auto ] = new(
+			SimId.Auto,
+			"Auto detect",
+			"Auto",
+			SimSupportLevel.Supported,
+			0,
+			true,
+			null,
+			"Automatically detects a supported running simulator and switches MAIRA to it. If no supported simulator is running, MAIRA stays idle." ),
 		[ SimId.IRacing ] = new(
 			SimId.IRacing,
 			"iRacing",
@@ -42,9 +51,21 @@ public static class SimRegistry
 
 	public static string GetNotRunningStatusText( SimId simId )
 	{
+		if ( simId == SimId.Auto )
+		{
+			return "No supported simulator is running";
+		}
+
 		var definition = GetDefinition( simId );
 
 		return $"The {definition.DisplayName} simulator is not running";
+	}
+
+	public static string GetConnectedStatusText( SimId simId )
+	{
+		var definition = GetDefinition( simId );
+
+		return $"Connected to {definition.DisplayName}";
 	}
 
 	public static string GetReplayModeStatusText( SimId simId )

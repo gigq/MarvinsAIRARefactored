@@ -9796,14 +9796,23 @@ public class Settings : INotifyPropertyChanged
 
 				_appSelectedSimulator = value;
 
-				var previousDefaultTradingPaintsFolder = SimRegistry.GetDefaultTradingPaintsFolder( previousSim );
+				var previousDefaultTradingPaintsFolder = previousSim == SimId.Auto ? null : SimRegistry.GetDefaultTradingPaintsFolder( previousSim );
 
-				if ( string.IsNullOrWhiteSpace( _tradingPaintsFolder ) || string.Equals( _tradingPaintsFolder, previousDefaultTradingPaintsFolder, StringComparison.OrdinalIgnoreCase ) )
+				if ( ( value != SimId.Auto ) && ( string.IsNullOrWhiteSpace( _tradingPaintsFolder ) || ( previousDefaultTradingPaintsFolder != null && string.Equals( _tradingPaintsFolder, previousDefaultTradingPaintsFolder, StringComparison.OrdinalIgnoreCase ) ) ) )
 				{
 					TradingPaintsFolder = SimRegistry.GetDefaultTradingPaintsFolder( value );
 				}
 
+				var previousSuppressUpdatingOfContextSettings = SuppressUpdatingOfContextSettings;
+				SuppressUpdatingOfContextSettings = true;
+
 				OnPropertyChanged();
+
+				SuppressUpdatingOfContextSettings = previousSuppressUpdatingOfContextSettings;
+
+				// Switching simulators should restore that simulator's scoped settings instead of
+				// copying the previously selected simulator's live values into the new context.
+				UpdateSettings( false );
 
 				var app = App.Instance;
 

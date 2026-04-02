@@ -68,6 +68,7 @@ public partial class AppSettingsPage : UserControl
 
 		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
 		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+		var effectiveSimId = app.Simulator.SelectedSimId;
 
 		var defaultPageOptions = new Dictionary<MainWindow.AppPage, string>
 		{
@@ -87,10 +88,10 @@ public partial class AppSettingsPage : UserControl
 		};
 
 		var supportedDefaultPages = defaultPageOptions
-			.Where( keyValuePair => SimRegistry.SupportsPage( settings.AppSelectedSimulator, keyValuePair.Key ) )
+			.Where( keyValuePair => SimRegistry.SupportsPage( effectiveSimId, keyValuePair.Key ) )
 			.ToList();
 
-		if ( !SimRegistry.SupportsPage( settings.AppSelectedSimulator, settings.AppDefaultPage ) && ( supportedDefaultPages.Count > 0 ) )
+		if ( !SimRegistry.SupportsPage( effectiveSimId, settings.AppDefaultPage ) && ( supportedDefaultPages.Count > 0 ) )
 		{
 			settings.AppDefaultPage = supportedDefaultPages[ 0 ].Key;
 		}

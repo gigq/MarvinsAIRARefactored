@@ -132,7 +132,7 @@ public class SteeringEffects
 
 	public void RefreshCalibrationDirectory()
 	{
-		CalibrationDirectory = App.GetSimulatorContentDirectory( DataContext.DataContext.Instance.Settings.AppSelectedSimulator, "Calibration" );
+		CalibrationDirectory = App.GetSimulatorContentDirectory( App.Instance!.Simulator.ContextSimId, "Calibration" );
 
 		if ( !Directory.Exists( CalibrationDirectory ) )
 		{
@@ -223,6 +223,8 @@ public class SteeringEffects
 		// if both indices are the same (at exact int or at boundary), no need to blend
 
 		var expectedYawRateInDegreesPerSecond = 0f;
+		var useHeuristicLmuSlipModel = !_calibrationIsValid && ( app.Simulator.SelectedSimId == SimId.LeMansUltimate );
+		var hasHandlingReference = _calibrationIsValid || useHeuristicLmuSlipModel;
 
 		if ( _calibrationIsValid )
 		{
@@ -244,6 +246,24 @@ public class SteeringEffects
 
 		var deviation = yawRateInDegreesPerSecond - expectedYawRateInDegreesPerSecond;  // + => oversteer, - => understeer
 
+		if ( useHeuristicLmuSlipModel )
+		{
+			// LMU fallback when no calibration curve is available:
+			// compare steering demand to actual yaw response, then fold in lateral slip as an
+			// oversteer proxy so the existing effect stack can still operate without the circle-track workflow.
+			const float steeringDeadzoneDegrees = 8f;
+			const float steeringDemandScale = 0.0025f;
+
+			var steeringDemand = MathF.Max( 0f, MathF.Abs( steeringWheelAngleInDegrees ) - steeringDeadzoneDegrees ) * steeringDemandScale;
+			var yawResponse = yawRateInDegreesPerSecond;
+			var lateralSlipProxy = MathF.Atan2( MathF.Abs( app.Simulator.VelocityY ), Math.Max( MathF.Abs( app.Simulator.VelocityX ), 5f ) );
+
+			var understeerDeviation = MathF.Max( 0f, steeringDemand - yawResponse );
+			var oversteerDeviation = MathF.Max( 0f, MathF.Max( yawResponse - steeringDemand, lateralSlipProxy - steeringDemand * 0.5f ) );
+
+			deviation = ( oversteerDeviation >= understeerDeviation ) ? oversteerDeviation : -understeerDeviation;
+		}
+
 		var absDeviation = MathF.Abs( deviation );
 
 		// fade effects out at low speed
@@ -254,7 +274,7 @@ public class SteeringEffects
 
 		var understeerEffect = 0f;
 
-		if ( _calibrationIsValid )
+		if ( hasHandlingReference )
 		{
 			if ( ( deviation < 0f ) && ( absDeviation >= settings.SteeringEffectsUndersteerMinimumThreshold ) )
 			{
@@ -268,7 +288,7 @@ public class SteeringEffects
 
 		var oversteerEffect = 0f;
 
-		if ( _calibrationIsValid )
+		if ( hasHandlingReference )
 		{
 			if ( ( deviation > 0f ) && ( absDeviation >= settings.SteeringEffectsOversteerMinimumThreshold ) )
 			{

@@ -12,7 +12,7 @@ namespace MarvinsAIRARefactored.Components;
 
 public sealed class RecordingManager : IDisposable
 {
-	private string CurrentRecordingsDirectory => App.GetSimulatorContentDirectory( DataContext.DataContext.Instance.Settings.AppSelectedSimulator, "Recordings" );
+	private string CurrentRecordingsDirectory => App.GetSimulatorContentDirectory( App.Instance!.Simulator.ContextSimId, "Recordings" );
 
 	public Dictionary<string, Recording> Recordings { get; private set; } = [];
 

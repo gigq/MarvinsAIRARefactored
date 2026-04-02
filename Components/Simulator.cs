@@ -28,6 +28,9 @@ public partial class Simulator
 
 	private readonly IRacingSdk _irsdk = new();
 	private readonly IReadOnlyDictionary<SimId, ISimTelemetryBackend> _telemetryBackends;
+	private SimId? _autoDetectedSimId = null;
+	private SimId _contextSimId = SimId.IRacing;
+	private DateTime _nextAutoDetectionUtc = DateTime.MinValue;
 	private DateTime _nextBackendDiagnosticsLogUtc = DateTime.MinValue;
 	private int _backendTickMutex = 0;
 
@@ -56,7 +59,7 @@ public partial class Simulator
 	public float GpuUsage { get; private set; } = 0f;
 	public float LongitudinalGForce { get; private set; } = 0f;
 	public float LateralGForce { get; private set; } = 0f;
-	public bool IsConnected => GetSelectedTelemetryBackend().IsConnected;
+	public bool IsConnected => ( SelectedSimId != SimId.Auto ) && GetSelectedTelemetryBackend().IsConnected;
 	public bool IsOnTrack { get; private set; } = false;
 	public bool IsReplayPlaying { get; private set; } = false;
 	public int Lap { get; private set; } = 0;
@@ -685,15 +688,17 @@ public partial class Simulator
 
 	public void Tick( App app )
 	{
+		UpdateAutoDetectedSimulator( false );
+
 		var nowUtc = DateTime.UtcNow;
 
-		if ( nowUtc >= _nextBackendDiagnosticsLogUtc )
+		if ( ( SelectedSimId != SimId.Auto ) && ( nowUtc >= _nextBackendDiagnosticsLogUtc ) )
 		{
 			_nextBackendDiagnosticsLogUtc = nowUtc.AddSeconds( 1 );
 			app.Logger.WriteLine( $"[SimulatorTick] selected={SelectedSimId} backend={GetSelectedTelemetryBackend().GetType().Name}" );
 		}
 
-		if ( SelectedSimId != SimId.LeMansUltimate )
+		if ( ( SelectedSimId != SimId.Auto ) && ( SelectedSimId != SimId.LeMansUltimate ) )
 		{
 			PollSelectedTelemetryBackend();
 		}
@@ -724,6 +729,11 @@ public partial class Simulator
 
 	internal void PollSelectedTelemetryBackend()
 	{
+		if ( SelectedSimId == SimId.Auto )
+		{
+			return;
+		}
+
 		if ( Interlocked.Exchange( ref _backendTickMutex, 1 ) != 0 )
 		{
 			return;

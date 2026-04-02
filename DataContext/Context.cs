@@ -25,7 +25,7 @@ public class Context : IComparable<Context?>
 	{
 		var app = App.Instance!;
 
-		SimulatorId = DataContext.Instance.Settings.AppSelectedSimulator;
+		SimulatorId = app.Simulator.ContextSimId;
 
 		if ( contextSwitches.PerWheelbase )
 		{

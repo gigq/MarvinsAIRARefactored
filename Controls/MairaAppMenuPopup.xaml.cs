@@ -277,15 +277,16 @@ namespace MarvinsAIRARefactored.Controls
 #endif
 
 			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			var simIdForUi = App.Instance!.Simulator.SelectedSimId;
 			var hasExistingSelection = ( SelectedAppMenuItem != null ) && AppMenuItems.Any( appMenuItem => appMenuItem.AppPage == SelectedAppPage );
 			var selectedPage = hasExistingSelection ? SelectedAppPage : settings.AppDefaultPage;
 
-			if ( !SimRegistry.SupportsPage( settings.AppSelectedSimulator, selectedPage ) )
+			if ( !SimRegistry.SupportsPage( simIdForUi, selectedPage ) )
 			{
 				selectedPage = settings.AppDefaultPage;
 			}
 
-			if ( !SimRegistry.SupportsPage( settings.AppSelectedSimulator, selectedPage ) || !AppMenuItems.Any( appMenuItem => appMenuItem.AppPage == selectedPage ) )
+			if ( !SimRegistry.SupportsPage( simIdForUi, selectedPage ) || !AppMenuItems.Any( appMenuItem => appMenuItem.AppPage == selectedPage ) )
 			{
 				selectedPage = AppMenuItems.First().AppPage;
 			}
@@ -323,9 +324,9 @@ namespace MarvinsAIRARefactored.Controls
 
 		private void AddAppMenuItemIfSupported( AppPage appPage, UserControl pageUserControl )
 		{
-			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			var simIdForUi = App.Instance!.Simulator.SelectedSimId;
 
-			if ( SimRegistry.SupportsPage( settings.AppSelectedSimulator, appPage ) )
+			if ( SimRegistry.SupportsPage( simIdForUi, appPage ) )
 			{
 				AppMenuItems.Add( new AppMenuItem
 				{

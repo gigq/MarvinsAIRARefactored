@@ -222,6 +222,12 @@ public partial class MainWindow : Window
 
 				statusStyle = MairaStatusBar.StatusStyleEnum.Normal;
 			}
+			else if ( simDefinition.Id == SimId.Auto )
+			{
+				statusText1 = SimRegistry.GetNotRunningStatusText( SimId.Auto );
+
+				statusStyle = MairaStatusBar.StatusStyleEnum.Error;
+			}
 			else if ( !simDefinition.Supports( SimFeature.TelemetryBackend ) )
 			{
 				statusText1 = simDefinition.DisplayName;
@@ -231,7 +237,7 @@ public partial class MainWindow : Window
 			}
 			else
 			{
-				statusText1 = SimRegistry.GetNotRunningStatusText( simDefinition.Id );
+				statusText1 = SimRegistry.GetNotRunningStatusText( app.Simulator.SelectedSimId );
 
 				statusStyle = MairaStatusBar.StatusStyleEnum.Error;
 			}

@@ -60,6 +60,7 @@ public partial class App : Application
 
 	private static readonly IReadOnlyDictionary<string, SimId> _simulatorArgumentMap = new Dictionary<string, SimId>( StringComparer.OrdinalIgnoreCase )
 	{
+		[ "auto" ] = SimId.Auto,
 		[ "iracing" ] = SimId.IRacing,
 		[ "i-racing" ] = SimId.IRacing,
 		[ "lmu" ] = SimId.LeMansUltimate,

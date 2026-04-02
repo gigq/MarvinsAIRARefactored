@@ -10,6 +10,7 @@ using UserControl = System.Windows.Controls.UserControl;
 using MarvinsAIRARefactored.Classes;
 using MarvinsAIRARefactored.Components;
 using MarvinsAIRARefactored.Controls;
+using MarvinsAIRARefactored.SimSupport;
 
 namespace MarvinsAIRARefactored.Pages;
 
@@ -167,6 +168,8 @@ public partial class SteeringEffectsPage : UserControl
 			CalibrationFileName_MairaComboBox.OffValue = string.Empty;
 		} );
 
+		CalibrationFileNameChanged( settings.SteeringEffectsCalibrationFileName != string.Empty );
+
 		app.Logger.WriteLine( "[SteeringEffectsPage] <<< UpdateCalibrationFileNameOptions" );
 	}
 
@@ -263,11 +266,14 @@ public partial class SteeringEffectsPage : UserControl
 	public void CalibrationFileNameChanged( bool isSelected )
 	{
 		var app = App.Instance!;
+		var requiresCalibration = app.Simulator.SelectedSimId != SimId.LeMansUltimate;
 
 		app.Dispatcher.InvokeAsync( () =>
 		{
-			Understeer_CalibrationFileWarning.Visibility = isSelected ? Visibility.Collapsed : Visibility.Visible;
-			Oversteer_CalibrationFileWarning.Visibility = isSelected ? Visibility.Collapsed : Visibility.Visible;
+			var visibility = ( requiresCalibration && !isSelected ) ? Visibility.Visible : Visibility.Collapsed;
+
+			Understeer_CalibrationFileWarning.Visibility = visibility;
+			Oversteer_CalibrationFileWarning.Visibility = visibility;
 		} );
 	}
 
