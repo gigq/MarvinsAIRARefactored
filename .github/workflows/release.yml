@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '2.0.*'
+
+jobs:
+  build-release:
+    runs-on: windows-2022
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Publish app
+        run: dotnet publish MarvinsAIRARefactored.csproj -c Release -r win-x64 --self-contained false -o bin\publish /p:Version=${{ github.ref_name }}
+
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: Build installer
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "InnoSetup\MarvinsAIRA.iss"'
+        shell: powershell
+
+      - name: Create portable zip
+        shell: powershell
+        run: |
+          $version = (Get-Item 'bin\publish\MarvinsAIRARefactored.exe').VersionInfo.FileVersion
+          New-Item -ItemType Directory -Path 'artifacts\release' -Force | Out-Null
+          Compress-Archive -Path 'bin\publish\*' -DestinationPath "artifacts\release\MAIRA-Refactored-LMU-Fork-$version-win-x64.zip" -Force
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/release/*.exe
+            artifacts/release/*.zip
+          generate_release_notes: true
