@@ -42,6 +42,7 @@ public class RacingWheel
 		PresetReduceBigBumps,
 		PresetBasicFFB,
 		PresetBalancedFFB,
+		PresetSmoothVariableBlend,
 		_Dummy1_,
 		_Dummy2_
 	};
@@ -397,6 +398,16 @@ public class RacingWheel
 				settings.RacingWheelMultiSlewRateReduction = 0.1f * ( 1f - MathZ.Saturate( ( 8f - settings.RacingWheelWheelForce ) / 6f ) );
 				settings.RacingWheelMultiDetailGain = 0f;
 				settings.RacingWheelMultiOutputSmoothing = 0.08f;
+				break;
+
+			case MultiFFBSourceOptions.PresetSmoothVariableBlend:
+				settings.RacingWheelEnableSoftLimiter = true;
+				settings.RacingWheelMulti360HzDetail = 0.2f;
+				settings.RacingWheelMultiTorqueCompression = 0f;
+				settings.RacingWheelMultiEnableSlewPeakMode = true;
+				settings.RacingWheelMultiSlewRateReduction = 0f;
+				settings.RacingWheelMultiDetailGain = 0f;
+				settings.RacingWheelMultiOutputSmoothing = 0f;
 				break;
 		}
 	}

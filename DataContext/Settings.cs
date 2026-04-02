@@ -1098,10 +1098,11 @@ public class Settings : INotifyPropertyChanged
                             RacingWheelMultiFFBSourceSelection = RacingWheel.MultiFFBSourceOptions.Hybrid10;
                             break;
 
-						case RacingWheel.MultiFFBSourceOptions.HybridVariable30:
+                        case RacingWheel.MultiFFBSourceOptions.HybridVariable30:
                         case RacingWheel.MultiFFBSourceOptions.DefaultsHybridVariable30:
                         case RacingWheel.MultiFFBSourceOptions.PresetBasicFFB:
                         case RacingWheel.MultiFFBSourceOptions.PresetBalancedFFB:
+                        case RacingWheel.MultiFFBSourceOptions.PresetSmoothVariableBlend:
                             RacingWheelMultiFFBSourceSelection = RacingWheel.MultiFFBSourceOptions.HybridVariable30;
                             break;
 

@@ -1561,6 +1561,10 @@
     <value>(Preset) Core tire feedback, moderate surface detail</value>
     <comment>Settings targeting a balance between tire feedback and surface detail</comment>
   </data>
+  <data name="PresetSmoothVariableBlend" xml:space="preserve">
+    <value>(Preset) Smooth variable blend, 20% detail mix</value>
+    <comment>Settings targeting a smoother hybrid blend with low interpolated detail</comment>
+  </data>
   <data name="PresetBoostDetail" xml:space="preserve">
     <value>(Preset) Moderately boost FFB Dynamics</value>
     <comment>Settings to boost FFB Dynamics</comment>
