@@ -989,6 +989,10 @@
     <value>Wheel Centering Strength</value>
     <comment>Racing wheel</comment>
   </data>
+  <data name="StraightLineStability" xml:space="preserve">
+    <value>Straight-Line Stability</value>
+    <comment>Racing wheel</comment>
+  </data>
   <data name="CenterWheelWhileRacing" xml:space="preserve">
     <value>Center wheel while racing</value>
     <comment>Racing wheel</comment>

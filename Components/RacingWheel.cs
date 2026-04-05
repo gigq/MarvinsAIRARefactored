@@ -1530,6 +1530,25 @@ public class RacingWheel
 				outputTorque += MathZ.Lerp( app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelFriction, 0f, parkedFactor );
 			}
 
+			// apply a narrow straight-line damping assist for LMU to calm hands-off
+			// oscillation without adding broad friction while cornering.
+
+			if ( ( app.Simulator.SelectedSimId == SimSupport.SimId.LeMansUltimate ) && ( settings.RacingWheelStraightLineStability > 0f ) && app.Simulator.IsOnTrack )
+			{
+				var speedFactor = MathZ.Saturate( ( app.Simulator.Velocity - 12f ) / 18f );
+				var centerAngleRange = MathF.Max( 0.5f, app.Simulator.SteeringWheelAngleMax * 0.06f );
+				var centerFactor = 1f - MathZ.Saturate( MathF.Abs( app.Simulator.SteeringWheelAngle ) / centerAngleRange );
+				var lateralAccelFactor = 1f - MathZ.Saturate( MathF.Abs( app.Simulator.LatAccel ) / ( MathZ.OneG * 0.35f ) );
+				var yawRateFactor = 1f - MathZ.Saturate( MathF.Abs( app.Simulator.YawRate ) / 0.35f );
+				var lateralVelocityFactor = 1f - MathZ.Saturate( MathF.Abs( app.Simulator.VelocityY ) / 1.5f );
+				var straightLineStabilityFactor = speedFactor * centerFactor * lateralAccelFactor * yawRateFactor * lateralVelocityFactor;
+
+				if ( straightLineStabilityFactor > 0f )
+				{
+					outputTorque += app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelStraightLineStability * straightLineStabilityFactor;
+				}
+			}
+
 			// apply parked friction torque
 
 			if ( settings.RacingWheelParkedFriction > 0f )

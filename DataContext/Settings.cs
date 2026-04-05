@@ -2374,6 +2374,60 @@ public class Settings : INotifyPropertyChanged
 
 	#endregion
 
+	#region Racing wheel - Straight line stability
+
+	private float _racingWheelStraightLineStability = 0f;
+
+	public float RacingWheelStraightLineStability
+	{
+		get => _racingWheelStraightLineStability;
+
+		set
+		{
+			value = MathZ.Saturate( value );
+
+			if ( value != _racingWheelStraightLineStability )
+			{
+				_racingWheelStraightLineStability = value;
+
+				OnPropertyChanged();
+			}
+
+			if ( _racingWheelStraightLineStability == 0f )
+			{
+				RacingWheelStraightLineStabilityString = DataContext.Instance.Localization[ "OFF" ];
+			}
+			else
+			{
+				RacingWheelStraightLineStabilityString = $"{_racingWheelStraightLineStability * 100f:F0}{DataContext.Instance.Localization[ "Percent" ]}";
+			}
+		}
+	}
+
+	private string _racingWheelStraightLineStabilityString = string.Empty;
+
+	[XmlIgnore]
+	public string RacingWheelStraightLineStabilityString
+	{
+		get => _racingWheelStraightLineStabilityString;
+
+		set
+		{
+			if ( value != _racingWheelStraightLineStabilityString )
+			{
+				_racingWheelStraightLineStabilityString = value;
+
+				OnPropertyChanged();
+			}
+		}
+	}
+
+	public ContextSwitches RacingWheelStraightLineStabilityContextSwitches { get; set; } = new( true, true, false, false, false );
+	public ButtonMappings RacingWheelStraightLineStabilityPlusButtonMappings { get; set; } = new();
+	public ButtonMappings RacingWheelStraightLineStabilityMinusButtonMappings { get; set; } = new();
+
+	#endregion
+
 	#region Racing wheel - Gear change vibrate strength
 
 	private float _racingWheelGearChangeVibrateStrength = 0.0f;
