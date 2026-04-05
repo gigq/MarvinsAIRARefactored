@@ -2376,7 +2376,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region Racing wheel - Straight line stability
 
-	private float _racingWheelStraightLineStability = 0f;
+	private float _racingWheelStraightLineStability = 1f;
 
 	public float RacingWheelStraightLineStability
 	{

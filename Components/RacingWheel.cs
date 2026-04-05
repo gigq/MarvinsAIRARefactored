@@ -116,6 +116,11 @@ public class RacingWheel
 	private float _seatOfPantsEffectTimerMS = 0f;
 	private float _vibrateOnGearChangeTimerMS = 0f;
 	private float _vibrateOnABSTimerMS = 0f;
+	private float _straightLineStabilityLatchTimerMS = 0f;
+	private float _straightLineStabilityAlternationTimerMS = 0f;
+	private int _straightLineStabilityAlternationCount = 0;
+	private int _straightLineStabilityLastVelocitySign = 0;
+	private float _straightLineStabilityFilteredTorque = 0f;
 
 	private readonly float[] _steeringWheelTorque360Hz = new float[ Simulator.SamplesPerFrame360Hz + 2 ];
 	private readonly float[] _lmuTorqueHistory = new float[ LmuTorqueHistoryCapacity ];
@@ -1536,17 +1541,133 @@ public class RacingWheel
 			if ( ( app.Simulator.SelectedSimId == SimSupport.SimId.LeMansUltimate ) && ( settings.RacingWheelStraightLineStability > 0f ) && app.Simulator.IsOnTrack )
 			{
 				var speedFactor = MathZ.Saturate( ( app.Simulator.Velocity - 12f ) / 18f );
-				var centerAngleRange = MathF.Max( 0.5f, app.Simulator.SteeringWheelAngleMax * 0.06f );
-				var centerFactor = 1f - MathZ.Saturate( MathF.Abs( app.Simulator.SteeringWheelAngle ) / centerAngleRange );
 				var lateralAccelFactor = 1f - MathZ.Saturate( MathF.Abs( app.Simulator.LatAccel ) / ( MathZ.OneG * 0.35f ) );
 				var yawRateFactor = 1f - MathZ.Saturate( MathF.Abs( app.Simulator.YawRate ) / 0.35f );
 				var lateralVelocityFactor = 1f - MathZ.Saturate( MathF.Abs( app.Simulator.VelocityY ) / 1.5f );
-				var straightLineStabilityFactor = speedFactor * centerFactor * lateralAccelFactor * yawRateFactor * lateralVelocityFactor;
+				var straightDrivingFactor = speedFactor * lateralAccelFactor * yawRateFactor * lateralVelocityFactor;
+				var highSpeedOscillationFactor = speedFactor
+					* ( 1f - MathZ.Saturate( MathF.Abs( app.Simulator.LatAccel ) / ( MathZ.OneG * 0.8f ) ) )
+					* ( 1f - MathZ.Saturate( MathF.Abs( app.Simulator.YawRate ) / 0.45f ) )
+					* ( 1f - MathZ.Saturate( MathF.Abs( app.Simulator.VelocityY ) / 0.9f ) );
+				var angleAbs = MathF.Abs( app.Simulator.SteeringWheelAngle );
+				var centerAngleRange = MathF.Max( 0.5f, app.Simulator.SteeringWheelAngleMax * 0.06f );
+				var captureAngleRange = MathF.Max( centerAngleRange * 2.5f, app.Simulator.SteeringWheelAngleMax * 0.15f );
+				var wideCaptureAngleRange = MathF.Max( captureAngleRange * 2.75f, app.Simulator.SteeringWheelAngleMax * 0.45f );
+				var centerFactor = 1f - MathZ.Saturate( angleAbs / centerAngleRange );
+				var captureFactor = 1f - MathZ.Saturate( angleAbs / captureAngleRange );
+				var wideCaptureFactor = 1f - MathZ.Saturate( angleAbs / wideCaptureAngleRange );
+				var wheelVelocity = app.DirectInput.ForceFeedbackWheelVelocity;
+				var wheelVelocityAbs = MathF.Abs( wheelVelocity );
+				var currentVelocitySign = wheelVelocityAbs > 0.02f ? Math.Sign( wheelVelocity ) : 0;
+				var oscillationVelocityFactor = MathZ.Saturate( ( wheelVelocityAbs - 0.08f ) / 0.4f );
+				var oscillationAngleFactor = MathZ.Saturate( ( angleAbs - centerAngleRange * 0.8f ) / MathF.Max( captureAngleRange * 1.2f, 0.25f ) );
+				var oscillationPersistenceFactor = MathF.Max( oscillationVelocityFactor, oscillationAngleFactor );
+
+				if ( _straightLineStabilityAlternationTimerMS > 0f )
+				{
+					_straightLineStabilityAlternationTimerMS = MathF.Max( 0f, _straightLineStabilityAlternationTimerMS - deltaMilliseconds );
+
+					if ( _straightLineStabilityAlternationTimerMS <= 0f )
+					{
+						_straightLineStabilityAlternationCount = 0;
+					}
+				}
+
+				if ( _straightLineStabilityLatchTimerMS > 0f )
+				{
+					_straightLineStabilityLatchTimerMS = MathF.Max( 0f, _straightLineStabilityLatchTimerMS - deltaMilliseconds );
+				}
+
+				if ( ( straightDrivingFactor > 0.35f ) && ( captureFactor > 0f ) && ( wheelVelocityAbs > 0.02f ) )
+				{
+					if ( ( currentVelocitySign != 0 ) && ( _straightLineStabilityLastVelocitySign != 0 ) && ( currentVelocitySign != _straightLineStabilityLastVelocitySign ) )
+					{
+						_straightLineStabilityAlternationCount++;
+						_straightLineStabilityAlternationTimerMS = 250f;
+
+						if ( _straightLineStabilityAlternationCount >= 2 )
+						{
+							_straightLineStabilityLatchTimerMS = 700f;
+						}
+					}
+
+					if ( currentVelocitySign != 0 )
+					{
+						_straightLineStabilityLastVelocitySign = currentVelocitySign;
+					}
+				}
+				else if ( wheelVelocityAbs < 0.01f )
+				{
+					_straightLineStabilityLastVelocitySign = 0;
+				}
+
+				if ( ( highSpeedOscillationFactor > 0.35f ) && ( wideCaptureFactor > 0f ) && ( wheelVelocityAbs > 0.55f ) )
+				{
+					_straightLineStabilityLatchTimerMS = MathF.Max( _straightLineStabilityLatchTimerMS, 900f );
+				}
+
+				if ( ( _straightLineStabilityLatchTimerMS > 0f )
+					&& ( speedFactor > 0.3f )
+					&& ( oscillationPersistenceFactor > 0.15f )
+					&& ( MathF.Max( straightDrivingFactor, highSpeedOscillationFactor ) > 0.08f ) )
+				{
+					_straightLineStabilityLatchTimerMS = MathF.Max(
+						_straightLineStabilityLatchTimerMS,
+						MathZ.Lerp( 400f, 1000f, oscillationPersistenceFactor ) );
+				}
+
+				var baseStraightLineStabilityFactor = straightDrivingFactor * centerFactor;
+				var latchedStraightLineStabilityFactor = 0f;
+				var oscillationSuppressionFactor = 0f;
+
+				if ( _straightLineStabilityLatchTimerMS > 0f )
+				{
+					var latchFade = MathZ.Saturate( _straightLineStabilityLatchTimerMS / 1000f );
+					var recoveryDrivingFactor = MathF.Max( highSpeedOscillationFactor, speedFactor * ( 0.25f + 0.55f * oscillationPersistenceFactor ) );
+					var recoveryCaptureFactor = MathF.Max( wideCaptureFactor, 0.2f + oscillationAngleFactor * 0.55f );
+					var latchedDrivingFactor = MathF.Max( straightDrivingFactor, recoveryDrivingFactor );
+					var latchedCaptureFactor = MathF.Max( captureFactor, recoveryCaptureFactor );
+					latchedStraightLineStabilityFactor = latchedDrivingFactor * latchedCaptureFactor * latchFade;
+				}
+
+				var straightLineStabilityFactor = MathF.Max( baseStraightLineStabilityFactor, latchedStraightLineStabilityFactor );
+
+				if ( ( MathF.Max( straightDrivingFactor, highSpeedOscillationFactor ) > 0f ) && ( MathF.Max( captureFactor, wideCaptureFactor ) > 0f ) )
+				{
+					var filteredTorqueBlend = MathZ.Lerp( 0.08f, 0.2f, MathF.Max( straightDrivingFactor * captureFactor, highSpeedOscillationFactor * wideCaptureFactor ) );
+					_straightLineStabilityFilteredTorque = MathZ.Lerp( _straightLineStabilityFilteredTorque, outputTorque, filteredTorqueBlend );
+
+					if ( _straightLineStabilityLatchTimerMS > 0f )
+					{
+						var latchFade = MathZ.Saturate( _straightLineStabilityLatchTimerMS / 1000f );
+						var suppressionDriveFactor = MathF.Max( straightDrivingFactor * captureFactor, highSpeedOscillationFactor * wideCaptureFactor );
+						var recoverySuppressionFactor = MathF.Max(
+							highSpeedOscillationFactor * MathF.Max( wideCaptureFactor, 0.3f ),
+							speedFactor * oscillationPersistenceFactor * ( 0.3f + 0.5f * oscillationAngleFactor ) );
+						suppressionDriveFactor = MathF.Max( suppressionDriveFactor, recoverySuppressionFactor );
+						oscillationSuppressionFactor = MathZ.Saturate( settings.RacingWheelStraightLineStability * suppressionDriveFactor * ( 0.9f + 0.7f * latchFade ) );
+						outputTorque = MathZ.Lerp( outputTorque, _straightLineStabilityFilteredTorque, oscillationSuppressionFactor );
+					}
+				}
+				else
+				{
+					_straightLineStabilityFilteredTorque = outputTorque;
+				}
 
 				if ( straightLineStabilityFactor > 0f )
 				{
-					outputTorque += app.DirectInput.ForceFeedbackWheelVelocity * settings.RacingWheelStraightLineStability * straightLineStabilityFactor;
+					var latchBoost = _straightLineStabilityLatchTimerMS > 0f ? 1.75f : 1f;
+					outputTorque += wheelVelocity * settings.RacingWheelStraightLineStability * latchBoost * straightLineStabilityFactor;
 				}
+
+			}
+			else
+			{
+				_straightLineStabilityLatchTimerMS = 0f;
+				_straightLineStabilityAlternationTimerMS = 0f;
+				_straightLineStabilityAlternationCount = 0;
+				_straightLineStabilityLastVelocitySign = 0;
+				_straightLineStabilityFilteredTorque = 0f;
 			}
 
 			// apply parked friction torque
