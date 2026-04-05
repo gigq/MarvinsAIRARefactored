@@ -149,9 +149,18 @@ public class SteeringEffects
 	{
 		DataContext.DataContext.Instance.Settings.SteeringEffectsCalibrationFileName = string.Empty;
 
+		ResetTransientEffects();
 		ClearCalibration();
 
 		MainWindow._steeringEffectsPage.UpdateCalibrationFileNameOptions();
+	}
+
+	public void ResetTransientEffects()
+	{
+		UndersteerEffect = 0f;
+		OversteerEffect = 0f;
+		SeatOfPantsEffect = 0f;
+		SkidSlip = 0f;
 	}
 
 	public void Update( App app, float deltaSeconds )

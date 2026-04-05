@@ -61,6 +61,7 @@ public partial class Simulator
 	public float LongitudinalGForce { get; private set; } = 0f;
 	public float LateralGForce { get; private set; } = 0f;
 	public bool IsConnected => ( SelectedSimId != SimId.Auto ) && GetSelectedTelemetryBackend().IsConnected;
+	public bool HasLiveTelemetry { get; private set; } = false;
 	public bool IsOnTrack { get; private set; } = false;
 	public bool IsReplayPlaying { get; private set; } = false;
 	public int Lap { get; private set; } = 0;
@@ -779,6 +780,7 @@ public partial class Simulator
 		app.Logger.WriteLine( "[Simulator] OnDisconnected >>>" );
 
 		app.RacingWheel.UseSteeringWheelTorqueData = false;
+		HasLiveTelemetry = false;
 
 		WindowHandle = null;
 
@@ -920,6 +922,7 @@ public partial class Simulator
 	{
 		var app = App.Instance!;
 
+		HasLiveTelemetry = true;
 		WasOnTrack = IsOnTrack;
 
 		BrakeABSactive = snapshot.ABSactive;
@@ -1012,6 +1015,7 @@ public partial class Simulator
 		}
 
 		app.MultimediaTimer.Suspend = false;
+		HasLiveTelemetry = false;
 
 		_waitingForFirstSessionInfo = waitForFirstSessionInfo;
 
@@ -1035,11 +1039,37 @@ public partial class Simulator
 		app.Logger.WriteLine( "[Simulator] <<< OnConnected" );
 	}
 
+	internal void HandleBackendTelemetryStalled()
+	{
+		if ( !HasLiveTelemetry )
+		{
+			return;
+		}
+
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[Simulator] Telemetry stalled; clearing live force-feedback signal" );
+
+		HasLiveTelemetry = false;
+		app.RacingWheel.UseSteeringWheelTorqueData = false;
+
+		Array.Clear( SteeringWheelTorque_ST );
+		Array.Clear( CFShockVel_ST );
+		Array.Clear( CRShockVel_ST );
+		Array.Clear( LFShockVel_ST );
+		Array.Clear( LRShockVel_ST );
+		Array.Clear( RFShockVel_ST );
+		Array.Clear( RRShockVel_ST );
+
+		app.SteeringEffects.ResetTransientEffects();
+	}
+
 	private void FinalizeTelemetryFrame( App app, float deltaSeconds )
 	{
+		HasLiveTelemetry = true;
 		app.DirectInput.PollDevices( deltaSeconds );
 		app.RacingWheel.UpdateSteeringWheelTorqueBuffer = true;
-		app.RacingWheel.UseSteeringWheelTorqueData = ( SelectedSimId == SimId.LeMansUltimate ) ? IsConnected : IsOnTrack;
+		app.RacingWheel.UseSteeringWheelTorqueData = ( SelectedSimId == SimId.LeMansUltimate ) ? ( IsConnected && HasLiveTelemetry ) : IsOnTrack;
 
 		if ( IsReplayPlaying != _isReplayPlayingLastFrame )
 		{
