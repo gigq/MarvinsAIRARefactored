@@ -112,6 +112,7 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 				if ( ( _lastSessionTimeAdvanceUtc != DateTime.MinValue ) && ( nowUtc - _lastSessionTimeAdvanceUtc >= TimeSpan.FromMilliseconds( 500 ) ) )
 				{
 					App.Instance!.Logger.WriteLine( "[LMU] Session time stalled; polling with a fresh shared memory view" );
+					simulator.HandleBackendTelemetryStalled();
 					_lastSessionTimeAdvanceUtc = nowUtc;
 
 					return;
@@ -158,6 +159,8 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 
 	private void HandleReadFailure()
 	{
+		simulator.HandleBackendTelemetryStalled();
+
 		if ( _connected && ( DateTime.UtcNow - _lastSuccessfulReadUtc >= DisconnectGracePeriod ) )
 		{
 			_connected = false;

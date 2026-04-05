@@ -179,6 +179,36 @@ public class RacingWheel
 		return Stopwatch.GetTimestamp() * 1000.0 / Stopwatch.Frequency;
 	}
 
+	private void ResetStraightLineStabilityState()
+	{
+		_straightLineStabilityLatchTimerMS = 0f;
+		_straightLineStabilityAlternationTimerMS = 0f;
+		_straightLineStabilityAlternationCount = 0;
+		_straightLineStabilityLastVelocitySign = 0;
+		_straightLineStabilityFilteredTorque = 0f;
+	}
+
+	private void ClearLiveTelemetryForceFeedback( App app )
+	{
+		UseSteeringWheelTorqueData = false;
+		_usingSteeringWheelTorqueData = false;
+		UpdateSteeringWheelTorqueBuffer = false;
+		_elapsedMilliseconds = 0f;
+		_fadeTimerMS = 0f;
+		_lastUnfadedOutputTorque = 0f;
+		_predictedSteeringWheelTorque60Hz = 0f;
+		_outputTorque = 0f;
+		_understeerEffectTimerMS = 0f;
+		_oversteerEffectTimerMS = 0f;
+		_seatOfPantsEffectTimerMS = 0f;
+		_vibrateOnGearChangeTimerMS = 0f;
+		_vibrateOnABSTimerMS = 0f;
+		Array.Clear( _steeringWheelTorque360Hz );
+		ResetLmuTorqueHistory();
+		ResetStraightLineStabilityState();
+		app.DirectInput.UpdateForceFeedbackEffect( 0f );
+	}
+
 	private void ResetLmuTorqueHistory()
 	{
 		Array.Clear( _lmuTorqueHistory );
@@ -1185,6 +1215,14 @@ public class RacingWheel
 				_ffbPredictorK2.Reset();
 			}
 
+			var hasLiveSimulatorSignal = ( app.Simulator.SelectedSimId != SimSupport.SimId.LeMansUltimate ) || app.Simulator.HasLiveTelemetry;
+
+			if ( !hasLiveSimulatorSignal )
+			{
+				ClearLiveTelemetryForceFeedback( app );
+				return;
+			}
+
 			// check if we want to auto set max force
 
 			if ( AutoSetMaxForce )
@@ -1663,11 +1701,7 @@ public class RacingWheel
 			}
 			else
 			{
-				_straightLineStabilityLatchTimerMS = 0f;
-				_straightLineStabilityAlternationTimerMS = 0f;
-				_straightLineStabilityAlternationCount = 0;
-				_straightLineStabilityLastVelocitySign = 0;
-				_straightLineStabilityFilteredTorque = 0f;
+				ResetStraightLineStabilityState();
 			}
 
 			// apply parked friction torque
