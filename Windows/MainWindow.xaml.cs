@@ -393,6 +393,7 @@ public partial class MainWindow : Window
 			_racingWheelPage.MultiFFBSource_MairaComboBox.Visibility = racingWheelMultiFFBSourceVisibility;
 			_racingWheelPage.MultiDetailGain_MairaKnob.Visibility = racingWheelMultiDetailGainVisibility;
 			_racingWheelPage.MultiOutputSmoothing_MairaKnob.Visibility = racingWheelMultiOutputSmoothingVisibility;
+			_racingWheelPage.StraightLineStability_MairaKnob.Visibility = selectedSimId == SimId.LeMansUltimate ? Visibility.Visible : Visibility.Collapsed;
 
 			_racingWheelPage.CurbProtection_MairaGroupBox.Visibility = racingWheelCurbProtectionMairaGroupBoxVisibility;
 		} );
