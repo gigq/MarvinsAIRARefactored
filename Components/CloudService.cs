@@ -47,6 +47,73 @@ public class CloudService
 		public string changeLog = string.Empty;
 	}
 
+	class GitHubReleaseAsset
+	{
+		[JsonProperty( "name" )]
+		public string Name { get; set; } = string.Empty;
+
+		[JsonProperty( "browser_download_url" )]
+		public string BrowserDownloadUrl { get; set; } = string.Empty;
+	}
+
+	class GitHubLatestReleaseResponse
+	{
+		[JsonProperty( "tag_name" )]
+		public string TagName { get; set; } = string.Empty;
+
+		[JsonProperty( "body" )]
+		public string Body { get; set; } = string.Empty;
+
+		[JsonProperty( "html_url" )]
+		public string HtmlUrl { get; set; } = string.Empty;
+
+		[JsonProperty( "assets" )]
+		public List<GitHubReleaseAsset> Assets { get; set; } = [];
+	}
+
+	private static readonly Uri LatestReleaseApiUri = new( "https://api.github.com/repos/gigq/MarvinsAIRARefactored/releases/latest" );
+
+	private static bool IsNewerVersion( string currentVersion, string availableVersion )
+	{
+		if ( Version.TryParse( currentVersion, out var current ) && Version.TryParse( availableVersion, out var available ) )
+		{
+			return available > current;
+		}
+
+		return !string.Equals( currentVersion, availableVersion, StringComparison.OrdinalIgnoreCase );
+	}
+
+	private static GetCurrentVersionResponse? MapLatestRelease( GitHubLatestReleaseResponse? release )
+	{
+		if ( release == null || string.IsNullOrWhiteSpace( release.TagName ) )
+		{
+			return null;
+		}
+
+		var installerAsset = release.Assets.FirstOrDefault( asset =>
+			asset.Name.EndsWith( ".exe", StringComparison.OrdinalIgnoreCase ) &&
+			asset.Name.Contains( "Setup", StringComparison.OrdinalIgnoreCase ) );
+
+		var downloadUrl = installerAsset?.BrowserDownloadUrl;
+
+		if ( string.IsNullOrWhiteSpace( downloadUrl ) )
+		{
+			downloadUrl = release.Assets.FirstOrDefault( asset => asset.Name.EndsWith( ".exe", StringComparison.OrdinalIgnoreCase ) )?.BrowserDownloadUrl;
+		}
+
+		if ( string.IsNullOrWhiteSpace( downloadUrl ) )
+		{
+			downloadUrl = release.HtmlUrl;
+		}
+
+		return new GetCurrentVersionResponse
+		{
+			currentVersion = release.TagName.Trim(),
+			downloadUrl = downloadUrl ?? string.Empty,
+			changeLog = string.IsNullOrWhiteSpace( release.Body ) ? $"See release notes: {release.HtmlUrl}" : release.Body.Trim()
+		};
+	}
+
 	public async Task CheckForUpdates( bool manuallyLaunched )
 	{
 		var app = App.Instance!;
@@ -59,21 +126,22 @@ public class CloudService
 
 			app.MainWindow.UpdateStatus();
 
-			var getCurrentVersionUrl = $"https://herboldracing.com/wp-json/maira/v2/get-current-version?id={NetworkIdGuid}";
-
 			using var httpClient = new HttpClient();
+			httpClient.DefaultRequestHeaders.UserAgent.ParseAdd( "MarvinsALMUARefactored-UpdateChecker" );
+			httpClient.DefaultRequestHeaders.Accept.ParseAdd( "application/vnd.github+json" );
 
-			var jsonString = await httpClient.GetStringAsync( getCurrentVersionUrl );
+			var jsonString = await httpClient.GetStringAsync( LatestReleaseApiUri );
 
 			app.Logger.WriteLine( jsonString );
 
-			var getCurrentVersionResponse = JsonConvert.DeserializeObject<GetCurrentVersionResponse>( jsonString );
+			var latestRelease = JsonConvert.DeserializeObject<GitHubLatestReleaseResponse>( jsonString );
+			var getCurrentVersionResponse = MapLatestRelease( latestRelease );
 
 			if ( getCurrentVersionResponse != null )
 			{
 				var appVersion = Misc.GetVersion();
 
-				if ( appVersion != getCurrentVersionResponse.currentVersion )
+				if ( IsNewerVersion( appVersion, getCurrentVersionResponse.currentVersion ) )
 				{
 					app.Logger.WriteLine( "[CloudService] Newer version is available" );
 
