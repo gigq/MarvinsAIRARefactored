@@ -9836,7 +9836,7 @@ public class Settings : INotifyPropertyChanged
 
 	#region App - Selected simulator
 
-	private SimId _appSelectedSimulator = SimId.IRacing;
+	private SimId _appSelectedSimulator = SimId.Auto;
 
 	public SimId AppSelectedSimulator
 	{
