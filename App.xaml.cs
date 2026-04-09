@@ -168,6 +168,33 @@ public partial class App : Application
 		_timer.Elapsed += OnTimer;
 	}
 
+	private void BeginDeferredPeripheralInitialization()
+	{
+		_ = InitializeDeferredPeripheralDevicesAsync();
+	}
+
+	private async Task InitializeDeferredPeripheralDevicesAsync()
+	{
+		Logger.WriteLine( "[App] DeferredPeripheralInitialization >>>" );
+
+		try
+		{
+			var settings = DataContext.DataContext.Instance.Settings;
+
+			// Probe serial peripherals after the UI is available so COM discovery
+			// does not block the first window from appearing.
+			await AdminBoxx.InitializeAsync( settings.AdminBoxxConnectOnStartup );
+			await Wind.InitializeAsync( settings.WindConnectOnStartup );
+			await SeatBeltTensioner.InitializeAsync( settings.SeatBeltTensionerEnabled );
+		}
+		catch ( Exception exception )
+		{
+			Logger.WriteLine( $"[App] Deferred peripheral initialization failed: {exception}" );
+		}
+
+		Logger.WriteLine( "[App] <<< DeferredPeripheralInitialization" );
+	}
+
 	private static bool TryParseSimulatorArgument( string[] args, out SimId simId )
 	{
 		simId = default;
@@ -338,7 +365,6 @@ public partial class App : Application
 				}
 
 				SteeringEffects.RefreshCalibrationDirectory();
-				AdminBoxx.Initialize();
 				AudioManager.Initialize();
 				Simulator.Initialize();
 				DirectInput.Initialize();
@@ -356,8 +382,6 @@ public partial class App : Application
 				RecordingManager.Initialize();
 				TimingMarkers.Initialize();
 				Telemetry.Initialize();
-				Wind.Initialize();
-				SeatBeltTensioner.Initialize();
 				HidHotplugMonitor.Initialize();
 				TradingPaints.Initialize();
 
@@ -392,20 +416,7 @@ public partial class App : Application
 					MainWindow.Show();
 				}
 
-				if ( DataContext.DataContext.Instance.Settings.AdminBoxxConnectOnStartup )
-				{
-					AdminBoxx.Connect();
-				}
-
-				if ( DataContext.DataContext.Instance.Settings.WindConnectOnStartup )
-				{
-					Wind.Connect();
-				}
-
-				if ( DataContext.DataContext.Instance.Settings.SeatBeltTensionerEnabled )
-				{
-					SeatBeltTensioner.Connect();
-				}
+				BeginDeferredPeripheralInitialization();
 
 #if !ADMINBOXX
 

@@ -209,6 +209,37 @@ public partial class AdminBoxx
 		app.Logger.WriteLine( "[AdminBoxx] <<< Initialize" );
 	}
 
+	public async Task InitializeAsync( bool connectOnStartup )
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[AdminBoxx] InitializeAsync >>>" );
+
+		string[] soundKeys = [
+			"adminboxx_tone", "iracing_tone", "replay_tone",
+			"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+			"restart_is_double_file", "restart_is_single_file",
+			"caution_extended_by_one_lap", "caution_shortened_by_one_lap",
+			"chat_disabled", "chat_enabled",
+			"all_penalties_cleared", "session_has_been_advanced", "one_lap_to_green",
+			"black_flag_driver_number", "clear_driver_number", "wave_by_driver_number", "end_of_line_driver_number", "disqualify_driver_number", "remove_driver_number", "clear_command",
+			"connected_to_adminboxx_app", "connected_to_iracing_simulator", "disconnected_from_iracing_simulator"
+		];
+
+		app.AudioManager.LoadSounds( "AdminBoxx", soundKeys );
+
+		_timer.Start();
+
+		await Task.Run( _usbSerialPortHelper.Initialize );
+
+		if ( connectOnStartup && _usbSerialPortHelper.DeviceFound )
+		{
+			await Task.Run( Connect );
+		}
+
+		app.Logger.WriteLine( "[AdminBoxx] <<< InitializeAsync" );
+	}
+
 	public void Shutdown()
 	{
 		var app = App.Instance!;

@@ -50,6 +50,32 @@ public class SeatBeltTensioner
 		app.Logger.WriteLine( "[SeatBeltTensioner] <<< Initialize" );
 	}
 
+	public async Task InitializeAsync( bool connectOnStartup )
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[SeatBeltTensioner] InitializeAsync >>>" );
+
+		await Task.Run( _usbSerialPortHelper.Initialize );
+
+		if ( !_usbSerialPortHelper.DeviceFound )
+		{
+			app.Logger.WriteLine( "[SeatBeltTensioner] Device not found - disabling SeatBeltTensionerEnabled" );
+
+			await app.Dispatcher.InvokeAsync( () =>
+			{
+				DataContext.DataContext.Instance.Settings.SeatBeltTensionerEnabled = false;
+				MainWindow._seatBeltTensionerPage.ConnectToSbt_MairaSwitch.IsEnabled = false;
+			} );
+		}
+		else if ( connectOnStartup )
+		{
+			await Task.Run( Connect );
+		}
+
+		app.Logger.WriteLine( "[SeatBeltTensioner] <<< InitializeAsync" );
+	}
+
 	public void Shutdown()
 	{
 		var app = App.Instance!;

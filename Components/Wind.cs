@@ -70,6 +70,32 @@ public partial class Wind
 		app.Logger.WriteLine( "[Wind] <<< Initialize" );
 	}
 
+	public async Task InitializeAsync( bool connectOnStartup )
+	{
+		var app = App.Instance!;
+
+		app.Logger.WriteLine( "[Wind] InitializeAsync >>>" );
+
+		await Task.Run( _usbSerialPortHelper.Initialize );
+
+		if ( !_usbSerialPortHelper.DeviceFound )
+		{
+			app.Logger.WriteLine( "[Wind] Device not found - disabling WindConnectOnStartup" );
+
+			await app.Dispatcher.InvokeAsync( () =>
+			{
+				DataContext.DataContext.Instance.Settings.WindConnectOnStartup = false;
+				MainWindow._windPage.ConnectToWind_MairaSwitch.IsEnabled = false;
+			} );
+		}
+		else if ( connectOnStartup )
+		{
+			await Task.Run( Connect );
+		}
+
+		app.Logger.WriteLine( "[Wind] <<< InitializeAsync" );
+	}
+
 	public void Shutdown()
 	{
 		var app = App.Instance!;
