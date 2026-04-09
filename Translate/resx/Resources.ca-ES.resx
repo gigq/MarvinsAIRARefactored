@@ -598,7 +598,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Els donatius són completament opcionals. Mai cobraré cap comissió per utilitzar MAIRA. Dit això, els donatius em fan sentir recolçat i feliç, i són una gran motivació per a mi per continuar treballant en MAIRA. Un ENORME agraïment a tothom que ja ha donat!</value>
+    <value>Els donatius són completament opcionals. Mai cobraré cap comissió per utilitzar MALMUA. Dit això, els donatius em fan sentir recolçat i feliç, i són una gran motivació per a mi per continuar treballant en MALMUA. Un ENORME agraïment a tothom que ja ha donat!</value>
     <comment>Donate</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -718,7 +718,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>Vull agrair a aquests moderadors voluntaris que m'hagin ajudat a respondre les moltes preguntes plantejades pels usuaris de MAIRA, cosa que m'ha permès tenir més temps per centrar-me en el desenvolupament de MAIRA!</value>
+    <value>Vull agrair a aquests moderadors voluntaris que m'hagin ajudat a respondre les moltes preguntes plantejades pels usuaris de MALMUA, cosa que m'ha permès tenir més temps per centrar-me en el desenvolupament de MALMUA!</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -1358,7 +1358,7 @@
     <comment>Help</comment>
   </data>
   <data name="DiscordText" xml:space="preserve">
-    <value>El servidor Discord de MAIRA és la manera més ràpida d'obtenir respostes a les vostres preguntes, si no les podeu trobar a la documentació. Hi ha voluntaris que ajuden, i jo també intento ajudar.</value>
+    <value>El servidor Discord de MALMUA és la manera més ràpida d'obtenir respostes a les vostres preguntes, si no les podeu trobar a la documentació. Hi ha voluntaris que ajuden, i jo també intento ajudar.</value>
     <comment>Help</comment>
   </data>
   <data name="ForumsText" xml:space="preserve">

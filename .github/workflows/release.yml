@@ -35,7 +35,7 @@ jobs:
         run: |
           $version = (Get-Item 'bin\publish\MarvinsALMUARefactored.exe').VersionInfo.FileVersion
           New-Item -ItemType Directory -Path 'artifacts\release' -Force | Out-Null
-          Compress-Archive -Path 'bin\publish\*' -DestinationPath "artifacts\release\MAIRA-Refactored-LMU-Fork-$version-win-x64.zip" -Force
+          Compress-Archive -Path 'bin\publish\*' -DestinationPath "artifacts\release\MALMUA-Refactored-LMU-Fork-$version-win-x64.zip" -Force
 
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v2

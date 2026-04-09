@@ -46,7 +46,7 @@ public class MultimediaTimer
 
 	private readonly AutoResetEvent _autoResetEvent = new( false );
 
-	private readonly Thread _workerThread = new( WorkerThread ) { IsBackground = true, Priority = ThreadPriority.Highest, Name = "MAIRA Multimedia Timer Worker Thread" };
+	private readonly Thread _workerThread = new( WorkerThread ) { IsBackground = true, Priority = ThreadPriority.Highest, Name = "MALMUA Multimedia Timer Worker Thread" };
 
 	private bool _running = true;
 

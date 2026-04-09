@@ -596,7 +596,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Les dons sont entièrement facultatifs. Je ne facturerai jamais de frais pour l'utilisation de MAIRA. Cela dit, les dons me font chaud au cœur et me motivent énormément à continuer à travailler sur MAIRA. Un grand merci à tous ceux qui ont déjà fait un don ! Voici le lien pour faire un don :</value>
+    <value>Les dons sont entièrement facultatifs. Je ne facturerai jamais de frais pour l'utilisation de MALMUA. Cela dit, les dons me font chaud au cœur et me motivent énormément à continuer à travailler sur MALMUA. Un grand merci à tous ceux qui ont déjà fait un don ! Voici le lien pour faire un don :</value>
     <comment>Contribute</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -958,7 +958,7 @@
     <value>Échelle de la fenêtre de superposition</value>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>Passerelle MAIRA de reconnaissance vocale</value>
+    <value>Passerelle MALMUA de reconnaissance vocale</value>
   </data>
   <data name="STT_Hint" xml:space="preserve">
     <value></value>

@@ -16,7 +16,7 @@ public static class SimRegistry
 			0,
 			true,
 			null,
-			"Automatically detects a supported running simulator and switches MAIRA to it. If no supported simulator is running, MAIRA stays idle." ),
+			"Automatically detects a supported running simulator and switches MALMUA to it. If no supported simulator is running, MALMUA stays idle." ),
 		[ SimId.IRacing ] = new(
 			SimId.IRacing,
 			"iRacing",

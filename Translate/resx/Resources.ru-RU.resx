@@ -597,7 +597,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Пожертвования абсолютно добровольные.Я никогда не буду брать плату за использование MAIRA. Но всё же они очень приятны и хорошо мотивируют продолжать работать над приложением. Большое спасибо всем, кто уже сделал пожертвование! Это можно сделать по ссылке:</value>
+    <value>Пожертвования абсолютно добровольные.Я никогда не буду брать плату за использование MALMUA. Но всё же они очень приятны и хорошо мотивируют продолжать работать над приложением. Большое спасибо всем, кто уже сделал пожертвование! Это можно сделать по ссылке:</value>
     <comment>Donate</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -716,7 +716,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>Хочу поблагодарить модераторов, которые помогают отвечать на многочисленные вопросы пользователям MAIRA, что позволяет мне сосредоточиться на разработке!</value>
+    <value>Хочу поблагодарить модераторов, которые помогают отвечать на многочисленные вопросы пользователям MALMUA, что позволяет мне сосредоточиться на разработке!</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -1056,7 +1056,7 @@
     <comment>Speech to text</comment>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>MAIRA мост для распознавания речи</value>
+    <value>MALMUA мост для распознавания речи</value>
     <comment>Speech-to-text bridge</comment>
   </data>
   <data name="STT_Hint" xml:space="preserve">
@@ -1164,11 +1164,11 @@
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToWindOnStartup" xml:space="preserve">
-    <value>Присоединяться к MAIRA Ветер при запуске приложения</value>
+    <value>Присоединяться к MALMUA Ветер при запуске приложения</value>
     <comment>Wind</comment>
   </data>
   <data name="ConnectToWind" xml:space="preserve">
-    <value>Присоединиться к MAIRA Ветер</value>
+    <value>Присоединиться к MALMUA Ветер</value>
     <comment>Wind</comment>
   </data>
   <data name="LeftFan" xml:space="preserve">
@@ -1227,7 +1227,7 @@
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>Приложение Marvin's Awesome iRacing (MAIRA) не связано с Trading Paints.</value>
+    <value>Приложение Marvin's Awesome iRacing (MALMUA) не связано с Trading Paints.</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">
@@ -1352,7 +1352,7 @@
     <comment>Help</comment>
   </data>
   <data name="DiscordText" xml:space="preserve">
-    <value>Сервер MAIRA в Discord — самый быстрый способ получить ответы на ваши вопросы, если вы не смогли найти их в документации. Там помогают волонтёры, и я тоже стараюсь по возможности помогать.</value>
+    <value>Сервер MALMUA в Discord — самый быстрый способ получить ответы на ваши вопросы, если вы не смогли найти их в документации. Там помогают волонтёры, и я тоже стараюсь по возможности помогать.</value>
     <comment>Help</comment>
   </data>
   <data name="ForumsText" xml:space="preserve">

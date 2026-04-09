@@ -30,7 +30,7 @@ function wsUrl()
 }
 
 let strings = {
-    title: 'MAIRA STT Bridge',
+    title: 'MALMUA STT Bridge',
     hint: 'Click the enable button. You must check that the browser has the correct audio device selected, by clicking on  the microphone icon to the left of the address bar!',
     button: 'Enable Speech-To-Text'
 };

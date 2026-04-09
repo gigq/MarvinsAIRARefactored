@@ -596,7 +596,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Le Donazioni sono completamente opzionali. Non addebiterò mai nessuncost per l'utilizzo di Maira. Tuttavia, le donazioni mi fanno sentire bene, ed è un ottimo modo per motivarmi a continuare a lavorare a MAIRA. Un caloroso Grazie a tutti quelli che hanno già donato! Qui il link per donare:</value>
+    <value>Le Donazioni sono completamente opzionali. Non addebiterò mai nessuncost per l'utilizzo di Maira. Tuttavia, le donazioni mi fanno sentire bene, ed è un ottimo modo per motivarmi a continuare a lavorare a MALMUA. Un caloroso Grazie a tutti quelli che hanno già donato! Qui il link per donare:</value>
     <comment>Contribute</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -715,7 +715,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>Voglio ringraziare i moderatori volontari per aver aiutato a rispondere alle molteplici domande degli utenti di MAIRA, permettendomi di avere più tempo di concentrarmi sullo sviluppo di MAIRA!</value>
+    <value>Voglio ringraziare i moderatori volontari per aver aiutato a rispondere alle molteplici domande degli utenti di MALMUA, permettendomi di avere più tempo di concentrarmi sullo sviluppo di MALMUA!</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -979,7 +979,7 @@
     <value>Scala finestra overlay</value>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>Bridge MAIRA per il riconoscimento vocale</value>
+    <value>Bridge MALMUA per il riconoscimento vocale</value>
   </data>
   <data name="STT_Hint" xml:space="preserve">
     <value></value>
@@ -1127,7 +1127,7 @@
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>Marvin's Awesome Le Mans Ultimate App (MAIRA) non è affiliata con Trading Paints</value>
+    <value>Marvin's Awesome Le Mans Ultimate App (MALMUA) non è affiliata con Trading Paints</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">
@@ -1252,7 +1252,7 @@
     <comment>Help</comment>
   </data>
   <data name="DiscordText" xml:space="preserve">
-    <value>Il server Discord di MAIRA è il modo più rapido per avere risposte alle vostre domande, se non le trovate nella documentazione. Lì ci sono volontari che possono aiutarvi e io stesso posso provare a darvi una mano.</value>
+    <value>Il server Discord di MALMUA è il modo più rapido per avere risposte alle vostre domande, se non le trovate nella documentazione. Lì ci sono volontari che possono aiutarvi e io stesso posso provare a darvi una mano.</value>
     <comment>Help</comment>
   </data>
   <data name="ForumsText" xml:space="preserve">

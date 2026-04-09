@@ -232,7 +232,7 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 		var brake = (float) view.ReadDouble( vehicleOffset + VehicleBrakeOffset );
 		var steeringInput = (float) view.ReadDouble( vehicleOffset + VehicleSteeringOffset );
 		var clutch = (float) view.ReadDouble( vehicleOffset + VehicleClutchOffset );
-		// LMU reports shaft torque in its own coordinate system. MAIRA's wheel pipeline follows the
+		// LMU reports shaft torque in its own coordinate system. MALMUA's wheel pipeline follows the
 		// same sign convention as iRacing, so we invert here before handing it to the shared algorithm stack.
 		var steeringTorque = (float) -view.ReadDouble( vehicleOffset + VehicleSteeringShaftTorqueOffset ) * SteeringTorqueScale;
 		var genericFfbTorque = view.ReadSingle( GenericFfbTorqueOffset );
@@ -352,7 +352,7 @@ internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetry
 		var surfaceTypes = new byte[ 4 ];
 
 		// LMU headers expose mTireLoad and mGripFract, but on the cars we tested those channels
-		// stayed pinned at zero, so we intentionally do not map them into MAIRA for now.
+		// stayed pinned at zero, so we intentionally do not map them into MALMUA for now.
 
 		for ( var wheelIndex = 0; wheelIndex < 4; wheelIndex++ )
 		{

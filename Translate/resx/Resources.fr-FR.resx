@@ -606,7 +606,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Les dons sont entièrement facultatifs. Je ne facturerai jamais l'utilisation de MAIRA. Cela dit, les dons me font très plaisir et me motivent énormément à continuer à travailler sur MAIRA. Un grand merci à tous ceux qui ont déjà fait un don !</value>
+    <value>Les dons sont entièrement facultatifs. Je ne facturerai jamais l'utilisation de MALMUA. Cela dit, les dons me font très plaisir et me motivent énormément à continuer à travailler sur MALMUA. Un grand merci à tous ceux qui ont déjà fait un don !</value>
     <comment>Donate</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -726,7 +726,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>Je tiens à remercier ces modérateurs bénévoles d'avoir aidé à répondre aux nombreuses questions posées par les utilisateurs de MAIRA, ce qui m'a permis de consacrer plus de temps au développement de MAIRA !</value>
+    <value>Je tiens à remercier ces modérateurs bénévoles d'avoir aidé à répondre aux nombreuses questions posées par les utilisateurs de MALMUA, ce qui m'a permis de consacrer plus de temps au développement de MALMUA !</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -1072,7 +1072,7 @@
     <comment>Speech to text</comment>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>Pont de transcription vocale MAIRA</value>
+    <value>Pont de transcription vocale MALMUA</value>
     <comment>Speech-to-text bridge</comment>
   </data>
   <data name="STT_Hint" xml:space="preserve">
@@ -1180,11 +1180,11 @@
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToWindOnStartup" xml:space="preserve">
-    <value>Se connecter à MAIRA Wind au démarrage de l'application</value>
+    <value>Se connecter à MALMUA Wind au démarrage de l'application</value>
     <comment>Wind</comment>
   </data>
   <data name="ConnectToWind" xml:space="preserve">
-    <value>Connectez-vous à MAIRA Wind</value>
+    <value>Connectez-vous à MALMUA Wind</value>
     <comment>Wind</comment>
   </data>
   <data name="LeftFan" xml:space="preserve">
@@ -1244,7 +1244,7 @@
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>L'application géniale iRacing de Marvin (MAIRA) n'est pas affiliée à Trading Paints.</value>
+    <value>L'application géniale iRacing de Marvin (MALMUA) n'est pas affiliée à Trading Paints.</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">
@@ -1371,7 +1371,7 @@
     <comment>Help</comment>
   </data>
   <data name="DiscordText" xml:space="preserve">
-    <value>Le serveur Discord de MAIRA est le moyen le plus rapide d'obtenir des réponses à vos questions si vous ne les trouvez pas dans la documentation. Des bénévoles y apportent leur aide, et j'essaie également d'y contribuer.
+    <value>Le serveur Discord de MALMUA est le moyen le plus rapide d'obtenir des réponses à vos questions si vous ne les trouvez pas dans la documentation. Des bénévoles y apportent leur aide, et j'essaie également d'y contribuer.
 
 </value>
     <comment>Help</comment>

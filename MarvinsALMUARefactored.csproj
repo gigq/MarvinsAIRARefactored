@@ -29,7 +29,7 @@
   <ItemGroup>
     <EmbeddedResource Include="AdminBoxx\code.py" />
     <Resource Include="Artwork\AppIcon\adminboxx.ico" />
-    <Resource Include="Artwork\AppIcon\maira-universal.ico" />
+    <Resource Include="Artwork\AppIcon\malmua-universal.ico" />
     <Resource Include="Artwork\Buttons\app-menu.png" />
     <Resource Include="Artwork\Buttons\clear.png" />
     <Resource Include="Artwork\Buttons\combo-box-checked.png" />
@@ -193,7 +193,7 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <ApplicationIcon>Artwork\AppIcon\maira-universal.ico</ApplicationIcon>
+        <ApplicationIcon>Artwork\AppIcon\malmua-universal.ico</ApplicationIcon>
       </PropertyGroup>
     </Otherwise>
   </Choose>

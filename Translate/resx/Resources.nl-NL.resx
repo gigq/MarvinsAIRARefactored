@@ -578,7 +578,7 @@
     <value></value>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Donaties zijn geheel vrijblijvend. Ik zal nooit een prijs berekenen voor het gebruik van MAIRA. Echter, donaties is een ultieme motivator om MAIRA te blijven ontwikkelen. Speciale dank naar iedereen die al een donatie gedaan heeft!</value>
+    <value>Donaties zijn geheel vrijblijvend. Ik zal nooit een prijs berekenen voor het gebruik van MALMUA. Echter, donaties is een ultieme motivator om MALMUA te blijven ontwikkelen. Speciale dank naar iedereen die al een donatie gedaan heeft!</value>
   </data>
   <data name="Donate_UC" xml:space="preserve">
     <value>Doneer</value>
@@ -668,7 +668,7 @@
     <value>DISCORD-MODERATORS</value>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>Speciale dank aan alle vrijwilligers die helpen bij beantwoorden van de vele vragen van mede MAIRA gebruikers. Dit geeft mij de tijd om volledig te focussen op het ontwikkelen van MAIRA!</value>
+    <value>Speciale dank aan alle vrijwilligers die helpen bij beantwoorden van de vele vragen van mede MALMUA gebruikers. Dit geeft mij de tijd om volledig te focussen op het ontwikkelen van MALMUA!</value>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
     <value>De AdminBoxx firmware wordt geupdate</value>
@@ -923,7 +923,7 @@
     <value>Schaal van overlay-venster</value>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>MAIRA Spraak-naar-tekst-brug</value>
+    <value>MALMUA Spraak-naar-tekst-brug</value>
   </data>
   <data name="STT_Hint" xml:space="preserve">
     <value>Klik op de inschakelknop. Controleer het geselcteerde audio apparaat door te klikken op het microfoon icoon links van de adresbalk!</value>
@@ -1008,11 +1008,11 @@
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToWindOnStartup" xml:space="preserve">
-    <value>Verbind met MAIRA Wind tijdens opstarten</value>
+    <value>Verbind met MALMUA Wind tijdens opstarten</value>
     <comment>Wind</comment>
   </data>
   <data name="ConnectToWind" xml:space="preserve">
-    <value>Verbind met MAIRA Wind</value>
+    <value>Verbind met MALMUA Wind</value>
     <comment>Wind</comment>
   </data>
   <data name="LeftFan" xml:space="preserve">
@@ -1072,7 +1072,7 @@
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>Marvin's Awesome Le Mans Ultimate App (MAIRA) is geen onderdeel van Trading Paints</value>
+    <value>Marvin's Awesome Le Mans Ultimate App (MALMUA) is geen onderdeel van Trading Paints</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">
@@ -1197,7 +1197,7 @@
     <comment>Help</comment>
   </data>
   <data name="DiscordText" xml:space="preserve">
-    <value>De MAIRA Discord server is de snelste manier op antwoorden te krijgen op je vragen, mocht je het antwoord niet in de documentatie kunnen vinden. Er zijn vrijwilligers actief en ikzelf probeer ook te helpen. </value>
+    <value>De MALMUA Discord server is de snelste manier op antwoorden te krijgen op je vragen, mocht je het antwoord niet in de documentatie kunnen vinden. Er zijn vrijwilligers actief en ikzelf probeer ook te helpen. </value>
     <comment>Help</comment>
   </data>
   <data name="ForumsText" xml:space="preserve">

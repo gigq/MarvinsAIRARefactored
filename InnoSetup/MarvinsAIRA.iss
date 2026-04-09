@@ -2,8 +2,8 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppFile "..\bin\publish\MarvinsALMUARefactored.exe"
-#define MyAppName "MAIRA Refactored LMU Fork"
-#define MyAppIconName "MAIRA Refactored LMU Fork"
+#define MyAppName "MALMUA Refactored LMU Fork"
+#define MyAppIconName "MALMUA Refactored LMU Fork"
 #define MyAppVersion GetVersionNumbersString(MyAppFile)
 #define MyAppPublisher "gigq"
 #define MyAppURL "https://github.com/gigq/MarvinsAIRARefactored"
@@ -34,9 +34,9 @@ DisableProgramGroupPage=yes
 ; Remove the following line to run in administrative install mode (install for all users).
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputBaseFilename=MAIRA-Refactored-LMU-Fork-Setup-{#MyAppVersion}
+OutputBaseFilename=MALMUA-Refactored-LMU-Fork-Setup-{#MyAppVersion}
 OutputDir=..\artifacts\release
-SetupIconFile=..\Artwork\AppIcon\maira-universal.ico
+SetupIconFile=..\Artwork\AppIcon\malmua-universal.ico
 SolidCompression=yes
 WizardStyle=modern
 CloseApplications=yes

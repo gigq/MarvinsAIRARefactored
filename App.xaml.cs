@@ -118,7 +118,7 @@ public partial class App : Application
 
 	private readonly AutoResetEvent _autoResetEvent = new( false );
 
-	private readonly Thread _workerThread = new( WorkerThread ) { IsBackground = true, Priority = ThreadPriority.Normal, Name = "MAIRA App Worker Thread" };
+	private readonly Thread _workerThread = new( WorkerThread ) { IsBackground = true, Priority = ThreadPriority.Normal, Name = "MALMUA App Worker Thread" };
 
 	private bool _running = true;
 

@@ -596,7 +596,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Příspěvky jsou pouze dobrovolné a nikdy nebude MAIRA zpoplatněná. Vašich příspěvků si moc vážím a motivuje mě to pokračovat dále. Obrovské díky patří všem, kteří už poslali nějaký příspěvek! Zde je odkaz, kde je možné taky přispět:</value>
+    <value>Příspěvky jsou pouze dobrovolné a nikdy nebude MALMUA zpoplatněná. Vašich příspěvků si moc vážím a motivuje mě to pokračovat dále. Obrovské díky patří všem, kteří už poslali nějaký příspěvek! Zde je odkaz, kde je možné taky přispět:</value>
     <comment>Contribute</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -616,11 +616,11 @@
     <comment>Tab item</comment>
   </data>
   <data name="CodeContributions_UC" xml:space="preserve">
-    <value>POMOC S TVORBOU KÓDU MAIRA!</value>
+    <value>POMOC S TVORBOU KÓDU MALMUA!</value>
     <comment>Contribute</comment>
   </data>
   <data name="TranslationContributions_UC" xml:space="preserve">
-    <value>POMOC S PŘEKLADEM MAIRA!</value>
+    <value>POMOC S PŘEKLADEM MALMUA!</value>
     <comment>Contribute</comment>
   </data>
   <data name="CodeContributionsText" xml:space="preserve">
@@ -628,7 +628,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="TranslationContributionsText" xml:space="preserve">
-    <value>Pokud umíte číst a psát nějakým jazykem, kterým MAIRA ještě není přeložená a chtěli by jste se podílet na překladu, tak navštivte Discord kanál:</value>
+    <value>Pokud umíte číst a psát nějakým jazykem, kterým MALMUA ještě není přeložená a chtěli by jste se podílet na překladu, tak navštivte Discord kanál:</value>
     <comment>Contribute</comment>
   </data>
   <data name="TranslationsDiscordChannel" xml:space="preserve">
@@ -1047,7 +1047,7 @@
     <value>Měřítko překryvného okna</value>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>Most MAIRA řeč–text</value>
+    <value>Most MALMUA řeč–text</value>
   </data>
   <data name="STT_Hint" xml:space="preserve">
     <value></value>

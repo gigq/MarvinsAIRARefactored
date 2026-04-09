@@ -324,7 +324,7 @@ function send_discord_translation_update( string $ip, string $contributorName, s
 	$embed = [
 		'title' => 'Translation updated',
 		'timestamp' => gmdate( 'c' ),
-		'color' => 0x2e7eff, // MAIRA blue 💙
+		'color' => 0x2e7eff, // MALMUA blue 💙
 		'fields' => [
 			[ 'name' => 'Language', 'value' => $lang, 'inline' => true ],
 			[ 'name' => 'Key', 'value' => trunc( $key, 256 ), 'inline' => true ],
@@ -358,7 +358,7 @@ function send_discord_translation_update( string $ip, string $contributorName, s
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_TIMEOUT => 3,    // be snappy, don’t block
 		CURLOPT_CONNECTTIMEOUT => 2,
-		CURLOPT_USERAGENT => 'MAIRA-Translator/1.0',
+		CURLOPT_USERAGENT => 'MALMUA-Translator/1.0',
 	] );
 	@curl_exec( $ch );
 	@curl_close( $ch );

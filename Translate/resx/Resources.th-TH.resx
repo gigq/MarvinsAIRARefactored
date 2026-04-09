@@ -702,7 +702,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>การบริจาคเป็นทางเลือกเท่านั้น ผมจะไม่เก็บค่าบริการใดใดสำหรับกับใช้งาน MAIRA แต่ถึงอย่างนั้น การบริจาคก็ทำให้ผมอบอุ่นและรู้สึกดี และมันก็ยังเป็นกำลังใจให้ผมอย่างมากในการที่จะพัฒนา MAIRA ต่อ ขอขอบคุณทุกๆคนที่ได้ทำการบริจาคเข้ามา</value>
+    <value>การบริจาคเป็นทางเลือกเท่านั้น ผมจะไม่เก็บค่าบริการใดใดสำหรับกับใช้งาน MALMUA แต่ถึงอย่างนั้น การบริจาคก็ทำให้ผมอบอุ่นและรู้สึกดี และมันก็ยังเป็นกำลังใจให้ผมอย่างมากในการที่จะพัฒนา MALMUA ต่อ ขอขอบคุณทุกๆคนที่ได้ทำการบริจาคเข้ามา</value>
     <comment>Donate</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -822,7 +822,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>ขอขอบคุณผู้ดูแลอาสาสมัครที่ช่วยตอบคำถามผู้ใช้ MAIRA ทำให้ผมมีเวลาพัฒนาแอปมากขึ้น</value>
+    <value>ขอขอบคุณผู้ดูแลอาสาสมัครที่ช่วยตอบคำถามผู้ใช้ MALMUA ทำให้ผมมีเวลาพัฒนาแอปมากขึ้น</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -1462,7 +1462,7 @@
     <comment>Help</comment>
   </data>
   <data name="DiscordText" xml:space="preserve">
-    <value>Discord ของ MAIRA เป็นวิธีที่เร็วที่สุดในการหาคำตอบถ้าคุณหาในเอกสารไม่เจอ ที่นั่นมีอาสาสมัครคอยช่วยเหลืออยู่ และผมจะช่วยหาทางช่วยเหลือด้วยเช่นกัน</value>
+    <value>Discord ของ MALMUA เป็นวิธีที่เร็วที่สุดในการหาคำตอบถ้าคุณหาในเอกสารไม่เจอ ที่นั่นมีอาสาสมัครคอยช่วยเหลืออยู่ และผมจะช่วยหาทางช่วยเหลือด้วยเช่นกัน</value>
     <comment>Help</comment>
   </data>
   <data name="ForumsText" xml:space="preserve">

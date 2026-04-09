@@ -14,7 +14,7 @@ Feel free to contribute to this fork by opening issues or submitting pull reques
 
 ## Current Simulator Support
 
-MAIRA Refactored in this fork now supports:
+MALMUA Refactored in this fork now supports:
 
 - `iRacing`
 - `Le Mans Ultimate`
@@ -32,9 +32,9 @@ This fork supports LMU with:
 
 ### LMU Notes
 
-- Disable in-game LMU wheel FFB when using MAIRA for steering FFB.
+- Disable in-game LMU wheel FFB when using MALMUA for steering FFB.
 - LMU car settings are keyed from the model name when available, for example `Porsche 911 GT3 R LMGT3`.
-- Some MAIRA features remain iRacing-only because they depend on iRacing-specific data or integrations.
+- Some MALMUA features remain iRacing-only because they depend on iRacing-specific data or integrations.
 - Trading Paints and the legacy iRacing diagnostics workflows are still iRacing-specific.
 
 ### Selecting a Simulator
@@ -51,7 +51,7 @@ Accepted LMU aliases include `lmu`, `lemans`, `le-mans-ultimate`, and `LeMansUlt
 
 ### Architecture Overview (ChatGPT Description)
 
-This document captures the architectural description from the initial ChatGPT analysis of the MAIRA Refactored codebase.
+This document captures the architectural description from the initial ChatGPT analysis of the MALMUA Refactored codebase.
 
 ---
 

@@ -574,8 +574,8 @@
   </data>
   <data name="DonationsText" xml:space="preserve">
     <value>Spenden sind komplett FREIWILLIG!
-Die Nutzung von MAIRA wird immer kostenlos sein. Ich werde niemals Gebühren dafür erheben.
-Dennoch: Spenden geben mir ein gutes Gefühl und motivieren mich ungemein, MAIRA immer weiter zu verbessern. Ein riesiges Dankeschön an alle, die bereits gespendet haben!
+Die Nutzung von MALMUA wird immer kostenlos sein. Ich werde niemals Gebühren dafür erheben.
+Dennoch: Spenden geben mir ein gutes Gefühl und motivieren mich ungemein, MALMUA immer weiter zu verbessern. Ein riesiges Dankeschön an alle, die bereits gespendet haben!
 Hier ist der Link zum Spenden:</value>
     <comment>Contribute</comment>
   </data>
@@ -605,7 +605,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Contribute</comment>
   </data>
   <data name="TranslationContributionsText" xml:space="preserve">
-    <value>Du kannst mehrere Sprachen? Dann brauchen wir deine Hilfe  um MAIRA in jede mögliche Sprache der Welt zu übersetzen! Weitere Informationen dazu findest du in diesem Discord-Kanal:</value>
+    <value>Du kannst mehrere Sprachen? Dann brauchen wir deine Hilfe  um MALMUA in jede mögliche Sprache der Welt zu übersetzen! Weitere Informationen dazu findest du in diesem Discord-Kanal:</value>
     <comment>Contribute</comment>
   </data>
   <data name="TranslationsDiscordChannel" xml:space="preserve">
@@ -691,7 +691,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>Ich möchte mich bei den ehrenamtlichen Moderatoren bedanken, die geholfen haben, die vielen Fragen der Nutzer zu beantworten. Das ermöglicht mir, mehr Zeit in die Entwicklung von MAIRA zu stecken!</value>
+    <value>Ich möchte mich bei den ehrenamtlichen Moderatoren bedanken, die geholfen haben, die vielen Fragen der Nutzer zu beantworten. Das ermöglicht mir, mehr Zeit in die Entwicklung von MALMUA zu stecken!</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -1017,7 +1017,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Speech to text</comment>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>MAIRA Sprache-zu-Text Schnittstelle</value>
+    <value>MALMUA Sprache-zu-Text Schnittstelle</value>
     <comment>Speech-to-text bridge</comment>
   </data>
   <data name="STT_Hint" xml:space="preserve">
@@ -1111,11 +1111,11 @@ Hier ist der Link zum Spenden:</value>
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToWindOnStartup" xml:space="preserve">
-    <value>Verbinde zu MAIRA-Wind bei App-Start</value>
+    <value>Verbinde zu MALMUA-Wind bei App-Start</value>
     <comment>Wind</comment>
   </data>
   <data name="ConnectToWind" xml:space="preserve">
-    <value>Verbinde zu MAIRA Wind</value>
+    <value>Verbinde zu MALMUA Wind</value>
     <comment>Wind</comment>
   </data>
   <data name="LeftFan" xml:space="preserve">
@@ -1175,7 +1175,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>Marvin's Awesome Le Mans Ultimate App (MAIRA) steht in keiner Verbindung zu Trading Paints</value>
+    <value>Marvin's Awesome Le Mans Ultimate App (MALMUA) steht in keiner Verbindung zu Trading Paints</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">
@@ -1303,7 +1303,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Help</comment>
   </data>
   <data name="DiscordText" xml:space="preserve">
-    <value>Der MAIRA Discord-Server ist der schnellste Weg, um Antworten auf deine Fragen zu erhalten, wenn du diese nicht in der Dokumentation finden kannst. Es gibt Freiwillige, die dir helfen, und auch ich versuche, dir zu helfen.</value>
+    <value>Der MALMUA Discord-Server ist der schnellste Weg, um Antworten auf deine Fragen zu erhalten, wenn du diese nicht in der Dokumentation finden kannst. Es gibt Freiwillige, die dir helfen, und auch ich versuche, dir zu helfen.</value>
     <comment>Help</comment>
   </data>
   <data name="ForumsText" xml:space="preserve">

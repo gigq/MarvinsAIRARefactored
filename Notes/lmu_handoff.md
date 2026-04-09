@@ -206,8 +206,8 @@ Do not try to retrofit LMU by sprinkling `if (selectedSim == LMU)` everywhere. T
 Before implementing LMU, answer this explicitly:
 
 - Is LMU exposing telemetry through shared memory, plugin API, file output, or some other mechanism?
-- What data fields needed by MAIRA are actually available?
-- Which existing MAIRA features are realistic for LMU on day one?
+- What data fields needed by MALMUA are actually available?
+- Which existing MALMUA features are realistic for LMU on day one?
 
 Do not assume LMU can provide every iRacing datum currently used by:
 

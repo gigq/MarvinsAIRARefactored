@@ -706,7 +706,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Donations are completely optional. I will never charge any fees for using MAIRA. That said, donations make me feel warm and fuzzy, and is a great motivator for me to keep working on MAIRA. A huge thank you to everybody who have donated already!</value>
+    <value>Donations are completely optional. I will never charge any fees for using MALMUA. That said, donations make me feel warm and fuzzy, and is a great motivator for me to keep working on MALMUA. A huge thank you to everybody who have donated already!</value>
     <comment>Donate</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -830,7 +830,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>I want to thank these volunteer moderators for helping answer the many questions posed by MAIRA users, allowing me to have more time to focus on the development of MAIRA!</value>
+    <value>I want to thank these volunteer moderators for helping answer the many questions posed by MALMUA users, allowing me to have more time to focus on the development of MALMUA!</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -1174,7 +1174,7 @@
     <comment>Speech to text</comment>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>MAIRA Speech-To-Text Bridge</value>
+    <value>MALMUA Speech-To-Text Bridge</value>
     <comment>Speech-to-text bridge</comment>
   </data>
   <data name="STT_Hint" xml:space="preserve">
@@ -1290,11 +1290,11 @@
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToSBT" xml:space="preserve">
-    <value>Connect to MAIRA Seat Belt Tensioner</value>
+    <value>Connect to MALMUA Seat Belt Tensioner</value>
     <comment>Seat Belt Tensioner</comment>
   </data>
   <data name="ConnectToSBTOnStartup" xml:space="preserve">
-    <value>Connect to MAIRA Seat Belt Tensioner on App Startup</value>
+    <value>Connect to MALMUA Seat Belt Tensioner on App Startup</value>
     <comment>Seat Belt Tensioner</comment>
   </data>
   <data name="Tuning_UC" xml:space="preserve">
@@ -1318,11 +1318,11 @@
     <comment>Seat Belt Tensioner</comment>
   </data>
   <data name="ConnectToWindOnStartup" xml:space="preserve">
-    <value>Connect to MAIRA Wind on App Startup</value>
+    <value>Connect to MALMUA Wind on App Startup</value>
     <comment>Wind</comment>
   </data>
   <data name="ConnectToWind" xml:space="preserve">
-    <value>Connect to MAIRA Wind</value>
+    <value>Connect to MALMUA Wind</value>
     <comment>Wind</comment>
   </data>
   <data name="LeftFan" xml:space="preserve">
@@ -1386,7 +1386,7 @@
     <comment>Page title</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>Marvin's Awesome Le Mans Ultimate App (MAIRA) is not affiliated with Trading Paints</value>
+    <value>Marvin's Awesome Le Mans Ultimate App (MALMUA) is not affiliated with Trading Paints</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">
@@ -1514,7 +1514,7 @@
     <comment>Help</comment>
   </data>
   <data name="DiscordText" xml:space="preserve">
-    <value>The MAIRA Discord server is the fastest way to get answers to your questions, if you can't find it in the documentation.  There are volunteers helping out, and I also try to help out as well.</value>
+    <value>The MALMUA Discord server is the fastest way to get answers to your questions, if you can't find it in the documentation.  There are volunteers helping out, and I also try to help out as well.</value>
     <comment>Help</comment>
   </data>
   <data name="ForumsText" xml:space="preserve">

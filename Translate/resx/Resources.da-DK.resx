@@ -592,11 +592,11 @@
     <comment>Tab item</comment>
   </data>
   <data name="BuyMeACoffee" xml:space="preserve">
-    <value>Køb mig en kop kaffe! - Støt MAIRA</value>
+    <value>Køb mig en kop kaffe! - Støt MALMUA</value>
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Donationer er helt valgfrie. Jeg vil aldrig opkræve gebyrer for at bruge MAIRA. Når det er sagt, så får donationer mig til at føle mig varm og tryg, og det er en stor motivation for mig til at fortsætte med at arbejde på MAIRA. En stor tak til alle, der allerede har doneret! Her er linket til at donere:</value>
+    <value>Donationer er helt valgfrie. Jeg vil aldrig opkræve gebyrer for at bruge MALMUA. Når det er sagt, så får donationer mig til at føle mig varm og tryg, og det er en stor motivation for mig til at fortsætte med at arbejde på MALMUA. En stor tak til alle, der allerede har doneret! Her er linket til at donere:</value>
     <comment>Contribute</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -715,7 +715,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>Jeg vil gerne takke disse frivillige moderatorer for at hjælpe med at besvare de mange spørgsmål fra MAIRA-brugere, hvilket giver mig mere tid til at fokusere på udviklingen af ​​MAIRA!</value>
+    <value>Jeg vil gerne takke disse frivillige moderatorer for at hjælpe med at besvare de mange spørgsmål fra MALMUA-brugere, hvilket giver mig mere tid til at fokusere på udviklingen af ​​MALMUA!</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -1048,7 +1048,7 @@
     <value>Overlejringsvinduets skala</value>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>MAIRA Tale-til-tekst</value>
+    <value>MALMUA Tale-til-tekst</value>
   </data>
   <data name="STT_Hint" xml:space="preserve">
     <value>Klik på aktiverings knappen. Du skal kontrollere, at browseren har valgt den korrekte lydenhed, ved at klikke på mikrofonikonet til venstre for adresselinjen!</value>
@@ -1133,11 +1133,11 @@
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToWindOnStartup" xml:space="preserve">
-    <value>Tilslut til MAIRA ved App Start</value>
+    <value>Tilslut til MALMUA ved App Start</value>
     <comment>Wind</comment>
   </data>
   <data name="ConnectToWind" xml:space="preserve">
-    <value>Tilsluttet til MAIRA Vind</value>
+    <value>Tilsluttet til MALMUA Vind</value>
     <comment>Wind</comment>
   </data>
   <data name="LeftFan" xml:space="preserve">
@@ -1197,7 +1197,7 @@
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>Marvins fantastiske iRacing-app (MAIRA) er ikke tilknyttet Trading Paints.</value>
+    <value>Marvins fantastiske iRacing-app (MALMUA) er ikke tilknyttet Trading Paints.</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">

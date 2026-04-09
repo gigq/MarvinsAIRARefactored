@@ -9,7 +9,7 @@
         xmlns:datacontext="clr-namespace:MarvinsALMUARefactored.DataContext"
         mc:Ignorable="d"
         Title="{Binding Localization[AppTitle]}"
-        Icon="/Artwork/AppIcon/maira-universal.ico"
+        Icon="/Artwork/AppIcon/malmua-universal.ico"
         MinWidth="550"
         MinHeight="350"
         Width="1100"

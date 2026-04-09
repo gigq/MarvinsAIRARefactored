@@ -757,7 +757,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>Շնորհակալություն կամավոր մոդերատորներին՝ հարցերին պատասխանելու և համայնքին օգնելու համար, ինչը թույլ է տալիս ինձ ավելի շատ ժամանակ հատկացնել MAIRA-ի զարգացմանը։</value>
+    <value>Շնորհակալություն կամավոր մոդերատորներին՝ հարցերին պատասխանելու և համայնքին օգնելու համար, ինչը թույլ է տալիս ինձ ավելի շատ ժամանակ հատկացնել MALMUA-ի զարգացմանը։</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -1130,7 +1130,7 @@
     <value>Overlay Window Scale</value>
   </data>
   <data name="STT_Title">
-    <value>MAIRA խոսքից-տեքստ կամուրջ</value>
+    <value>MALMUA խոսքից-տեքստ կամուրջ</value>
   </data>
   <data name="STT_Button">
     <value>Միացնել խոսքից-տեքստը</value>

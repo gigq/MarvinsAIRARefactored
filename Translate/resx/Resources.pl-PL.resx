@@ -595,7 +595,7 @@
     <comment>Współpraca</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Darowizny są całkowicie dobrowolne. Nigdy nie będę pobierać żadnych opłat za korzystanie z MAIRA. Mimo to, darowizny dają mi poczucie ciepła i komfortu oraz są dla mnie ogromną motywacją do dalszej pracy nad MAIRA. Ogromne podziękowania dla wszystkich, którzy już przekazali darowizny! Oto link do wpłaty:</value>
+    <value>Darowizny są całkowicie dobrowolne. Nigdy nie będę pobierać żadnych opłat za korzystanie z MALMUA. Mimo to, darowizny dają mi poczucie ciepła i komfortu oraz są dla mnie ogromną motywacją do dalszej pracy nad MALMUA. Ogromne podziękowania dla wszystkich, którzy już przekazali darowizny! Oto link do wpłaty:</value>
     <comment>Współpraca</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -716,7 +716,7 @@
     <comment>Współpraca</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>Chciałbym podziękować moderatorom-wolontariuszom za pomoc w odpowiadaniu na liczne pytania zadawane przez użytkowników MAIRA. Dzięki czemu mogę poświęcić więcej czasu na rozwój MAIRA!</value>
+    <value>Chciałbym podziękować moderatorom-wolontariuszom za pomoc w odpowiadaniu na liczne pytania zadawane przez użytkowników MALMUA. Dzięki czemu mogę poświęcić więcej czasu na rozwój MALMUA!</value>
     <comment>Współpraca</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -989,7 +989,7 @@
     <value>Skalowanie okna nakładki</value>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>Most MAIRA do rozpoznawania mowy</value>
+    <value>Most MALMUA do rozpoznawania mowy</value>
   </data>
   <data name="STT_Hint" xml:space="preserve">
     <value>Kliknij przycisk włącz. Sprawdź czy przegldarka ma wybrane prawidłowe urządzenie audio, klikając w ikonę mikrofonu po lewej stronie paska adresu!</value>
@@ -1074,11 +1074,11 @@
     <comment>App menu item</comment>
   </data>
   <data name="ConnectToWindOnStartup" xml:space="preserve">
-    <value>Połącz z MAIRA Wind przy Starcie Aplikacji</value>
+    <value>Połącz z MALMUA Wind przy Starcie Aplikacji</value>
     <comment>Wind</comment>
   </data>
   <data name="ConnectToWind" xml:space="preserve">
-    <value>Połącz z MAIRA Wind</value>
+    <value>Połącz z MALMUA Wind</value>
     <comment>Wind</comment>
   </data>
   <data name="LeftFan" xml:space="preserve">
@@ -1138,7 +1138,7 @@
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>Marvin's Awesome Le Mans Ultimate App (MAIRA) nie jest powiązany z Trading Paints</value>
+    <value>Marvin's Awesome Le Mans Ultimate App (MALMUA) nie jest powiązany z Trading Paints</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">

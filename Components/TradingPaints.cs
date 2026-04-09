@@ -446,7 +446,7 @@ public class TradingPaints
 			Timeout = TimeSpan.FromSeconds( 30 )
 		};
 
-		http.DefaultRequestHeaders.UserAgent.ParseAdd( "MAIRA/2.0 (+https://github.com/mherbold/MarvinsAIRARefactored)" );
+		http.DefaultRequestHeaders.UserAgent.ParseAdd( "MALMUA/2.0 (+https://github.com/mherbold/MarvinsAIRARefactored)" );
 		http.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "*/*" ) );
 		http.DefaultRequestHeaders.AcceptEncoding.Add( new StringWithQualityHeaderValue( "gzip" ) );
 		http.DefaultRequestHeaders.AcceptEncoding.Add( new StringWithQualityHeaderValue( "deflate" ) );

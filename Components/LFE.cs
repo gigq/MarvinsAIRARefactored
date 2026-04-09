@@ -44,7 +44,7 @@ public class LFE
 	private bool _captureDeviceCreated = false;
 	private readonly AutoResetEvent _autoResetEvent = new( false );
 
-	private readonly Thread _workerThread = new( WorkerThread ) { IsBackground = true, Priority = ThreadPriority.Highest, Name = "MAIRA LFE Worker Thread" };
+	private readonly Thread _workerThread = new( WorkerThread ) { IsBackground = true, Priority = ThreadPriority.Highest, Name = "MALMUA LFE Worker Thread" };
 
 	private bool _running = true;
 

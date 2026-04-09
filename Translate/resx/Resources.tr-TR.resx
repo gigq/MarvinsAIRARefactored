@@ -593,7 +593,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Bağışlar tamamen isteğe bağlıdır. MAIRA'yı kullanmak için hiçbir zaman ücret talep etmeyeceğim. Bununla birlikte, bağışlar bana sıcak ve mutlu hissettiriyor ve MAIRA üzerinde çalışmaya devam etmem için büyük bir motivasyon kaynağı oluyor. Bağışta bulunan herkese çok teşekkür ederim! Bağış yapmak için link:</value>
+    <value>Bağışlar tamamen isteğe bağlıdır. MALMUA'yı kullanmak için hiçbir zaman ücret talep etmeyeceğim. Bununla birlikte, bağışlar bana sıcak ve mutlu hissettiriyor ve MALMUA üzerinde çalışmaya devam etmem için büyük bir motivasyon kaynağı oluyor. Bağışta bulunan herkese çok teşekkür ederim! Bağış yapmak için link:</value>
     <comment>Contribute</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -712,7 +712,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>I want to thank these volunteer moderators for helping answer the many questions posed by MAIRA users, allowing me to have more time to focus on the development of MAIRA!MAIRA kullanıcılarının sorduğu birçok soruyu yanıtlamaya yardımcı olan bu gönüllü moderatörlere teşekkür etmek istiyorum. Bu sayede MAIRA'nın geliştirilmesine daha fazla zaman ayırabiliyorum!</value>
+    <value>I want to thank these volunteer moderators for helping answer the many questions posed by MALMUA users, allowing me to have more time to focus on the development of MALMUA!MALMUA kullanıcılarının sorduğu birçok soruyu yanıtlamaya yardımcı olan bu gönüllü moderatörlere teşekkür etmek istiyorum. Bu sayede MALMUA'nın geliştirilmesine daha fazla zaman ayırabiliyorum!</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -1052,7 +1052,7 @@
     <comment>Speech to text</comment>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>MAIRA Konuşma-Metin Köprüsü</value>
+    <value>MALMUA Konuşma-Metin Köprüsü</value>
     <comment>Speech-to-text bridge</comment>
   </data>
   <data name="STT_Hint" xml:space="preserve">

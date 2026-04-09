@@ -87,7 +87,7 @@ public partial class MainWindow : Window
 
 #else
 
-		var iconUri = new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/AppIcon/maira-universal.ico" );
+		var iconUri = new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/AppIcon/malmua-universal.ico" );
 
 #endif
 
@@ -465,7 +465,7 @@ public partial class MainWindow : Window
 			{
 #if !ADMINBOXX
 
-				var resourceStream = Application.GetResourceStream( new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/AppIcon/maira-universal.ico" ) ).Stream;
+				var resourceStream = Application.GetResourceStream( new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/AppIcon/malmua-universal.ico" ) ).Stream;
 
 #else
 

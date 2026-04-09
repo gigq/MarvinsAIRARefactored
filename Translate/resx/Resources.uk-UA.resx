@@ -607,7 +607,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DonationsText" xml:space="preserve">
-    <value>Пожертви абсолютно необов'язкові. Я ніколи не стягуватиму жодної плати за користування MAIRA. Проте, пожертви зігрівають мене та дарують мені позитивні емоції, і це чудова мотивація для мене продовжувати працювати над MAIRA. Величезне спасибі всім, хто вже зробив пожертву!</value>
+    <value>Пожертви абсолютно необов'язкові. Я ніколи не стягуватиму жодної плати за користування MALMUA. Проте, пожертви зігрівають мене та дарують мені позитивні емоції, і це чудова мотивація для мене продовжувати працювати над MALMUA. Величезне спасибі всім, хто вже зробив пожертву!</value>
     <comment>Donate</comment>
   </data>
   <data name="Donate_UC" xml:space="preserve">
@@ -727,7 +727,7 @@
     <comment>Contribute</comment>
   </data>
   <data name="DiscordModeratorsText" xml:space="preserve">
-    <value>Я хочу подякувати цим волонтерам-модераторам за допомогу у відповідях на численні запитання користувачів MAIRA, що дозволило мені мати більше часу зосередитися на розвитку MAIRA!</value>
+    <value>Я хочу подякувати цим волонтерам-модераторам за допомогу у відповідях на численні запитання користувачів MALMUA, що дозволило мені мати більше часу зосередитися на розвитку MALMUA!</value>
     <comment>Contribute</comment>
   </data>
   <data name="AdminBoxxIsUpdating" xml:space="preserve">
@@ -1067,7 +1067,7 @@
     <comment>Speech to text</comment>
   </data>
   <data name="STT_Title" xml:space="preserve">
-    <value>Міст перетворення мовлення в текст MAIRA</value>
+    <value>Міст перетворення мовлення в текст MALMUA</value>
     <comment>Speech-to-text bridge</comment>
   </data>
   <data name="STT_Hint" xml:space="preserve">
@@ -1211,11 +1211,11 @@
     <comment>Seat Belt Tensioner</comment>
   </data>
   <data name="ConnectToWindOnStartup" xml:space="preserve">
-    <value>Підключення до MAIRA Wind під час запуску програми</value>
+    <value>Підключення до MALMUA Wind під час запуску програми</value>
     <comment>Wind</comment>
   </data>
   <data name="ConnectToWind" xml:space="preserve">
-    <value>Підключення до MAIRA Wind</value>
+    <value>Підключення до MALMUA Wind</value>
     <comment>Wind</comment>
   </data>
   <data name="LeftFan" xml:space="preserve">
@@ -1275,7 +1275,7 @@
     <comment>Page title</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>додаток Marvin's Awesome iRacing (MAIRA) не пов'язаний з Trading Paints</value>
+    <value>додаток Marvin's Awesome iRacing (MALMUA) не пов'язаний з Trading Paints</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">
@@ -1405,7 +1405,7 @@
     <comment>Help</comment>
   </data>
   <data name="DiscordText" xml:space="preserve">
-    <value>Сервер MAIRA Discord — це найшвидший спосіб отримати відповіді на ваші запитання, якщо ви не можете знайти їх у документації. Є волонтери, які допомагають, і я також намагаюся допомогти.</value>
+    <value>Сервер MALMUA Discord — це найшвидший спосіб отримати відповіді на ваші запитання, якщо ви не можете знайти їх у документації. Є волонтери, які допомагають, і я також намагаюся допомогти.</value>
     <comment>Help</comment>
   </data>
   <data name="ForumsText" xml:space="preserve">

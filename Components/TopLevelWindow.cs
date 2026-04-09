@@ -16,7 +16,7 @@ public class TopLevelWindow
 
 		app.Logger.WriteLine( "[TopLevelWindow] Initialize >>>" );
 
-		var hwndSourceParameters = new HwndSourceParameters( "MAIRA DirectInput Host" )
+		var hwndSourceParameters = new HwndSourceParameters( "MALMUA DirectInput Host" )
 		{
 			Width = 1,
 			Height = 1,
