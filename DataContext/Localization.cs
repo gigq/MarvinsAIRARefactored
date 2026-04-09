@@ -5,9 +5,9 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
-using MarvinsAIRARefactored.Classes;
+using MarvinsALMUARefactored.Classes;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public partial class Localization : INotifyPropertyChanged
 {

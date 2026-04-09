@@ -2,9 +2,9 @@
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
-using MarvinsAIRARefactored.PInvoke;
+using MarvinsALMUARefactored.PInvoke;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public sealed class HidHotplugMonitor : IDisposable
 {

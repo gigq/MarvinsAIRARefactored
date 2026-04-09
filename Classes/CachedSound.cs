@@ -5,7 +5,7 @@ using SharpDX;
 using SharpDX.Multimedia;
 using SharpDX.XAudio2;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public sealed class CachedSound : IDisposable
 {

@@ -1,5 +1,5 @@
 ﻿
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public sealed class RlsWheelVelocityPredictor
 {

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public static class ChromeLauncher
 {

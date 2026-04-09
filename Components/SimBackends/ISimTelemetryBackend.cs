@@ -1,4 +1,4 @@
-namespace MarvinsAIRARefactored.Components.SimBackends;
+namespace MarvinsALMUARefactored.Components.SimBackends;
 
 internal interface ISimTelemetryBackend
 {

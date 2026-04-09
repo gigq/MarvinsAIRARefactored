@@ -1,10 +1,10 @@
 ﻿
 using System.Runtime.CompilerServices;
 
-using MarvinsAIRARefactored.Controls;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Controls;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class Debug
 {

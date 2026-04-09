@@ -1,4 +1,4 @@
-namespace MarvinsAIRARefactored.SimSupport;
+namespace MarvinsALMUARefactored.SimSupport;
 
 [Flags]
 public enum SimFeature

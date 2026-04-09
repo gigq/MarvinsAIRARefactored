@@ -16,7 +16,7 @@ using PInvoke;
 
 using Point = System.Windows.Point;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public class Misc
 {

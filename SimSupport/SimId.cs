@@ -1,4 +1,4 @@
-namespace MarvinsAIRARefactored.SimSupport;
+namespace MarvinsALMUARefactored.SimSupport;
 
 public enum SimId
 {

@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "type", Target = "~T:MarvinsAIRARefactored.WinMM.fuEvent" )]
+[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "type", Target = "~T:MarvinsALMUARefactored.WinMM.fuEvent" )]

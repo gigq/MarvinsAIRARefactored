@@ -1,9 +1,9 @@
 ﻿
-using MarvinsAIRARefactored.Classes;
+using MarvinsALMUARefactored.Classes;
 
 using vJoyInterfaceWrap;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class VirtualJoystick
 {

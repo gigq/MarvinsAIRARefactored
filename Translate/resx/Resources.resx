@@ -126,7 +126,7 @@
     <comment>App menu item</comment>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>Marvin's Awesome iRacing App</value>
+    <value>Marvin's Awesome Le Mans Ultimate App</value>
     <comment>Window title</comment>
   </data>
   <data name="DetailBoostBias" xml:space="preserve">
@@ -747,6 +747,10 @@
   </data>
   <data name="GitHubRepository" xml:space="preserve">
     <value>GitHub Repository</value>
+    <comment>Contribute</comment>
+  </data>
+  <data name="ForkSupportBlurb" xml:space="preserve">
+    <value>This fork was made to support Le Mans Ultimate while still supporting iRacing, and it can automatically switch between the two simulators.</value>
     <comment>Contribute</comment>
   </data>
   <data name="Contributors" xml:space="preserve">
@@ -1382,7 +1386,7 @@
     <comment>Page title</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>Marvin's Awesome iRacing App (MAIRA) is not affiliated with Trading Paints</value>
+    <value>Marvin's Awesome Le Mans Ultimate App (MAIRA) is not affiliated with Trading Paints</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public sealed class HelpIconVisibilityConverter : IMultiValueConverter
 {

@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="MarvinsAIRARefactored.Controls.MairaButtonMapping"
+﻿<UserControl x:Class="MarvinsALMUARefactored.Controls.MairaButtonMapping"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
-             xmlns:components="clr-namespace:MarvinsAIRARefactored.Components"
+             xmlns:controls="clr-namespace:MarvinsALMUARefactored.Controls"
+             xmlns:components="clr-namespace:MarvinsALMUARefactored.Components"
              mc:Ignorable="d"
              Width="600">
 
@@ -26,8 +26,8 @@
 
             <controls:MairaButton Grid.Column="0"
                                   x:Name="Record_MairaButton"
-                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/record-white.png"
-                                  BlinkIcon="/MarvinsAIRARefactored;component/Artwork/Buttons/record-orange.png"
+                                  Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/record-white.png"
+                                  BlinkIcon="/MarvinsALMUARefactored;component/Artwork/Buttons/record-orange.png"
                                   Click="Record_MairaButton_Click" />
 
             <StackPanel Grid.Column="2"
@@ -45,7 +45,7 @@
             </StackPanel>
 
             <controls:MairaButton Grid.Column="4"
-                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/clear.png"
+                                  Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/clear.png"
                                   Click="Trash_MairaButton_Click" />
 
         </Grid>

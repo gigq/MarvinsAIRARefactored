@@ -4,7 +4,7 @@ using System.Management;
 using System.Text;
 using System;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public sealed class UsbSerialPortHelper( string handshake = "", string deviceIdMustContain = "", string fallbackVid = "", string fallbackPid = "", int baudRate = 115200, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One ) : IDisposable
 {

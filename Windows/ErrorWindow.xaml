@@ -1,10 +1,10 @@
-﻿<Window x:Class="MarvinsAIRARefactored.Windows.ErrorWindow"
+﻿<Window x:Class="MarvinsALMUARefactored.Windows.ErrorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
-        xmlns:datacontext="clr-namespace:MarvinsAIRARefactored.DataContext"
+        xmlns:controls="clr-namespace:MarvinsALMUARefactored.Controls"
+        xmlns:datacontext="clr-namespace:MarvinsALMUARefactored.DataContext"
         mc:Ignorable="d"
         Title="{Binding Localization[AppTitle]}"
         SizeToContent="Height"
@@ -42,7 +42,7 @@
                    Grid.Column="0"
                    Width="48"
                    Height="48"
-                   Source="/MarvinsAIRARefactored;component/Artwork/Buttons/clear.png"
+                   Source="/MarvinsALMUARefactored;component/Artwork/Buttons/clear.png"
                    RenderOptions.BitmapScalingMode="HighQuality" />
 
             <TextBlock x:Name="Title_TextBlock"
@@ -117,11 +117,11 @@
                 </Grid.ColumnDefinitions>
 
                 <controls:MairaButton Grid.Column="0"
-                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/copy.png"
+                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/copy.png"
                                       Click="CopyDetails_MairaButton_Click" />
 
                 <controls:MairaButton Grid.Column="2"
-                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/power-red.png"
+                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/power-red.png"
                                       Click="Exit_MairaButton_Click" />
             </Grid>
 

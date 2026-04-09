@@ -1,6 +1,10 @@
-# MAIRA Refactored LMU Fork
+# Marvins Awesome Le Mans Ultimate App
+
+`MarvinsALMUARefactored` is Marvin's Awesome Le Mans Ultimate App.
 
 This repository is a Le Mans Ultimate-focused fork of the original MAIRA Refactored project.
+
+This fork was made to support Le Mans Ultimate while still supporting iRacing, and it can automatically switch between the two simulators.
 
 Original repository:
 
@@ -38,9 +42,9 @@ This fork supports LMU with:
 You can choose the simulator in `App Settings`, or launch from the command line:
 
 ```powershell
-.\MarvinsAIRARefactored.exe --sim auto
-.\MarvinsAIRARefactored.exe --sim iracing
-.\MarvinsAIRARefactored.exe --sim lmu
+.\MarvinsALMUARefactored.exe --sim auto
+.\MarvinsALMUARefactored.exe --sim iracing
+.\MarvinsALMUARefactored.exe --sim lmu
 ```
 
 Accepted LMU aliases include `lmu`, `lemans`, `le-mans-ultimate`, and `LeMansUltimate`.
@@ -528,4 +532,3 @@ Hardware & I/O (DirectInput, Audio, VirtualJoystick, AdminBoxx)
    ↓                ↓
 Telemetry MMF       UI Viewers & Graphs
 ```
-

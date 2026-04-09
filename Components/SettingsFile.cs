@@ -1,10 +1,10 @@
 ﻿
 using System.IO;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.DataContext;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.DataContext;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class SettingsFile
 {

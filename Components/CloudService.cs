@@ -3,12 +3,12 @@ using System.IO;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Windows;
 
 using Newtonsoft.Json;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class CloudService
 {
@@ -77,7 +77,7 @@ public class CloudService
 				{
 					app.Logger.WriteLine( "[CloudService] Newer version is available" );
 
-					var localFilePath = Path.Combine( App.DocumentsFolder, $"MarvinsAIRARefactored-Setup-{getCurrentVersionResponse.currentVersion}.exe" );
+					var localFilePath = Path.Combine( App.DocumentsFolder, $"MarvinsALMUARefactored-Setup-{getCurrentVersionResponse.currentVersion}.exe" );
 
 					var updateDownloaded = File.Exists( localFilePath );
 

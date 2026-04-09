@@ -1,10 +1,10 @@
 ﻿
 using System.Windows;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Controls;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Controls;
 
-namespace MarvinsAIRARefactored.Windows;
+namespace MarvinsALMUARefactored.Windows;
 
 public partial class UpdateButtonMappingsWindow : Window
 {

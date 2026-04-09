@@ -3,7 +3,7 @@ using System.Windows.Interop;
 
 using static PInvoke.User32;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class TopLevelWindow
 {

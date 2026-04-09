@@ -1,7 +1,7 @@
 ﻿
 using System.Windows;
 
-namespace MarvinsAIRARefactored.Windows;
+namespace MarvinsALMUARefactored.Windows;
 
 public partial class RunInstallerWindow : Window
 {

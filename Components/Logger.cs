@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Channels;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public sealed class Logger
 {

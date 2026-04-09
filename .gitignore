@@ -401,7 +401,7 @@ FodyWeavers.xsd
 /.idea
 
 # Ignore files for ChatGPT
-/MarvinsAIRARefactored.zip
+/MarvinsALMUARefactored.zip
 Translate.zip
 Help/.idea/webServers.xml
 Website/.idea/deployment.xml

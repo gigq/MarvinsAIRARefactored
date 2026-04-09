@@ -9,9 +9,9 @@ using UserControl = System.Windows.Controls.UserControl;
 
 using PInvoke;
 
-using MarvinsAIRARefactored.Classes;
+using MarvinsALMUARefactored.Classes;
 
-namespace MarvinsAIRARefactored.Controls;
+namespace MarvinsALMUARefactored.Controls;
 
 public partial class MairaDualSlider : UserControl
 {

@@ -1,4 +1,4 @@
-namespace MarvinsAIRARefactored.SimSupport;
+namespace MarvinsALMUARefactored.SimSupport;
 
 public sealed record SimDefinition(
 	SimId Id,

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MarvinsAIRARefactored.DataContext;
+namespace MarvinsALMUARefactored.DataContext;
 
 public class ContextSwitches : INotifyPropertyChanged
 {

@@ -3,9 +3,9 @@ using System.Runtime.CompilerServices;
 
 using SharpDX.DirectInput;
 
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class DirectInput
 {

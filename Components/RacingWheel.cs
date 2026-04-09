@@ -6,12 +6,12 @@ using System.Runtime.CompilerServices;
 
 using CsvHelper;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Windows;
 
-using static MarvinsAIRARefactored.Windows.MainWindow;
+using static MarvinsALMUARefactored.Windows.MainWindow;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class RacingWheel
 {

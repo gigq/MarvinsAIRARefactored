@@ -1,7 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MarvinsAIRARefactored.Controls
+namespace MarvinsALMUARefactored.Controls
 {
     public class MairaTabItem : TabItem
     {

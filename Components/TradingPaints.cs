@@ -7,11 +7,11 @@ using System.Text;
 
 using ICSharpCode.SharpZipLib.BZip2;
 
-using MarvinsAIRARefactored.Classes;
+using MarvinsALMUARefactored.Classes;
 
 using static IRSDKSharper.IRacingSdkSessionInfo.DriverInfoModel;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class TradingPaints
 {

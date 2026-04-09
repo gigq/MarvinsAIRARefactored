@@ -1,9 +1,9 @@
 ﻿
 using System.Diagnostics;
 
-using MarvinsAIRARefactored.PInvoke;
+using MarvinsALMUARefactored.PInvoke;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class MultimediaTimer
 {

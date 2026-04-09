@@ -1,7 +1,7 @@
 ﻿
 using System.Runtime.CompilerServices;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public class MathZ
 {

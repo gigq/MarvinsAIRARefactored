@@ -2,11 +2,11 @@
 using System.Windows;
 using System.Windows.Input;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.DataContext;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.DataContext;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.Controls;
+namespace MarvinsALMUARefactored.Controls;
 
 public class MairaMappableButton : MairaButton
 {

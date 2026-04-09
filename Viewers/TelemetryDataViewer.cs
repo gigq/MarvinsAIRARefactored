@@ -12,7 +12,7 @@ using ScrollBar = System.Windows.Controls.Primitives.ScrollBar;
 
 using IRSDKSharper;
 
-namespace MarvinsAIRARefactored.Viewers;
+namespace MarvinsALMUARefactored.Viewers;
 
 public class TelemetryDataViewer : Control
 {

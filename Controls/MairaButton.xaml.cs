@@ -6,7 +6,7 @@ using System.Windows.Threading;
 
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace MarvinsAIRARefactored.Controls;
+namespace MarvinsALMUARefactored.Controls;
 
 public partial class MairaButton : UserControl
 {
@@ -71,7 +71,7 @@ public partial class MairaButton : UserControl
 		set => SetValue( BlinkIconProperty, value );
 	}
 
-	public static readonly DependencyProperty DefaultFrameProperty = DependencyProperty.Register( nameof( DefaultFrame ), typeof( ImageSource ), typeof( MairaButton ), new PropertyMetadata( new BitmapImage( new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/ring-large-default.png", UriKind.Absolute ) ) ) );
+	public static readonly DependencyProperty DefaultFrameProperty = DependencyProperty.Register( nameof( DefaultFrame ), typeof( ImageSource ), typeof( MairaButton ), new PropertyMetadata( new BitmapImage( new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/Buttons/ring-large-default.png", UriKind.Absolute ) ) ) );
 
 	public ImageSource DefaultFrame
 	{
@@ -79,7 +79,7 @@ public partial class MairaButton : UserControl
 		set => SetValue( DefaultFrameProperty, value );
 	}
 
-	public static readonly DependencyProperty MappedFrameProperty = DependencyProperty.Register( nameof( MappedFrame ), typeof( ImageSource ), typeof( MairaButton ), new PropertyMetadata( new BitmapImage( new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/ring-large-mapped.png", UriKind.Absolute ) ) ) );
+	public static readonly DependencyProperty MappedFrameProperty = DependencyProperty.Register( nameof( MappedFrame ), typeof( ImageSource ), typeof( MairaButton ), new PropertyMetadata( new BitmapImage( new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/Buttons/ring-large-mapped.png", UriKind.Absolute ) ) ) );
 
 	public ImageSource MappedFrame
 	{
@@ -87,7 +87,7 @@ public partial class MairaButton : UserControl
 		set => SetValue( MappedFrameProperty, value );
 	}
 
-	public static readonly DependencyProperty PressedFrameProperty = DependencyProperty.Register( nameof( PressedFrame ), typeof( ImageSource ), typeof( MairaButton ), new PropertyMetadata( new BitmapImage( new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/ring-large-pressed.png", UriKind.Absolute ) ) ) );
+	public static readonly DependencyProperty PressedFrameProperty = DependencyProperty.Register( nameof( PressedFrame ), typeof( ImageSource ), typeof( MairaButton ), new PropertyMetadata( new BitmapImage( new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/Buttons/ring-large-pressed.png", UriKind.Absolute ) ) ) );
 
 	public ImageSource PressedFrame
 	{

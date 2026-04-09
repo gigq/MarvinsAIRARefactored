@@ -5,15 +5,15 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using Color = MarvinsAIRARefactored.Classes.Color;
+using Color = MarvinsALMUARefactored.Classes.Color;
 using Timer = System.Timers.Timer;
 
 using IRSDKSharper;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public partial class AdminBoxx
 {

@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
 
-namespace MarvinsAIRARefactored.Windows
+namespace MarvinsALMUARefactored.Windows
 {
 	public partial class HelpWindow : Window
 	{

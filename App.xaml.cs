@@ -10,18 +10,18 @@ using Application = System.Windows.Application;
 using ComboBox = System.Windows.Controls.ComboBox;
 using Timer = System.Timers.Timer;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Components;
-using MarvinsAIRARefactored.SimSupport;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Components;
+using MarvinsALMUARefactored.SimSupport;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored;
+namespace MarvinsALMUARefactored;
 
 public partial class App : Application
 {
 #if !ADMINBOXX
 
-	public const string AppName = "MarvinsAIRA Refactored";
+	public const string AppName = "MarvinsALMUA Refactored";
 
 #else
 
@@ -110,7 +110,7 @@ public partial class App : Application
 	public const int TimerPeriodInMilliseconds = 17;
 	public const int TimerTicksPerSecond = 1000 / TimerPeriodInMilliseconds;
 
-	private const string RefactoredMutexName = "MarvinsAIRARefactoredMutex";
+	private const string RefactoredMutexName = "MarvinsALMUARefactoredMutex";
 	private const string ClassicMutexName = "MarvinsAIRA Mutex";
 
 	private static Mutex? _refactoredMutex = null;

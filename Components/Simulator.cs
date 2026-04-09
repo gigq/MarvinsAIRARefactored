@@ -11,14 +11,14 @@ using YamlDotNet.Serialization.NamingConventions;
 using PInvoke;
 using IRSDKSharper;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Components.SimBackends;
-using MarvinsAIRARefactored.SimSupport;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Components.SimBackends;
+using MarvinsALMUARefactored.SimSupport;
+using MarvinsALMUARefactored.Windows;
 
-using static MarvinsAIRARefactored.Windows.MainWindow;
+using static MarvinsALMUARefactored.Windows.MainWindow;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public partial class Simulator
 {

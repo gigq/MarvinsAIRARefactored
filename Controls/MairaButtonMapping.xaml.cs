@@ -4,10 +4,10 @@ using System.Windows.Controls;
 
 using UserControl = System.Windows.Controls.UserControl;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Components;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Components;
 
-namespace MarvinsAIRARefactored.Controls;
+namespace MarvinsALMUARefactored.Controls;
 
 public partial class MairaButtonMapping : UserControl
 {
@@ -95,29 +95,29 @@ public partial class MairaButtonMapping : UserControl
 		{
 			if ( _isRecording )
 			{
-				FirstButton_Label.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "WaitingForInput" ];
+				FirstButton_Label.Text = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization[ "WaitingForInput" ];
 
 				FirstButton_Label.Visibility = Visibility.Visible;
 				SecondButton_Label.Visibility = Visibility.Collapsed;
 			}
 			else if ( MappedButton.ClickButton.DeviceInstanceGuid == Guid.Empty )
 			{
-				FirstButton_Label.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "PressTheRecordButton" ];
+				FirstButton_Label.Text = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization[ "PressTheRecordButton" ];
 
 				FirstButton_Label.Visibility = Visibility.Visible;
 				SecondButton_Label.Visibility = Visibility.Collapsed;
 			}
 			else if ( MappedButton.HoldButton.DeviceInstanceGuid == Guid.Empty )
 			{
-				FirstButton_Label.Text = $"{MappedButton.ClickButton.DeviceProductName} {GetFriendlyButtonName( MappedButton.ClickButton.ButtonNumber )} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Click" ]}";
+				FirstButton_Label.Text = $"{MappedButton.ClickButton.DeviceProductName} {GetFriendlyButtonName( MappedButton.ClickButton.ButtonNumber )} {MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization[ "Click" ]}";
 
 				FirstButton_Label.Visibility = Visibility.Visible;
 				SecondButton_Label.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
-				FirstButton_Label.Text = $"{MappedButton.HoldButton.DeviceProductName} {GetFriendlyButtonName( MappedButton.HoldButton.ButtonNumber )} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Hold" ]}";
-				SecondButton_Label.Text = $"{MappedButton.ClickButton.DeviceProductName} {GetFriendlyButtonName( MappedButton.ClickButton.ButtonNumber )} {MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Click" ]}";
+				FirstButton_Label.Text = $"{MappedButton.HoldButton.DeviceProductName} {GetFriendlyButtonName( MappedButton.HoldButton.ButtonNumber )} {MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization[ "Hold" ]}";
+				SecondButton_Label.Text = $"{MappedButton.ClickButton.DeviceProductName} {GetFriendlyButtonName( MappedButton.ClickButton.ButtonNumber )} {MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization[ "Click" ]}";
 
 				FirstButton_Label.Visibility = Visibility.Visible;
 				SecondButton_Label.Visibility = Visibility.Visible;
@@ -162,7 +162,7 @@ public partial class MairaButtonMapping : UserControl
 
 	private static string GetFriendlyButtonName( int buttonNumber )
 	{
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
 
 		if ( ( buttonNumber < DirectInput.PovButtonBase ) || ( buttonNumber >= ( DirectInput.PovButtonBase + DirectInput.PovVirtualButtonCount ) ) )
 		{

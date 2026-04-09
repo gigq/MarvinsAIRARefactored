@@ -1,9 +1,9 @@
 ﻿
 using System.Diagnostics;
 
-using MarvinsAIRARefactored.Classes;
+using MarvinsALMUARefactored.Classes;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public sealed class SpeechToText : IDisposable
 {

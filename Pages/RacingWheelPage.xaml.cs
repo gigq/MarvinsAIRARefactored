@@ -8,10 +8,10 @@ using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
 using UserControl = System.Windows.Controls.UserControl;
 
-using MarvinsAIRARefactored.Components;
-using MarvinsAIRARefactored.SimSupport;
+using MarvinsALMUARefactored.Components;
+using MarvinsALMUARefactored.SimSupport;
 
-namespace MarvinsAIRARefactored.Pages;
+namespace MarvinsALMUARefactored.Pages;
 
 public partial class RacingWheelPage : UserControl
 {
@@ -28,7 +28,7 @@ public partial class RacingWheelPage : UserControl
 
 	private void Power_MairaMappableButton_Click( object sender, RoutedEventArgs e )
 	{
-		MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelEnableForceFeedback = !MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelEnableForceFeedback;
+		MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings.RacingWheelEnableForceFeedback = !MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings.RacingWheelEnableForceFeedback;
 	}
 
 	private void Test_MairaMappableButton_Click( object sender, RoutedEventArgs e )
@@ -275,8 +275,8 @@ public partial class RacingWheelPage : UserControl
 
 		app.Logger.WriteLine( "[RacingWheelPage] UpdateSteeringDeviceOptions >>>" );
 
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		var dictionary = new Dictionary<Guid, string>();
 
@@ -312,8 +312,8 @@ public partial class RacingWheelPage : UserControl
 
 		app.Logger.WriteLine( "[RacingWheelPage] UpdateAlgorithmOptions >>>" );
 
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 		var selectedSimId = app.Simulator.SelectedSimId;
 
 		var dictionary = new Dictionary<RacingWheel.Algorithm, string>
@@ -343,8 +343,8 @@ public partial class RacingWheelPage : UserControl
 
 		app.Logger.WriteLine( "[RacingWheelPage] UpdateFFBSourceOptions >>>" );
 
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 		var selectedSimId = app.Simulator.SelectedSimId;
 
 		var dictionary = new Dictionary<RacingWheel.MultiFFBSourceOptions, string>
@@ -383,8 +383,8 @@ public partial class RacingWheelPage : UserControl
 
 		app.Logger.WriteLine( "[RacingWheelPage] UpdatePredictionModeOptions >>>" );
 
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		var dictionary = new Dictionary<RacingWheel.PredictionMode, string>
 		{
@@ -408,7 +408,7 @@ public partial class RacingWheelPage : UserControl
 
 		app.Logger.WriteLine( "[RacingWheelPage] UpdatePreviewRecordingsOptions >>>" );
 
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
 
 		var dictionary = new Dictionary<string, string>();
 
@@ -436,8 +436,8 @@ public partial class RacingWheelPage : UserControl
 
 		app.Logger.WriteLine( "[RacingWheelPage] UpdateLFERecordingDeviceOptions >>>" );
 
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		var dictionary = new Dictionary<Guid, string>();
 
@@ -462,7 +462,7 @@ public partial class RacingWheelPage : UserControl
 	{
 		var app = App.Instance!;
 
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		app.Dispatcher.Invoke( () =>
 		{
@@ -474,21 +474,21 @@ public partial class RacingWheelPage : UserControl
 
 			if ( !settings.RacingWheelEnableForceFeedback )
 			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-red.png" ) as ImageSource;
+				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/Buttons/power-red.png" ) as ImageSource;
 
 				blink = true;
 			}
 			else if ( !app.Simulator.IsConnected )
 			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-blue.png" ) as ImageSource;
+				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/Buttons/power-blue.png" ) as ImageSource;
 			}
 			else if ( !app.DirectInput.ForceFeedbackInitialized )
 			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-yellow.png" ) as ImageSource;
+				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/Buttons/power-yellow.png" ) as ImageSource;
 			}
 			else
 			{
-				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/power-green.png" ) as ImageSource;
+				imageSource = new ImageSourceConverter().ConvertFromString( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/Buttons/power-green.png" ) as ImageSource;
 			}
 
 			if ( imageSource != null )
@@ -524,7 +524,7 @@ public partial class RacingWheelPage : UserControl
 			{
 				if ( !settings.RacingWheelEnableForceFeedback )
 				{
-					SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "FFBIsDisabled" ];
+					SteeringDeviceFaultReason_TextBlock.Text = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization[ "FFBIsDisabled" ];
 				}
 				else if ( !app.Simulator.IsConnected )
 				{
@@ -538,7 +538,7 @@ public partial class RacingWheelPage : UserControl
 				{
 					if ( app.SteeringEffects.IsCalibrating )
 					{
-						SteeringDeviceFaultReason_TextBlock.Text = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "CalibrationIsRunning" ];
+						SteeringDeviceFaultReason_TextBlock.Text = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization[ "CalibrationIsRunning" ];
 					}
 					else if ( ( app.Simulator.SelectedSimId == SimId.IRacing ) && app.Simulator.SteeringFFBEnabled && !settings.RacingWheelAlwaysEnableFFB )
 					{

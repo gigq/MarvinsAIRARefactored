@@ -5,7 +5,7 @@ using System.Windows.Input;
 using TextBox = System.Windows.Controls.TextBox;
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace MarvinsAIRARefactored.Controls;
+namespace MarvinsALMUARefactored.Controls;
 
 public partial class MairaTextBox : UserControl
 {

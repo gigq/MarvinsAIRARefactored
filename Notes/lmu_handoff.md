@@ -88,7 +88,7 @@ Behavior:
 
 - iRacing still uses the legacy MAIRA folder layout for upstream compatibility.
 - Non-iRacing sims go under:
-  - `Documents/MarvinsAIRA Refactored/Sims/<SimFolder>/...`
+  - `Documents/MarvinsALMUA Refactored/Sims/<SimFolder>/...`
 
 This was done to avoid cross-sim collisions while preserving the current iRacing expectations.
 

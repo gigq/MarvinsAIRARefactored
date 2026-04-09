@@ -1,8 +1,8 @@
 using System.Diagnostics;
 
-using MarvinsAIRARefactored.SimSupport;
+using MarvinsALMUARefactored.SimSupport;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public partial class Simulator
 {

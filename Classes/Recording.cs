@@ -4,7 +4,7 @@ using System.IO;
 
 using CsvHelper;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public class Recording
 {

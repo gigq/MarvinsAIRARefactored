@@ -6,7 +6,7 @@ using System.Windows.Threading;
 using Point = System.Windows.Point;
 using Size = System.Windows.Size;
 
-namespace MarvinsAIRARefactored.Windows;
+namespace MarvinsALMUARefactored.Windows;
 
 public partial class CursorCountdownOverlay : Window
 {

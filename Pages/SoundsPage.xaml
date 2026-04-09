@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="MarvinsAIRARefactored.Pages.SoundsPage"
+﻿<UserControl x:Class="MarvinsALMUARefactored.Pages.SoundsPage"
              x:Name="Root"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:MarvinsAIRARefactored.Pages"
-             xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
-             xmlns:datacontext="clr-namespace:MarvinsAIRARefactored.DataContext"
+             xmlns:local="clr-namespace:MarvinsALMUARefactored.Pages"
+             xmlns:controls="clr-namespace:MarvinsALMUARefactored.Controls"
+             xmlns:datacontext="clr-namespace:MarvinsALMUARefactored.DataContext"
              mc:Ignorable="d"
              d:DesignWidth="800">
 
@@ -97,7 +97,7 @@
 
                 <controls:MairaButton Grid.Column="10"
                                       Label="{Binding Localization[Test]}"
-                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate.png"
+                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/vibrate.png"
                                       Click="Click_Test_MairaButton_Click"
                                       IsSmall="True" />
 
@@ -154,7 +154,7 @@
 
                 <controls:MairaButton Grid.Column="10"
                                       Label="{Binding Localization[Test]}"
-                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate.png"
+                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/vibrate.png"
                                       Click="ABSEngaged_Test_MairaButton_Click"
                                       IsSmall="True" />
 
@@ -220,7 +220,7 @@
 
                 <controls:MairaButton Grid.Column="10"
                                       Label="{Binding Localization[Test]}"
-                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate.png"
+                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/vibrate.png"
                                       Click="WheelLock_Test_MairaButton_Click"
                                       IsSmall="True" />
 
@@ -286,7 +286,7 @@
 
                 <controls:MairaButton Grid.Column="10"
                                       Label="{Binding Localization[Test]}"
-                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate.png"
+                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/vibrate.png"
                                       Click="WheelSpin_Test_MairaButton_Click"
                                       IsSmall="True" />
 
@@ -338,7 +338,7 @@
 
                 <controls:MairaButton Grid.Column="10"
                                       Label="{Binding Localization[Test]}"
-                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate.png"
+                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/vibrate.png"
                                       Click="Understeer_Test_MairaButton_Click"
                                       IsSmall="True" />
 
@@ -390,7 +390,7 @@
 
                 <controls:MairaButton Grid.Column="10"
                                       Label="{Binding Localization[Test]}"
-                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate.png"
+                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/vibrate.png"
                                       Click="Oversteer_Test_MairaButton_Click"
                                       IsSmall="True" />
 
@@ -442,7 +442,7 @@
 
                 <controls:MairaButton Grid.Column="10"
                                       Label="{Binding Localization[Test]}"
-                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate.png"
+                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/vibrate.png"
                                       Click="SeatOfPants_Test_MairaButton_Click"
                                       IsSmall="True" />
 

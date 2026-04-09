@@ -3,11 +3,11 @@ using System.Windows;
 
 using UserControl = System.Windows.Controls.UserControl;
 
-using MarvinsAIRARefactored.Windows;
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.SimSupport;
+using MarvinsALMUARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.SimSupport;
 
-namespace MarvinsAIRARefactored.Pages;
+namespace MarvinsALMUARefactored.Pages;
 
 public partial class AppSettingsPage : UserControl
 {
@@ -55,7 +55,7 @@ public partial class AppSettingsPage : UserControl
 
 		app.Logger.WriteLine( "[AppSettingsPage] UpdateLanguageOptions >>>" );
 
-		Language_MairaComboBox.ItemsSource = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization.Languages.ToList();
+		Language_MairaComboBox.ItemsSource = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization.Languages.ToList();
 
 		app.Logger.WriteLine( "[AppSettingsPage] <<< UpdateLanguageOptions" );
 	}
@@ -66,8 +66,8 @@ public partial class AppSettingsPage : UserControl
 
 		app.Logger.WriteLine( "[AppSettingsPage] UpdateDefaultPageOptions >>>" );
 
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
 		var effectiveSimId = app.Simulator.SelectedSimId;
 
 		var defaultPageOptions = new Dictionary<MainWindow.AppPage, string>
@@ -108,7 +108,7 @@ public partial class AppSettingsPage : UserControl
 
 		app.Logger.WriteLine( "[AppSettingsPage] UpdateSimulatorOptions >>>" );
 
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 		var simulatorOptions = SimRegistry.Definitions
 			.ToDictionary( definition => definition.Id, definition => SimRegistry.GetOptionLabel( definition.Id ) );
 		var selectedSimulatorDefinition = SimRegistry.GetDefinition( settings.AppSelectedSimulator );
@@ -147,7 +147,7 @@ public partial class AppSettingsPage : UserControl
 				_cpuAffinitySwitches.Add( cpuSwitch );
 			}
 
-			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 			settings.PropertyChanged += Settings_PropertyChanged;
 
@@ -161,7 +161,7 @@ public partial class AppSettingsPage : UserControl
 
 	private void Settings_PropertyChanged( object? sender, System.ComponentModel.PropertyChangedEventArgs e )
 	{
-		if ( e.PropertyName == nameof( MarvinsAIRARefactored.DataContext.Settings.AppAffinityMaskBits ) )
+		if ( e.PropertyName == nameof( MarvinsALMUARefactored.DataContext.Settings.AppAffinityMaskBits ) )
 		{
 			UpdateCpuAffinityUI();
 		}
@@ -178,7 +178,7 @@ public partial class AppSettingsPage : UserControl
 
 		try
 		{
-			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 			var currentAffinityMask = settings.AppAffinityMaskBits;
 
 			for ( var i = 0; i < _cpuAffinitySwitches.Count && i < _physicalCoreOptions.Count; i++ )
@@ -216,7 +216,7 @@ public partial class AppSettingsPage : UserControl
 
 			var newAffinityMask = CpuAffinityHelper.BuildAffinityMask( selectedIndexes, _physicalCoreOptions );
 
-			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 			settings.AppAffinityMaskBits = newAffinityMask;
 		}

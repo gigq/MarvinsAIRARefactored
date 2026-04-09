@@ -1,7 +1,7 @@
 ﻿
 using System.Runtime.InteropServices;
 
-namespace MarvinsAIRARefactored.PInvoke;
+namespace MarvinsALMUARefactored.PInvoke;
 
 public static partial class UXTheme
 {

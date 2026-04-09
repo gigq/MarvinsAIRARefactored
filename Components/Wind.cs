@@ -3,10 +3,10 @@ using System.Buffers.Text;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public partial class Wind
 {

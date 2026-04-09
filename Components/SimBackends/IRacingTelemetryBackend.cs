@@ -1,6 +1,6 @@
 using IRSDKSharper;
 
-namespace MarvinsAIRARefactored.Components.SimBackends;
+namespace MarvinsALMUARefactored.Components.SimBackends;
 
 internal sealed class IRacingTelemetryBackend(
 	IRacingSdk irsdk,

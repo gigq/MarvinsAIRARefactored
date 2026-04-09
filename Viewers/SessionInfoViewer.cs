@@ -11,7 +11,7 @@ using FlowDirection = System.Windows.FlowDirection;
 using Point = System.Windows.Point;
 using ScrollBar = System.Windows.Controls.Primitives.ScrollBar;
 
-namespace MarvinsAIRARefactored.Viewers;
+namespace MarvinsALMUARefactored.Viewers;
 
 public class SessionInfoViewer : Control
 {

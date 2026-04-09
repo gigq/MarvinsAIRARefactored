@@ -1,7 +1,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:classes="clr-namespace:MarvinsAIRARefactored.Classes">
+    xmlns:classes="clr-namespace:MarvinsALMUARefactored.Classes">
 
     <Style x:Key="HelpIconButtonStyle" TargetType="Button">
 

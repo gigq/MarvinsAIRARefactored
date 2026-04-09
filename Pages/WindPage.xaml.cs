@@ -3,7 +3,7 @@ using System.Windows;
 
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace MarvinsAIRARefactored.Pages;
+namespace MarvinsALMUARefactored.Pages;
 
 public partial class WindPage : UserControl
 {

@@ -2,7 +2,7 @@
 using System.Windows.Data;
 using System.Globalization;
 
-namespace MarvinsAIRARefactored.Converters;
+namespace MarvinsALMUARefactored.Converters;
 
 [ValueConversion( typeof( string ), typeof( bool ) )]
 public class StartsWithUnderscoreConverter : IValueConverter

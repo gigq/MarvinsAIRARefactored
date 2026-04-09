@@ -1,11 +1,11 @@
 ﻿
 using System.Windows;
 
-using MarvinsAIRARefactored.Controls;
+using MarvinsALMUARefactored.Controls;
 
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace MarvinsAIRARefactored.Pages;
+namespace MarvinsALMUARefactored.Pages;
 
 public partial class SpeechToTextPage : UserControl
 {
@@ -125,7 +125,7 @@ public partial class SpeechToTextPage : UserControl
 		};
 
 		Language_MairaComboBox.ItemsSource = dictionary.ToList();
-		Language_MairaComboBox.SelectedValue = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.SpeechToTextLanguageCode;
+		Language_MairaComboBox.SelectedValue = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings.SpeechToTextLanguageCode;
 
 		app.Logger.WriteLine( "[SpeechToTextPage] <<< UpdateLanguageOptions" );
 	}

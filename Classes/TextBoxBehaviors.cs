@@ -6,7 +6,7 @@ using DataFormats = System.Windows.DataFormats;
 using DataObject = System.Windows.DataObject;
 using TextBox = System.Windows.Controls.TextBox;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public static class TextBoxBehaviors
 {

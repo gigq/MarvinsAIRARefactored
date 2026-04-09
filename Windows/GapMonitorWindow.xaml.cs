@@ -10,9 +10,9 @@ using PInvoke;
 
 using static PInvoke.User32;
 
-using MarvinsAIRARefactored.Components;
+using MarvinsALMUARefactored.Components;
 
-namespace MarvinsAIRARefactored.Windows;
+namespace MarvinsALMUARefactored.Windows;
 
 public partial class GapMonitorWindow : Window
 {
@@ -49,7 +49,7 @@ public partial class GapMonitorWindow : Window
 
 		InitializeComponent();
 
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		var rectangle = settings.OverlaysGapMonitorWindowPosition;
 
@@ -69,7 +69,7 @@ public partial class GapMonitorWindow : Window
 	{
 		if ( IsVisible && ( WindowState == WindowState.Normal ) )
 		{
-			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 			var rectangle = settings.OverlaysGapMonitorWindowPosition;
 
@@ -87,7 +87,7 @@ public partial class GapMonitorWindow : Window
 
 	public void MakeDraggable()
 	{
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		_isDraggable = settings.OverlaysMakeGapMonitorDraggable;
 

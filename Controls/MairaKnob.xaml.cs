@@ -17,11 +17,11 @@ using UserControl = System.Windows.Controls.UserControl;
 
 using PInvoke;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.DataContext;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.DataContext;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.Controls;
+namespace MarvinsALMUARefactored.Controls;
 
 public partial class MairaKnob : UserControl
 {
@@ -440,7 +440,7 @@ public partial class MairaKnob : UserControl
 
 	private bool IsPercentValueString()
 	{
-		var percentSuffix = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "Percent" ];
+		var percentSuffix = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization[ "Percent" ];
 
 		if ( string.IsNullOrWhiteSpace( percentSuffix ) )
 		{

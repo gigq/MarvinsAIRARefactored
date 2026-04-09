@@ -1,10 +1,10 @@
-﻿<UserControl x:Class="MarvinsAIRARefactored.Controls.MairaKnob"
+﻿<UserControl x:Class="MarvinsALMUARefactored.Controls.MairaKnob"
              x:Name="Root"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
+             xmlns:controls="clr-namespace:MarvinsALMUARefactored.Controls"
              mc:Ignorable="d">
 
     <Grid VerticalAlignment="Top">
@@ -103,34 +103,34 @@
                 </Grid.ColumnDefinitions>
 
                 <controls:MairaMappableButton Grid.Column="0"
-                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/minus.png"
+                                              Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/minus.png"
                                               IconWidth="32"
                                               IconHeight="32"
-                                              DefaultFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-minus-default.png"
-                                              MappedFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-minus-mapped.png"
-                                              PressedFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-minus-pressed.png"
+                                              DefaultFrame="/MarvinsALMUARefactored;component/Artwork/Buttons/knob-minus-default.png"
+                                              MappedFrame="/MarvinsALMUARefactored;component/Artwork/Buttons/knob-minus-mapped.png"
+                                              PressedFrame="/MarvinsALMUARefactored;component/Artwork/Buttons/knob-minus-pressed.png"
                                               Click="Minus_MairaMappableButton_Click"
                                               ButtonMappings="{Binding MinusButtonMappings, ElementName=Root}" />
 
                 <controls:MairaButton x:Name="Middle_MairaButton"
                                       Grid.Column="1"
-                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/drag.png"
+                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/drag.png"
                                       IconWidth="52"
                                       IconHeight="32"
-                                      DefaultFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-middle-default.png"
-                                      PressedFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-middle-pressed.png"
+                                      DefaultFrame="/MarvinsALMUARefactored;component/Artwork/Buttons/knob-middle-default.png"
+                                      PressedFrame="/MarvinsALMUARefactored;component/Artwork/Buttons/knob-middle-pressed.png"
                                       PreviewMouseLeftButtonDown="Middle_MairaButton_PreviewMouseLeftButtonDown"
                                       PreviewMouseLeftButtonUp="Middle_MairaButton_PreviewMouseLeftButtonUp"
                                       PreviewMouseMove="Middle_MairaButton_PreviewMouseMove"
                                       LostMouseCapture="Middle_MairaButton_LostMouseCapture" />
 
                 <controls:MairaMappableButton Grid.Column="2"
-                                              Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/plus.png"
+                                              Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/plus.png"
                                               IconWidth="32"
                                               IconHeight="32"
-                                              DefaultFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-plus-default.png"
-                                              MappedFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-plus-mapped.png"
-                                              PressedFrame="/MarvinsAIRARefactored;component/Artwork/Buttons/knob-plus-pressed.png"
+                                              DefaultFrame="/MarvinsALMUARefactored;component/Artwork/Buttons/knob-plus-default.png"
+                                              MappedFrame="/MarvinsALMUARefactored;component/Artwork/Buttons/knob-plus-mapped.png"
+                                              PressedFrame="/MarvinsALMUARefactored;component/Artwork/Buttons/knob-plus-pressed.png"
                                               Click="Plus_MairaMappableButton_Click"
                                               ButtonMappings="{Binding PlusButtonMappings, ElementName=Root}" />
 

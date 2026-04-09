@@ -3,7 +3,7 @@ using System.IO.MemoryMappedFiles;
 using System.Text;
 using IRSDKSharper;
 
-namespace MarvinsAIRARefactored.Components.SimBackends;
+namespace MarvinsALMUARefactored.Components.SimBackends;
 
 internal sealed class LmuTelemetryBackend( Simulator simulator ) : ISimTelemetryBackend
 {

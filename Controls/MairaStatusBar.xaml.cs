@@ -3,7 +3,7 @@ using System.Windows;
 
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace MarvinsAIRARefactored.Controls;
+namespace MarvinsALMUARefactored.Controls;
 
 public partial class MairaStatusBar : UserControl
 {

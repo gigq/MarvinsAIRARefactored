@@ -22,7 +22,7 @@
     <comment>Tab item</comment>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>Marvin's Awesome iRacing App</value>
+    <value>Marvin's Awesome Le Mans Ultimate App</value>
     <comment>Window title</comment>
   </data>
   <data name="DetailBoostBias" xml:space="preserve">
@@ -1175,7 +1175,7 @@ Hier ist der Link zum Spenden:</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>Marvin's Awesome iRacing App (MAIRA) steht in keiner Verbindung zu Trading Paints</value>
+    <value>Marvin's Awesome Le Mans Ultimate App (MAIRA) steht in keiner Verbindung zu Trading Paints</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">

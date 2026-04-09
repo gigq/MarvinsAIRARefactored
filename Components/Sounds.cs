@@ -1,8 +1,8 @@
 ﻿
-using MarvinsAIRARefactored.Classes;
-using static MarvinsAIRARefactored.Components.Sounds;
+using MarvinsALMUARefactored.Classes;
+using static MarvinsALMUARefactored.Components.Sounds;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class Sounds
 {

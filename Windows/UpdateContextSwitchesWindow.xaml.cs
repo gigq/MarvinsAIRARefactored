@@ -1,9 +1,9 @@
 ﻿
 using System.Windows;
 
-using MarvinsAIRARefactored.DataContext;
+using MarvinsALMUARefactored.DataContext;
 
-namespace MarvinsAIRARefactored.Windows;
+namespace MarvinsALMUARefactored.Windows;
 
 public partial class UpdateContextSwitchesWindow : Window
 {
@@ -55,6 +55,6 @@ public partial class UpdateContextSwitchesWindow : Window
 
 		app.Logger.WriteLine( "[UpdateContextSwitchesWindow] Window closed" );
 
-		MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.UpdateSettings( true );
+		MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings.UpdateSettings( true );
 	}
 }

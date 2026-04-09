@@ -3,7 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Xml.Linq;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public static class TradingPaintsXml
 {

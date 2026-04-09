@@ -1,5 +1,5 @@
 ﻿
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public class Color( float r, float g, float b )
 {

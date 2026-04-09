@@ -1,9 +1,9 @@
-﻿<Application x:Class="MarvinsAIRARefactored.App"
+﻿<Application x:Class="MarvinsALMUARefactored.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MarvinsAIRARefactored"
-             xmlns:classes="clr-namespace:MarvinsAIRARefactored.Classes"
-             xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
+             xmlns:local="clr-namespace:MarvinsALMUARefactored"
+             xmlns:classes="clr-namespace:MarvinsALMUARefactored.Classes"
+             xmlns:controls="clr-namespace:MarvinsALMUARefactored.Controls"
              xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
              Startup="App_Startup"
              Exit="App_Exit"
@@ -41,7 +41,7 @@
                    x:Key="MairaTextBlockStyle">
 
                 <Setter Property="FontFamily"
-                        Value="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Aptos Narrow" />
+                        Value="pack://application:,,,/MarvinsALMUARefactored;component/Fonts/#Aptos Narrow" />
                 <Setter Property="Typography.NumeralAlignment"
                         Value="Tabular" />
                 <Setter Property="Typography.NumeralStyle"
@@ -61,7 +61,7 @@
                    x:Key="MairaTextBoxStyle">
 
                 <Setter Property="FontFamily"
-                        Value="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Aptos Narrow" />
+                        Value="pack://application:,,,/MarvinsALMUARefactored;component/Fonts/#Aptos Narrow" />
                 <Setter Property="Typography.NumeralAlignment"
                         Value="Tabular" />
                 <Setter Property="Typography.NumeralStyle"
@@ -89,7 +89,7 @@
                 <Setter Property="FontSize"
                         Value="30" />
                 <Setter Property="FontFamily"
-                        Value="pack://application:,,,/MarvinsAIRARefactored;component/Fonts/#Aptos Narrow" />
+                        Value="pack://application:,,,/MarvinsALMUARefactored;component/Fonts/#Aptos Narrow" />
 
                 <Setter Property="Template">
 
@@ -123,7 +123,7 @@
 
                                 <Image x:Name="Glyph"
                                        Grid.Column="2"
-                                       Source="/MarvinsAIRARefactored;component/Artwork/Buttons/combo-box-default.png"
+                                       Source="/MarvinsALMUARefactored;component/Artwork/Buttons/combo-box-default.png"
                                        Width="32"
                                        Height="32"
                                        HorizontalAlignment="Right"
@@ -139,7 +139,7 @@
                                             Value="#666666" />
                                     <Setter TargetName="Glyph"
                                             Property="Source"
-                                            Value="pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/combo-box-hover.png" />
+                                            Value="pack://application:,,,/MarvinsALMUARefactored;component/Artwork/Buttons/combo-box-hover.png" />
                                 </Trigger>
 
                                 <Trigger Property="IsChecked"
@@ -148,7 +148,7 @@
                                             Value="Transparent" />
                                     <Setter TargetName="Glyph"
                                             Property="Source"
-                                            Value="pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Buttons/combo-box-checked.png" />
+                                            Value="pack://application:,,,/MarvinsALMUARefactored;component/Artwork/Buttons/combo-box-checked.png" />
                                 </Trigger>
 
                             </ControlTemplate.Triggers>

@@ -11,12 +11,12 @@ using FlowDirection = System.Windows.FlowDirection;
 using Pen = System.Windows.Media.Pen;
 using Point = System.Windows.Point;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Controls;
-using MarvinsAIRARefactored.SimSupport;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Controls;
+using MarvinsALMUARefactored.SimSupport;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class SteeringEffects
 {

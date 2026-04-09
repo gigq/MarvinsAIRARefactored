@@ -5,10 +5,10 @@ using System.Windows.Controls;
 
 using UserControl = System.Windows.Controls.UserControl;
 
-using MarvinsAIRARefactored.DataContext;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.DataContext;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.Controls;
+namespace MarvinsALMUARefactored.Controls;
 
 public partial class MairaSwitch : UserControl
 {

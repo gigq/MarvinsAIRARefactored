@@ -5,7 +5,7 @@ using StreamDeckSharp;
 using IDeviceContext = OpenMacroBoard.SDK.IDeviceContext;
 using KeyEventArgs = OpenMacroBoard.SDK.KeyEventArgs;
 
-namespace MarvinsAIRARefactored.Components
+namespace MarvinsALMUARefactored.Components
 {
 	public sealed class StreamDeck : IDisposable
 	{

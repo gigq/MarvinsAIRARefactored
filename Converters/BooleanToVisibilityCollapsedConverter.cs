@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Globalization;
 
-namespace MarvinsAIRARefactored.Converters;
+namespace MarvinsALMUARefactored.Converters;
 
 [ValueConversion( typeof( bool ), typeof( Visibility ) )]
 public class BooleanToVisibilityCollapsedConverter : IValueConverter

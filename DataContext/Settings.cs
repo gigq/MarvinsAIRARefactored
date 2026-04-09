@@ -5,14 +5,14 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows.Threading;
 using System.Xml.Serialization;
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Components;
-using MarvinsAIRARefactored.SimSupport;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Components;
+using MarvinsALMUARefactored.SimSupport;
+using MarvinsALMUARefactored.Windows;
 
-using static MarvinsAIRARefactored.Windows.MainWindow;
+using static MarvinsALMUARefactored.Windows.MainWindow;
 
-namespace MarvinsAIRARefactored.DataContext;
+namespace MarvinsALMUARefactored.DataContext;
 
 public class Settings : INotifyPropertyChanged
 {

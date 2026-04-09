@@ -105,7 +105,7 @@ $language_options = build_language_options( $selected );
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<title>Translations - Marvin's Awesome iRacing App</title>
+		<title>Translations - Marvin's Awesome Le Mans Ultimate App</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -335,7 +335,7 @@ $language_options = build_language_options( $selected );
 	<body>
 
 		<header>
-			<h1>Translations - Marvin's Awesome iRacing App</h1>
+			<h1>Translations - Marvin's Awesome Le Mans Ultimate App</h1>
 		</header>
 
 		<div class="container">

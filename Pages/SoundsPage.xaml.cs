@@ -3,9 +3,9 @@ using System.Windows;
 
 using UserControl = System.Windows.Controls.UserControl;
 
-using MarvinsAIRARefactored.Components;
+using MarvinsALMUARefactored.Components;
 
-namespace MarvinsAIRARefactored.Pages;
+namespace MarvinsALMUARefactored.Pages;
 
 public partial class SoundsPage : UserControl
 {

@@ -4,9 +4,9 @@ using System.Windows;
 
 using UserControl = System.Windows.Controls.UserControl;
 
-using MarvinsAIRARefactored.Components;
+using MarvinsALMUARefactored.Components;
 
-namespace MarvinsAIRARefactored.Pages;
+namespace MarvinsALMUARefactored.Pages;
 
 public partial class PedalsPage : UserControl
 {
@@ -90,8 +90,8 @@ public partial class PedalsPage : UserControl
 
 		app.Logger.WriteLine( "[PedalsPage] UpdateEffectOptions >>>" );
 
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		var dictionary = new Dictionary<Pedals.Effect, string>
 		{

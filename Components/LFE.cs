@@ -4,9 +4,9 @@ using System.Runtime.CompilerServices;
 using SharpDX.DirectSound;
 using SharpDX.Multimedia;
 
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public class LFE
 {

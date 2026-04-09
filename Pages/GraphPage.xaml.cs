@@ -5,9 +5,9 @@ using System.Windows.Input;
 using Cursors = System.Windows.Input.Cursors;
 using UserControl = System.Windows.Controls.UserControl;
 
-using MarvinsAIRARefactored.Classes;
+using MarvinsALMUARefactored.Classes;
 
-namespace MarvinsAIRARefactored.Pages;
+namespace MarvinsALMUARefactored.Pages;
 
 public partial class GraphPage : UserControl
 {

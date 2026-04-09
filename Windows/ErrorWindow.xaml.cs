@@ -3,7 +3,7 @@ using System.Windows;
 
 using Clipboard = System.Windows.Clipboard;
 
-namespace MarvinsAIRARefactored.Windows;
+namespace MarvinsALMUARefactored.Windows;
 
 public partial class ErrorWindow : Window
 {
@@ -15,7 +15,7 @@ public partial class ErrorWindow : Window
 
 #if ADMINBOXX
 
-		Title = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "AdminBoxx" ];
+		Title = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization[ "AdminBoxx" ];
 
 #endif
 

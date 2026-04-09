@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="MarvinsAIRARefactored.Pages.RacingWheelPage"
+﻿<UserControl x:Class="MarvinsALMUARefactored.Pages.RacingWheelPage"
              x:Name="Root"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:MarvinsAIRARefactored.Controls"
-             xmlns:controls="clr-namespace:MarvinsAIRARefactored.Controls"
-             xmlns:datacontext="clr-namespace:MarvinsAIRARefactored.DataContext"
+             xmlns:local="clr-namespace:MarvinsALMUARefactored.Controls"
+             xmlns:controls="clr-namespace:MarvinsALMUARefactored.Controls"
+             xmlns:datacontext="clr-namespace:MarvinsALMUARefactored.DataContext"
              mc:Ignorable="d"
              d:DesignWidth="800">
 
@@ -56,8 +56,8 @@
                     <controls:MairaMappableButton x:Name="Power_MairaMappableButton"
                                                   Grid.Column="0"
                                                   Label="{Binding Localization[Power]}"
-                                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/power-white.png"
-                                                  BlinkIcon="/MarvinsAIRARefactored;component/Artwork/Buttons/power-default.png"
+                                                  Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/power-white.png"
+                                                  BlinkIcon="/MarvinsALMUARefactored;component/Artwork/Buttons/power-default.png"
                                                   ContextSwitches="{Binding Settings.RacingWheelEnableForceFeedbackContextSwitches}"
                                                   ButtonMappings="{Binding Settings.RacingWheelEnableForceFeedbackButtonMappings}"
                                                   Click="Power_MairaMappableButton_Click" />
@@ -65,14 +65,14 @@
                     <controls:MairaMappableButton x:Name="Test_MairaMappableButton"
                                                   Grid.Column="2"
                                                   Label="{Binding Localization[Test]}"
-                                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/vibrate-large.png"
+                                                  Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/vibrate-large.png"
                                                   ButtonMappings="{Binding Settings.RacingWheelTestButtonMappings}"
                                                   Click="Test_MairaMappableButton_Click" />
 
                     <controls:MairaMappableButton x:Name="Reset_MairaMappableButton"
                                                   Grid.Column="4"
                                                   Label="{Binding Localization[Reset]}"
-                                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/reset.png"
+                                                  Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/reset.png"
                                                   ButtonMappings="{Binding Settings.RacingWheelResetButtonMappings}"
                                                   Click="Reset_MairaMappableButton_Click" />
 
@@ -168,14 +168,14 @@
                         <controls:MairaMappableButton x:Name="Set_MairaMappableButton"
                                                       Grid.Column="0"
                                                       Label="{Binding Localization[Set]}"
-                                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/set.png"
+                                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/set.png"
                                                       ButtonMappings="{Binding Settings.RacingWheelSetButtonMappings}"
                                                       Click="Set_MairaMappableButton_Click" />
 
                         <controls:MairaMappableButton x:Name="Clear_MairaMappableButton"
                                                       Grid.Column="2"
                                                       Label="{Binding Localization[Clear]}"
-                                                      Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/clear.png"
+                                                      Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/clear.png"
                                                       ButtonMappings="{Binding Settings.RacingWheelClearButtonMappings}"
                                                       Click="Clear_MairaMappableButton_Click" />
 
@@ -621,8 +621,8 @@
                     <controls:MairaMappableButton x:Name="Record_MairaMappableButton"
                                                   Grid.Column="2"
                                                   ButtonMappings="{Binding Settings.RacingWheelStartRecordingMappings}"
-                                                  Icon="/MarvinsAIRARefactored;component/Artwork/Buttons/record-white.png"
-                                                  BlinkIcon="/MarvinsAIRARefactored;component/Artwork/Buttons/record-orange.png"
+                                                  Icon="/MarvinsALMUARefactored;component/Artwork/Buttons/record-white.png"
+                                                  BlinkIcon="/MarvinsALMUARefactored;component/Artwork/Buttons/record-orange.png"
                                                   Click="StartRecording_MairaMappableButton_Click"
                                                   IsSmall="True" />
 

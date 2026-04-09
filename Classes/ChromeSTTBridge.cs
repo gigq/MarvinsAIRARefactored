@@ -5,7 +5,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public sealed class ChromeSTTBridge : IDisposable
 {

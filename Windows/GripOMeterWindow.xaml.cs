@@ -10,7 +10,7 @@ using PInvoke;
 
 using static PInvoke.User32;
 
-namespace MarvinsAIRARefactored.Windows;
+namespace MarvinsALMUARefactored.Windows;
 
 public partial class GripOMeterWindow : Window
 {
@@ -35,7 +35,7 @@ public partial class GripOMeterWindow : Window
 
 		InitializeComponent();
 
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		var rectangle = settings.SteeringEffectsGripOMeterWindowPosition;
 
@@ -68,7 +68,7 @@ public partial class GripOMeterWindow : Window
 	{
 		if ( IsVisible && ( WindowState == WindowState.Normal ) )
 		{
-			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 			var rectangle = settings.SteeringEffectsGripOMeterWindowPosition;
 
@@ -86,7 +86,7 @@ public partial class GripOMeterWindow : Window
 
 	public void MakeDraggable()
 	{
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		_isDraggable = settings.SteeringEffectsMakeGripOMeterDraggable;
 

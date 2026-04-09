@@ -1,8 +1,8 @@
 using System.IO;
 
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.SimSupport;
+namespace MarvinsALMUARefactored.SimSupport;
 
 public static class SimRegistry
 {

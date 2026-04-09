@@ -5,10 +5,10 @@ using System.Runtime.CompilerServices;
 
 using CsvHelper;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public sealed class RecordingManager : IDisposable
 {

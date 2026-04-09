@@ -7,12 +7,12 @@ using System.Windows.Controls;
 using ComboBox = System.Windows.Controls.ComboBox;
 using UserControl = System.Windows.Controls.UserControl;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Components;
-using MarvinsAIRARefactored.Controls;
-using MarvinsAIRARefactored.SimSupport;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Components;
+using MarvinsALMUARefactored.Controls;
+using MarvinsALMUARefactored.SimSupport;
 
-namespace MarvinsAIRARefactored.Pages;
+namespace MarvinsALMUARefactored.Pages;
 
 public partial class SteeringEffectsPage : UserControl
 {
@@ -130,8 +130,8 @@ public partial class SteeringEffectsPage : UserControl
 
 		app.Logger.WriteLine( "[SteeringEffectsPage] UpdateCalibrationFileNameOptions >>>" );
 
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		var dictionary = new Dictionary<string, string>()
 		{
@@ -179,8 +179,8 @@ public partial class SteeringEffectsPage : UserControl
 
 		app.Logger.WriteLine( "[SteeringEffectsPage] SetVibrationPatternMairaComboBoxItemsSource >>>" );
 
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		var dictionary = new Dictionary<RacingWheel.VibrationPattern, string>
 		{
@@ -213,8 +213,8 @@ public partial class SteeringEffectsPage : UserControl
 
 		app.Logger.WriteLine( "[SteeringEffectsPage] SetConstantForceDirectionMairaComboBoxItemsSource >>>" );
 
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		var dictionary = new Dictionary<RacingWheel.ConstantForceDirection, string>
 		{
@@ -244,8 +244,8 @@ public partial class SteeringEffectsPage : UserControl
 
 		app.Logger.WriteLine( "[SteeringEffectsPage] UpdateSeatOfPantsAlgorithmOptions >>>" );
 
-		var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		var dictionary = new Dictionary<SteeringEffects.SeatOfPantsAlgorithm, string>
 		{

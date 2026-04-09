@@ -22,7 +22,7 @@
     <comment>Zakładka</comment>
   </data>
   <data name="AppTitle" xml:space="preserve">
-    <value>Marvin's Awesome iRacing App</value>
+    <value>Marvin's Awesome Le Mans Ultimate App</value>
     <comment>Tytuł Okna</comment>
   </data>
   <data name="DetailBoostBias" xml:space="preserve">
@@ -1138,7 +1138,7 @@
     <comment>Trading Paints</comment>
   </data>
   <data name="TradingPaintsDisclaimer" xml:space="preserve">
-    <value>Marvin's Awesome iRacing App (MAIRA) nie jest powiązany z Trading Paints</value>
+    <value>Marvin's Awesome Le Mans Ultimate App (MAIRA) nie jest powiązany z Trading Paints</value>
     <comment>Trading Paints</comment>
   </data>
   <data name="MultiAdjustmentToolkit" xml:space="preserve">

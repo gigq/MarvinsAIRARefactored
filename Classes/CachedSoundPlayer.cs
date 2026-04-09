@@ -1,7 +1,7 @@
 ﻿
 using SharpDX.XAudio2;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public sealed class CachedSoundPlayer( CachedSound sound, XAudio2 xaudio2 ) : IDisposable
 {

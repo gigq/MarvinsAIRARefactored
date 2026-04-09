@@ -8,10 +8,10 @@ using Color = System.Windows.Media.Color;
 using ColorConverter = System.Windows.Media.ColorConverter;
 using UserControl = System.Windows.Controls.UserControl;
 
-using MarvinsAIRARefactored.DataContext;
-using MarvinsAIRARefactored.Windows;
+using MarvinsALMUARefactored.DataContext;
+using MarvinsALMUARefactored.Windows;
 
-namespace MarvinsAIRARefactored.Controls;
+namespace MarvinsALMUARefactored.Controls;
 
 public partial class MairaComboBox : UserControl
 {

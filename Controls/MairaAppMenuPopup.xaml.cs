@@ -5,12 +5,12 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-using MarvinsAIRARefactored.SimSupport;
-using static MarvinsAIRARefactored.Windows.MainWindow;
+using MarvinsALMUARefactored.SimSupport;
+using static MarvinsALMUARefactored.Windows.MainWindow;
 
 using UserControl = System.Windows.Controls.UserControl;
 
-namespace MarvinsAIRARefactored.Controls
+namespace MarvinsALMUARefactored.Controls
 {
 	public partial class MairaAppMenuPopup : UserControl
 	{
@@ -49,7 +49,7 @@ namespace MarvinsAIRARefactored.Controls
 
 #if ADMINBOXX
 
-			var uri = new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/Misc/adminboxx-logo.png", UriKind.Absolute );
+			var uri = new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/Misc/adminboxx-logo.png", UriKind.Absolute );
 
 			Image.Source = new BitmapImage( uri );
 
@@ -276,7 +276,7 @@ namespace MarvinsAIRARefactored.Controls
 
 #endif
 
-			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 			var simIdForUi = App.Instance!.Simulator.SelectedSimId;
 			var hasExistingSelection = ( SelectedAppMenuItem != null ) && AppMenuItems.Any( appMenuItem => appMenuItem.AppPage == SelectedAppPage );
 			var selectedPage = hasExistingSelection ? SelectedAppPage : settings.AppDefaultPage;
@@ -338,7 +338,7 @@ namespace MarvinsAIRARefactored.Controls
 
 		public void RelocalizeAppMenuItems()
 		{
-			var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+			var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
 
 			foreach ( var menuItem in AppMenuItems )
 			{
@@ -419,7 +419,7 @@ namespace MarvinsAIRARefactored.Controls
 
 		public void UpdateSelectedAppPageText()
 		{
-			var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+			var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
 
 			switch ( SelectedAppPage )
 			{

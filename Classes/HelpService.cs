@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public static class HelpService
 {

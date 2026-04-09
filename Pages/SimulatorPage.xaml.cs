@@ -4,7 +4,7 @@ using System.Windows.Input;
 using UserControl = System.Windows.Controls.UserControl;
 using ScrollEventArgs = System.Windows.Controls.Primitives.ScrollEventArgs;
 
-namespace MarvinsAIRARefactored.Pages;
+namespace MarvinsALMUARefactored.Pages;
 
 public partial class SimulatorPage : UserControl
 {

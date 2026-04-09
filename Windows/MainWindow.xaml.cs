@@ -11,13 +11,13 @@ using Simagic;
 
 using Application = System.Windows.Application;
 
-using MarvinsAIRARefactored.Classes;
-using MarvinsAIRARefactored.Components;
-using MarvinsAIRARefactored.Controls;
-using MarvinsAIRARefactored.Pages;
-using MarvinsAIRARefactored.SimSupport;
+using MarvinsALMUARefactored.Classes;
+using MarvinsALMUARefactored.Components;
+using MarvinsALMUARefactored.Controls;
+using MarvinsALMUARefactored.Pages;
+using MarvinsALMUARefactored.SimSupport;
 
-namespace MarvinsAIRARefactored.Windows;
+namespace MarvinsALMUARefactored.Windows;
 
 public partial class MainWindow : Window
 {
@@ -83,11 +83,11 @@ public partial class MainWindow : Window
 
 #if ADMINBOXX
 
-		var iconUri = new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/AppIcon/adminboxx.ico" );
+		var iconUri = new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/AppIcon/adminboxx.ico" );
 
 #else
 
-		var iconUri = new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/AppIcon/maira-universal.ico" );
+		var iconUri = new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/AppIcon/maira-universal.ico" );
 
 #endif
 
@@ -108,9 +108,9 @@ public partial class MainWindow : Window
 
 		RefreshWindow();
 
-		Misc.ForcePropertySetters( MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings );
+		Misc.ForcePropertySetters( MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings );
 
-		var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+		var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 		if ( settings.AppRememberWindowPositionAndSize )
 		{
@@ -140,11 +140,11 @@ public partial class MainWindow : Window
 
 #if ADMINBOXX
 
-			Title = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "AdminBoxx" ] + " " + Misc.GetVersion();
+			Title = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization[ "AdminBoxx" ] + " " + Misc.GetVersion();
 
 #else
 
-			Title = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization[ "AppTitle" ] + " " + Misc.GetVersion();
+			Title = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization[ "AppTitle" ] + " " + Misc.GetVersion();
 
 			_racingWheelPage.UpdateSteeringDeviceSection();
 			_racingWheelPage.UpdateSteeringDeviceOptions();
@@ -185,7 +185,7 @@ public partial class MainWindow : Window
 		{
 			var app = App.Instance!;
 
-			var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+			var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
 			var simDefinition = app.Simulator.CurrentSimDefinition;
 
 			var statusText1 = string.Empty;
@@ -300,9 +300,9 @@ public partial class MainWindow : Window
 			var useThirdRowSpacer = false;
 			var app = App.Instance!;
 			var selectedSimId = app.Simulator.SelectedSimId;
-			var selectedMultiFfbSource = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelMultiFFBSourceSelection;
+			var selectedMultiFfbSource = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings.RacingWheelMultiFFBSourceSelection;
 
-			switch ( MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.RacingWheelAlgorithm )
+			switch ( MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings.RacingWheelAlgorithm )
 			{
 				case RacingWheel.Algorithm.Native60Hz:
 					racingWheelPredictionModeComboBoxVisibility = Visibility.Visible;
@@ -403,7 +403,7 @@ public partial class MainWindow : Window
 	{
 		Dispatcher.Invoke( () =>
 		{
-			var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+			var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 			Misc.ApplyToTaggedElements( Root, "Complex", element => element.Visibility = settings.RacingWheelSimpleModeEnabled ? Visibility.Collapsed : Visibility.Visible );
 		} );
@@ -415,7 +415,7 @@ public partial class MainWindow : Window
 
 		Dispatcher.Invoke( () =>
 		{
-			var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+			var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
 
 			switch ( app.Pedals.PedalsDevice )
 			{
@@ -452,7 +452,7 @@ public partial class MainWindow : Window
 
 		Dispatcher.Invoke( () =>
 		{
-			var localization = MarvinsAIRARefactored.DataContext.DataContext.Instance.Localization;
+			var localization = MarvinsALMUARefactored.DataContext.DataContext.Instance.Localization;
 
 			if ( _notifyIcon != null )
 			{
@@ -461,15 +461,15 @@ public partial class MainWindow : Window
 				_notifyIcon.Dispose();
 			}
 
-			if ( MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.AppMinimizeToSystemTray )
+			if ( MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings.AppMinimizeToSystemTray )
 			{
 #if !ADMINBOXX
 
-				var resourceStream = Application.GetResourceStream( new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/AppIcon/maira-universal.ico" ) ).Stream;
+				var resourceStream = Application.GetResourceStream( new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/AppIcon/maira-universal.ico" ) ).Stream;
 
 #else
 
-				var resourceStream = Application.GetResourceStream( new Uri( "pack://application:,,,/MarvinsAIRARefactored;component/Artwork/AppIcon/adminboxx.ico" ) ).Stream;
+				var resourceStream = Application.GetResourceStream( new Uri( "pack://application:,,,/MarvinsALMUARefactored;component/Artwork/AppIcon/adminboxx.ico" ) ).Stream;
 
 #endif
 
@@ -513,7 +513,7 @@ public partial class MainWindow : Window
 
 		Activate();
 
-		if ( !MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.AppTopmostWindowEnabled )
+		if ( !MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings.AppTopmostWindowEnabled )
 		{
 			Topmost = true;
 			Topmost = false;
@@ -552,7 +552,7 @@ public partial class MainWindow : Window
 		{
 			if ( IsVisible && ( WindowState == WindowState.Normal ) )
 			{
-				var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+				var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 				var rectangle = settings.AppWindowPositionAndSize;
 
@@ -569,7 +569,7 @@ public partial class MainWindow : Window
 		{
 			if ( IsVisible && ( WindowState == WindowState.Normal ) )
 			{
-				var settings = MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings;
+				var settings = MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings;
 
 				var rectangle = settings.AppWindowPositionAndSize;
 
@@ -582,7 +582,7 @@ public partial class MainWindow : Window
 
 	private void Window_StateChanged( object sender, EventArgs e )
 	{
-		if ( MarvinsAIRARefactored.DataContext.DataContext.Instance.Settings.AppMinimizeToSystemTray )
+		if ( MarvinsALMUARefactored.DataContext.DataContext.Instance.Settings.AppMinimizeToSystemTray )
 		{
 			if ( WindowState == WindowState.Minimized )
 			{

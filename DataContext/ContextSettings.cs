@@ -1,7 +1,7 @@
 ﻿
-using MarvinsAIRARefactored.Components;
+using MarvinsALMUARefactored.Components;
 
-namespace MarvinsAIRARefactored.DataContext;
+namespace MarvinsALMUARefactored.DataContext;
 
 public class ContextSettings
 {

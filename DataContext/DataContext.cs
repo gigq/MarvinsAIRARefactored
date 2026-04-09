@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-using Localization = MarvinsAIRARefactored.Components.Localization;
+using Localization = MarvinsALMUARefactored.Components.Localization;
 
-namespace MarvinsAIRARefactored.DataContext;
+namespace MarvinsALMUARefactored.DataContext;
 
 public class DataContext : INotifyPropertyChanged
 {

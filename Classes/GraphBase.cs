@@ -6,7 +6,7 @@ using System.Windows.Media.Imaging;
 
 using Image = System.Windows.Controls.Image;
 
-namespace MarvinsAIRARefactored.Classes;
+namespace MarvinsALMUARefactored.Classes;
 
 public class GraphBase
 {

@@ -2,9 +2,9 @@
 using SharpDX.XAudio2;
 using System.IO;
 
-using MarvinsAIRARefactored.Classes;
+using MarvinsALMUARefactored.Classes;
 
-namespace MarvinsAIRARefactored.Components;
+namespace MarvinsALMUARefactored.Components;
 
 public sealed class AudioManager : IDisposable
 {
